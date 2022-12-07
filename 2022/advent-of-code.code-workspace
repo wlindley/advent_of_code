@@ -19,6 +19,9 @@
 		{
 			"name": "puzzle3_1",
 			"path": "puzzle3_1"
+		},
+		{
+			"path": "puzzle3_2"
 		}
 	]
 }
