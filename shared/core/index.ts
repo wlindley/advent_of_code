@@ -1,3 +1,4 @@
+export { euclideanMod } from './math';
 export {
   executeSolver,
   formatDayFolder,

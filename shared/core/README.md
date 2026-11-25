@@ -8,6 +8,7 @@ Pure, runtime-agnostic contracts and reusable domain utilities shared across Adv
 - `PuzzleMeta` & `PuzzlePartManifest`: metadata and browser registration shape for solved parts.
 - `executeSolver(solver, rawInput, clock?)`: executes `parse` + `solve` and returns `{ answer, elapsedMs, runtime }`.
 - `formatDayFolder(day)` / `formatPartKey(year, day, part)`: canonical path/ID formatters with boundary validation.
+- `euclideanMod(dividend, divisor)`: non-negative Euclidean modulo in `[0, divisor)` with safe-integer validation.
 - `Clock` & `systemClock`: injectable monotonic timing boundary for deterministic tests.
 
 ## Maintainer Guide
