@@ -7,6 +7,12 @@ export type Direction = 'L' | 'R';
 
 const TOKEN_PATTERN = /^([LR])(\d+)$/;
 
+function assertValidPosition(position: number): void {
+  if (!Number.isInteger(position) || position < 0 || position >= DIAL_SIZE) {
+    throw new RangeError(`Dial position must be an integer in [0, ${DIAL_SIZE - 1}], got ${position}`);
+  }
+}
+
 /** Immutable dial rotation instruction on a 0..99 circular safe dial. */
 export class Rotation {
   readonly direction: Direction;
@@ -27,12 +33,23 @@ export class Rotation {
 
   /** Returns the new dial position after applying this rotation from `position`. */
   applyTo(position: number): number {
-    if (!Number.isInteger(position) || position < 0 || position >= DIAL_SIZE) {
-      throw new RangeError(`Dial position must be an integer in [0, ${DIAL_SIZE - 1}], got ${position}`);
-    }
+    assertValidPosition(position);
     // Pre-reduce large click counts so position +/- step stays well within safe integers.
     const step = this.distance % DIAL_SIZE;
     return euclideanMod(position + (this.direction === 'R' ? step : -step), DIAL_SIZE);
+  }
+
+  /** Counts how many clicks during this rotation land on 0 (excluding starting position). */
+  countZeroHitsFrom(position: number): number {
+    assertValidPosition(position);
+    const firstHit =
+      this.direction === 'R'
+        ? DIAL_SIZE - position
+        : position === 0
+          ? DIAL_SIZE
+          : position;
+    if (this.distance < firstHit) return 0;
+    return 1 + Math.floor((this.distance - firstHit) / DIAL_SIZE);
   }
 
   static parse(token: string): Rotation {
