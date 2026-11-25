@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T21:55:00Z",
+  "updatedAt": "2026-11-25T22:01:00Z",
   "years": [
     {
       "year": 2025,
@@ -24,6 +24,44 @@
             "Placing shared day input parsing and value objects in 2025/day01/shared preserves full rotation distances cleanly for Part 2."
           ],
           "verifiedAt": "2026-11-25T21:54:54Z"
+        },
+        {
+          "year": 2025,
+          "day": 1,
+          "part": 2,
+          "title": "Secret Entrance",
+          "puzzleUrl": "https://adventofcode.com/2025/day/1#part2",
+          "status": "in_progress",
+          "phase": "design_selected",
+          "summary": "Using the same 0–99 safe dial starting at 50 and rotation sequence from Part 1, count every individual click that lands the pointer on 0—both intermediate pass-throughs (including multi-turn loops) and exact end-of-rotation landings.",
+          "proposals": [
+            {
+              "id": "first-hit-arithmetic",
+              "name": "First-Hit Modular Arithmetic",
+              "summary": "Compute clicks to the first zero crossing (100 - p for R; p === 0 ? 100 : p for L) and count 1 + floor((d - firstHit) / 100) in O(1) per rotation.",
+              "complexity": "O(N) time, O(1) auxiliary space",
+              "tradeoffs": "Pure non-negative safe-integer math with zero negative-floor quirks or cumulative overflow; verified against a click-by-click test oracle."
+            },
+            {
+              "id": "unwrapped-floor-diff",
+              "name": "Unwrapped Number-Line Floor Difference",
+              "summary": "Track cumulative unwrapped position x and subtract floor(x/100) intervals across each step.",
+              "complexity": "O(N) time, O(1) auxiliary space",
+              "tradeoffs": "Requires subtle -1 offset for leftward half-open intervals and cumulative coordinate can grow unboundedly on synthetic inputs."
+            },
+            {
+              "id": "click-by-click-sim",
+              "name": "Direct Single-Click Simulation",
+              "summary": "Step the dial by +/-1 mod 100 for every individual click and increment when position hits 0.",
+              "complexity": "O(sum d_i) time, O(1) space",
+              "tradeoffs": "Trivially faithful to the spec (ideal differential test oracle), but linear in total click distance."
+            }
+          ],
+          "selectedProposalId": "first-hit-arithmetic",
+          "selectionRationale": "O(1) per rotation with purely non-negative safe-integer arithmetic cleanly resolving the p = 0 left/right asymmetry, placed cohesively on Rotation in 2025/day01/shared/.",
+          "inFlightWork": "Adding Rotation.countZeroHitsFrom, Part 2 domain solver + differential tests, and Archimedean spiral-sweep SVG visualizer via Flash.",
+          "attempts": [],
+          "updatedAt": "2026-11-25T22:01:00Z"
         }
       ]
     }
