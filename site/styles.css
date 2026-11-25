@@ -1,67 +1,16 @@
 :root {
-  --bg-light: #f6f8fa;
-  --bg-dark: #0d1117;
-  --surface-light: #ffffff;
-  --surface-dark: #161b22;
-  --border-light: #d0d7de;
-  --border-dark: #30363d;
-  --text-light: #1f2328;
-  --text-dark: #e6edf3;
-  --muted-light: #59636e;
-  --muted-dark: #8b949e;
-  --accent-light: #0969da;
-  --accent-dark: #58a6ff;
-  --gold-light: #9a6700;
-  --gold-dark: #f2cc60;
-  --ok-light: #1a7f37;
-  --ok-dark: #3fb950;
-  --warn-light: #bc4c00;
-  --warn-dark: #f0883e;
-  --err-light: #cf222e;
-  --err-dark: #f85149;
+  --bg: #f6f8fa;
+  --surface: #ffffff;
+  --border: #d0d7de;
+  --text: #1f2328;
+  --muted: #59636e;
+  --accent: #0969da;
+  --gold: #9a6700;
+  --ok: #1a7f37;
+  --warn: #bc4c00;
+  --err: #cf222e;
 
-  --bg: var(--bg-light);
-  --surface: var(--surface-light);
-  --border: var(--border-light);
-  --text: var(--text-light);
-  --muted: var(--muted-light);
-  --accent: var(--accent-light);
-  --gold: var(--gold-light);
-  --ok: var(--ok-light);
-  --warn: var(--warn-light);
-  --err: var(--err-light);
-
-  color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: var(--bg-dark);
-    --surface: var(--surface-dark);
-    --border: var(--border-dark);
-    --text: var(--text-dark);
-    --muted: var(--muted-dark);
-    --accent: var(--accent-dark);
-    --gold: var(--gold-dark);
-    --ok: var(--ok-dark);
-    --warn: var(--warn-dark);
-    --err: var(--err-dark);
-  }
-}
-
-@supports (color: light-dark(white, black)) {
-  :root {
-    --bg: light-dark(var(--bg-light), var(--bg-dark));
-    --surface: light-dark(var(--surface-light), var(--surface-dark));
-    --border: light-dark(var(--border-light), var(--border-dark));
-    --text: light-dark(var(--text-light), var(--text-dark));
-    --muted: light-dark(var(--muted-light), var(--muted-dark));
-    --accent: light-dark(var(--accent-light), var(--accent-dark));
-    --gold: light-dark(var(--gold-light), var(--gold-dark));
-    --ok: light-dark(var(--ok-light), var(--ok-dark));
-    --warn: light-dark(var(--warn-light), var(--warn-dark));
-    --err: light-dark(var(--err-light), var(--err-dark));
-  }
+  color-scheme: light;
 }
 
 html {
