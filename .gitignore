@@ -1,1 +1,9 @@
 .DS_Store
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.aoc-session
+.aoc-cache/
+.env
+.env.local
