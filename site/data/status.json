@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T22:14:00Z",
+  "updatedAt": "2026-11-25T22:19:30Z",
   "years": [
     {
       "year": 2025,
@@ -51,37 +51,19 @@
           "part": 1,
           "title": "Gift Shop",
           "puzzleUrl": "https://adventofcode.com/2025/day/2",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "Given comma-separated inclusive positive integer ID ranges, identify every invalid ID whose canonical base-10 representation consists of a digit sequence repeated twice (e.g., 55, 6464, 123123) and return their sum.",
-          "proposals": [
-            {
-              "id": "closed-form-ap",
-              "name": "Closed-Form Digit-Band Arithmetic Series",
-              "summary": "Clamp repeated half-prefix h per overlapping even digit band 2k and sum the BigInt arithmetic progression h * (10^k + 1) in O(1) per band.",
-              "complexity": "O(R * D) time, O(R) space",
-              "tradeoffs": "O(1) per digit band regardless of range width; exact BigInt arithmetic immune to overflow; verified against a brute-force differential oracle."
-            },
-            {
-              "id": "prefix-enumeration",
-              "name": "Half-Prefix Lattice Generator",
-              "summary": "Enumerate only valid half-prefixes h in [h_min, h_max] per overlapping even band and sum h * (10^k + 1).",
-              "complexity": "O(R * D + K) time, O(R) space",
-              "tradeoffs": "Direct ID enumeration, but degrades linearly in match count K on huge synthetic ranges."
-            },
-            {
-              "id": "direct-range-scan",
-              "name": "Direct Range Scan",
-              "summary": "Scan every integer in each range and test whether its left and right decimal halves match.",
-              "complexity": "O(W * D) time, O(1) space",
-              "tradeoffs": "Trivial spec-faithful reference ideal as a differential test oracle, but linear in total range width."
-            }
+          "algorithmSummary": "Closed-form digit-band arithmetic series in BigInt: for each overlapping even digit length 2k, clamp the repeated half-prefix h against [10^(k-1), 10^k - 1] via exact ceiling/floor division by M = 10^k + 1 and sum M * count * (h_min + h_max) / 2 in O(1) per band.",
+          "complexity": "O(R * D) time, O(R) space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 0.36,
+          "attemptsCount": 1,
+          "learnings": [
+            "Using BigInt for ceiling/floor bounds and arithmetic-series summation guarantees exactness across arbitrary digit widths without Number precision loss.",
+            "Implementing general RepeatedPatternBand(patternLength, repeats) in 2025/day02/shared keeps Part 2 ready for arbitrary repeat counts.",
+            "Scale BigInt positions to 0..1000 in BigInt before converting to Number when rendering SVG bars so huge custom inputs never produce NaN/Infinity."
           ],
-          "selectedProposalId": "closed-form-ap",
-          "selectionRationale": "O(R * D) time independent of range width using exact BigInt arithmetic, with reusable RepeatedPatternBand(k, r) in 2025/day02/shared/ ready for Part 2.",
-          "inFlightWork": "Implementing 2025/day02/shared/idRange, Part 1 domain solver + differential oracle tests, and digit-band SVG visualizer via Flash.",
-          "attempts": [],
-          "updatedAt": "2026-11-25T22:14:00Z"
+          "verifiedAt": "2026-11-25T22:19:09Z"
         }
       ]
     }
