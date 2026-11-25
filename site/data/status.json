@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T22:42:00Z",
+  "updatedAt": "2026-11-25T22:45:45Z",
   "years": [
     {
       "year": 2025,
@@ -110,37 +110,18 @@
           "part": 2,
           "title": "Lobby",
           "puzzleUrl": "https://adventofcode.com/2025/day/3#part2",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "Activate exactly 12 batteries per bank while preserving their left-to-right order to form the maximum 12-digit joltage per bank, and return the BigInt sum across all banks.",
-          "proposals": [
-            {
-              "id": "monotonic-stack-reuse",
-              "name": "Monotonic Decreasing Stack (Reuse BatteryBank.selectMaxJoltage)",
-              "summary": "Directly call the existing k-agnostic O(n) monotonic decreasing stack with drop budget L - 12 in 2025/day03/shared/batteryBank.ts, summing BigInt joltages.",
-              "complexity": "O(N * L) time, O(L) space",
-              "tradeoffs": "Asymptotically optimal independent of k, zero edits to shared/ or part1/, paired with a greedy-window-scan differential oracle in tests."
-            },
-            {
-              "id": "greedy-window-scan",
-              "name": "Iterative Slot-by-Slot Feasible-Window Scan",
-              "summary": "Pick each of the 12 slots left-to-right by finding the leftmost max digit in [cursor, L - (12 - s)].",
-              "complexity": "O(N * k * L) time, O(k) space",
-              "tradeoffs": "Intuitive window view (ideal independent differential test oracle), but scales worse with k."
-            },
-            {
-              "id": "next-digit-lookahead",
-              "name": "Right-to-Left Next-Digit Automaton",
-              "summary": "Precompute nextPos[i][1..9] in O(9L) and jump greedily across the 12 slots in O(9k).",
-              "complexity": "O(N * L) time, O(9L) space",
-              "tradeoffs": "Linear time, but 9x memory overhead vs the existing monotonic stack."
-            }
+          "algorithmSummary": "Reuses 2025/day03/shared/batteryBank.ts verbatim: O(n) strict-> monotonic decreasing stack with drop budget L - 12 selecting the lexicographically maximum 12-digit subsequence in BigInt, paired with a pure traceStackDrops breakdown and greedy-window-scan differential test oracle.",
+          "complexity": "O(N * L) time, O(L) space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 1.45,
+          "attemptsCount": 1,
+          "learnings": [
+            "Building k-agnostic BatteryBank.selectMaxJoltage(count) with BigInt in Part 1 let Part 2 solve k = 12 with zero edits to shared/ or part1/.",
+            "Differential testing the O(n) monotonic stack against an independent O(k * n) feasible-window oracle verified both values and earliest-index tie-breaking."
           ],
-          "selectedProposalId": "monotonic-stack-reuse",
-          "selectionRationale": "2025/day03/shared/batteryBank.ts already implements the exact optimal O(n) monotonic stack with BigInt joltage; Part 2 adds a pure traceStackDrops breakdown and a 12-slot place-value register visualizer.",
-          "inFlightWork": "Implementing 2025/day03/part2/domain (traceStackDrops, Part 2 solver + greedy-window-scan differential tests) and 12-slot register visualizer via Flash.",
-          "attempts": [],
-          "updatedAt": "2026-11-25T22:42:00Z"
+          "verifiedAt": "2026-11-25T22:45:35Z"
         }
       ]
     }
