@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T21:51:00Z",
+  "updatedAt": "2026-11-25T21:55:00Z",
   "years": [
     {
       "year": 2025,
@@ -11,37 +11,19 @@
           "part": 1,
           "title": "Secret Entrance",
           "puzzleUrl": "https://adventofcode.com/2025/day/1",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "A circular safe dial numbered 0 through 99 starts at 50. Apply an ordered sequence of left (L) and right (R) click rotations modulo 100 and count how many rotations leave the dial resting on 0.",
-          "proposals": [
-            {
-              "id": "euclidean-modular-scan",
-              "name": "Direct Euclidean Modular Simulation",
-              "summary": "Parse lines into immutable Rotation value objects and fold linearly from 50 using Euclidean modulo, preserving full rotation distances for tracing and Part 2 reuse.",
-              "complexity": "O(N) time, O(N) parsed / O(1) solver working space",
-              "tradeoffs": "Immune to JS negative-remainder and safe-integer overflow bugs; preserves raw multi-turn distances."
-            },
-            {
-              "id": "prefix-sum-congruence",
-              "name": "Unwrapped Prefix-Sum Congruence Counting",
-              "summary": "Accumulate unwrapped signed deltas on the integer line and count prefix sums divisible by 100.",
-              "complexity": "O(N) time, O(N) parsed / O(1) auxiliary space",
-              "tradeoffs": "Concise math, but risks safe-integer overflow on huge synthetic inputs and still requires modulo reduction for dial rendering."
-            },
-            {
-              "id": "streaming-digit-mod",
-              "name": "Zero-Allocation Streaming Digit-Modulo Fold",
-              "summary": "Fold raw characters directly modulo 100 without allocating rotation objects.",
-              "complexity": "O(L) time, O(1) auxiliary space",
-              "tradeoffs": "Fastest memory profile, but discards full revolution distances needed for rich visualization and potential Part 2 reuse."
-            }
+          "algorithmSummary": "Direct Euclidean modular simulation: parse instructions into immutable Rotation value objects in 2025/day01/shared, pre-reduce each rotation distance modulo 100 before signed addition, and fold through shared/core euclideanMod while counting resting positions at 0.",
+          "complexity": "O(N) time, O(N) parsed / O(1) solver working space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 1.28,
+          "attemptsCount": 1,
+          "learnings": [
+            "Promoted euclideanMod to shared/core/math.ts to avoid JavaScript negative remainder and -0 pitfalls.",
+            "Personal input includes multi-turn rotations up to 998 clicks; always pre-reduce distance modulo ring size instead of single-wrap conditionals.",
+            "Placing shared day input parsing and value objects in 2025/day01/shared preserves full rotation distances cleanly for Part 2."
           ],
-          "selectedProposalId": "euclidean-modular-scan",
-          "selectionRationale": "Runs in O(N) time and O(1) solver space with zero overflow risk, while preserving full rotation distances in 2025/day01/shared/ for visualization and Part 2 reuse.",
-          "inFlightWork": "Implementing shared/core/math, 2025/day01/shared/rotation, Part 1 domain solver, 100% coverage TDD tests, and SVG safe-dial visualization via Flash.",
-          "attempts": [],
-          "updatedAt": "2026-11-25T21:51:00Z"
+          "verifiedAt": "2026-11-25T21:54:54Z"
         }
       ]
     }

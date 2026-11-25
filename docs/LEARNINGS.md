@@ -4,10 +4,11 @@ Reusable algorithmic patterns, parsing idioms, performance tricks, and AoC pitfa
 
 ## Promoted Shared Utilities (`shared/core/`)
 - `solver.ts` — `PuzzleSolver`, `executeSolver`, `Clock` contract for deterministic timing & tracing.
-- *(Utilities like grids, BFS/Dijkstra, number theory, and Web Worker pools will be added here as puzzles motivate them.)*
+- `math.ts` — `euclideanMod(dividend, divisor)` with safe-integer validation and `-0` normalization (added in 2025 Day 1 Part 1).
 
 ## Algorithmic Patterns & Scaling Traps
-- *(Populated automatically as 2025 and prior years are solved.)*
+- **Preserve raw magnitudes when parsing Part 1** (2025 Day 1): Example inputs often use small numbers (`< 100`) while personal inputs include multi-revolution/large values (`up to 998`); preserve unreduced values in `<year>/dayNN/shared/` so Part 2 can reuse the exact parser without churn.
+- **Avoid single-wrap conditionals on modular arithmetic**: Always use `euclideanMod` with pre-reduced step size (`distance % M`) so arbitrarily large safe integers never overflow or produce negative remainders.
 
 ## Parsing & Numeric Pitfalls
 - Always check whether puzzle answers can exceed `Number.MAX_SAFE_INTEGER` (`2^53 - 1`); use `BigInt` whenever totals/products can grow super-linearly.
