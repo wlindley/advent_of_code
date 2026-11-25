@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T23:14:15Z",
+  "updatedAt": "2026-11-25T23:20:00Z",
   "years": [
     {
       "year": 2025,
@@ -180,6 +180,44 @@
             "Guard zero-span domains when projecting BigInt coordinates onto SVG tracks so singleton datasets never divide by zero."
           ],
           "verifiedAt": "2026-11-25T23:14:03Z"
+        },
+        {
+          "year": 2025,
+          "day": 5,
+          "part": 2,
+          "title": "Cafeteria",
+          "puzzleUrl": "https://adventofcode.com/2025/day/5#part2",
+          "status": "in_progress",
+          "phase": "design_selected",
+          "summary": "Disregard the available ingredient ID list and compute the total number of distinct integer IDs covered by the union of all inclusive fresh ingredient ID ranges.",
+          "proposals": [
+            {
+              "id": "sort-and-coalesce-union",
+              "name": "Sort-and-Sweep Canonical Interval Union (IntervalUnion.totalLength)",
+              "summary": "Reuse shared/core/interval.ts IntervalUnion to sort and coalesce overlapping/adjacent BigInt ranges in O(R log R) time and sum end - start + 1n.",
+              "complexity": "O(R log R) time, O(R) space",
+              "tradeoffs": "Zero edits to shared/ or part1/, exact BigInt precision, paired with an endpoint-sweep-line differential oracle in tests."
+            },
+            {
+              "id": "endpoint-sweep-line",
+              "name": "Half-Open Endpoint Sweep-Line",
+              "summary": "Map each closed range [s, e] to (s, +1) and (e + 1n, -1) events and sweep active coverage depth.",
+              "complexity": "O(R log R) time, O(R) space",
+              "tradeoffs": "Great independent differential test oracle, but sorts 2R events and bypasses existing IntervalUnion."
+            },
+            {
+              "id": "online-disjoint-interval-set",
+              "name": "Incremental Disjoint Interval Set",
+              "summary": "Insert ranges one by one in raw input order using binary search and array splicing.",
+              "complexity": "O(R^2) worst-case time, O(R) space",
+              "tradeoffs": "Supports streaming arrival order, but slower worst-case and more complex on static inputs."
+            }
+          ],
+          "selectedProposalId": "sort-and-coalesce-union",
+          "selectionRationale": "100% reuses shared/core/interval.ts IntervalUnion.totalLength in O(R log R) time and exact BigInt with zero edits to shared/ or part1/.",
+          "inFlightWork": "Implementing 2025/day05/part2/domain (coalescing trace, solver + sweep-line differential tests) and two-lane SVG swimlane visualizer via Flash.",
+          "attempts": [],
+          "updatedAt": "2026-11-25T23:20:00Z"
         }
       ]
     }
