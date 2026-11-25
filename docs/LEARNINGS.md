@@ -18,3 +18,6 @@ Reusable algorithmic patterns, parsing idioms, performance tricks, and AoC pitfa
 ## Visualization & Runtime Notes
 - Keep `domain/` 100% pure (zero DOM/React imports) and emit compact, bounded trace snapshots so large personal inputs never freeze the UI.
 - Escalation ladder: main thread → Web Worker (> ~500 ms or embarrassingly parallel) → local Rust CLI (only if optimized TS/Workers would exceed 5 minutes or browser memory limits).
+
+## Future Scaling Notes
+- **Multi-year parallelism (post-2025)**: After completing 2025, prior years can be tackled **2–3 years in parallel** (e.g., isolated worktrees/branches per year merged into `main`, with `site/data/status.json` updates merged cleanly and AoC submissions serialized around `.aoc-cache/rate-limit.json`). When reaching 2022, archive the existing `2022/` Rust solutions to `archive/2022-rust/` first.
