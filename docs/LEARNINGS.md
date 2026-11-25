@@ -5,6 +5,7 @@ Reusable algorithmic patterns, parsing idioms, performance tricks, and AoC pitfa
 ## Promoted Shared Utilities (`shared/core/`)
 - `solver.ts` — `PuzzleSolver`, `executeSolver`, `Clock` contract for deterministic timing & tracing.
 - `math.ts` — `euclideanMod(dividend, divisor)` with safe-integer validation and `-0` normalization (added in 2025 Day 1 Part 1).
+- `grid.ts` — immutable `Grid2D<T>`, `DIRS_4`, `DIRS_8` preserving meaningful spaces by stripping only trailing line endings (added in 2025 Day 4 Part 1).
 
 ## Algorithmic Patterns & Scaling Traps
 - **Preserve raw magnitudes when parsing Part 1** (2025 Day 1): Example inputs often use small numbers (`< 100`) while personal inputs include multi-revolution/large values (`up to 998`); preserve unreduced values in `<year>/dayNN/shared/` so Part 2 can reuse the exact parser without churn.
