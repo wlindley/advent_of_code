@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T22:34:00Z",
+  "updatedAt": "2026-11-25T22:38:00Z",
   "years": [
     {
       "year": 2025,
@@ -91,37 +91,18 @@
           "part": 1,
           "title": "Lobby",
           "puzzleUrl": "https://adventofcode.com/2025/day/3",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "Each input line is a battery bank of single-digit joltage ratings (1–9). Activate exactly two batteries at indices i < j without reordering to maximize the concatenated two-digit joltage, and sum the maxima across all banks.",
-          "proposals": [
-            {
-              "id": "monotonic-stack-greedy",
-              "name": "Monotonic Decreasing Stack (General k-Battery Subsequence)",
-              "summary": "Find the lexicographically maximum length-k subsequence in O(N * L) time using a monotonic non-increasing index stack with discard budget L - k and BigInt totals.",
-              "complexity": "O(N * L) time, O(L) space",
-              "tradeoffs": "Optimal O(N * L) independent of k, deterministic earliest-index tie-breaking, and ready for Part 2 scaling."
-            },
-            {
-              "id": "single-pass-prefix-max",
-              "name": "Single-Pass Prefix-Max Sweep",
-              "summary": "Track the maximum digit seen so far in 0..j-1 while sweeping j = 1..L-1 and evaluate 10*bestTens + d[j].",
-              "complexity": "O(N * L) time, O(1) space",
-              "tradeoffs": "Minimal for k = 2, but needs DP or rework if Part 2 increases k."
-            },
-            {
-              "id": "two-phase-window-max",
-              "name": "Greedy Earliest-Max Window Selection",
-              "summary": "Sequentially pick each slot's earliest max digit inside the feasible window [start .. L - (k - t)].",
-              "complexity": "O(N * k * L) worst-case time, O(1) space",
-              "tradeoffs": "High pedagogical clarity, but worse asymptotic complexity if k grows."
-            }
+          "algorithmSummary": "Monotonic non-increasing index stack with discard budget L - k in 2025/day03/shared/batteryBank.ts (strict > pop condition for earliest-index tie-breaking), accumulating BigInt totals in O(N * L) time independent of k.",
+          "complexity": "O(N * L) time, O(L) space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 1.15,
+          "attemptsCount": 1,
+          "learnings": [
+            "Using a strict > pop condition on the monotonic stack guarantees earliest-index determinism without wasting discard budget on equal digits.",
+            "Implementing k-agnostic BatteryBank.selectMaxJoltage(count) with BigInt in 2025/day03/shared/ prepares cleanly for larger k in Part 2."
           ],
-          "selectedProposalId": "monotonic-stack-greedy",
-          "selectionRationale": "Optimal O(N * L) time independent of k with deterministic earliest-index tie-breaking and BigInt precision in 2025/day03/shared/ ready for Part 2.",
-          "inFlightWork": "Implementing 2025/day03/shared/batteryBank, Part 1 domain solver + differential oracle tests, and battery-rack visualizer via Flash.",
-          "attempts": [],
-          "updatedAt": "2026-11-25T22:34:00Z"
+          "verifiedAt": "2026-11-25T22:37:25Z"
         }
       ]
     }
