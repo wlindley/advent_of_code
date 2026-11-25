@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T22:55:30Z",
+  "updatedAt": "2026-11-25T23:02:00Z",
   "years": [
     {
       "year": 2025,
@@ -142,6 +142,44 @@
             "HTML Canvas keeps 137x137 (~18.8k cells) heatmaps crisp and instant without thousands of SVG DOM nodes."
           ],
           "verifiedAt": "2026-11-25T22:55:14Z"
+        },
+        {
+          "year": 2025,
+          "day": 4,
+          "part": 2,
+          "title": "Printing Department",
+          "puzzleUrl": "https://adventofcode.com/2025/day/4#part2",
+          "status": "in_progress",
+          "phase": "design_selected",
+          "summary": "Repeatedly remove every @ paper roll with strictly fewer than 4 occupied 8-neighbors (updating neighbor degrees as rolls are removed) until no accessible rolls remain, and return the total number of rolls removed.",
+          "proposals": [
+            {
+              "id": "wave-peeling-kcore",
+              "name": "Synchronous Wave-by-Wave 4-Core Peeling",
+              "summary": "Double-buffered typed-array BFS using WarehouseFloor.computeDegreeMap(), claiming rolls when degree drops below 4 and recording exact Uint32Array removal waves in O(R * C) time.",
+              "complexity": "O(R * C) time, O(R * C) space",
+              "tradeoffs": "Optimal linear time with zero GC churn, exact synchronous wave contours matching the example, and zero edits to shared/ or part1/."
+            },
+            {
+              "id": "fifo-queue-peeling",
+              "name": "Single-Queue Kahn-Style 4-Core Peeling",
+              "summary": "Process removable rolls in a single flat FIFO queue, relying on confluence for total count.",
+              "complexity": "O(R * C) time, O(R * C) space",
+              "tradeoffs": "Minimal code, but needs extra layer bookkeeping to emit synchronous wave traces."
+            },
+            {
+              "id": "iterative-full-grid-scan",
+              "name": "Fixed-Point Full-Grid Rescan",
+              "summary": "Repeatedly scan all R x C cells per wave until no rolls have < 4 neighbors.",
+              "complexity": "O(W * R * C) time, O(R * C) space",
+              "tradeoffs": "Trivially faithful to the problem statement (ideal differential test oracle), but degrades quadratically on long wave chains."
+            }
+          ],
+          "selectedProposalId": "wave-peeling-kcore",
+          "selectionRationale": "Strict O(R * C) time & space reusing WarehouseFloor.computeDegreeMap() verbatim while emitting exact 1-indexed Uint32Array wave contours for the Canvas erosion visualizer.",
+          "inFlightWork": "Implementing 2025/day04/part2/domain (peelWarehouse, PeelingResult + differential oracle tests) and Canvas wave-erosion visualizer via Flash.",
+          "attempts": [],
+          "updatedAt": "2026-11-25T23:02:00Z"
         }
       ]
     }
