@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T23:28:30Z",
+  "updatedAt": "2026-11-25T23:32:00Z",
   "years": [
     {
       "year": 2025,
@@ -206,37 +206,18 @@
           "part": 1,
           "title": "Trash Compactor",
           "puzzleUrl": "https://adventofcode.com/2025/day/6",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "Parse a horizontal ASCII math worksheet containing side-by-side vertical arithmetic problems separated by full blank columns. Evaluate each problem's stacked integers under its bottom operator (+ or *) in BigInt and sum all results.",
-          "proposals": [
-            {
-              "id": "column-block-grid",
-              "name": "Space-Preserving Column-Block Partitioner",
-              "summary": "Right-pad lines without trimming leading spaces, split on full blank columns into immutable ProblemBlock records preserving fixed-width digitRows, and evaluate horizontally in BigInt.",
-              "complexity": "O(R * W) time, O(R * W) space",
-              "tradeoffs": "Preserves exact intra-block alignment for Part 2 vertical reading and worksheet visualization while running in < 1 ms."
-            },
-            {
-              "id": "streaming-column-fsm",
-              "name": "Single-Pass Streaming Column State Machine",
-              "summary": "Sweep columns left-to-right accumulating per-row BigInt operands and folding on each full blank column.",
-              "complexity": "O(R * W) time, O(R) aux space",
-              "tradeoffs": "Minimal allocations, but couples parsing tightly to Part 1's horizontal orientation."
-            },
-            {
-              "id": "row-token-transpose",
-              "name": "Row-Wise Whitespace Tokenization & Transpose",
-              "summary": "Split each row on whitespace and transpose column index j across rows.",
-              "complexity": "O(R * W) time, O(R * P) space",
-              "tradeoffs": "Simple differential test oracle for Part 1, but discards column alignment required for Part 2."
-            }
+          "algorithmSummary": "Space-preserving column-block partitioner in 2025/day06/shared/worksheet.ts: strip only outer blank lines, right-pad ragged lines to maxWidth, split on all-space columns into immutable ProblemBlock records, extract horizontal BigInt operands, and fold under + or *.",
+          "complexity": "O(R * W) time, O(R * W) space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 2.09,
+          "attemptsCount": 1,
+          "learnings": [
+            "Never call .trim() on column-aligned ASCII worksheets; strip only outer blank lines and right-pad shorter lines so leading spaces remain aligned.",
+            "Keeping ProblemBlock tolerant of intra-row spaces preserves raw character grids cleanly for Part 2 vertical reading."
           ],
-          "selectedProposalId": "column-block-grid",
-          "selectionRationale": "Decouples space-preserving column segmentation in 2025/day06/shared/ from horizontal operand extraction in Part 1, enabling Part 2 column-wise reading with zero parser churn.",
-          "inFlightWork": "Implementing 2025/day06/shared/worksheet, Part 1 domain solver + transpose differential oracle tests, and sliding monospace worksheet visualizer via Flash.",
-          "attempts": [],
-          "updatedAt": "2026-11-25T23:28:30Z"
+          "verifiedAt": "2026-11-25T23:31:52Z"
         }
       ]
     }
