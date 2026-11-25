@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T22:19:30Z",
+  "updatedAt": "2026-11-25T22:25:00Z",
   "years": [
     {
       "year": 2025,
@@ -64,6 +64,44 @@
             "Scale BigInt positions to 0..1000 in BigInt before converting to Number when rendering SVG bars so huge custom inputs never produce NaN/Infinity."
           ],
           "verifiedAt": "2026-11-25T22:19:09Z"
+        },
+        {
+          "year": 2025,
+          "day": 2,
+          "part": 2,
+          "title": "Gift Shop",
+          "puzzleUrl": "https://adventofcode.com/2025/day/2#part2",
+          "status": "in_progress",
+          "phase": "design_selected",
+          "summary": "Using the same comma-separated inclusive positive integer ID ranges from Part 1, an ID is now invalid if its canonical base-10 representation consists of any non-empty digit sequence repeated at least twice (r >= 2). Sum all distinct invalid IDs across the ranges.",
+          "proposals": [
+            {
+              "id": "mobius-band-inclusion-exclusion",
+              "name": "Möbius Inclusion-Exclusion over Repeated-Pattern Bands",
+              "summary": "For each digit length L >= 2, weight squarefree repeat divisors r | L by -μ(r) in {+1, -1} over IdRange.repeatedPatternBand(L/r, r) in exact BigInt.",
+              "complexity": "O(R * D * 2^ω(D)) time, O(1) working space",
+              "tradeoffs": "Closed-form and scale-invariant across arbitrary digit widths without enumerating IDs; verified against a brute-force periodicity oracle."
+            },
+            {
+              "id": "prime-band-dedup-set",
+              "name": "Prime-Repeat Band Enumeration with Set Deduplication",
+              "summary": "Enumerate bands for distinct prime divisors p | L into a Set<bigint> and sum unique elements.",
+              "complexity": "O(K * ω(D)) time, O(K) space",
+              "tradeoffs": "Simple deduplication, but scales linearly with invalid ID count K on wide synthetic ranges."
+            },
+            {
+              "id": "direct-scan-string-periodicity",
+              "name": "Direct Range Scan with String Periodicity",
+              "summary": "Scan every integer n in each range and check (s + s).indexOf(s, 1) < s.length.",
+              "complexity": "O(W * D) time, O(1) space",
+              "tradeoffs": "Zero number-theory assumptions (ideal differential test oracle), but slow on wide ranges."
+            }
+          ],
+          "selectedProposalId": "mobius-band-inclusion-exclusion",
+          "selectionRationale": "Reuses 100% of 2025/day02/shared/idRange.ts verbatim for exact, scale-invariant BigInt summation in O(1) working space and powers a signed inclusion-exclusion band ledger visualization.",
+          "inFlightWork": "Implementing 2025/day02/part2/domain (squarefreeRepeatTerms, Möbius solver + differential oracle tests) and signed inclusion-exclusion visualizer via Flash.",
+          "attempts": [],
+          "updatedAt": "2026-11-25T22:25:00Z"
         }
       ]
     }
