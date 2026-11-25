@@ -9,6 +9,7 @@ Reusable algorithmic patterns, parsing idioms, performance tricks, and AoC pitfa
 ## Algorithmic Patterns & Scaling Traps
 - **Preserve raw magnitudes when parsing Part 1** (2025 Day 1): Example inputs often use small numbers (`< 100`) while personal inputs include multi-revolution/large values (`up to 998`); preserve unreduced values in `<year>/dayNN/shared/` so Part 2 can reuse the exact parser without churn.
 - **Avoid single-wrap conditionals on modular arithmetic**: Always use `euclideanMod` with pre-reduced step size (`distance % M`) so arbitrarily large safe integers never overflow or produce negative remainders.
+- **Differential testing against simple brute-force oracles** (2025 Day 1 Part 2): Whenever a closed-form `O(1)` formula replaces step-by-step simulation (such as circular crossing counts with `p = 0` left/right asymmetry), add a test-only brute-force oracle across all boundary states to guarantee zero off-by-one bugs before submitting to AoC.
 
 ## Parsing & Numeric Pitfalls
 - Always check whether puzzle answers can exceed `Number.MAX_SAFE_INTEGER` (`2^53 - 1`); use `BigInt` whenever totals/products can grow super-linearly.
