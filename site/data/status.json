@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T22:45:45Z",
+  "updatedAt": "2026-11-25T22:51:00Z",
   "years": [
     {
       "year": 2025,
@@ -122,6 +122,44 @@
             "Differential testing the O(n) monotonic stack against an independent O(k * n) feasible-window oracle verified both values and earliest-index tie-breaking."
           ],
           "verifiedAt": "2026-11-25T22:45:35Z"
+        },
+        {
+          "year": 2025,
+          "day": 4,
+          "part": 1,
+          "title": "Printing Department",
+          "puzzleUrl": "https://adventofcode.com/2025/day/4",
+          "status": "in_progress",
+          "phase": "design_selected",
+          "summary": "Given a rectangular 2D warehouse floor diagram of paper rolls (@) and empty floor (.), count how many paper rolls are accessible to a forklift—meaning strictly fewer than 4 of their 8 surrounding cells contain another paper roll.",
+          "proposals": [
+            {
+              "id": "degree-map-padded",
+              "name": "Zero-Padded Neighbor Degree Map (Peel-Ready)",
+              "summary": "Embed occupancy in a 1-cell zero-padded (R+2)x(C+2) Uint8Array and compute a branchless flat 8-neighbor degree map, counting @ cells with degree < 4.",
+              "complexity": "O(R * C) time, O(R * C) space",
+              "tradeoffs": "Eliminates bounds checks and row-wrap bugs by construction, powers a 0–8 degree heatmap canvas, and hands Part 2 peel-ready degree buffers."
+            },
+            {
+              "id": "direct-8dir-scan",
+              "name": "Direct 8-Direction Grid Scan",
+              "summary": "Iterate every (r, c) over Grid2D and count @ cells whose 8 Moore neighbors contain fewer than 4 rolls.",
+              "complexity": "O(R * C) time, O(1) extra space",
+              "tradeoffs": "Minimal reference algorithm ideal as a differential test oracle, but does not retain per-cell degrees for Part 2 peeling or heatmap rendering."
+            },
+            {
+              "id": "separable-box-sum",
+              "name": "Separable 3x3 Box Filter",
+              "summary": "Compute horizontal 3-wide sliding row sums followed by vertical 3-high column sums minus self.",
+              "complexity": "O(R * C) time, O(C) working space",
+              "tradeoffs": "Generalizes to larger radius k, but overkill for k = 1 and less suited for single-cell dynamic peeling."
+            }
+          ],
+          "selectedProposalId": "degree-map-padded",
+          "selectionRationale": "Promotes reusable Grid2D<T> into shared/core, computes a branchless zero-padded 8-neighbor degree map (~38 KB for 137x137), and sets up O(R * C) k-core peeling for Part 2.",
+          "inFlightWork": "Implementing shared/core/grid, 2025/day04/shared/warehouse, Part 1 domain solver + differential fuzz tests, and HTML Canvas degree heatmap visualizer via Flash.",
+          "attempts": [],
+          "updatedAt": "2026-11-25T22:51:00Z"
         }
       ]
     }
