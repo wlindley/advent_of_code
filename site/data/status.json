@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T23:11:00Z",
+  "updatedAt": "2026-11-25T23:14:15Z",
   "years": [
     {
       "year": 2025,
@@ -168,37 +168,18 @@
           "part": 1,
           "title": "Cafeteria",
           "puzzleUrl": "https://adventofcode.com/2025/day/5",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "Given a two-section ingredient database containing inclusive fresh ID ranges and a list of available ingredient IDs, count how many available IDs fall within at least one fresh range.",
-          "proposals": [
-            {
-              "id": "merge-binary-search",
-              "name": "Canonical Interval Merge + Binary Search",
-              "summary": "Coalesce raw BigInt closed intervals into a sorted, disjoint, non-adjacent IntervalUnion in O(R log R) and binary-search each query in O(log M).",
-              "complexity": "O(R log R + Q log M) time, O(R + Q) space",
-              "tradeoffs": "Preserves input query order for probe tracing, promotes reusable BigInt intervals to shared/core, and exposes totalLength directly for Part 2."
-            },
-            {
-              "id": "sort-two-pointer-sweep",
-              "name": "Dual-Sort Two-Pointer Sweep",
-              "summary": "Sort merged intervals and query IDs ascending and advance a monotonic interval pointer in one linear pass.",
-              "complexity": "O(R log R + Q log Q) time, O(R + Q) space",
-              "tradeoffs": "Simple sweep, but requires index tagging to preserve query order and is slower when Q >> M."
-            },
-            {
-              "id": "linear-range-scan",
-              "name": "Direct Unmerged Linear Scan",
-              "summary": "Check every query ID against raw unmerged ranges until the first match.",
-              "complexity": "O(R * Q) time, O(R + Q) space",
-              "tradeoffs": "Trivially spec-faithful (ideal differential test oracle), but quadratic and provides no Part 2 reuse."
-            }
+          "algorithmSummary": "Promoted immutable BigInt ClosedInterval and IntervalUnion into shared/core/interval.ts: coalesce overlapping and integer-adjacent ranges in O(R log R) time, then binary-search each available ID in O(log M) without deduplicating queries.",
+          "complexity": "O(R log R + Q log M) time, O(R + Q) space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 0.82,
+          "attemptsCount": 1,
+          "learnings": [
+            "Promoted ClosedInterval and IntervalUnion to shared/core/interval.ts using explicit < / > BigInt comparators and integer-adjacent coalescing (next.start <= curEnd + 1n).",
+            "Guard zero-span domains when projecting BigInt coordinates onto SVG tracks so singleton datasets never divide by zero."
           ],
-          "selectedProposalId": "merge-binary-search",
-          "selectionRationale": "Promotes immutable BigInt ClosedInterval and IntervalUnion to shared/core, preserves query order in O(R log R + Q log M), and sets up Part 2 via IntervalUnion.totalLength.",
-          "inFlightWork": "Implementing shared/core/interval, 2025/day05/shared/database, Part 1 domain solver + differential oracle tests, and SVG number-line probe visualizer via Flash.",
-          "attempts": [],
-          "updatedAt": "2026-11-25T23:11:00Z"
+          "verifiedAt": "2026-11-25T23:14:03Z"
         }
       ]
     }
