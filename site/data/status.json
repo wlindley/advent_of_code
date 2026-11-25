@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T23:32:00Z",
+  "updatedAt": "2026-11-25T23:38:00Z",
   "years": [
     {
       "year": 2025,
@@ -218,6 +218,44 @@
             "Keeping ProblemBlock tolerant of intra-row spaces preserves raw character grids cleanly for Part 2 vertical reading."
           ],
           "verifiedAt": "2026-11-25T23:31:52Z"
+        },
+        {
+          "year": 2025,
+          "day": 6,
+          "part": 2,
+          "title": "Trash Compactor",
+          "puzzleUrl": "https://adventofcode.com/2025/day/6#part2",
+          "status": "in_progress",
+          "phase": "design_selected",
+          "summary": "Re-evaluate the fixed-width ASCII math worksheet right-to-left one character column at a time, reading each column top-to-bottom (MSD to LSD) as a BigInt operand folded under the block's bottom operator (+ or *), and return the grand total.",
+          "proposals": [
+            {
+              "id": "direct-column-scan",
+              "name": "Direct Right-to-Left Column Accumulator",
+              "summary": "Reuse parseWorksheet and ProblemBlock.evaluate; iterate blocks and columns right-to-left, accumulating top-to-bottom BigInt digits with a 3-state guard rejecting interior vertical gaps.",
+              "complexity": "O(R * W) time, O(W_max) working space",
+              "tradeoffs": "Zero per-column string allocations, zero edits to shared/ or part1/, paired with a 90° CCW block-transpose differential test oracle."
+            },
+            {
+              "id": "block-transpose-reuse",
+              "name": "90° CCW Block Transposition",
+              "summary": "Rotate each ProblemBlock's digitRows 90° counter-clockwise so vertical columns become horizontal rows.",
+              "complexity": "O(R * W) time, O(R * W) extra space",
+              "tradeoffs": "Ideal independent differential test oracle, but allocates extra transposed string buffers."
+            },
+            {
+              "id": "streaming-raw-grid-scan",
+              "name": "Single-Pass Right-to-Left Raw Grid Sweep",
+              "summary": "Sweep padded worksheet columns right-to-left without materializing ProblemBlock objects.",
+              "complexity": "O(R * W) time, O(W_max) space",
+              "tradeoffs": "Duplicates worksheet parsing/validation logic and lacks structured block snapshots for visualization."
+            }
+          ],
+          "selectedProposalId": "direct-column-scan",
+          "selectionRationale": "100% reuses 2025/day06/shared/worksheet.ts verbatim with zero per-column string allocations and clean 3-state vertical gap validation.",
+          "inFlightWork": "Implementing 2025/day06/part2/domain (extractVerticalColumns, RTL solver + transpose differential oracle tests) and RTL vertical column decoder visualizer via Flash.",
+          "attempts": [],
+          "updatedAt": "2026-11-25T23:38:00Z"
         }
       ]
     }
