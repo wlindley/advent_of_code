@@ -10,7 +10,22 @@ import {
   validateStatusDocument,
   type StatusDocument,
 } from './data/status';
+import { VersionMonitor } from './data/versionMonitor';
 import { getPartManifest } from './registry';
+
+const POLL_INTERVAL_MS = 30_000;
+
+async function fetchRemoteBuildId(): Promise<string | null> {
+  const response = await fetch(`./version.json?t=${Date.now()}`, { cache: 'no-store' });
+  if (!response.ok) return null;
+  const data = (await response.json()) as { buildId?: unknown };
+  return typeof data.buildId === 'string' ? data.buildId : null;
+}
+
+function isReloadSafe(): boolean {
+  const active = document.activeElement;
+  return !(active instanceof HTMLTextAreaElement || active instanceof HTMLInputElement);
+}
 
 type Route =
   | { readonly kind: 'dashboard' }
@@ -31,12 +46,41 @@ export function App() {
   const statusDoc = useMemo(() => validateStatusDocument(rawStatus as unknown as StatusDocument), []);
   const [route, setRoute] = useState<Route>(() => parseHash(window.location.hash));
   const [selectedYear, setSelectedYear] = useState<number>(statusDoc.years[0]?.year ?? 2025);
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [updatePending, setUpdatePending] = useState(false);
 
   useEffect(() => {
     const onHashChange = () => setRoute(parseHash(window.location.hash));
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
+
+  useEffect(() => {
+    if (!autoRefresh) return;
+    const monitor = new VersionMonitor({
+      currentBuildId: __APP_BUILD_ID__,
+      fetchBuildId: fetchRemoteBuildId,
+      isReloadSafe,
+      onUpdate: () => window.location.reload(),
+    });
+    const poll = () => {
+      if (document.visibilityState !== 'visible') return;
+      void monitor.checkNow().then(() => {
+        if (monitor.hasPendingUpdate) setUpdatePending(true);
+      });
+    };
+    const onFocusOut = () => {
+      monitor.flushPending();
+    };
+    const timer = window.setInterval(poll, POLL_INTERVAL_MS);
+    document.addEventListener('visibilitychange', poll);
+    document.addEventListener('focusout', onFocusOut);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', poll);
+      document.removeEventListener('focusout', onFocusOut);
+    };
+  }, [autoRefresh]);
 
   const activeParts = findActiveParts(statusDoc);
 
@@ -47,9 +91,20 @@ export function App() {
         <nav className="nav" aria-label="Primary navigation">
           <a href="#/">Dashboard</a>
           <a href="#/in-progress">In Progress ({activeParts.length})</a>
+          <button type="button" onClick={() => setAutoRefresh((enabled) => !enabled)}>
+            Auto-refresh: {autoRefresh ? 'On' : 'Off'}
+          </button>
           <a href="https://github.com/wlindley/advent_of_code" target="_blank" rel="noreferrer">GitHub ↗</a>
         </nav>
       </header>
+      {updatePending && (
+        <div className="card meta-row" role="status">
+          <span>A newer deployment is live.</span>
+          <button type="button" className="primary" onClick={() => window.location.reload()}>
+            Reload now
+          </button>
+        </div>
+      )}
 
       <main>
         {route.kind === 'dashboard' && (
