@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T23:47:00Z",
+  "updatedAt": "2026-11-25T23:50:40Z",
   "years": [
     {
       "year": 2025,
@@ -244,37 +244,18 @@
           "part": 1,
           "title": "Laboratories",
           "puzzleUrl": "https://adventofcode.com/2025/day/7",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "A downward beam enters a 2D tachyon manifold at S, passes straight through empty cells (.), and splits into adjacent left/right downward beams whenever it strikes a splitter (^). Converging beams merge into one; count the total number of split events.",
-          "proposals": [
-            {
-              "id": "row-frontier-sweep",
-              "name": "Row-by-Row Typed-Array Frontier Sweep",
-              "summary": "Sweep rows downward with ping-pong Uint8Array(cols) frontier buffers over TachyonManifold (Grid2D), recording a zero-copy cellStates buffer and scalar row frames.",
-              "complexity": "O(R * C) time, O(C) working space",
-              "tradeoffs": "Allocation-free, drives an instant 60fps HTML Canvas beam cascade, and maps 1-to-1 to Part 2 BigInt timeline DP."
-            },
-            {
-              "id": "bitmask-row-parallel",
-              "name": "Bit-Parallel BigInt Bitset Simulation",
-              "summary": "Encode row splitters and active beams as BigInt bitmasks and update with 3 bitwise operations per non-empty row.",
-              "complexity": "O(R * C / 64) sim time",
-              "tradeoffs": "Ideal independent differential test oracle, but collapses multiplicities needed if Part 2 counts paths."
-            },
-            {
-              "id": "splitter-dag-bfs",
-              "name": "Sparse Column-Indexed Splitter DAG BFS",
-              "summary": "Index splitter rows per column and jump downward via binary search in BFS order.",
-              "complexity": "O(K log R) time, O(K) space",
-              "tradeoffs": "Great for sparse tall grids, but higher overhead and extra work to reconstruct row-by-row beam trails."
-            }
+          "algorithmSummary": "Row-by-row ping-pong Uint8Array(cols) frontier sweep over TachyonManifold (backed by shared/core Grid2D), emitting a zero-copy cellStates buffer and scalar row frames in O(R * C) time, verified against an independent BigInt bitmask oracle.",
+          "complexity": "O(R * C) time, O(C) working space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 2.46,
+          "attemptsCount": 1,
+          "learnings": [
+            "Using ping-pong frontier buffers prevents in-place horizontal bleed when a splitter spawns into column c + 1 during a left-to-right scan.",
+            "Guarding !isSplitter before marking adjacent Beam cells preserves unreached splitter states on adjacent ^^ configurations."
           ],
-          "selectedProposalId": "row-frontier-sweep",
-          "selectionRationale": "Allocation-free O(R * C) sweep reusing shared/core/grid.ts, emitting a single zero-copy Uint8Array for Canvas playback and preparing 2025/day07/shared/ for Part 2.",
-          "inFlightWork": "Implementing 2025/day07/shared/manifold, Part 1 domain solver + BigInt bitmask differential tests, and HTML Canvas beam cascade visualizer via Flash.",
-          "attempts": [],
-          "updatedAt": "2026-11-25T23:47:00Z"
+          "verifiedAt": "2026-11-25T23:50:26Z"
         }
       ]
     }
