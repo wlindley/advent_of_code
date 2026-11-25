@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T22:04:30Z",
+  "updatedAt": "2026-11-25T22:14:00Z",
   "years": [
     {
       "year": 2025,
@@ -44,6 +44,44 @@
             "Model trace frames as frozen value objects with derived getters so visualizers never duplicate domain math."
           ],
           "verifiedAt": "2026-11-25T22:04:13Z"
+        },
+        {
+          "year": 2025,
+          "day": 2,
+          "part": 1,
+          "title": "Gift Shop",
+          "puzzleUrl": "https://adventofcode.com/2025/day/2",
+          "status": "in_progress",
+          "phase": "design_selected",
+          "summary": "Given comma-separated inclusive positive integer ID ranges, identify every invalid ID whose canonical base-10 representation consists of a digit sequence repeated twice (e.g., 55, 6464, 123123) and return their sum.",
+          "proposals": [
+            {
+              "id": "closed-form-ap",
+              "name": "Closed-Form Digit-Band Arithmetic Series",
+              "summary": "Clamp repeated half-prefix h per overlapping even digit band 2k and sum the BigInt arithmetic progression h * (10^k + 1) in O(1) per band.",
+              "complexity": "O(R * D) time, O(R) space",
+              "tradeoffs": "O(1) per digit band regardless of range width; exact BigInt arithmetic immune to overflow; verified against a brute-force differential oracle."
+            },
+            {
+              "id": "prefix-enumeration",
+              "name": "Half-Prefix Lattice Generator",
+              "summary": "Enumerate only valid half-prefixes h in [h_min, h_max] per overlapping even band and sum h * (10^k + 1).",
+              "complexity": "O(R * D + K) time, O(R) space",
+              "tradeoffs": "Direct ID enumeration, but degrades linearly in match count K on huge synthetic ranges."
+            },
+            {
+              "id": "direct-range-scan",
+              "name": "Direct Range Scan",
+              "summary": "Scan every integer in each range and test whether its left and right decimal halves match.",
+              "complexity": "O(W * D) time, O(1) space",
+              "tradeoffs": "Trivial spec-faithful reference ideal as a differential test oracle, but linear in total range width."
+            }
+          ],
+          "selectedProposalId": "closed-form-ap",
+          "selectionRationale": "O(R * D) time independent of range width using exact BigInt arithmetic, with reusable RepeatedPatternBand(k, r) in 2025/day02/shared/ ready for Part 2.",
+          "inFlightWork": "Implementing 2025/day02/shared/idRange, Part 1 domain solver + differential oracle tests, and digit-band SVG visualizer via Flash.",
+          "attempts": [],
+          "updatedAt": "2026-11-25T22:14:00Z"
         }
       ]
     }
