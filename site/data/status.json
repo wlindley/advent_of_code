@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T23:38:00Z",
+  "updatedAt": "2026-11-25T23:41:35Z",
   "years": [
     {
       "year": 2025,
@@ -225,37 +225,18 @@
           "part": 2,
           "title": "Trash Compactor",
           "puzzleUrl": "https://adventofcode.com/2025/day/6#part2",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "Re-evaluate the fixed-width ASCII math worksheet right-to-left one character column at a time, reading each column top-to-bottom (MSD to LSD) as a BigInt operand folded under the block's bottom operator (+ or *), and return the grand total.",
-          "proposals": [
-            {
-              "id": "direct-column-scan",
-              "name": "Direct Right-to-Left Column Accumulator",
-              "summary": "Reuse parseWorksheet and ProblemBlock.evaluate; iterate blocks and columns right-to-left, accumulating top-to-bottom BigInt digits with a 3-state guard rejecting interior vertical gaps.",
-              "complexity": "O(R * W) time, O(W_max) working space",
-              "tradeoffs": "Zero per-column string allocations, zero edits to shared/ or part1/, paired with a 90° CCW block-transpose differential test oracle."
-            },
-            {
-              "id": "block-transpose-reuse",
-              "name": "90° CCW Block Transposition",
-              "summary": "Rotate each ProblemBlock's digitRows 90° counter-clockwise so vertical columns become horizontal rows.",
-              "complexity": "O(R * W) time, O(R * W) extra space",
-              "tradeoffs": "Ideal independent differential test oracle, but allocates extra transposed string buffers."
-            },
-            {
-              "id": "streaming-raw-grid-scan",
-              "name": "Single-Pass Right-to-Left Raw Grid Sweep",
-              "summary": "Sweep padded worksheet columns right-to-left without materializing ProblemBlock objects.",
-              "complexity": "O(R * W) time, O(W_max) space",
-              "tradeoffs": "Duplicates worksheet parsing/validation logic and lacks structured block snapshots for visualization."
-            }
+          "algorithmSummary": "Reuses 2025/day06/shared/worksheet.ts verbatim: iterate blocks and columns right-to-left, accumulating top-to-bottom BigInt operands via a 3-state guard rejecting interior vertical gaps while preserving 0n columns and skipping operator-only space columns.",
+          "complexity": "O(R * W) time, O(W_max) working space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 2.47,
+          "attemptsCount": 1,
+          "learnings": [
+            "Preserving raw fixed-width digitRows in 2025/day06/shared/worksheet.ts let Part 2 decode vertical right-to-left columns with zero parser changes.",
+            "Track a 3-state digit machine (before / inDigits / after) rather than checking value !== 0n so legitimate zero-valued columns are preserved while empty columns are skipped."
           ],
-          "selectedProposalId": "direct-column-scan",
-          "selectionRationale": "100% reuses 2025/day06/shared/worksheet.ts verbatim with zero per-column string allocations and clean 3-state vertical gap validation.",
-          "inFlightWork": "Implementing 2025/day06/part2/domain (extractVerticalColumns, RTL solver + transpose differential oracle tests) and RTL vertical column decoder visualizer via Flash.",
-          "attempts": [],
-          "updatedAt": "2026-11-25T23:38:00Z"
+          "verifiedAt": "2026-11-25T23:41:23Z"
         }
       ]
     }
