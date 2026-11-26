@@ -1,6 +1,6 @@
 # Advent of Code — Learnings & Playbook
 
-High-signal engineering, algorithmic, testing, and visualization rules distilled from **2025, 2024, 2023, and 2022 (146/146 consecutive first-try stars, 0 wrong submissions, 100% V8 coverage)**. Consult during puzzle analysis and design review before coding each part.
+High-signal engineering, algorithmic, testing, and visualization rules distilled from **2025, 2024, 2023, and 2022 (174/174 consecutive first-try stars, 0 wrong submissions, 100% V8 coverage)**. Consult during puzzle analysis and design review before coding each part.
 
 ---
 
@@ -9,18 +9,20 @@ High-signal engineering, algorithmic, testing, and visualization rules distilled
 Check here before writing day-local helpers. During parallel year worktrees, treat `shared/` as **read-only**; build day-local utilities in `<YYYY>/dayNN/shared/` and flag promotion candidates for the end-of-year barrier.
 
 ### `shared/core/` (Pure TS, Node + Browser + Worker safe)
-- **`solver.ts`**: `PuzzleSolver`, `executeSolver`, `createFinaleSolver`, `formatDayFolder`, `formatPartKey`, `Clock`, `systemClock`.
-- **`math.ts`**: `euclideanMod` (safe-int, `-0`-free), `bigintLog2` (top-53-bit exact log2 past `2^1024`), `bigintIsqrt` (exact floor `√n`), `extGcdBigInt`, `solveCongruences` (generalized `BigInt` CRT).
+- **`solver.ts` & `finale.ts`**: `PuzzleSolver`, `executeSolver`, `formatDayFolder`, `formatPartKey`, `Clock`, `systemClock`; `createFinaleSolver`, `buildStarCanopy`, `traceFinale`, `parsePriorStars`, `verifyFinaleStar`.
+- **`math.ts` & `crt.ts`**: `euclideanMod` (safe-int, `-0`-free), `bigintLog2` (top-53-bit exact log2 past `2^1024`), `bigintIsqrt` (exact floor `√n`), `extGcdBigInt`, `solveCongruences` (generalized `BigInt` CRT).
 - **`rational.ts`**: immutable `BigInt` `Rational`, `gcdBigInt`, `lcmBigInt`, `floorDiv`, `ceilDiv`.
+- **`linear.ts`**: `RationalLinearSystem` (incremental exact Gauss-Jordan RREF solver over arbitrary-precision `Rational`s).
 - **`interval.ts`**: immutable `BigInt` `ClosedInterval` and `IntervalUnion` (`contains`, `findContaining`, `totalLength`). *Trap*: `IntervalUnion` coalesces integer-adjacent ranges (`[2,3] ∪ [4,5]`), so use `ClosedInterval` directly for pairwise overlap/containment checks.
 - **`grid.ts`**: immutable `Grid2D<T>`, `DIRS_4`, `DIRS_8`, `GridDelta` (preserves significant spaces by stripping only trailing line endings).
+- **`heap.ts`**: `MinHeap<T>` (binary min-heap with custom comparator for Dijkstra, A*, and priority-queue searches).
 - **`disjointSet.ts`**: `Int32Array`-backed `DisjointSet` (iterative path compression, union-by-size, `componentCount`, `componentSizes`).
 - **`dag.ts`**: immutable `DirectedGraph<T>` (`relevantSubgraph`, iterative Kahn `topologicalOrder`, `BigInt` `countPaths` with R-scoped cycle detection).
 - **`gf2.ts`**: arbitrary-width `BigInt` `Gf2LinearSystem` (Gauss-Jordan RREF, nullspace basis, Gray-code `minWeightSolution`) and `bitCount`.
 - **`trace.ts`**: `validateMaxSteps`, `sampleTraceIndices` (endpoint-preserving uniform sampling).
 
 ### `shared/viz/` (React UI primitives)
-- **`InputRunner`**, **`PlaybackControls`**, **`usePlayback`**, **`PuzzlePartManifest`**, **`VisualizerProps`**.
+- **`InputRunner`**, **`PlaybackControls`**, **`usePlayback`**, **`PuzzlePartManifest`**, **`VisualizerProps`**, **`FinaleCanopyVisualizer.tsx`** (pairs with `createFinaleSolver` so all Day 25 Part 2 finales in `2021`–`2015` are ~6-line domain + ~8-line viz wrappers).
 
 ---
 
@@ -41,7 +43,7 @@ Check here before writing day-local helpers. During parallel year worktrees, tre
 - **Exact linear algebra & geometry**:
   - Normalize 2D cross-product determinants to `d > 0n` so ray/box sign checks stay branch-clean in exact `BigInt`.
   - Use shifted integer discriminants (`Δ' = T^2 - 4(D + 1)`) with `bigintIsqrt` to exclude boundary ties without float rounding.
-  - Solve 2×2 / linear systems via exact `BigInt` Cramer + `extGcdBigInt` collinear fallback or incremental `Rational` Gauss-Jordan RREF; handle shared-velocity (`dv === 0n`) axes explicitly.
+  - Solve 2×2 / linear systems via exact `BigInt` Cramer + `extGcdBigInt` collinear fallback or `RationalLinearSystem`; handle shared-velocity (`dv === 0n`) axes explicitly.
   - Clip viewport rays in world coordinates via exact `Rational` Liang-Barsky before normalizing the two clipped endpoints—prevents `BigInt` velocity underflow (`(v * scale) / span === 0n`).
 - **Bitwise & sorting traps**:
   - Never use 32-bit JS bitwise ops for widths `>= 31` (52-letter alphabets, wide grids, >31 items): use `BigInt` masks + `bitCount` / `bigintLog2`, or validate masks strictly in `[0, 0x7fffffff]`.
@@ -57,6 +59,7 @@ Check here before writing day-local helpers. During parallel year worktrees, tre
   - Make invalid states unrepresentable via constructor invariants, exact parameter arity, and discriminated unions.
   - Replace `switch` + unreachable `default` with total `Record<Union, ...>` tables; never duplicate the same validation in both parser and constructor.
   - Use mathematically tight loop bounds (e.g., `i > 0` when index `0` is guaranteed valid) and branch-free guards like `Math.max(1, maxVal)` instead of `if (maxVal === 0)`.
+  - **Queue-exhausting small-subgraph BFS**: When target reachability is structurally guaranteed (e.g., extracting saturated unit-flow paths), let `while (qHead < qTail)` drain the small subgraph instead of early-returning on `v === target`, avoiding an uncovered V8 loop-exit false branch.
 - **Never call `Object.freeze()` on `TypedArray`s**: V8 throws `TypeError` on non-empty TypedArrays. Encapsulate `Int32Array`/`Uint8Array`/`Uint32Array`/`Float64Array` in private fields, freeze only the owning wrapper/plain arrays, and translate internal `-1` sentinels to `null` at public boundaries.
 - **Prototype-safe collections**: Use `Map`/`Set` (not plain objects) for arbitrary string keys (labels, nodes, wires) to avoid `Object.prototype` collisions and preserve insertion order.
 - **Coverage edge tests**: Include borderless grids (to hit all 4 OOB neighbor checks), empty/single-element inputs, exact-threshold equality (`>=` vs `>`), and trace-cap boundaries (`maxSteps <= reservedFrames` so `sampleTraceIndices` never receives `<= 0`).
@@ -73,6 +76,7 @@ Check here before writing day-local helpers. During parallel year worktrees, tre
   - **Corridor contraction** (collapsing degree-2 chains, pruning `from === end` / `to === start`) + descending-weight CSR branch-and-bound with admissible upper bounds solves hard longest-simple-path mazes in milliseconds.
   - **Macro-leg graphs** `(r, c, axis)` + intrusive circular Dial buckets outperform 4D heap Dijkstra on constrained-turn grids.
   - **All-optimal-paths extraction**: Stop forward Dijkstra at `poppedCost > bestScore` (not first goal pop), then run `O(V_opt)` tight-edge backward BFS (`dist[u] + w === dist[v]`).
+  - **Forward-star undirected flow graphs**: Store undirected edges in flat `Int32Array` `head`/`to`/`next` arrays as paired half-edges `(2e, 2e + 1)` for `O(1)` reverse lookup via `he ^ 1` (`cap[he] -= 1; cap[he ^ 1] += 1; cur = to[he ^ 1]`); pair with reverse-BFS target probes and capped unit-capacity Edmonds-Karp (`flow < k + 1`) for millisecond min-cuts and edge-disjoint path extraction.
   - **Offline connectivity**: Record earliest-block timestamps in an `Int32Array` and run reverse-time `DisjointSet` percolation (`firstFall[idx] === k`) for near-linear cut finding.
   - **Bitmask & separable sweeps**: Block-strided SOS Max-DP cuts disjoint 2-agent subset pairing from `O(3^K)` to `O(K · 2^K)`. Separable 1D edge-cut sweeps (`prefix * (G - prefix) * width`) replace `O(G^2)` pairwise Manhattan sums.
 - **Cycle fast-forwarding & periodicity**:
@@ -103,4 +107,4 @@ Check here before writing day-local helpers. During parallel year worktrees, tre
 - **Runtime escalation & workflow**:
   - Escalation ladder: main thread → Web Worker (`> ~500 ms` or embarrassingly parallel) → local Rust CLI (only if optimized TS/Workers would exceed 5 min or browser RAM).
   - Parallel years run in isolated worktrees with serialized AoC submissions (`.aoc-cache/rate-limit.json`).
-  - Final-day Part 2 uses `createFinaleSolver` (`level=2`, `answer=0`) after all 49 prior stars are verified.
+  - Final-day Part 2 uses `createFinaleSolver` (`level=2`, `answer=0`) + `FinaleCanopyVisualizer` after all 49 prior stars are verified.
