@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T16:34:18Z",
+  "updatedAt": "2026-11-26T16:48:26Z",
   "parts": [
     {
       "year": 2023,
@@ -823,6 +823,26 @@
       ],
       "startedAt": "2026-11-26T16:18:57Z",
       "verifiedAt": "2026-11-26T16:34:18Z"
+    },
+    {
+      "year": 2023,
+      "day": 21,
+      "part": 2,
+      "title": "Step Counter",
+      "puzzleUrl": "https://adventofcode.com/2023/day/21#part2",
+      "status": "solved",
+      "summary": "Repeat the 131x131 garden grid infinitely in all directions and count the exact number of walkable garden plots reachable in 26,501,365 orthogonal steps from S.",
+      "algorithmSummary": "Zero-churn direct infinite BFS + cross-verified BigInt Newton quadratic extrapolation reusing 2023/day21/shared GardenMap, countInfiniteReachable, QuadraticProgression, buildGardenTrace, and GardenVisualizer with zero shared edits (49.92 ms on 131x131 for 26,501,365 = 202,300 * 131 + 65 -> 639,051,580,070,841 plots): samples y(0..3) at r + k*N, validates stabilization via progression.matchesSample(3n, y3) across a 7x7-tile 917x917 BFS before extrapolating in exact BigInt, and falls back to bounded direct infinite BFS for small or non-periodic grids; verified against official 11x11 infinite checkpoints (6/10/50/100 -> 16/50/1594/6536), asymmetric rock-bearing 7x7 direct BFS cross-checks, empty 5x5 PART2_STEPS exactness, and an adversarial 21x21 NW serpentine spiral that delays stabilization past k = 2 and is caught at k = 3.",
+      "complexity": "O(N^2) time and space (independent of steps)",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 49.92,
+      "attemptsCount": 1,
+      "learnings": [
+        "Cross-verifying QuadraticProgression against a fourth independent sample y(3) (7x7 tiles, 917x917 cells) adds ~25 ms while catching adversarial delayed-stabilization traps like a 21x21 serpentine corridor.",
+        "Storing progression: QuadraticProgression on the quadratic InfiniteSolveReport variant avoids duplicating derived first/second differences while keeping both domain and visualizer consumers cleanly typed."
+      ],
+      "startedAt": "2026-11-26T16:35:11Z",
+      "verifiedAt": "2026-11-26T16:48:26Z"
     }
   ]
 }
