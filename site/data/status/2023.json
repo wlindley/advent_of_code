@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T07:23:19Z",
+  "updatedAt": "2026-11-26T07:36:12Z",
   "parts": [
     {
       "year": 2023,
@@ -402,6 +402,26 @@
       ],
       "startedAt": "2026-11-26T07:09:45Z",
       "verifiedAt": "2026-11-26T07:23:19Z"
+    },
+    {
+      "year": 2023,
+      "day": 11,
+      "part": 1,
+      "title": "Cosmic Expansion",
+      "puzzleUrl": "https://adventofcode.com/2023/day/11",
+      "status": "solved",
+      "summary": "On a 2D sky-survey grid of empty space ('.') and galaxies ('#'), double the size of every row and column containing no galaxies (expansion factor 2) and compute the sum of shortest Manhattan distances between every unordered pair of distinct galaxies.",
+      "algorithmSummary": "Separable 1D axis edge-cut sweep in exact BigInt (O(R * C) parse + O(R + C) sweep, 2.16 ms on 140x140) parameterized by expansionFactor: bigint via createCosmicExpansionSolver(2n) in 2023/day11/shared/, avoiding O(G^2) pair enumeration completely and pairing with a HiDPI StarfieldCanvas and CosmicExpansionVisualizer for zero-churn Part 2 (1,000,000x) reuse; differentially verified against an O(G^2) pairwise expanded Manhattan oracle, a literal expanded-grid DIRS_4 BFS oracle, affine linearity up to 10^12, and symmetry invariance.",
+      "complexity": "O(R * C) parse, O(R + C) sweep, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.16,
+      "attemptsCount": 1,
+      "learnings": [
+        "Decomposing Manhattan distance into independent row and column edge-cut sweeps (prefix * (G - prefix) * sliceWidth) eliminates O(G^2) galaxy pair loops completely and casts factors to BigInt before multiplying so arbitrary expansion factors stay exact.",
+        "Parameterizing createCosmicExpansionSolver(expansionFactor) and CosmicExpansionVisualizer in 2023/day11/shared/ prepares Part 2 (1,000,000n) in ~15 lines with zero shared-module edits."
+      ],
+      "startedAt": "2026-11-26T07:23:59Z",
+      "verifiedAt": "2026-11-26T07:36:12Z"
     }
   ]
 }
