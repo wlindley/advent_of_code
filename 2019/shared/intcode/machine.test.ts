@@ -3,15 +3,15 @@ import { IntcodeMachine } from './machine';
 import { CORE_OPCODES, createOpcodeRegistry } from './opcodes';
 import { parseIntcodeProgram } from './program';
 
-const REGISTRY = createOpcodeRegistry(CORE_OPCODES);
+const CORE_REGISTRY = createOpcodeRegistry(CORE_OPCODES);
 
 function runTape(raw: string, maxSteps: number): IntcodeMachine {
-  const machine = IntcodeMachine.fromProgram(parseIntcodeProgram(raw), REGISTRY);
+  const machine = IntcodeMachine.fromProgram(parseIntcodeProgram(raw), CORE_REGISTRY);
   machine.run(maxSteps);
   return machine;
 }
 
-describe('IntcodeMachine', () => {
+describe('IntcodeMachine core execution', () => {
   it('executes all five official AoC Day 2 example tapes accurately', () => {
     const ex1 = runTape('1,9,10,3,2,3,11,0,99,30,40,50', 20);
     expect(ex1.readMemory(0n)).toBe(3500n);
@@ -27,39 +27,49 @@ describe('IntcodeMachine', () => {
     ]);
   });
 
-  it('records step metadata with exact reads, previousValue, and halted transitions', () => {
-    const machine = IntcodeMachine.fromProgram(parseIntcodeProgram('1,1,1,4,99,5,6,0,99'), REGISTRY);
-    const step0 = machine.step();
-    expect(step0).toEqual({
+  it('records DetailedIntcodeStep metadata with mode, rawParam, and I/O fields', () => {
+    const machine = IntcodeMachine.fromProgram(parseIntcodeProgram('1,1,1,4,99,5,6,0,99'), CORE_REGISTRY);
+    expect(machine.step()).toEqual({
       stepIndex: 0,
       ipBefore: 0n,
       ipAfter: 4n,
+      rawInstruction: 1n,
       opcode: 1n,
       mnemonic: 'ADD',
-      reads: [{ address: 1n, value: 1n }, { address: 1n, value: 1n }],
+      arity: 3,
+      reads: [
+        { address: 1n, rawParam: 1n, value: 1n, mode: 'position' },
+        { address: 1n, rawParam: 1n, value: 1n, mode: 'position' },
+      ],
       write: { address: 4n, previousValue: 99n, value: 2n },
+      inputConsumed: null,
+      outputEmitted: null,
+      waitingForInput: false,
       halted: false,
     });
     const step1 = machine.step();
     expect(step1.opcode).toBe(2n);
     expect(step1.write).toEqual({ address: 0n, previousValue: 1n, value: 30n });
-    const step2 = machine.step();
-    expect(step2).toEqual({
+    expect(machine.step()).toEqual({
       stepIndex: 2,
       ipBefore: 8n,
       ipAfter: 8n,
+      rawInstruction: 99n,
       opcode: 99n,
       mnemonic: 'HALT',
+      arity: 0,
       reads: [],
       write: null,
+      inputConsumed: null,
+      outputEmitted: null,
+      waitingForInput: false,
       halted: true,
     });
   });
 
   it('handles immediate halt, negative operands, and > 2^53 BigInt arithmetic', () => {
-    const haltOnly = IntcodeMachine.fromProgram(parseIntcodeProgram('99'), REGISTRY);
-    const step = haltOnly.step();
-    expect(step.halted).toBe(true);
+    const haltOnly = IntcodeMachine.fromProgram(parseIntcodeProgram('99'), CORE_REGISTRY);
+    expect(haltOnly.step().halted).toBe(true);
     expect(haltOnly.ip).toBe(0n);
     expect(haltOnly.stepCount).toBe(1);
 
@@ -68,25 +78,19 @@ describe('IntcodeMachine', () => {
   });
 
   it('rejects unknown opcodes, stepping after halt, and out-of-bounds pointers', () => {
-    const badOp = IntcodeMachine.fromProgram(parseIntcodeProgram('77,0,0,0,99'), REGISTRY);
+    const badOp = IntcodeMachine.fromProgram(parseIntcodeProgram('77,0,0,0,99'), CORE_REGISTRY);
     expect(() => badOp.step()).toThrow(Error);
+    expect(() => runTape('99', 5).step()).toThrow(Error);
+    expect(() => IntcodeMachine.fromProgram(parseIntcodeProgram('1,99,0,0,99'), CORE_REGISTRY).step()).toThrow(RangeError);
+    expect(() => IntcodeMachine.fromProgram(parseIntcodeProgram('1,0,0,99,99'), CORE_REGISTRY).step()).toThrow(RangeError);
 
-    const halted = runTape('99', 5);
-    expect(() => halted.step()).toThrow(Error);
-
-    const oobRead = IntcodeMachine.fromProgram(parseIntcodeProgram('1,99,0,0,99'), REGISTRY);
-    expect(() => oobRead.step()).toThrow(RangeError);
-
-    const oobWrite = IntcodeMachine.fromProgram(parseIntcodeProgram('1,0,0,99,99'), REGISTRY);
-    expect(() => oobWrite.step()).toThrow(RangeError);
-
-    const oobIp = IntcodeMachine.fromProgram(parseIntcodeProgram('1,0,0,0'), REGISTRY);
+    const oobIp = IntcodeMachine.fromProgram(parseIntcodeProgram('1,0,0,0'), CORE_REGISTRY);
     oobIp.step();
     expect(() => oobIp.step()).toThrow(RangeError);
   });
 
   it('enforces maxSteps, rejects invalid limits, and is idempotent once halted', () => {
-    const machine = IntcodeMachine.fromProgram(parseIntcodeProgram('1,0,0,0,1,0,0,0,99'), REGISTRY);
+    const machine = IntcodeMachine.fromProgram(parseIntcodeProgram('1,0,0,0,1,0,0,0,99'), CORE_REGISTRY);
     expect(() => machine.run(0)).toThrow(RangeError);
     expect(() => machine.run(1.5)).toThrow(RangeError);
     expect(() => machine.run(2)).toThrow(RangeError);
