@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:59:38Z",
+  "updatedAt": "2026-11-26T05:11:36Z",
   "parts": [
     {
       "year": 2023,
@@ -162,6 +162,26 @@
       ],
       "startedAt": "2026-11-26T04:50:05Z",
       "verifiedAt": "2026-11-26T04:59:38Z"
+    },
+    {
+      "year": 2023,
+      "day": 5,
+      "part": 1,
+      "title": "If You Give A Seed A Fertilizer",
+      "puzzleUrl": "https://adventofcode.com/2023/day/5",
+      "status": "solved",
+      "summary": "Translate a list of initial seed IDs sequentially through seven category-conversion maps of piecewise range shifts (mapping uncovered values to identity) and return the lowest resulting location ID.",
+      "algorithmSummary": "Sorted RangeMap binary-search pipeline in exact BigInt built on shared/core ClosedInterval in 2023/day05/shared/ (O(sum R_m log R_m + S * sum log R_m) time): validates non-overlapping source intervals and contiguous category chains while keeping raw seeds and sorted rules zero-churn for Part 2 interval splitting; differentially verified against a raw file-order linear-scan oracle across 25 random multi-stage almanacs.",
+      "complexity": "O(sum R_m log R_m + S * sum log R_m) time, O(R) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.81,
+      "attemptsCount": 1,
+      "learnings": [
+        "Storing raw BigInt seeds and sorted disjoint RangeRule intervals in 2023/day05/shared/ supports Part 1 binary-search lookups while leaving Part 2's 1.84-billion-seed interval splitting zero-churn.",
+        "Almanac rule lines order destination before source (destStart srcStart length) and reach 2^32, so explicit BigInt sorting (< / > / 0) and ClosedInterval inclusive ends (start + len - 1n) prevent silent overflow and off-by-one bugs."
+      ],
+      "startedAt": "2026-11-26T05:00:42Z",
+      "verifiedAt": "2026-11-26T05:11:36Z"
     }
   ]
 }
