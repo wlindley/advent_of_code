@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T16:56:27Z",
+  "updatedAt": "2026-11-26T17:04:22Z",
   "parts": [
     {
       "year": 2024,
@@ -864,6 +864,26 @@
       ],
       "startedAt": "2026-11-26T16:41:10Z",
       "verifiedAt": "2026-11-26T16:56:27Z"
+    },
+    {
+      "year": 2024,
+      "day": 22,
+      "part": 2,
+      "title": "Monkey Market",
+      "puzzleUrl": "https://adventofcode.com/2024/day/22#part2",
+      "status": "solved",
+      "summary": "Find the single 4-step consecutive price-change sequence across 1,774 buyers (2,000 steps each) that maximizes total bananas when each buyer sells once on that sequence's first occurrence.",
+      "algorithmSummary": "Zero-churn Part 2 banana-sequence optimizer reusing 2024/day22/shared findBestBananaSequence (rolling base-19 4-delta key over Int32Array(130,321) totals, seenStamp, and buyerCounts), buildBananaOptimizationTrace, and MonkeyMarketVisualizer (with golden 4-delta trigger halo and top-10 leaderboard) with zero shared edits (35.72 ms across 3.55M steps -> 1,831 bananas); differentially verified against an independent BigInt PRNG + Map<string, number> + per-buyer Set<string> oracle across the official Part 2 example (1, 2, 3, 2024 -> 23 at -2,1,-1,3), 9-step walkthrough (123 -> 6), duplicate-occurrence/duplicate-buyer checks ([123], [123, 123]), and fixed-point [0].",
+      "complexity": "O(B * K + 19^4) time, O(19^4) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 35.72,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building Int32Array(130,321) stamp-dedup aggregation and buildBananaOptimizationTrace in 2024/day22/shared/ solved Part 2 in 35.72 ms with 24 lines of domain solver code and zero shared-module edits.",
+        "Testing [123, 123] === 2 * solvePart2([123]) alongside [123] against an independent BigInt+Map/Set oracle simultaneously verifies duplicate-window suppression within a buyer and stamp isolation across identical seeds."
+      ],
+      "startedAt": "2026-11-26T16:57:10Z",
+      "verifiedAt": "2026-11-26T17:04:22Z"
     }
   ]
 }
