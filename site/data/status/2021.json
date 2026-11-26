@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:11:45Z",
+  "updatedAt": "2026-11-26T21:28:49Z",
   "parts": [
     {
       "year": 2021,
@@ -163,6 +163,26 @@
       ],
       "startedAt": "2026-11-26T21:03:37Z",
       "verifiedAt": "2026-11-26T21:11:45Z"
+    },
+    {
+      "year": 2021,
+      "day": 5,
+      "part": 1,
+      "title": "Hydrothermal Venture",
+      "puzzleUrl": "https://adventofcode.com/2021/day/5",
+      "status": "solved",
+      "summary": "Count how many integer lattice points are covered by at least two horizontal or vertical hydrothermal vent line segments.",
+      "algorithmSummary": "Hybrid flat Uint32Array rasterizer with automatic sparse Map fallback and linear-stride stepping in 2021/day05/shared/ (AXIS_ALIGNED_POLICY for Part 1, pre-built OCTILINEAR_POLICY for zero-churn Part 2; 3.34 ms across 500 segments -> 6,572): accumulator bounds computed strictly from included segments, Null Object NOOP_COVERAGE_OBSERVER, delta hotspot collector bounded across frames, HiDPI canvas VentCanvas resolving CSS tokens via getComputedStyle, differentially verified across 50 seeded PRNG fields against an independent brute-force Map oracle for both policies.",
+      "complexity": "O(N + L + W * H) dense / O(N + L) sparse time, O(min(W * H, U)) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.34,
+      "attemptsCount": 1,
+      "learnings": [
+        "Stepping the trace across all input segments (included + skipped) with delta hotspot transitions drained from a top-level FrameHotspotCollector keeps includedCount + skippedCount aligned and avoids duplicating hotspot arrays across frames.",
+        "Computing accumulator bounds strictly from policy-included segments prevents a huge skipped diagonal in Part 1 from unnecessarily triggering sparse fallback."
+      ],
+      "startedAt": "2026-11-26T21:11:45Z",
+      "verifiedAt": "2026-11-26T21:28:49Z"
     }
   ]
 }
