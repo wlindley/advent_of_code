@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T16:31:11Z",
+  "updatedAt": "2026-11-26T16:40:32Z",
   "parts": [
     {
       "year": 2024,
@@ -824,6 +824,26 @@
       ],
       "startedAt": "2026-11-26T16:14:29Z",
       "verifiedAt": "2026-11-26T16:31:11Z"
+    },
+    {
+      "year": 2024,
+      "day": 21,
+      "part": 2,
+      "title": "Keypad Conundrum",
+      "puzzleUrl": "https://adventofcode.com/2024/day/21#part2",
+      "status": "solved",
+      "summary": "Extend the directional-keypad robot chain to 25 intermediate robots (D = 25), find the shortest human button sequence length for each door code, and sum all code complexities.",
+      "algorithmSummary": "Zero-churn D = 25 specialization reusing 2024/day21/shared buildDirectionalCostTable(25), solveDoorCodes(codes, PART2_CONFIG), createKeypadConundrumSolver, and KeypadConundrumVisualizer with zero shared edits (1.00 ms on personal input, 216,668,579,770,346 total complexity): scales exact BigInt bottom-up DP across all 26 depth layers, renders bigintLog2-scaled 5x5 cost heatmaps and bounded Layer-0 readouts (activeLayers === null past 512 chars) across 32 trace frames, and differentially verifies all 25 directional transitions at D = 25, the 5 official example codes (154,115,708,116,294), and edge codes (000A, 999A, 1000A) against an independent zig-zag-preserving top-down memoized BigInt oracle.",
+      "complexity": "O(D * 25 + |codes|) time (D = 25), O(D * 25) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building exact BigInt bottom-up DirectionalCostTable and O(|code|) pre-flight reconstruction gating inside 2024/day21/shared/ solved D = 25 in 1.00 ms with 19 lines of Part 2 solver code and zero shared-module edits.",
+        "Enumerating shortest paths via Manhattan-decreasing coordinate steps (rather than a global visited-set BFS) preserves every interleaved zig-zag path on the 4x3 numeric keypad in the differential oracle."
+      ],
+      "startedAt": "2026-11-26T16:32:10Z",
+      "verifiedAt": "2026-11-26T16:40:32Z"
     }
   ]
 }
