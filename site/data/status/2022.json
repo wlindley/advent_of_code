@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:11:54Z",
+  "updatedAt": "2026-11-26T06:26:23Z",
   "parts": [
     {
       "year": 2022,
@@ -322,6 +322,26 @@
       ],
       "startedAt": "2026-11-26T06:01:43Z",
       "verifiedAt": "2026-11-26T06:11:54Z"
+    },
+    {
+      "year": 2022,
+      "day": 9,
+      "part": 1,
+      "title": "Rope Bridge",
+      "puzzleUrl": "https://adventofcode.com/2022/day/9",
+      "status": "solved",
+      "summary": "Simulate a 2-knot rope (head and tail) starting at (0, 0) under cardinal head motion commands where the tail pulls one orthogonal or diagonal step whenever Chebyshev distance exceeds 1, and count distinct cells visited by the tail.",
+      "algorithmSummary": "Generalized K-knot Int32Array rope stepper (K = 2) with early-break cascade and polymorphic DenseTailTracker (Uint8Array) / SparseTailTracker (Set<string>) in 2022/day09/shared/ (2.27 ms across ~11,500 head steps), paired with a pure-TS RopeViewport and HiDPI Canvas 2D RopeBridgeVisualizer for zero-churn Part 2 (K = 10) reuse; differentially verified against an independent point-object + Set<string> oracle across 50 seeded PRNG motion plans and multi-knot diagonal cascades.",
+      "complexity": "O(M + S * K) time, O(K + min(W * H, V)) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.27,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using the unified 16-case Math.sign Chebyshev pull rule and parameterizing knotCount in 2022/day09/shared/ handles both Part 1 (K = 2) and Part 2's (±2, ±2) diagonal cascades (K = 10) with zero shared-module churn.",
+        "Keeping knot coordinates in world space and applying (-minX, -minY) shifting solely inside DenseTailTracker avoids shift/unshift boilerplate while bounding dense grid memory to <= 4 MB."
+      ],
+      "startedAt": "2026-11-26T06:12:33Z",
+      "verifiedAt": "2026-11-26T06:26:23Z"
     }
   ]
 }
