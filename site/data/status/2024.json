@@ -443,6 +443,26 @@
       ],
       "startedAt": "2026-11-26T07:39:06Z",
       "verifiedAt": "2026-11-26T07:47:49Z"
+    },
+    {
+      "year": 2024,
+      "day": 12,
+      "part": 1,
+      "title": "Garden Groups",
+      "puzzleUrl": "https://adventofcode.com/2024/day/12",
+      "status": "solved",
+      "summary": "Partition a 2D uppercase garden plot grid into 4-connected same-plant regions, compute each region's fencing price as area * perimeter, and return the total fencing cost across all regions.",
+      "algorithmSummary": "Single-pass flat Int32Array BFS region flood-fill parameterized by a polymorphic RegionFenceMetric (PERIMETER_METRIC) in 2024/day12/shared/ in O(R * C) time (12.58 ms on 140x140): stores region labels and cells in immutable GardenRegions and pairs with a HiDPI GardenCanvas and GardenGroupsVisualizer for zero-churn Part 2 (bulk-discount sides) reuse; differentially verified against an independent shared/core DisjointSet connected-component oracle across all official examples, nested enclaves, and 50 seeded random grids.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 12.58,
+      "attemptsCount": 1,
+      "learnings": [
+        "Factoring RegionFenceMetric (evaluating a single connected region against the immutable GardenMap) into 2024/day12/shared/ prepares Part 2's straight-side/corner bulk discount with zero edits to shared/ or part1/.",
+        "Cross-checking flat Int32Array BFS flood-fill against shared/core DisjointSet connected components independently verifies nested holes, diagonal touchings of identical plant types, and single-plot islands."
+      ],
+      "startedAt": "2026-11-26T07:49:28Z",
+      "verifiedAt": "2026-11-26T08:00:40Z"
     }
   ]
 }

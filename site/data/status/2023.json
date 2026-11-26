@@ -442,6 +442,26 @@
       ],
       "startedAt": "2026-11-26T07:36:49Z",
       "verifiedAt": "2026-11-26T07:44:38Z"
+    },
+    {
+      "year": 2023,
+      "day": 12,
+      "part": 1,
+      "title": "Hot Springs",
+      "puzzleUrl": "https://adventofcode.com/2023/day/12",
+      "status": "solved",
+      "summary": "Given rows of damaged-spring condition records ('.', '#', '?') paired with contiguous damaged-group length lists, count the total number of valid damaged-spring arrangements consistent with every row's pattern and group runs.",
+      "algorithmSummary": "Rolling-row BigInt block-placement DP with prefix operational/damaged run checks parameterized by an unfold-factor strategy (unfold = 1) in 2023/day12/shared/ in O(N * K) time per row (3.82 ms across 1,000 rows): validates every contiguous '#' placement and trailing damaged mask in O(1) via precomputed Int32Array prefix sums and pairs with an interactive HotSpringsVisualizer for zero-churn Part 2 (5x unfolded) reuse; differentially verified against an independent backtracking enumeration oracle across official examples, edge cases, and seeded random spring records.",
+      "complexity": "O(sum(N * K)) time, O(N) working space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.82,
+      "attemptsCount": 1,
+      "learnings": [
+        "Precomputing Int32Array prefix counts of '.' and '#' turns each contiguous damaged-block placement check into O(1) inside a rolling BigInt DP table, keeping 1,000 rows at 3.82 ms and scaling effortlessly to Part 2's 5x-unfolded records.",
+        "Parameterizing the unfold factor in 2023/day12/shared/solverFactory.ts and HotSpringsVisualizer prepares Part 2 (5x unfold) in ~15 lines with zero edits to shared/."
+      ],
+      "startedAt": "2026-11-26T07:45:15Z",
+      "verifiedAt": "2026-11-26T07:59:32Z"
     }
   ]
 }

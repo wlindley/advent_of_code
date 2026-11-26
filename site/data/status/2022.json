@@ -462,6 +462,26 @@
       ],
       "startedAt": "2026-11-26T07:33:51Z",
       "verifiedAt": "2026-11-26T07:48:39Z"
+    },
+    {
+      "year": 2022,
+      "day": 12,
+      "part": 2,
+      "title": "Hill Climbing Algorithm",
+      "puzzleUrl": "https://adventofcode.com/2022/day/12#part2",
+      "status": "solved",
+      "summary": "Find the shortest 4-directional path to summit E (elevation 'z') starting from any square at elevation 'a' (including S), where each step may climb at most +1 elevation.",
+      "algorithmSummary": "Zero-churn LOWEST_ELEVATION_START_CONDITION (elevation === 0) plugging into 2022/day12/shared reverse BFS from E and HiDPI ElevationCanvas/HillClimbingVisualizer with zero shared edits in O(R * C) time (4.20 ms on 41x181): selects the first reachable 'a'-elevation square in reverse-BFS distance order; differentially verified against an independent multi-source forward BFS oracle across official examples, unreachable-S fallback, and 60 seeded random heightmaps.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.2,
+      "attemptsCount": 1,
+      "learnings": [
+        "Parameterizing StartCondition on ReverseBfsField in 2022/day12/shared/ reduced Part 2 to a 7-line predicate (LOWEST_ELEVATION_START_CONDITION) and a 5-line solver wrapper with zero edits to shared/ or part1/.",
+        "Reverse BFS from summit E naturally handles heightmaps where S itself is cut off from E while another 'a'-elevation trailhead reaches the summit."
+      ],
+      "startedAt": "2026-11-26T07:50:08Z",
+      "verifiedAt": "2026-11-26T07:57:34Z"
     }
   ]
 }
