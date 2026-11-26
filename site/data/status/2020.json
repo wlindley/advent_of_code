@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T20:32:27Z",
+  "updatedAt": "2026-11-26T20:47:45Z",
   "parts": [
     {
       "year": 2020,
@@ -83,6 +83,26 @@
       ],
       "startedAt": "2026-11-26T20:26:29Z",
       "verifiedAt": "2026-11-26T20:32:27Z"
+    },
+    {
+      "year": 2020,
+      "day": 3,
+      "part": 1,
+      "title": "Toboggan Trajectory",
+      "puzzleUrl": "https://adventofcode.com/2020/day/3",
+      "status": "solved",
+      "summary": "Count the trees encountered while descending a horizontally tiling forest grid along slope right 3, down 1 from the top-left corner.",
+      "algorithmSummary": "Modular-stride slope evaluator over shared/core Grid2D and euclideanMod in 2020/day03/shared/ with PART2_SLOPES pre-built for zero-churn Part 2 (1.22 ms across 323x31 forest -> 237): zero-derived-state LandingStep/TrajectoryRun/SlopeProgress models, synchronized row-by-row bounded traceTrajectories, HiDPI 3-panel canvas visualizer (wrapped tile, unwrapped corridor, minimap) resolving CSS tokens via getComputedStyle, differentially verified against an explicit string-tiling oracle.",
+      "complexity": "O(H * W) parse, O(H / down) solve, O(1) auxiliary solve space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.22,
+      "attemptsCount": 1,
+      "learnings": [
+        "Canvas 2D fillStyle/strokeStyle cannot parse var(--token) strings directly, so resolving light-mode CSS tokens once via getComputedStyle(canvas) keeps HiDPI canvas rendering theme-consistent.",
+        "Modeling LandingStep with primary fields only (stepIndex, slope, forestCols, isTree) and deriving row, col, wrappedCol, and tileRepeat via getters eliminates state drift."
+      ],
+      "startedAt": "2026-11-26T20:32:56Z",
+      "verifiedAt": "2026-11-26T20:47:45Z"
     }
   ]
 }
