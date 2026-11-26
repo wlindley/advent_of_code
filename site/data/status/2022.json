@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:00:05Z",
+  "updatedAt": "2026-11-26T05:08:02Z",
   "parts": [
     {
       "year": 2022,
@@ -182,6 +182,26 @@
       ],
       "startedAt": "2026-11-26T04:47:42Z",
       "verifiedAt": "2026-11-26T05:00:05Z"
+    },
+    {
+      "year": 2022,
+      "day": 5,
+      "part": 2,
+      "title": "Supply Stacks",
+      "puzzleUrl": "https://adventofcode.com/2022/day/5#part2",
+      "status": "solved",
+      "summary": "Execute the same crate rearrangement procedure with the CrateMover 9001, which lifts count crates as a single contiguous block preserving their vertical order, and read the top crate label from every stack.",
+      "algorithmSummary": "Zero-churn CrateMover9001 CraneStrategy plugging into 2022/day05/shared executeProcedure, traceProcedure, and CraneBayVisualizer: shallow-clones and freezes the lifted bottom-to-top slice intact in O(N + sum(count)) time; differentially verified against an order-preserving O(S * M) backward top-tracker oracle across 50 seeded random procedures.",
+      "complexity": "O(N + sum(count)) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.87,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because 2022/day05/shared separated CraneStrategy and placed CraneBayVisualizer in shared/viz/, Part 2 required only 41 lines of domain code and a 15-line visualizer wrapper with zero edits to shared/.",
+        "Defensive shallow cloning and freezing inside CrateMover9001.arrangeLifted prevents aliasing bugs when direct unit-test callers mutate their source array."
+      ],
+      "startedAt": "2026-11-26T05:01:27Z",
+      "verifiedAt": "2026-11-26T05:08:02Z"
     }
   ]
 }
