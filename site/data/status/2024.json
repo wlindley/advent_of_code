@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T16:40:32Z",
+  "updatedAt": "2026-11-26T16:56:27Z",
   "parts": [
     {
       "year": 2024,
@@ -844,6 +844,26 @@
       ],
       "startedAt": "2026-11-26T16:32:10Z",
       "verifiedAt": "2026-11-26T16:40:32Z"
+    },
+    {
+      "year": 2024,
+      "day": 22,
+      "part": 1,
+      "title": "Monkey Market",
+      "puzzleUrl": "https://adventofcode.com/2024/day/22",
+      "status": "solved",
+      "summary": "Evolve each of 1,774 buyers' 24-bit pseudorandom secret numbers through 2,000 mix-and-prune xorshift steps and sum the 2,000th secret across all buyers.",
+      "algorithmSummary": "24-bit bitwise xorshift PRNG (exact for all non-negative safe integers since 2^24 | 2^32, paired with overflow-safe BigInt mix) + pre-built zero-churn Part 2 findBestBananaSequence using three local non-frozen Int32Array(130,321) base-19 stamp-dedup buffers (totals, seenStamp, buyerCounts) in 2024/day22/shared/ (10.81 ms across 3.55M PRNG steps): eliminates unobserved 0-banana tie bugs via buyerCounts[k] === 0 filtering, separates Part 1/Part 2 traces without type-tag switches (buildSecretSumTrace / buildBananaOptimizationTrace with pre-sampled 40-step price windows rendered in MarketChartSvg), and differentially verifies both PRNG and banana optimization against independent BigInt and Map/Set oracles across official examples (37327623 P1, 23 P2), 0-buyer edge cases, and multi-buyer duplicate occurrences.",
+      "complexity": "O(B * K) time, O(1) space (Part 1); O(B * K + 19^4) time, O(19^4) space (Part 2)",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 10.81,
+      "attemptsCount": 1,
+      "learnings": [
+        "Filtering scan slots with buyerCounts[k] === 0 prevents unobserved key 0 (-9,-9,-9,-9) from winning a 0-banana tie on all-zero buyer inputs while simultaneously providing exact matchedBuyers counts for Part 2.",
+        "Separating buildSecretSumTrace and buildBananaOptimizationTrace with strategy props on MonkeyMarketVisualizer eliminates type-tag mode switches and keeps Part 1 (bigint) and Part 2 (number) cleanly typed with zero shared edits."
+      ],
+      "startedAt": "2026-11-26T16:41:10Z",
+      "verifiedAt": "2026-11-26T16:56:27Z"
     }
   ]
 }
