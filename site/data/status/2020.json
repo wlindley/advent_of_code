@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:35:12Z",
+  "updatedAt": "2026-11-26T21:42:31Z",
   "parts": [
     {
       "year": 2020,
@@ -183,6 +183,26 @@
       ],
       "startedAt": "2026-11-26T21:20:01Z",
       "verifiedAt": "2026-11-26T21:35:12Z"
+    },
+    {
+      "year": 2020,
+      "day": 5,
+      "part": 2,
+      "title": "Binary Boarding",
+      "puzzleUrl": "https://adventofcode.com/2020/day/5#part2",
+      "status": "solved",
+      "summary": "Find the unique unoccupied interior seat ID whose immediate adjacent seat IDs (-1 and +1) are both present on the boarding manifest.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day05/shared/ binding MISSING_INTERIOR_SEAT_POLICY into BoardingSolver and BoardingVisualizer (0.76 ms across 824 passes -> 504): zero edits to shared/ or part1/, scans fixed 1024-seat Uint8Array occupancy bitset across 1..1022 enforcing unique flanked gap, differentially verified across 50 seeded PRNG cabins (including duplicates, extreme interior gaps 1 and 1022, and multi-seat hole rejections) against two independent deduplicating oracles (sorted-adjacent-gap and arithmetic-series).",
+      "complexity": "O(N) parse & occupancy population, O(C) fixed 1024-seat scan",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.76,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building MISSING_INTERIOR_SEAT_POLICY and CabinOccupancy.missingInteriorSeatIds in day05/shared/ let Part 2 ship in 4 lines of domain code with zero edits to shared/ or part1/.",
+        "Explicitly testing a 2-wide interior hole ([355, 356, 359, 360]) and deduplicating both differential oracles guarantees exact +1/-1 neighbor semantics even with duplicate passes."
+      ],
+      "startedAt": "2026-11-26T21:35:12Z",
+      "verifiedAt": "2026-11-26T21:42:31Z"
     }
   ]
 }
