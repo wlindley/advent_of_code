@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:31:20Z",
+  "updatedAt": "2026-11-26T17:39:15Z",
   "parts": [
     {
       "year": 2023,
@@ -903,6 +903,26 @@
       ],
       "startedAt": "2026-11-26T17:15:54Z",
       "verifiedAt": "2026-11-26T17:31:20Z"
+    },
+    {
+      "year": 2023,
+      "day": 23,
+      "part": 2,
+      "title": "A Long Walk",
+      "puzzleUrl": "https://adventofcode.com/2023/day/23#part2",
+      "status": "solved",
+      "summary": "Treat all steep slopes (^, >, v, <) as normal dry trail tiles on the 141x141 maze and find the longest simple hike from entrance to exit without revisiting any tile.",
+      "algorithmSummary": "Zero-churn dry-slope specialization reusing 2023/day23/shared contractTrailGraph(map, true) (collapsing 141x141 into 36 junctions / 60 undirected corridors while skipping from === endId and to === startId to tighten maxIncoming[preEnd]), descending-weight flat-CSR findLongestPath (unique forcedPreEnd exit + provably admissible incremental maxIncoming upper bound), buildHikeTrace, and TrailVisualizer (ignoreSlopes=true) with zero shared edits (138.81 ms on 36-junction undirected personal input -> 6,710 steps); differentially verified against an independent raw-grid uncontracted undirected DFS oracle across the official 23x23 example (154), direct 2-row maze, uphill slopes, cyclic loops + dead ends, unequal parallel corridors, and a 2x2 open room with adjacent degree >= 3 junctions.",
+      "complexity": "O(R * C) contraction + O(P_pruned) CSR branch-and-bound DFS, O(R * C + V + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 138.81,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building descending-weight CSR branch-and-bound with unique forcedPreEnd exit and incremental maxIncoming pruning in 2023/day23/shared/ solved the 36-junction NP-hard Part 2 maze in 138.81 ms with 29 lines of Part 2 solver code and zero shared edits.",
+        "Because slopes are traversable in Part 2, unreachable-maze tests must use solid # walls rather than opposing slopes to exercise the null-result error and unreachable trace frame."
+      ],
+      "startedAt": "2026-11-26T17:32:10Z",
+      "verifiedAt": "2026-11-26T17:39:15Z"
     }
   ]
 }
