@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T01:34:20Z",
+  "updatedAt": "2026-11-26T01:39:07Z",
   "years": [
     {
       "year": 2025,
@@ -416,38 +416,19 @@
           "part": 1,
           "title": "Reactor",
           "puzzleUrl": "https://adventofcode.com/2025/day/11",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "Given a directed device wiring network (device: out1 out2 ...), count all distinct directed paths starting at 'you' and ending at 'out'.",
-          "proposals": [
-            {
-              "id": "kahn-topo-dp",
-              "name": "Subgraph-Pruned Kahn Topological DP",
-              "summary": "Promote immutable DirectedGraph<T> to shared/core/dag.ts, prune to R = Forward(you) ∩ Backward(out), verify acyclicity via iterative Kahn's topological sort, and accumulate BigInt path counts forward.",
-              "complexity": "O(V + E) time and space",
-              "tradeoffs": "Strictly iterative (immune to deep-chain stack overflow), scopes cycle detection exactly to R, and sets up Part 2 waypoint queries with zero shared/ edits."
-            },
-            {
-              "id": "memoized-dfs",
-              "name": "3-Color Top-Down Memoized DFS",
-              "summary": "Run recursive 3-color DFS from 'you' with BigInt memoization of paths(u -> out).",
-              "complexity": "O(V + E) time and space",
-              "tradeoffs": "Concise (ideal differential test oracle), but recursive call stack can overflow on deep synthetic chains."
-            },
-            {
-              "id": "hop-frontier-propagation",
-              "name": "Nilpotent Adjacency Power Series",
-              "summary": "Propagate sparse BigInt frontier vectors hop-by-hop until empty.",
-              "complexity": "O(L * |E_R|) time, O(|V_R|) space",
-              "tradeoffs": "Produces a path-length histogram naturally, but degrades to O(V * E) on long chains."
-            }
+          "algorithmSummary": "Promoted immutable DirectedGraph<T> to shared/core/dag.ts: prune to R = Forward(you) ∩ Backward(out) via iterative BFS, verify acyclicity with iterative Kahn's topological sort, and sweep forward accumulating BigInt path counts.",
+          "complexity": "O(V + E) time and space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 2.05,
+          "attemptsCount": 1,
+          "learnings": [
+            "Promoted generic immutable DirectedGraph<T> (relevantSubgraph, iterative Kahn topologicalOrder, BigInt countPaths) to shared/core/dag.ts.",
+            "Pruning Backward(target) strictly inside Forward(source) scopes cycle detection to R without falsely rejecting off-path cycles, while still catching source===target cycles."
           ],
-          "selectedProposalId": "kahn-topo-dp",
-          "selectionRationale": "Iterative O(V + E) BigInt DP with exact R-scoped cycle detection, promotes reusable shared/core/dag.ts, and lets Part 2 compose waypoint queries with zero edits.",
-          "inFlightWork": "Implementing shared/core/dag.ts, 2025/day11/shared/reactor.ts, Part 1 solver + DFS oracle tests, and adaptive SVG layered DAG visualizer.",
-          "attempts": [],
           "startedAt": "2026-11-26T01:27:36Z",
-          "updatedAt": "2026-11-26T01:34:20Z"
+          "verifiedAt": "2026-11-26T01:39:07Z"
         }
       ]
     }
