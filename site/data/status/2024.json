@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:28:12Z",
+  "updatedAt": "2026-11-26T17:48:52Z",
   "parts": [
     {
       "year": 2024,
@@ -924,6 +924,26 @@
       ],
       "startedAt": "2026-11-26T17:20:21Z",
       "verifiedAt": "2026-11-26T17:28:12Z"
+    },
+    {
+      "year": 2024,
+      "day": 24,
+      "part": 1,
+      "title": "Crossed Wires",
+      "puzzleUrl": "https://adventofcode.com/2024/day/24",
+      "status": "solved",
+      "summary": "Simulate a combinational boolean gate network (AND, OR, XOR) from initial x/y wire bits and assemble the zNN output wires into an unsigned integer.",
+      "algorithmSummary": "Immutable LogicCircuit DAG + Kahn topological sort via shared/core DirectedGraph in 2024/day24/shared/ (1.53 ms on 45-bit ripple-carry adder network): cycle rejection, BigInt zNN bit-shift assembly, pre-built zero-churn Part 2 general bit-by-bit blueprint backtracking repairAdder + verifyAdderFunctionally (handling within-bit, cross-bit, cyclic, and doubly-corrupted swaps) and interactive CircuitVisualizer SVG, verified at 100% V8 coverage across 6 test suites.",
+      "complexity": "O(V + E) time and O(V + E) space for V wires and E gate-input edges",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.53,
+      "attemptsCount": 1,
+      "learnings": [
+        "Modeling the combinational boolean gate network over shared/core DirectedGraph with Kahn topological sort rejects cycles cleanly and evaluates the 222-gate network into a 46-bit BigInt in 1.53 ms.",
+        "Pre-building general bit-by-bit ripple-carry blueprint backtracking (repairAdder + tryCompileAdder + verifyAdderFunctionally) with unconditional XOR-gate candidate unions in 2024/day24/shared/ prepares zero-churn Part 2 repair for arbitrary 4-swap corruptions."
+      ],
+      "startedAt": "2026-11-26T17:28:51Z",
+      "verifiedAt": "2026-11-26T17:48:52Z"
     }
   ]
 }
