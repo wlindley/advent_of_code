@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:37:15Z",
+  "updatedAt": "2026-11-26T05:49:50Z",
   "parts": [
     {
       "year": 2024,
@@ -223,6 +223,26 @@
       ],
       "startedAt": "2026-11-26T05:26:28Z",
       "verifiedAt": "2026-11-26T05:37:15Z"
+    },
+    {
+      "year": 2024,
+      "day": 6,
+      "part": 2,
+      "title": "Guard Gallivant",
+      "puzzleUrl": "https://adventofcode.com/2024/day/6#part2",
+      "status": "solved",
+      "summary": "Count how many single-cell obstruction placements (excluding the guard's starting position and existing obstacles) force the patrolling guard into an infinite loop.",
+      "algorithmSummary": "Jump-table directional raycasting reusing 2024/day06/shared LabMap and simulatePatrol with zero churn: restricts candidates to the baseline patrol's visited cells, precomputes 4 flat Int32Array stop tables with O(1) extra-obstacle ray interception, and detects cycles via a method-local generation-stamped Uint32Array(4 * R * C) in O(R * C + K * T) time (11.17 ms across 4,655 candidates); differentially verified against simulatePatrol across fixed edge grids and 20 seeded random floorplans.",
+      "complexity": "O(R * C + K * T) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 11.17,
+      "attemptsCount": 1,
+      "learnings": [
+        "Restricting obstruction candidates to the baseline patrol's visited cells (excluding start) plus 4-directional Int32Array jump tables cuts 130x130 loop search from hundreds of milliseconds down to 11.17 ms on the main thread.",
+        "Using a method-local generation-stamped Uint32Array(4 * R * C) keeps ObstacleJumpTable 100% immutable and re-entrant while avoiding per-candidate zero-fill overhead."
+      ],
+      "startedAt": "2026-11-26T05:37:45Z",
+      "verifiedAt": "2026-11-26T05:49:50Z"
     }
   ]
 }
