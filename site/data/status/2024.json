@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:16:19Z",
+  "updatedAt": "2026-11-26T06:29:13Z",
   "parts": [
     {
       "year": 2024,
@@ -283,6 +283,26 @@
       ],
       "startedAt": "2026-11-26T06:07:14Z",
       "verifiedAt": "2026-11-26T06:16:19Z"
+    },
+    {
+      "year": 2024,
+      "day": 8,
+      "part": 1,
+      "title": "Resonant Collinearity",
+      "puzzleUrl": "https://adventofcode.com/2024/day/8",
+      "status": "solved",
+      "summary": "On a 2D map of case-sensitive alphanumeric antennas, project the two exterior double-distance antinodes (2A - B and 2B - A) for every unordered same-frequency antenna pair and count unique in-bounds antinode locations.",
+      "algorithmSummary": "Frequency-grouped unordered pair projection into a flat Uint8Array(R * C) occupancy bitset parameterized by a polymorphic AntinodeProjectionRule (DOUBLE_DISTANCE_RULE) in 2024/day08/shared/ built on shared/core Grid2D (1.38 ms on 50x50 / 42 frequencies / 237 pairs), paired with a reusable ResonanceVisualizer in 2024/day08/shared/viz/ for zero-churn Part 2 harmonic reuse; differentially verified against both a global pair-hashset oracle and a cell-centric midpoint lookup oracle across 80 seeded grids.",
+      "complexity": "O(R * C + sum k_f^2) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.38,
+      "attemptsCount": 1,
+      "learnings": [
+        "Personal inputs deliberately include 16 matching uppercase/lowercase frequency pairs (e.g., 'a' vs 'A') and overlapping antinode-on-antenna hits, requiring case-sensitive frequency keys and separate occupancy tracking.",
+        "Parameterizing collectAntinodes, traceAntinodes, and ResonanceVisualizer by AntinodeProjectionRule prepares Part 2's full-line resonant harmonics with zero edits to 2024/day08/shared/."
+      ],
+      "startedAt": "2026-11-26T06:16:51Z",
+      "verifiedAt": "2026-11-26T06:29:13Z"
     }
   ]
 }
