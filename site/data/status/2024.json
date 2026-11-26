@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T07:25:23Z",
+  "updatedAt": "2026-11-26T07:38:26Z",
   "parts": [
     {
       "year": 2024,
@@ -403,6 +403,26 @@
       ],
       "startedAt": "2026-11-26T07:16:42Z",
       "verifiedAt": "2026-11-26T07:25:23Z"
+    },
+    {
+      "year": 2024,
+      "day": 11,
+      "part": 1,
+      "title": "Plutonian Pebbles",
+      "puzzleUrl": "https://adventofcode.com/2024/day/11",
+      "status": "solved",
+      "summary": "Evolve a line of integer-engraved stones through 25 simultaneous blinks—mapping 0 to 1, splitting even-digit numbers into two half-length stones with leading zeros stripped, and multiplying all other stones by 2024—and return the total stone count.",
+      "algorithmSummary": "Order-independent frequency-histogram DP in exact BigInt (Map<bigint, bigint> with per-run memoized blinkStone) parameterized by blinkCount via createPlutonianPebblesSolver(25) in 2024/day11/shared/ in O(B * D) time (1.93 ms across 25 blinks), paired with a dual-curve log10 GrowthChartSvg (reusing shared/core bigintLog2) and PebbleEvolutionVisualizer for zero-churn Part 2 (75-blink) reuse; differentially verified against both a literal ordered-array oracle (blinks 0..12) and a top-down memoized recursive DP oracle (up to 75 blinks) plus superposition invariance.",
+      "complexity": "O(B * D) time, O(D) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.93,
+      "attemptsCount": 1,
+      "learnings": [
+        "Collapsing stones into a Map<bigint, bigint> frequency histogram turns exponential stone counts into O(B * D) exact BigInt updates while keeping DEFAULT_MAX_TRACE_STEPS = 80 large enough to capture every single blink of both Part 1 (25) and Part 2 (75).",
+        "Avoiding Math.log10 on BigInt values in blinkStone and computing visualizer rule percentages via Number((part * 1000n) / total) / 10 keeps both domain transitions and UI bars exact across arbitrary BigInt magnitudes."
+      ],
+      "startedAt": "2026-11-26T07:26:10Z",
+      "verifiedAt": "2026-11-26T07:38:26Z"
     }
   ]
 }
