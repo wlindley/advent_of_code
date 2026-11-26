@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T11:15:24Z",
+  "updatedAt": "2026-11-26T11:33:12Z",
   "parts": [
     {
       "year": 2023,
@@ -762,6 +762,26 @@
       ],
       "startedAt": "2026-11-26T11:07:56Z",
       "verifiedAt": "2026-11-26T11:15:24Z"
+    },
+    {
+      "year": 2023,
+      "day": 20,
+      "part": 1,
+      "title": "Pulse Propagation",
+      "puzzleUrl": "https://adventofcode.com/2023/day/20",
+      "status": "solved",
+      "summary": "Simulate 1,000 button presses sending low pulses into a network of broadcaster, flip-flop (%), conjunction (&), and sink modules in FIFO order, then multiply the total low and high pulses emitted.",
+      "algorithmSummary": "Polymorphic CircuitNode hierarchy (BroadcasterNode, FlipFlopNode, ConjunctionNode, SinkNode via declarative NODE_FACTORIES with zero type-tag switches) + index-pointer FIFO CircuitSimulator in 2023/day20/shared/ (5.92 ms across 1,000 presses on 58 modules): computes ConjunctionNode.highCount and simulator.product dynamically in exact BigInt, exposes topology accessors (inputsOf/outputsOf/specOf), post-receive onPulse hooks, two-pass bounded PulseTraceFrame sampling, and layered SVG PulseCircuitVisualizer for zero-churn Part 2 rx-feeder LCM reuse; differentially verified against an independent plain-map FIFO simulator oracle across both official examples (32000000 and 11687500), untyped sinks, multi-input conjunctions, feedback loops, and seeded random circuits.",
+      "complexity": "O(P * E_avg) time, O(V + E + Q_max) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 5.92,
+      "attemptsCount": 1,
+      "learnings": [
+        "Placing ModuleDescriptor in types.ts keeps types <- nodes <- blueprint strictly acyclic while polymorphic NODE_FACTORIES eliminate type-tag switch chains across all four module kinds.",
+        "Running a two-pass bounded trace builder (fast probe pass + selective snapshot capture) keeps visualization memory O(maxSteps) while rendering Answer directly from solver.solve keeps PulseCircuitVisualizer 100% reusable for Part 2's LCM result."
+      ],
+      "startedAt": "2026-11-26T11:16:43Z",
+      "verifiedAt": "2026-11-26T11:33:12Z"
     }
   ]
 }
