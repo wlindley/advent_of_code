@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:47:01Z",
+  "updatedAt": "2026-11-26T21:56:50Z",
   "parts": [
     {
       "year": 2019,
@@ -183,6 +183,26 @@
       ],
       "startedAt": "2026-11-26T21:28:10Z",
       "verifiedAt": "2026-11-26T21:47:01Z"
+    },
+    {
+      "year": 2019,
+      "day": 5,
+      "part": 2,
+      "title": "Sunny with a Chance of Asteroids",
+      "puzzleUrl": "https://adventofcode.com/2019/day/5#part2",
+      "status": "solved",
+      "summary": "Execute the Intcode TEST diagnostic program with jump (5/6) and comparison (7/8) opcodes using system ID 5 and return the diagnostic code.",
+      "algorithmSummary": "Zero-churn reuse of 2019/shared/intcode/ (STANDARD_OPCODES) and 2019/day05/shared/ binding THERMAL_RADIATOR_SYSTEM_ID (5n) into createDiagnosticSolver and DiagnosticVisualizer (1.06 ms across 678-cell tape -> 13,758,663): zero edits to intcode/, day05/shared/, or part1/, verified across all 7 official Part 2 examples, lazy position-mode untaken jump (105,0,99999), > 2^64 / < -2^63 BigInt comparisons, and 30 seeded PRNG programs against an independent flat-loop oracle.",
+      "complexity": "O(N + S) time, O(N + K) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.06,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building opcodes 5..8 in 2019/shared/intcode/ and THERMAL_RADIATOR_SYSTEM_ID in 2019/day05/shared/ let Part 2 ship in 4 lines of domain code with zero shared edits.",
+        "Testing an untaken position-mode jump (105,0,99999) rather than immediate-mode (1105,0,99999) genuinely proves lazy param-2 evaluation because eager dereferencing of mem[99999] throws RangeError."
+      ],
+      "startedAt": "2026-11-26T21:47:01Z",
+      "verifiedAt": "2026-11-26T21:56:50Z"
     }
   ]
 }
