@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T11:19:00Z",
+  "updatedAt": "2026-11-26T11:36:21Z",
   "parts": [
     {
       "year": 2024,
@@ -763,6 +763,26 @@
       ],
       "startedAt": "2026-11-26T11:11:40Z",
       "verifiedAt": "2026-11-26T11:19:00Z"
+    },
+    {
+      "year": 2024,
+      "day": 20,
+      "part": 1,
+      "title": "Race Condition",
+      "puzzleUrl": "https://adventofcode.com/2024/day/20",
+      "status": "solved",
+      "summary": "Find every single-use collision-disabled cheat lasting up to 2 picoseconds on a 141x141 racetrack that saves at least 100 picoseconds compared to the shortest uncheated S-to-E path.",
+      "algorithmSummary": "Dual flat-Int32Array BFS (distFromStart & distFromEnd) + row/col-clamped Manhattan diamond scanner in 2024/day20/shared/ (6.80 ms on 141x141): works on both unique-path AoC grids and general branching/looping tracks, breaks early via monotonic BFS distance (distU <= baseline - minSaving - 2) with zero dead V8 branches, records 1 canonical witness per saving bucket in O(baseline) TypedArrays, and ships PART2_DEFAULT_CONFIG (K=20, minSaving=100) + HiDPI RacetrackCanvas (with translucent Manhattan radius halo) + SavingHistogram for zero-churn Part 2 reuse; differentially verified against both an O(T^2) all-pairs Manhattan oracle and a per-cheat full-BFS oracle across official examples (44 P1, 285 P2), branching/pocket tracks, and 20 seeded mazes for K in {2, 4, 10, 20}.",
+      "complexity": "O(W * H + T * K^2) time, O(W * H) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.8,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using distFromStart[reachable[i]] <= maxStartDist as the loop condition in analyzeCheats eliminates an unreachable loop-exit branch under V8 coverage because E is guaranteed in reachable at distance baseline > maxStartDist.",
+        "Adding a borderless track grid to bfs.test.ts exercises all four out-of-bounds BFS neighbor guards that walled AoC grids never hit."
+      ],
+      "startedAt": "2026-11-26T11:20:23Z",
+      "verifiedAt": "2026-11-26T11:36:21Z"
     }
   ]
 }
