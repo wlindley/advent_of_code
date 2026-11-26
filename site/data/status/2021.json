@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:02:45Z",
+  "updatedAt": "2026-11-26T21:11:45Z",
   "parts": [
     {
       "year": 2021,
@@ -143,6 +143,26 @@
       ],
       "startedAt": "2026-11-26T20:49:36Z",
       "verifiedAt": "2026-11-26T21:02:45Z"
+    },
+    {
+      "year": 2021,
+      "day": 4,
+      "part": 2,
+      "title": "Giant Squid",
+      "puzzleUrl": "https://adventofcode.com/2021/day/4#part2",
+      "status": "solved",
+      "summary": "Determine which 5x5 bingo board wins last as numbers are drawn and return the product of its unmarked cell sum and the winning drawn number.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day04/shared/ binding LAST_WINNER_POLICY into createBingoSolver and GiantSquidVisualizer (2.23 ms across 100 boards -> 6,594): zero edits to shared/ or part1/, draw-time minimax ranking selects the board with maximum winning draw index, interactive 5x5 board grid & 100-board status strip, differentially verified against an independent draw-by-draw last-winner simulator across 50 seeded PRNG games (including non-winning boards, simultaneous ties, and duplicate draws).",
+      "complexity": "O(D + B * 25 + W log W) time, O(D + B * 25) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.23,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building LAST_WINNER_POLICY and draw-time minimax ranking in day04/shared/ reduced Part 2's domain solver to 3 lines with zero edits to shared/ or part1/.",
+        "Explicitly verifying games with never-winning boards ensures LAST_WINNER_POLICY selects the last board that actually wins rather than boards that never complete a line."
+      ],
+      "startedAt": "2026-11-26T21:03:37Z",
+      "verifiedAt": "2026-11-26T21:11:45Z"
     }
   ]
 }
