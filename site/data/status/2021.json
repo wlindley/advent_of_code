@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T19:00:21Z",
+  "updatedAt": "2026-11-26T19:07:36Z",
   "parts": [
     {
       "year": 2021,
@@ -22,6 +22,26 @@
       ],
       "startedAt": "2026-11-26T18:33:02Z",
       "verifiedAt": "2026-11-26T19:00:21Z"
+    },
+    {
+      "year": 2021,
+      "day": 1,
+      "part": 2,
+      "title": "Sonar Sweep",
+      "puzzleUrl": "https://adventofcode.com/2021/day/1#part2",
+      "status": "solved",
+      "summary": "Count how many consecutive three-measurement sliding-window depth sums strictly increase across the sonar report.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day01/shared/ with stride W = 3 algebraic cancellation (d[i] > d[i - 3], 0.79 ms across 2,000 depth readings -> 1,743 increases): eliminates overlapping terms d[i-2] + d[i-1] and IEEE-754 3-sum rounding loss on MAX_SAFE_INTEGER readings, differentially verified against an independent BigInt 3-sum oracle across 30 seeded sequences and rendered with the shared gold cancelled-overlap bathymetry visualizer.",
+      "complexity": "O(N) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.79,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building generalized stride-W domain and overlay highlight logic in day01/shared/ let Part 2 land with zero shared edits and ~180 LOC total across domain, tests, visualizer wrapper, and manifest.",
+        "Comparing entering vs exiting endpoints directly (d[i] > d[i-3]) avoids 3-term IEEE-754 precision loss at Number.MAX_SAFE_INTEGER where naive Number summation collapses adjacent distinct window sums."
+      ],
+      "startedAt": "2026-11-26T19:01:08Z",
+      "verifiedAt": "2026-11-26T19:07:36Z"
     }
   ]
 }
