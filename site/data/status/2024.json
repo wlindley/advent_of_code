@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T10:56:24Z",
+  "updatedAt": "2026-11-26T11:10:35Z",
   "parts": [
     {
       "year": 2024,
@@ -723,6 +723,26 @@
       ],
       "startedAt": "2026-11-26T10:45:42Z",
       "verifiedAt": "2026-11-26T10:56:24Z"
+    },
+    {
+      "year": 2024,
+      "day": 19,
+      "part": 1,
+      "title": "Linen Layout",
+      "puzzleUrl": "https://adventofcode.com/2024/day/19",
+      "status": "solved",
+      "summary": "Given an unlimited supply of available 5-color towel stripe patterns and a list of desired towel designs, count how many designs can be assembled by concatenating available patterns.",
+      "algorithmSummary": "Preallocated flat 5-way Int32Array PatternTrie + unbounded exact BigInt bottom-up DP in 2024/day19/shared/ (7.07 ms across 447 patterns and 400 designs): encodes {w,u,b,r,g} as 0..4 for zero-allocation Trie transitions, computes exact prefixWays: bigint[] and canonical witnessDecomposition in a single O(L * M) pass per design (exposing countTotalArrangements and LinenVisualizer mode='possible' | 'arrangements' with bigintLog2-scaled SVG prefix bars for zero-churn Part 2 reuse); differentially verified against an independent recursive memoized startsWith DP oracle (30 seeded sets), exhaustive short-string partition enumeration, > 2^64 BigInt overflow stress, and dead-end backtracking traps.",
+      "complexity": "O(sum(|p|) + D * L * M) time, O(5 * N_trie + L) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 7.07,
+      "attemptsCount": 1,
+      "learnings": [
+        "Preallocating a flat 5-way Int32Array Trie to 1 + sum(|p|) eliminates dynamic resize branches and substring allocations while unbounded bigint[] DP prevents overflow even past BigInt64Array max (2^63 - 1).",
+        "Looping i from prefixWays.length - 1 down to i > 0 in furthestReachable avoids an unreachable loop-exit branch under V8 coverage since prefixWays[0] === 1n is always guaranteed."
+      ],
+      "startedAt": "2026-11-26T10:57:30Z",
+      "verifiedAt": "2026-11-26T11:10:35Z"
     }
   ]
 }
