@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T09:30:32Z",
+  "updatedAt": "2026-11-26T09:46:30Z",
   "parts": [
     {
       "year": 2023,
@@ -602,6 +602,26 @@
       ],
       "startedAt": "2026-11-26T09:19:32Z",
       "verifiedAt": "2026-11-26T09:30:32Z"
+    },
+    {
+      "year": 2023,
+      "day": 16,
+      "part": 1,
+      "title": "The Floor Will Be Lava",
+      "puzzleUrl": "https://adventofcode.com/2023/day/16",
+      "status": "solved",
+      "summary": "Trace a light beam entering the top-left corner (0, 0) traveling east across a 2D optical contraption of mirrors ('/', '\\') and splitters ('|', '-'), terminating cycles via directed-state tracking, and count all distinct energized tiles.",
+      "algorithmSummary": "Unified flat-queue Int32Array(4 * H * W) wavefront BFS kernel inside BeamTracer with a 20-byte outgoing-direction bitmask table and reusable Uint8Array(H * W) visited masks in 2023/day16/shared/ in O(H * W) time (1.42 ms on 110x110): handles entry-tile optics at (0, 0) (which is '\\' in personal input), exposes 2-pass bounded-memory sampled tracing (O(maxSteps * H * W)), Contraption.edgeEntries(), and ContraptionCanvas with optional Part 2 perimeter score ring for zero-churn Part 2 reuse; differentially verified against an independent plain-JS Set<string> + switch oracle across the official 10x10 example (46), all 40 perimeter entries (max 51), closed mirror/splitter cycles, and 40 seeded random contraptions.",
+      "complexity": "O(H * W) time, O(H * W) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.42,
+      "attemptsCount": 1,
+      "learnings": [
+        "Personal input places a '\\' mirror directly at (0, 0) unlike the official example's '.', so energizing and evaluating entry-tile optics on Wave 0 before stepping is essential.",
+        "Unifying solve() and 2-pass bounded-memory traceWaves() on one reusable Int32Array wavefront BFS kernel eliminates code duplication while keeping all 440 Part 2 perimeter trials zero-allocation and zero-churn."
+      ],
+      "startedAt": "2026-11-26T09:31:15Z",
+      "verifiedAt": "2026-11-26T09:46:30Z"
     }
   ]
 }
