@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T16:48:26Z",
+  "updatedAt": "2026-11-26T17:05:50Z",
   "parts": [
     {
       "year": 2023,
@@ -843,6 +843,26 @@
       ],
       "startedAt": "2026-11-26T16:35:11Z",
       "verifiedAt": "2026-11-26T16:48:26Z"
+    },
+    {
+      "year": 2023,
+      "day": 22,
+      "part": 1,
+      "title": "Sand Slabs",
+      "puzzleUrl": "https://adventofcode.com/2023/day/22",
+      "status": "solved",
+      "summary": "Settle 1,227 falling 3D axis-aligned sand bricks onto ground level z = 1 and count how many bricks can be individually disintegrated without causing any other brick to fall.",
+      "algorithmSummary": "2D flat-Int32Array heightmap settling (SettledStack indexed in strict topological order 0..N-1 with maxH < zMin collision guard and multi-cell supporter deduplication) + cohesive immutable SupportGraph (reused Int32Array Kahn in-degree BFS cascadeFrom / totalChainReactionFalls) in 2023/day22/shared/ (3.31 ms across 1,227 bricks): computes all brick axes, drop distances, and stack bounds dynamically with zero stored derived state, renders dual X-Z / Y-Z orthographic HiDPI elevations with interactive click-to-preview fall cascades in SlabElevationCanvas, and pre-builds zero-churn Part 2 chain-reaction analysis; differentially verified against an independent iterative 3D voxel-gravity oracle across the official 7-brick example (5 P1, 7 P2), multi-cell parallel stacks, diamonds, towers, and 25 seeded random 3D brick stacks.",
+      "complexity": "O(N log N + V + E) time (Part 1); O(N_unsafe * (N + E)) time (Part 2), O(W * H + N + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.31,
+      "attemptsCount": 1,
+      "learnings": [
+        "Indexing SettledStack and SupportGraph strictly by settled topological index 0..N-1 while keeping Brick.id for labels guarantees u < v for every support edge and eliminates ID-remapping lookups during Kahn's cascade BFS.",
+        "Checking maxH < brick.zMin during heightmap settling catches overlapping snapshots immediately and guarantees non-negative dropDistance on every SettledBrick."
+      ],
+      "startedAt": "2026-11-26T16:49:30Z",
+      "verifiedAt": "2026-11-26T17:05:50Z"
     }
   ]
 }
