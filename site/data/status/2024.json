@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:23:28Z",
+  "updatedAt": "2026-11-26T04:33:49Z",
   "parts": [
     {
       "year": 2024,
@@ -83,6 +83,26 @@
       ],
       "startedAt": "2026-11-26T04:13:48Z",
       "verifiedAt": "2026-11-26T04:23:28Z"
+    },
+    {
+      "year": 2024,
+      "day": 3,
+      "part": 1,
+      "title": "Mull It Over",
+      "puzzleUrl": "https://adventofcode.com/2024/day/3",
+      "status": "solved",
+      "summary": "Scan a continuous corrupted program memory stream for exact mul(X,Y) calls with 1-to-3-digit unsigned integer operands, ignore all malformed fragments, and sum all valid products.",
+      "algorithmSummary": "Zero-backtracking single-pass charCodeAt lexer in 2024/day03/shared/ tokenizing mul(X,Y), do(), and don't() into a frozen ParsedMemory stream in O(N) time; differentially verified against a global RegExp matchAll oracle over adversarial nested prefixes and a 20 KB synthetic corpus.",
+      "complexity": "O(N) time, O(K) token space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.24,
+      "attemptsCount": 1,
+      "learnings": [
+        "Returning the exact mismatch cursor c (not c + 1) in a charCodeAt lexer preserves inner starts of nested prefixes like mul(mul(2,3)) and don'tdon't() with zero backtracking.",
+        "Scanning raw memory continuously without line splitting and tokenizing do()/don't() up front keeps Part 2 conditional execution zero-churn."
+      ],
+      "startedAt": "2026-11-26T04:23:54Z",
+      "verifiedAt": "2026-11-26T04:33:49Z"
     }
   ]
 }
