@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:03:32Z",
+  "updatedAt": "2026-11-26T05:14:54Z",
   "parts": [
     {
       "year": 2024,
@@ -163,6 +163,26 @@
       ],
       "startedAt": "2026-11-26T04:56:06Z",
       "verifiedAt": "2026-11-26T05:03:32Z"
+    },
+    {
+      "year": 2024,
+      "day": 5,
+      "part": 1,
+      "title": "Print Queue",
+      "puzzleUrl": "https://adventofcode.com/2024/day/5",
+      "status": "solved",
+      "summary": "Given page ordering rules X|Y and odd-length print updates, identify every update that satisfies all applicable ordering rules (where both X and Y appear in the update) and return the sum of their middle page numbers.",
+      "algorithmSummary": "Per-update O(L^2) pairwise reverse-rule check on an immutable PageOrderRules adjacency index in 2024/day05/shared/ (avoiding global topological sort because the 49-page rule graph is a regular cyclic tournament) while exposing inducedGraph via shared/core DirectedGraph for zero-churn Part 2 repair; differentially verified against a raw rule-scan position-map oracle across cyclic tournaments and 30 random inputs.",
+      "complexity": "O(R + sum L_u^2) time, O(R + L_max) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.52,
+      "attemptsCount": 1,
+      "learnings": [
+        "The personal input's global rule graph on 49 pages has 1,176 = C(49, 2) edges with every vertex at in-degree 24 and out-degree 24 (a regular cyclic tournament), so all ordering checks and topological sorts must be scoped to each update's induced subgraph.",
+        "Checking all pairs (i < j) instead of only adjacent pairs catches non-adjacent violations on sparse partial orders while exposing PageOrderRules.inducedGraph for zero-churn Part 2 repair via shared/core DirectedGraph."
+      ],
+      "startedAt": "2026-11-26T05:03:58Z",
+      "verifiedAt": "2026-11-26T05:14:54Z"
     }
   ]
 }
