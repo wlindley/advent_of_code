@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:52:22Z",
+  "updatedAt": "2026-11-26T18:19:11Z",
   "parts": [
     {
       "year": 2022,
@@ -963,6 +963,45 @@
       ],
       "startedAt": "2026-11-26T17:44:34Z",
       "verifiedAt": "2026-11-26T17:52:22Z"
+    },
+    {
+      "year": 2022,
+      "day": 25,
+      "part": 1,
+      "title": "Full of Hot Air",
+      "puzzleUrl": "https://adventofcode.com/2022/day/25",
+      "status": "solved",
+      "summary": "Decode 109 balanced base-5 (SNAFU: =, -, 0, 1, 2) hot-air-balloon fuel requirements, sum them with exact arbitrary-precision arithmetic, and re-encode the total back into canonical SNAFU.",
+      "algorithmSummary": "Exact BigInt Horner decode -> BigInt sum -> Euclidean floorDiv(n + 2n, 5n) balanced base-5 re-encode in 2022/day25/shared/ (0.44 ms on 109 lines up to 20 digits): immutable SnafuNumber/SnafuLedger with dynamic getters (zero stored derived state), two-phase accumulate & division-carry cascade trace with live SnafuPlaceBreakdown/SnafuEncodeCascade visualizer, differentially verified against an independent direct column-wise balanced base-5 adder (zero base-10 conversion) across the official example ('2=-1=0'), conversion table, negative/zero/30-digit BigInt sums, and 25 seeded random ledgers.",
+      "complexity": "O(sum |s_i|) time, O(N + L) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.44,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using shared/core floorDiv(n + 2n, 5n) encodes positive, zero, and negative BigInt values into canonical balanced base-5 SNAFU uniformly without JavaScript truncating-division sign bugs.",
+        "Branching trace budgeting strictly at maxSteps <= encodeFrames.length prevents passing 0 to sampleTraceIndices(N, limit - K) when maxSteps equals the encode step count."
+      ],
+      "startedAt": "2026-11-26T17:52:43Z",
+      "verifiedAt": "2026-11-26T18:18:49Z"
+    },
+    {
+      "year": 2022,
+      "day": 25,
+      "part": 2,
+      "title": "Full of Hot Air",
+      "puzzleUrl": "https://adventofcode.com/2022/day/25#part2",
+      "status": "solved",
+      "summary": "Advent of Code 2022 finale star: blend all 49 collected stars across Days 1–25 into a star smoothie to claim the 50th and final star.",
+      "algorithmSummary": "Validated all 49 prerequisite stars and submitted the AoC finale completion trigger (level=2, answer=0), confirmed 50/50 stars on adventofcode.com, paired with a 50-star SVG canopy illumination visualizer.",
+      "complexity": "O(1) verification, O(S) animation",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.05,
+      "attemptsCount": 1,
+      "learnings": [
+        "Completed all 50 stars of Advent of Code 2022 with 50/50 consecutive first-try submissions (zero wrong guesses)."
+      ],
+      "startedAt": "2026-11-26T18:18:50Z",
+      "verifiedAt": "2026-11-26T18:19:11Z"
     }
   ]
 }

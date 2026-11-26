@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-11-26T18:13:12Z",
-  "subagentsScanned": 504,
+  "generatedAt": "2026-11-26T18:20:44Z",
+  "subagentsScanned": 508,
   "budgetTargetTokens": null,
   "tiers": [
     {
       "tier": "Gemini 4 Neon",
-      "turns": 3674,
-      "inputTokens": 22834146,
-      "cacheReadTokens": 430364135,
-      "outputTokens": 6961165
+      "turns": 3707,
+      "inputTokens": 23078750,
+      "cacheReadTokens": 436192826,
+      "outputTokens": 7023749
     },
     {
       "tier": "Gemini Flash",
-      "turns": 5257,
-      "inputTokens": 19410300,
-      "cacheReadTokens": 224730676,
-      "outputTokens": 5157439
+      "turns": 5319,
+      "inputTokens": 19607000,
+      "cacheReadTokens": 227877647,
+      "outputTokens": 5207897
     }
   ],
   "timeline": [
@@ -1670,28 +1670,46 @@
       "bucketStart": "2026-11-26T18:00:00Z",
       "scope": "2022",
       "tier": "Gemini Flash",
-      "turns": 13,
-      "inputTokens": 56675,
-      "cacheReadTokens": 300018,
-      "outputTokens": 11598
+      "turns": 50,
+      "inputTokens": 160430,
+      "cacheReadTokens": 2442962,
+      "outputTokens": 38378
     },
     {
       "bucketStart": "2026-11-26T18:00:00Z",
       "scope": "2023",
       "tier": "Gemini 4 Neon",
-      "turns": 6,
-      "inputTokens": 28752,
-      "cacheReadTokens": 77744,
-      "outputTokens": 5436
+      "turns": 12,
+      "inputTokens": 104985,
+      "cacheReadTokens": 183385,
+      "outputTokens": 13242
+    },
+    {
+      "bucketStart": "2026-11-26T18:00:00Z",
+      "scope": "2023",
+      "tier": "Gemini Flash",
+      "turns": 25,
+      "inputTokens": 92945,
+      "cacheReadTokens": 1004027,
+      "outputTokens": 23678
+    },
+    {
+      "bucketStart": "2026-11-26T18:00:00Z",
+      "scope": "2024",
+      "tier": "Gemini 4 Neon",
+      "turns": 10,
+      "inputTokens": 105934,
+      "cacheReadTokens": 201566,
+      "outputTokens": 39137
     },
     {
       "bucketStart": "2026-11-26T18:00:00Z",
       "scope": "shared",
       "tier": "Gemini 4 Neon",
-      "turns": 21,
-      "inputTokens": 160863,
-      "cacheReadTokens": 5449388,
-      "outputTokens": 60458
+      "turns": 38,
+      "inputTokens": 223300,
+      "cacheReadTokens": 10970872,
+      "outputTokens": 76099
     }
   ]
 }
