@@ -11,8 +11,10 @@ Pure, runtime-agnostic contracts and reusable domain utilities shared across Adv
 - `euclideanMod(dividend, divisor)`: non-negative Euclidean modulo in `[0, divisor)` with safe-integer validation.
 - `bigintLog2(value)` / `bigintIsqrt(n)`: exact top-53-bit `log2` (no overflow past `2^1024`) and exact floor integer square root for arbitrary-precision `bigint`s.
 - `Rational`, `gcdBigInt`, `lcmBigInt`, `floorDiv`, `ceilDiv`: exact arbitrary-precision rational arithmetic and BigInt number-theory helpers.
+- `RationalLinearSystem`: incremental exact Gauss-Jordan RREF linear system solver over `Rational` numbers with dynamic `rank` / `isFullRank` getters.
 - `extGcdBigInt(a, b)`, `solveCongruences(congruences)`, `Congruence`, `ExtGcdResult`: extended Euclidean algorithm and generalized Chinese Remainder Theorem solver supporting coprime and non-coprime moduli.
 - `Gf2LinearSystem`, `Gf2Equation`, `bitCount`, `DEFAULT_MAX_NULLITY`: GF(2) linear system solver over BigInt bitmasks.
+- `MinHeap<T>`: generic binary min-heap priority queue (`peek`, `push`, `pop`, dynamic `size` / `isEmpty`) for Dijkstra, A*, and priority-queue search.
 - `DirectedGraph`: immutable directed graph with topological sort, cycle detection, and path counting.
 - `Grid2D<T>`, `DIRS_4`, `DIRS_8`, `GridDelta`: immutable rectangular row-major grid parser/container and frozen orthogonal/8-way direction vectors.
 - `ClosedInterval`, `IntervalUnion`: immutable `bigint` inclusive `[start, end]` interval (with `contains`, `containsInterval`, `overlaps`, `intersection`, `subtract`) and sorted disjoint non-adjacent interval union with $O(\log K)$ binary-search lookup.
