@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:21:44Z",
+  "updatedAt": "2026-11-26T21:28:10Z",
   "parts": [
     {
       "year": 2019,
@@ -143,6 +143,26 @@
       ],
       "startedAt": "2026-11-26T21:09:56Z",
       "verifiedAt": "2026-11-26T21:21:44Z"
+    },
+    {
+      "year": 2019,
+      "day": 4,
+      "part": 2,
+      "title": "Secure Container",
+      "puzzleUrl": "https://adventofcode.com/2019/day/4#part2",
+      "status": "solved",
+      "summary": "Count how many 6-digit integers in the inclusive input range have non-decreasing digits and contain at least one adjacent pair of identical digits not part of a larger matching group.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day04/shared/ binding EXACT_PAIR_POLICY into createSecureContainerSolver and SecureContainerVisualizer (2.52 ms -> 1,462): zero edits to shared/ or part1/, OdometerStrip automatically highlights exact pairs in green and longer runs (>= 3) in amber, differentially verified across 30 fresh seeded PRNG ranges (seed 20190402) against an independent decimal brute-force oracle plus P2 <= P1 monotonicity and positional exact-pair divergence checks.",
+      "complexity": "O(D * M) time (D = 6, M <= 3,003), O(D) extra space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.52,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building EXACT_PAIR_POLICY and policy.acceptsRun-driven run-length highlighting in OdometerStrip.tsx let Part 2 ship in 4 lines of domain code with zero edits to shared/ or part1/.",
+        "Testing exact pairs in leading (112222), interior (111223, 122333), trailing (111122), and repeated (112233) positions guards against off-by-one run-boundary bugs."
+      ],
+      "startedAt": "2026-11-26T21:21:44Z",
+      "verifiedAt": "2026-11-26T21:28:10Z"
     }
   ]
 }
