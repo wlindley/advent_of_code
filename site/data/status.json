@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T01:08:19Z",
+  "updatedAt": "2026-11-26T01:19:00Z",
   "years": [
     {
       "year": 2025,
@@ -389,6 +389,45 @@
           ],
           "startedAt": "2026-11-26T00:56:57Z",
           "verifiedAt": "2026-11-26T01:08:19Z"
+        },
+        {
+          "year": 2025,
+          "day": 10,
+          "part": 2,
+          "title": "Factory",
+          "puzzleUrl": "https://adventofcode.com/2025/day/10#part2",
+          "status": "in_progress",
+          "phase": "design_selected",
+          "summary": "Each factory machine has integer joltage counters starting at 0 and buttons that each increment a subset of counters by +1. Find the minimum total non-negative integer button presses (min sum(x) s.t. A x = b, x >= 0) across all machines.",
+          "proposals": [
+            {
+              "id": "rational-rref-search",
+              "name": "Exact Rational RREF + Interval-Pruned Nullspace DFS",
+              "summary": "Promote BigInt Rational + floorDiv/ceilDiv to shared/core/rational.ts, run exact Gauss-Jordan RREF with pivotOrder favoring tight free bounds, clear row denominators via LCM, and run interval-pruned directional DFS over free variables.",
+              "complexity": "O(L^2 B + L * prod(span_k)) time, O(L B) space",
+              "tradeoffs": "100% exact on non-TU det=2 submatrices (zero FP drift), solves all 198 machines in ~2-15 ms, and promotes reusable Rational math to shared/core."
+            },
+            {
+              "id": "parity-halving-dc",
+              "name": "GF(2) Parity-Halving Divide-and-Conquer",
+              "summary": "Decompose x = p + 2*x' by grouping 2^B subsets by L-bit parity mask and memoizing recursive halving.",
+              "complexity": "O(2^B * L + memo) time and space",
+              "tradeoffs": "Concise (~40 LOC) and ideal as an independent differential test oracle, but exponential in B."
+            },
+            {
+              "id": "simplex-bnb-ilp",
+              "name": "Exact Dual Simplex + Branch-and-Bound ILP",
+              "summary": "Solve continuous LP relaxations with exact Two-Phase/Dual Simplex and branch on fractional variables.",
+              "complexity": "Exponential worst-case in B",
+              "tradeoffs": "General for high nullity, but heavy implementation complexity unnecessary for max Q-nullity = 3."
+            }
+          ],
+          "selectedProposalId": "rational-rref-search",
+          "selectionRationale": "Exact BigInt rational arithmetic eliminates floating-point drift on non-TU det=2 matrices, solves all 198 machines in ~2-15 ms, promotes shared/core/rational.ts, and cross-verifies against a parity-halving-dc oracle.",
+          "inFlightWork": "Implementing shared/core/rational.ts, RationalLinearSystem, interval-pruned joltage solver, parity-halving oracle tests, and SVG counter/RREF visualizer.",
+          "attempts": [],
+          "startedAt": "2026-11-26T01:08:56Z",
+          "updatedAt": "2026-11-26T01:19:00Z"
         }
       ]
     }
