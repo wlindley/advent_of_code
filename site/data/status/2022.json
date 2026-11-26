@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:01:10Z",
+  "updatedAt": "2026-11-26T17:18:14Z",
   "parts": [
     {
       "year": 2022,
@@ -883,6 +883,26 @@
       ],
       "startedAt": "2026-11-26T16:52:28Z",
       "verifiedAt": "2026-11-26T17:01:10Z"
+    },
+    {
+      "year": 2022,
+      "day": 23,
+      "part": 1,
+      "title": "Unstable Diffusion",
+      "puzzleUrl": "https://adventofcode.com/2022/day/23",
+      "status": "solved",
+      "summary": "Simulate 10 synchronous rounds of elf diffusion across an infinite 2D grid with rotating N/S/W/E 3-cell proposal rules and simultaneous collision cancellation, then count empty ground tiles in the tight bounding box.",
+      "algorithmSummary": "Dynamic padded flat Uint8Array occupancy grid + 1 KB bitmask DIR_LUT[(dirOffset << 8) | mask] + 1-based round-stamped Int32Array propTag (zero per-round array clearing, exact 2-branch collision logic backed by perpendicular-wedge 2-collider proof) in 2022/day23/shared/ (2.97 ms across 10 rounds on ~2,500 elves): stores world coordinates in elfRow/elfCol with geometric ensureMargin expansion, proves Static-Equivalence early exit (movedCount === 0 iff all elves isolated), pre-builds zero-churn Part 2 findFirstStaticRound + traceUntilStatic + HiDPI DiffusionCanvas (stable union-bounds camera), and differentially verifies round-by-round against an independent Set<string>/Map<string, number> oracle across the 5-elf (25 P1, 4 P2) and 22-elf (110 P1, 20 P2) official examples, all 4 growth borders, and seeded random grids.",
+      "complexity": "O(R * N + G) time, O(G + N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.97,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because perpendicular proposers cover each other's 3-cell check wedges, at most two opposite elves can ever propose the same cell in a round, yielding an exact 2-branch propTag collision check with zero unreachable V8 branches.",
+        "Proving Static-Equivalence (every leading-direction extreme non-isolated elf always moves) makes early-exiting simulateRounds on movedCount === 0 exact while pre-building findFirstStaticRound and traceUntilStatic in 2022/day23/shared/ for zero-churn Part 2."
+      ],
+      "startedAt": "2026-11-26T17:01:54Z",
+      "verifiedAt": "2026-11-26T17:18:14Z"
     }
   ]
 }

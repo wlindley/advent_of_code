@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:04:22Z",
+  "updatedAt": "2026-11-26T17:19:42Z",
   "parts": [
     {
       "year": 2024,
@@ -884,6 +884,26 @@
       ],
       "startedAt": "2026-11-26T16:57:10Z",
       "verifiedAt": "2026-11-26T17:04:22Z"
+    },
+    {
+      "year": 2024,
+      "day": 23,
+      "part": 1,
+      "title": "LAN Party",
+      "puzzleUrl": "https://adventofcode.com/2024/day/23",
+      "status": "solved",
+      "summary": "Find every distinct 3-computer triangle in the 3,380-link undirected LAN graph where at least one computer's name starts with 't'.",
+      "algorithmSummary": "Lexicographically sorted dense-ID LanGraph + canonical u < v < w two-pointer triangle intersection + pre-built zero-churn Part 2 pivoted Bron-Kerbosch maximum-clique finder in 2024/day23/shared/ (11.83 ms across 3,380 links -> 1,512 triangles): normalizes current clique IDs via sort(compareNumbers) before canonical tie-breaking to handle out-of-order pivot recursion, renders adaptive full-ring (V <= 40) vs focused 2-ring ego-neighborhood (V > 40) SVG graphs in LanGraphSvg, and differentially verifies both findTriangles and findMaximumClique against brute-force oracles across the 32-edge official example (7 P1, 'co,de,ka,ta' P2), an 8-node pivot-tie-break unsorted-R fixture, and 30 seeded random graphs.",
+      "complexity": "O(E * d_max) time (Part 1); O(V * 3^(d_max/3)) worst-case (Part 2), O(V + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 11.83,
+      "attemptsCount": 1,
+      "learnings": [
+        "In pivoted Bron-Kerbosch without X, branching on a larger vertex w in P \\ N(u) can recurse onto smaller vertices remaining in P and produce an unsorted current clique; sorting current at candidates.length === 0 fixes both password formatting and lexicographic tie-breaking.",
+        "Pruning the outer Bron-Kerbosch loop with <= (since v1 < v2 guarantees lex-larger equal-size cliques) while keeping strict < inside expandClique preserves canonical lex-smallest tie-breaking on same-root cliques."
+      ],
+      "startedAt": "2026-11-26T17:05:08Z",
+      "verifiedAt": "2026-11-26T17:19:42Z"
     }
   ]
 }
