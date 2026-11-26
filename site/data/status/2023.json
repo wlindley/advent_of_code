@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:48:51Z",
+  "updatedAt": "2026-11-26T04:59:38Z",
   "parts": [
     {
       "year": 2023,
@@ -142,6 +142,26 @@
       ],
       "startedAt": "2026-11-26T04:40:19Z",
       "verifiedAt": "2026-11-26T04:48:51Z"
+    },
+    {
+      "year": 2023,
+      "day": 4,
+      "part": 2,
+      "title": "Scratchcards",
+      "puzzleUrl": "https://adventofcode.com/2023/day/4#part2",
+      "status": "solved",
+      "summary": "Under the cascading copy rule where each scratchcard instance with k matches wins one copy of each of the next k cards below it (with won copies triggering identical downstream cascades), compute the total number of original and copied scratchcards.",
+      "algorithmSummary": "Zero-churn O(N) forward difference-array DP in exact BigInt reusing 2023/day04/shared Scratchcard.matchCount: maintains an O(1)-update delta wave across cards with table-end clamping; differentially verified against both an O(N * K) forward scatter oracle and an O(N) backward suffix-sum dual oracle up to 2^65.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.29,
+      "attemptsCount": 1,
+      "learnings": [
+        "Allocating delta with length N + 1 and gating on end > i collapses zero-match firebreaks and last-card clamping into one clean branch with zero out-of-bounds guards.",
+        "Using BigInt for copy counts plus shared/core bigintLog2 and BigInt ratio scaling keeps both 2^65 synthetic cascades and the Log2/Linear SVG wave visualizer overflow-free."
+      ],
+      "startedAt": "2026-11-26T04:50:05Z",
+      "verifiedAt": "2026-11-26T04:59:38Z"
     }
   ]
 }

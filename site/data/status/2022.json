@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:47:29Z",
+  "updatedAt": "2026-11-26T05:00:05Z",
   "parts": [
     {
       "year": 2022,
@@ -162,6 +162,26 @@
       ],
       "startedAt": "2026-11-26T04:39:31Z",
       "verifiedAt": "2026-11-26T04:47:29Z"
+    },
+    {
+      "year": 2022,
+      "day": 5,
+      "part": 1,
+      "title": "Supply Stacks",
+      "puzzleUrl": "https://adventofcode.com/2022/day/5",
+      "status": "solved",
+      "summary": "Parse an ASCII drawing of numbered crate stacks and a sequence of move commands, simulate CrateMover 9000 lifting crates one at a time (reversing lifted order), and read the top crate label from every stack.",
+      "algorithmSummary": "Encapsulated in-place stack simulation parameterized by a CraneStrategy interface (CrateMover9000 LIFO reversal) in 2022/day05/shared/ with whitespace-preserving diagram parsing and gravity validation in O(C + K) time; differentially verified against an independent O(S * M) reverse top-crate coordinate tracker across 45 seeded random procedures.",
+      "complexity": "O(C + K) time, O(S + C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.97,
+      "attemptsCount": 1,
+      "learnings": [
+        "Never .trim() raw input or diagram lines when parsing ASCII crate drawings; leading spaces encode empty left columns while stripped trailing spaces on short lines must still be tolerated.",
+        "Parameterizing executeProcedure and traceProcedure by CraneStrategy and placing the pure React Cargo Crane Bay SVG in 2022/day05/shared/viz/ makes Part 2 (CrateMover 9001) zero-churn across both domain and UI."
+      ],
+      "startedAt": "2026-11-26T04:47:42Z",
+      "verifiedAt": "2026-11-26T05:00:05Z"
     }
   ]
 }
