@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T20:11:41Z",
+  "updatedAt": "2026-11-26T20:29:09Z",
   "parts": [
     {
       "year": 2019,
@@ -43,6 +43,26 @@
       "startedAt": "2026-11-26T19:08:08Z",
       "verifiedAt": "2026-11-26T20:11:41Z",
       "humanWaitSeconds": 3437
+    },
+    {
+      "year": 2019,
+      "day": 2,
+      "part": 1,
+      "title": "1202 Program Alarm",
+      "puzzleUrl": "https://adventofcode.com/2019/day/2",
+      "status": "solved",
+      "summary": "Restore a gravity-assist Intcode program to the 1202 alarm state (mem[1]=12, mem[2]=2), execute opcodes 1/2/99 until halt, and return mem[0].",
+      "algorithmSummary": "Reusable year-scoped BigInt Intcode VM in 2019/shared/intcode/ (MemoryAccess DIP, BigInt-first bounds checks, polymorphic OpcodeHandler registry, O(1) StepRecorderContext) powering 2019/day02/shared/alarmRunner.ts (0.50 ms -> 5,098,658): 2-pass bounded traceGravityAssist, interactive SVG tape visualizer, differentially verified against an independent flat-loop oracle across 30 seeded programs plus all 5 raw AoC examples.",
+      "complexity": "O(T) time, O(N) tape memory",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.50,
+      "attemptsCount": 1,
+      "learnings": [
+        "Building a year-scoped reusable BigInt Intcode VM in 2019/shared/intcode/ with MemoryAccess DIP and polymorphic OpcodeHandler prepares Days 5, 7, 9, and 11-25 for clean additive extensions with zero rewrites.",
+        "Validating address bounds in BigInt (address < 0n || address >= BigInt(len)) before Number(address) avoids silent IEEE-754 precision collisions at 2^53 + 1 while keeping V8 coverage cleanly at 100%."
+      ],
+      "startedAt": "2026-11-26T20:12:19Z",
+      "verifiedAt": "2026-11-26T20:29:09Z"
     }
   ]
 }
