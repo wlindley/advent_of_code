@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T10:29:24Z",
+  "updatedAt": "2026-11-26T10:44:37Z",
   "parts": [
     {
       "year": 2024,
@@ -683,6 +683,26 @@
       ],
       "startedAt": "2026-11-26T10:16:15Z",
       "verifiedAt": "2026-11-26T10:29:24Z"
+    },
+    {
+      "year": 2024,
+      "day": 18,
+      "part": 1,
+      "title": "RAM Run",
+      "puzzleUrl": "https://adventofcode.com/2024/day/18",
+      "status": "solved",
+      "summary": "Simulate the first 1,024 falling byte coordinates corrupting cells on a 71x71 memory grid and find the minimum number of orthogonal steps from (0, 0) to (70, 70).",
+      "algorithmSummary": "Immutable MemorySpace recording each cell's earliest fall index in a flat Int32Array + flat Int32Array 4-neighbor BFS in 2024/day18/shared/ (3.48 ms on 71x71 / 1024 bytes): stores firstFallIndex once so both Part 1 shortest-path BFS and Part 2 reverse-time DisjointSet percolation reuse the same model with zero shared edits, paired with HiDPI RamRunCanvas (already supporting crimson blockingByte highlight for Part 2) and dual-config manifest (7x7/12 example vs 71x71/1024 personal); differentially verified against an independent Set<string> BFS oracle across 60 seeded grids and a reverse-time DisjointSet percolation oracle.",
+      "complexity": "O(W * H + B) time, O(W * H) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.48,
+      "attemptsCount": 1,
+      "learnings": [
+        "Recording each grid cell's earliest fall index in a flat Int32Array (NEVER_CORRUPTED = Int32 max) turns time-sliced queries into O(1) comparisons and makes Part 2 reverse-time DSU percolation zero-churn.",
+        "Handling 7x7 / 12 vs 71x71 / 1024 configuration via createRamRunPart1Solver keeps domain logic pure while allowing the CLI to default to 71x71 / 1024 and the UI manifest to recognize the official example."
+      ],
+      "startedAt": "2026-11-26T10:30:20Z",
+      "verifiedAt": "2026-11-26T10:44:37Z"
     }
   ]
 }
