@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:38:21Z",
+  "updatedAt": "2026-11-26T04:47:29Z",
   "parts": [
     {
       "year": 2022,
@@ -142,6 +142,26 @@
       ],
       "startedAt": "2026-11-26T04:29:53Z",
       "verifiedAt": "2026-11-26T04:38:21Z"
+    },
+    {
+      "year": 2022,
+      "day": 4,
+      "part": 2,
+      "title": "Camp Cleanup",
+      "puzzleUrl": "https://adventofcode.com/2022/day/4#part2",
+      "status": "solved",
+      "summary": "Using the same pairs of inclusive integer section assignment ranges (a-b,c-d), count how many pairs overlap at all (sharing at least one section ID).",
+      "algorithmSummary": "Zero-churn closed-interval overlap scan reusing 2022/day04/shared AssignmentPair.overlaps and PairRelation classification in O(N) time and O(1) auxiliary space; differentially verified against both an endpoint-sweep oracle and a bitset-intersection oracle across 1,000 synthetic pairs.",
+      "complexity": "O(N) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.13,
+      "attemptsCount": 1,
+      "learnings": [
+        "Reusing AssignmentPair.overlaps and 5-way PairRelation from 2022/day04/shared delivered Part 2 with zero edits to shared/ and zero imports from part1/.",
+        "Drawing single-point endpoint touches as a distinct diamond marker and only showing a gap bracket when upper.start > lower.end + 1n visually separates overlapping, adjacent-disjoint, and gapped-disjoint ranges."
+      ],
+      "startedAt": "2026-11-26T04:39:31Z",
+      "verifiedAt": "2026-11-26T04:47:29Z"
     }
   ]
 }
