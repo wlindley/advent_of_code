@@ -1,6 +1,27 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T18:33:02Z",
-  "parts": []
+  "updatedAt": "2026-11-26T19:00:21Z",
+  "parts": [
+    {
+      "year": 2021,
+      "day": 1,
+      "part": 1,
+      "title": "Sonar Sweep",
+      "puzzleUrl": "https://adventofcode.com/2021/day/1",
+      "status": "solved",
+      "summary": "Count how many consecutive sea-floor depth measurements strictly increase relative to the immediately preceding reading.",
+      "algorithmSummary": "Generalized stride-W algebraic cancellation (d[i] > d[i - W], W=1 for Part 1, pre-built W=3 for zero-churn Part 2) in 2021/day01/shared/ (1.18 ms across 2,000 depth readings -> 1,711 increases): immutable SonarReport with exact BigInt windowSum, bounded streaming sweep trace, bathymetry SVG profile visualizer, differentially verified against an independent O(N*W) explicit BigInt window-sum oracle across W = 1, 2, 3, 5.",
+      "complexity": "O(N) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.18,
+      "attemptsCount": 1,
+      "learnings": [
+        "Algebraic telescoping cancellation reduces sliding-window sum comparison (sum[i..i+W-1] > sum[i-1..i+W-2]) to a single stride comparison d[i+W-1] > d[i-1] with zero addition overflow and zero shared-module edits for Part 2.",
+        "Adding a bounds-checked SonarReport.depthAt(index) accessor eliminates unreachable fallback branches under TypeScript's noUncheckedIndexedAccess while preserving 100% V8 branch coverage."
+      ],
+      "startedAt": "2026-11-26T18:33:02Z",
+      "verifiedAt": "2026-11-26T19:00:21Z"
+    }
+  ]
 }
