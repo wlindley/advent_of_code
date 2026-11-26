@@ -37,11 +37,12 @@ code, pre, textarea { font-family: ui-monospace, SFMono-Regular, Menlo, monospac
 .nav { display: flex; gap: 1rem; align-items: center; }
 
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.15rem; margin-bottom: 1rem; }
-.grid-days { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.9rem; }
+.grid-days { display: grid; grid-template-columns: repeat(auto-fill, minmax(248px, 1fr)); gap: 0.9rem; }
 .day-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem; display: flex; flex-direction: column; gap: 0.6rem; }
 .day-header { display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; }
 .part-links { display: flex; gap: 0.5rem; }
-.part-pill { flex: 1; text-align: center; padding: 0.35rem 0.5rem; border-radius: 6px; border: 1px solid var(--border); font-size: 0.85rem; font-weight: 600; }
+.part-pill { flex: 1; text-align: center; padding: 0.35rem 0.4rem; border-radius: 6px; border: 1px solid var(--border); font-size: 0.82rem; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.nowrap { white-space: nowrap; font-variant-numeric: tabular-nums; }
 
 .status-solved { border-color: var(--ok); color: var(--ok); }
 .status-in_progress { border-color: var(--warn); color: var(--warn); }
@@ -73,6 +74,18 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
 .proposal-card { border: 1px solid var(--border); border-radius: 8px; padding: 0.85rem; }
 .proposal-selected { border-color: var(--accent); border-width: 2px; }
 .meta-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0.6rem 0; }
+
+.quality-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
+.quality-panel { display: flex; flex-direction: column; gap: 0.65rem; }
+.quality-header { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 0.6rem; }
+.metric-tile { border: 1px solid var(--border); border-radius: 8px; padding: 0.55rem 0.65rem; background: var(--bg); display: flex; flex-direction: column; gap: 0.15rem; }
+.metric-sub { font-size: 0.74rem; color: var(--muted); }
+.day-quality { font-size: 0.76rem; color: var(--muted); display: flex; justify-content: space-between; gap: 0.4rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.grade-A { border-color: var(--ok); color: var(--ok); }
+.grade-B { border-color: var(--accent); color: var(--accent); }
+.grade-C { border-color: var(--warn); color: var(--warn); }
+.grade-D { border-color: var(--err); color: var(--err); }
 
 @supports not (accent-color: auto) {
   progress { -webkit-appearance: none; appearance: none; border: none; background: var(--border); border-radius: 6px; }

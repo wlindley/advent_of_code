@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { InputRunner, type PuzzlePartManifest } from '../../shared/viz';
+import type { ScopeQuality } from '../data/quality';
 import { computeSolveDurationSeconds, formatDuration, type PartRecord } from '../data/status';
+import { QualityPanel } from './QualityPanel';
 
 export interface SolvedPartViewProps {
   readonly record: Extract<PartRecord, { status: 'solved' }>;
   readonly manifest?: PuzzlePartManifest;
+  readonly quality?: ScopeQuality;
 }
 
-export function SolvedPartView({ record, manifest }: SolvedPartViewProps) {
+export function SolvedPartView({ record, manifest, quality }: SolvedPartViewProps) {
   const [activeInput, setActiveInput] = useState(manifest?.exampleInput ?? '');
   const Visualizer = manifest?.Visualizer;
 
@@ -43,6 +46,16 @@ export function SolvedPartView({ record, manifest }: SolvedPartViewProps) {
           </>
         )}
       </section>
+
+      {quality && (
+        <section className="card">
+          <QualityPanel
+            title="Code Quality Metrics"
+            subtitle={`Part ${record.part} module`}
+            scope={quality}
+          />
+        </section>
+      )}
 
       {manifest && Visualizer ? (
         <>

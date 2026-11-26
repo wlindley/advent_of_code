@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { PuzzlePart } from '../shared/core';
+import { formatPartKey, type PuzzlePart } from '../shared/core';
 import { DashboardView } from './components/DashboardView';
 import { InProgressPanel } from './components/InProgressPanel';
 import { SolvedPartView } from './components/SolvedPartView';
+import rawQuality from './data/quality.json';
+import { findPartQuality, type QualityReport } from './data/quality';
 import rawStatus from './data/status.json';
 import {
   findActiveParts,
@@ -44,6 +46,7 @@ function parseHash(hash: string): Route {
 
 export function App() {
   const statusDoc = useMemo(() => validateStatusDocument(rawStatus as unknown as StatusDocument), []);
+  const qualityReport = rawQuality as unknown as QualityReport;
   const [route, setRoute] = useState<Route>(() => parseHash(window.location.hash));
   const [selectedYear, setSelectedYear] = useState<number>(statusDoc.years[0]?.year ?? 2025);
   const [autoRefresh, setAutoRefresh] = useState(true);
@@ -108,7 +111,12 @@ export function App() {
 
       <main>
         {route.kind === 'dashboard' && (
-          <DashboardView statusDoc={statusDoc} selectedYear={selectedYear} onSelectYear={setSelectedYear} />
+          <DashboardView
+            statusDoc={statusDoc}
+            qualityReport={qualityReport}
+            selectedYear={selectedYear}
+            onSelectYear={setSelectedYear}
+          />
         )}
 
         {route.kind === 'in_progress' && (
@@ -137,7 +145,14 @@ export function App() {
             );
           }
           if (record.status === 'solved') {
-            return <SolvedPartView record={record} manifest={getPartManifest(route.year, route.day, route.part)} />;
+            const key = formatPartKey(route.year, route.day, route.part);
+            return (
+              <SolvedPartView
+                record={record}
+                manifest={getPartManifest(route.year, route.day, route.part)}
+                quality={findPartQuality(qualityReport, key)}
+              />
+            );
           }
           return <InProgressPanel record={record} />;
         })()}
