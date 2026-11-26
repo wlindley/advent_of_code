@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T20:55:44Z",
+  "updatedAt": "2026-11-26T21:12:12Z",
   "parts": [
     {
       "year": 2020,
@@ -123,6 +123,26 @@
       ],
       "startedAt": "2026-11-26T20:48:33Z",
       "verifiedAt": "2026-11-26T20:55:44Z"
+    },
+    {
+      "year": 2020,
+      "day": 4,
+      "part": 1,
+      "title": "Passport Processing",
+      "puzzleUrl": "https://adventofcode.com/2020/day/4",
+      "status": "solved",
+      "summary": "Count how many blank-line-separated passport records contain all seven required fields (byr, iyr, eyr, hgt, hcl, ecl, pid), treating cid as optional.",
+      "algorithmSummary": "Polymorphic PassportValidationPolicy (REQUIRED_FIELDS_POLICY for Part 1, pre-built STRICT_FIELD_POLICY & STRICT_FIELD_RULES for zero-churn Part 2) in 2020/day04/shared/ (1.78 ms across 255 passports -> 196): strict single-colon key:value parser rejecting fused/duplicate keys, zero-derived-state PresenceEvaluation/StrictFieldEvaluation/PassportTraceFrame, interactive 8-field passport card scanner visualizer, differentially verified against an independent whitespace-record set-inclusion oracle across 40 seeded batches.",
+      "complexity": "O(N * F) time, O(N * F) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.78,
+      "attemptsCount": 1,
+      "learnings": [
+        "Enforcing a strict single-colon key:value grammar rejects malformed fused tokens like 'byr:1980ecl:brn' instead of silently capturing an invalid value.",
+        "Pre-building polymorphic STRICT_FIELD_RULES (including leading-zero-rejecting HeightRule) and STRICT_FIELD_POLICY in day04/shared/ prepares Part 2 with zero edits to shared/."
+      ],
+      "startedAt": "2026-11-26T20:56:32Z",
+      "verifiedAt": "2026-11-26T21:12:12Z"
     }
   ]
 }
