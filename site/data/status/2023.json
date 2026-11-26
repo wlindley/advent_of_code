@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:05:50Z",
+  "updatedAt": "2026-11-26T17:15:05Z",
   "parts": [
     {
       "year": 2023,
@@ -863,6 +863,26 @@
       ],
       "startedAt": "2026-11-26T16:49:30Z",
       "verifiedAt": "2026-11-26T17:05:50Z"
+    },
+    {
+      "year": 2023,
+      "day": 22,
+      "part": 2,
+      "title": "Sand Slabs",
+      "puzzleUrl": "https://adventofcode.com/2023/day/22#part2",
+      "status": "solved",
+      "summary": "For each of the 1,227 settled sand bricks, count how many other bricks would fall in a chain reaction if that brick were disintegrated, and sum those counts across all bricks.",
+      "algorithmSummary": "Zero-churn chain-reaction specialization reusing 2023/day22/shared SettledStack, SupportGraph.totalChainReactionFalls (skipping safe bricks and running zero-allocation Kahn in-degree BFS over a single reused Int32Array buffer), buildSlabTrace, and interactive SlabVisualizer (mode='part2') with zero shared edits (5.17 ms across 1,227 bricks -> 64,714 total falling bricks); differentially verified against an independent brute-force 3D voxel drop-by-1 re-settling oracle across the official 7-brick example (7), multi-level diamonds (5), multi-cell parallel horizontal stacks (5), single bricks (0), and 15 seeded non-overlapping random stacks.",
+      "complexity": "O(N log N + sum(area_i) + L * (N + E)) time, O(X * Y + N + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 5.17,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building SupportGraph.totalChainReactionFalls and mode='part2' in 2023/day22/shared/ delivered Part 2 in 5.17 ms with 25 lines of domain solver code and zero shared-module edits.",
+        "Generating non-overlapping seeded stacks via monotonic zCursor lets the independent drop-by-1 3D voxel gravity oracle differentially test full chain-reaction sums without touching SupportGraph."
+      ],
+      "startedAt": "2026-11-26T17:06:59Z",
+      "verifiedAt": "2026-11-26T17:15:05Z"
     }
   ]
 }
