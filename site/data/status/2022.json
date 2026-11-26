@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T11:39:58Z",
+  "updatedAt": "2026-11-26T16:20:21Z",
   "parts": [
     {
       "year": 2022,
@@ -802,6 +802,27 @@
       ],
       "startedAt": "2026-11-26T11:31:05Z",
       "verifiedAt": "2026-11-26T11:39:58Z"
+    },
+    {
+      "year": 2022,
+      "day": 21,
+      "part": 1,
+      "title": "Monkey Math",
+      "puzzleUrl": "https://adventofcode.com/2022/day/21",
+      "status": "solved",
+      "summary": "Evaluate a 2,703-monkey arithmetic expression DAG of integer literals and +, -, *, / operations to determine the exact integer yelled by root.",
+      "algorithmSummary": "DAG-validated bottom-up exact Rational evaluator (reusing DirectedGraph and Rational from shared/core) with polymorphic BINARY_OPERATORS (apply, applyAffine, invertLeft, invertRight) in 2022/day21/shared/ (10.16 ms across 2,703 monkeys): validates all referenced operands before constructing DirectedGraph, evaluates reachableBottomUp(root) to prevent unreachable divide-by-zero poisoning, and pre-builds exact Part 2 solveEqualityUnknown (dispatching unique-path top-down inversion vs multi-path AffineExpr elimination) + buildEqualitySolveTrace + MonkeyMathVisualizer for zero-churn Part 2 reuse; differentially verified against an independent recursive memoized BigInt evaluator and top-down inversion + substitution oracle across official examples (152 P1, 301 P2) and seeded random trees.",
+      "complexity": "O(V + E) time, O(V + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 10.16,
+      "attemptsCount": 1,
+      "learnings": [
+        "Evaluating only reachableBottomUp(root) prevents unreachable monkeys with division-by-zero from poisoning root while keeping Part 1 and Part 2 exact over arbitrary-precision Rational values.",
+        "Dispatching Part 2 on unknownPathCount (1n -> top-down algebraic inversion, > 1n -> AffineExpr elimination) handles both right-hand division (10 / humn = 2) and multi-path linear DAGs cleanly with zero shared-module edits."
+      ],
+      "startedAt": "2026-11-26T11:41:07Z",
+      "verifiedAt": "2026-11-26T16:20:21Z",
+      "humanWaitSeconds": 15791
     }
   ]
 }
