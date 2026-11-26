@@ -21,6 +21,27 @@ export class ClosedInterval {
   }
 }
 
+function coalesceSortedIntervals(sorted: readonly ClosedInterval[]): ClosedInterval[] {
+  if (sorted.length === 0) return [];
+  const merged: ClosedInterval[] = [];
+  let curStart = sorted[0]!.start;
+  let curEnd = sorted[0]!.end;
+
+  for (let i = 1; i < sorted.length; i += 1) {
+    const next = sorted[i]!;
+    // Coalesce touching integer ranges (e.g. [3, 5] and [6, 7]) in addition to overlaps.
+    if (next.start <= curEnd + 1n) {
+      curEnd = next.end > curEnd ? next.end : curEnd;
+    } else {
+      merged.push(new ClosedInterval(curStart, curEnd));
+      curStart = next.start;
+      curEnd = next.end;
+    }
+  }
+  merged.push(new ClosedInterval(curStart, curEnd));
+  return merged;
+}
+
 /** Normalized sorted union of disjoint, non-adjacent `ClosedInterval` bands. */
 export class IntervalUnion {
   readonly intervals: readonly ClosedInterval[];
@@ -30,35 +51,13 @@ export class IntervalUnion {
     const sorted = Array.from(intervals).sort((a, b) =>
       a.start < b.start ? -1 : a.start > b.start ? 1 : 0,
     );
-    const merged: ClosedInterval[] = [];
-
-    if (sorted.length > 0) {
-      let curStart = sorted[0]!.start;
-      let curEnd = sorted[0]!.end;
-
-      for (let i = 1; i < sorted.length; i += 1) {
-        const next = sorted[i]!;
-        // Coalesce touching integer ranges (e.g. [3, 5] and [6, 7]) in addition to overlaps.
-        if (next.start <= curEnd + 1n) {
-          curEnd = next.end > curEnd ? next.end : curEnd;
-        } else {
-          merged.push(new ClosedInterval(curStart, curEnd));
-          curStart = next.start;
-          curEnd = next.end;
-        }
-      }
-      merged.push(new ClosedInterval(curStart, curEnd));
-    }
-
-    this.intervals = Object.freeze(merged);
+    this.intervals = Object.freeze(coalesceSortedIntervals(sorted));
     Object.freeze(this);
   }
 
   get totalLength(): bigint {
     let total = 0n;
-    for (const iv of this.intervals) {
-      total += iv.length;
-    }
+    for (const iv of this.intervals) total += iv.length;
     return total;
   }
 
@@ -68,13 +67,9 @@ export class IntervalUnion {
     while (lo <= hi) {
       const mid = (lo + hi) >>> 1;
       const iv = this.intervals[mid]!;
-      if (value < iv.start) {
-        hi = mid - 1;
-      } else if (value > iv.end) {
-        lo = mid + 1;
-      } else {
-        return iv;
-      }
+      if (value < iv.start) hi = mid - 1;
+      else if (value > iv.end) lo = mid + 1;
+      else return iv;
     }
     return undefined;
   }

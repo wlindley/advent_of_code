@@ -1,5 +1,41 @@
 const EMPTY: readonly never[] = Object.freeze([]);
 
+function forwardWithReverse<T>(
+  graph: DirectedGraph<T>,
+  source: T,
+): { forward: Set<T>; revAdj: Map<T, T[]> } {
+  const forward = new Set<T>([source]);
+  const revAdj = new Map<T, T[]>();
+  const queue: T[] = [source];
+  for (let head = 0; head < queue.length; head++) {
+    const u = queue[head]!;
+    for (const v of graph.outNeighbors(u)) {
+      const rev = revAdj.get(v);
+      if (rev) rev.push(u);
+      else revAdj.set(v, [u]);
+      if (!forward.has(v)) {
+        forward.add(v);
+        queue.push(v);
+      }
+    }
+  }
+  return { forward, revAdj };
+}
+
+function backwardReachable<T>(revAdj: ReadonlyMap<T, readonly T[]>, target: T): Set<T> {
+  const relevant = new Set<T>([target]);
+  const queue: T[] = [target];
+  for (let head = 0; head < queue.length; head++) {
+    for (const u of revAdj.get(queue[head]!) ?? EMPTY) {
+      if (!relevant.has(u)) {
+        relevant.add(u);
+        queue.push(u);
+      }
+    }
+  }
+  return relevant;
+}
+
 /** Immutable directed multigraph with topological sorting and path counting. */
 export class DirectedGraph<T = string> {
   private readonly adjacency: ReadonlyMap<T, readonly T[]>;
@@ -31,26 +67,12 @@ export class DirectedGraph<T = string> {
   /** Returns the induced subgraph of vertices lying on at least one s -> t walk. */
   relevantSubgraph(source: T, target: T): DirectedGraph<T> {
     if (!this.has(source) || !this.has(target)) return new DirectedGraph([]);
-    const forward = new Set<T>([source]);
-    const revAdj = new Map<T, T[]>();
-    const fQueue: T[] = [source];
-    for (let head = 0; head < fQueue.length; head++) {
-      const u = fQueue[head]!;
-      for (const v of this.outNeighbors(u)) {
-        const rev = revAdj.get(v);
-        if (rev) rev.push(u); else revAdj.set(v, [u]);
-        if (!forward.has(v)) { forward.add(v); fQueue.push(v); }
-      }
-    }
+    const { forward, revAdj } = forwardWithReverse(this, source);
     if (!forward.has(target)) return new DirectedGraph([]);
-    const relevant = new Set<T>([target]);
-    const bQueue: T[] = [target];
-    for (let head = 0; head < bQueue.length; head++) {
-      for (const u of revAdj.get(bQueue[head]!) ?? EMPTY) {
-        if (!relevant.has(u)) { relevant.add(u); bQueue.push(u); }
-      }
-    }
-    return new DirectedGraph([...relevant].map((u) => [u, this.outNeighbors(u).filter((v) => relevant.has(v))]));
+    const relevant = backwardReachable(revAdj, target);
+    return new DirectedGraph(
+      [...relevant].map((u) => [u, this.outNeighbors(u).filter((v) => relevant.has(v))]),
+    );
   }
 
   /** Iterative Kahn's algorithm; throws if any cycle exists in the graph. */

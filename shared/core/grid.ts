@@ -33,7 +33,8 @@ export class Grid2D<T> {
     }
     this.rows = rows;
     this.cols = cols;
-    this.cells = cells.slice();
+    this.cells = Object.freeze(cells.slice());
+    Object.freeze(this);
   }
 
   get size(): number {
