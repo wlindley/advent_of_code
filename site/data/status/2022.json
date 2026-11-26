@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:26:23Z",
+  "updatedAt": "2026-11-26T06:33:45Z",
   "parts": [
     {
       "year": 2022,
@@ -342,6 +342,26 @@
       ],
       "startedAt": "2026-11-26T06:12:33Z",
       "verifiedAt": "2026-11-26T06:26:23Z"
+    },
+    {
+      "year": 2022,
+      "day": 9,
+      "part": 2,
+      "title": "Rope Bridge",
+      "puzzleUrl": "https://adventofcode.com/2022/day/9#part2",
+      "status": "solved",
+      "summary": "Extend the rope simulation to 10 knots (head plus 9 trailing knots) starting at (0, 0) under the same cardinal head motions—including (±2, ±2) diagonal cascades—and count distinct cells visited by the 10th knot.",
+      "algorithmSummary": "Zero-churn 10-knot specialization (PART2_KNOT_COUNT = 10) reusing 2022/day09/shared Int32Array rope cascade, adaptive DenseTailTracker/SparseTailTracker, and HiDPI Canvas 2D RopeBridgeVisualizer with zero edits to shared/ (2.85 ms across ~11,500 head steps); differentially verified against an independent explicit 4-branch follow oracle covering all 4 (±2, ±2) diagonal quadrants, sparse fallback, and 45 seeded Mulberry32 PRNG plans.",
+      "complexity": "O(M + S * K) time, O(K + min(W * H, V)) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.85,
+      "attemptsCount": 1,
+      "learnings": [
+        "Parameterizing knotCount and implementing the unified Math.sign Chebyshev follow rule in 2022/day09/shared/ reduced Part 2 to 15 lines of production domain code and an 8-line visualizer wrapper with zero shared-module churn.",
+        "Asserting that all four (±2, ±2) diagonal cascade quadrants actually fire inside the differential oracle proves Part 2's diagonal pull physics is thoroughly exercised beyond Part 1's orthogonal-head subset."
+      ],
+      "startedAt": "2026-11-26T06:26:55Z",
+      "verifiedAt": "2026-11-26T06:33:45Z"
     }
   ]
 }

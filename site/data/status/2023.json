@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:18:56Z",
+  "updatedAt": "2026-11-26T06:32:26Z",
   "parts": [
     {
       "year": 2023,
@@ -302,6 +302,26 @@
       ],
       "startedAt": "2026-11-26T06:06:33Z",
       "verifiedAt": "2026-11-26T06:18:56Z"
+    },
+    {
+      "year": 2023,
+      "day": 8,
+      "part": 2,
+      "title": "Haunted Wasteland",
+      "puzzleUrl": "https://adventofcode.com/2023/day/8#part2",
+      "status": "solved",
+      "summary": "Simultaneously start a ghost on every node ending in 'A', advance all ghosts in lockstep along the cyclic L/R instruction tape, and return the earliest step at which every ghost simultaneously lands on a node ending in 'Z'.",
+      "algorithmSummary": "Zero-churn generalized rho-cycle decomposition and BigInt CRT convergence engine reusing 2023/day08/shared WastelandNetwork and shared/core ceilDiv/bigintLog2: extracts exact (prefixLength, cycleLength, preCycleHits, cycleHits) per ghost via Int32Array(N * L), checks pre-cycle simultaneous hits via the max-prefix anchor theorem, and folds multi-hit congruences via iterative extGcdBigInt (9.83 ms on 6 ghosts converging at 13.13 trillion steps); differentially verified against an independent lockstep ghost simulator across 40 seeded random multi-ghost networks.",
+      "complexity": "O(G * N * L) cycle extraction + O(prod |H_g| * log M) CRT time, O(N * L) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 9.83,
+      "attemptsCount": 1,
+      "learnings": [
+        "Even the official Part 2 example contains two '**Z' hits inside a single (nodeId, ip) cycle (22A has period 6 with hits at steps 3 and 6), so generalized BigInt CRT over multi-hit cycles handles both the official example, arbitrary non-aligned prefixes/offsets, and AoC's aligned-LCM personal input cleanly.",
+        "Every pre-cycle simultaneous hit t < max(prefix_g) must appear in the max-prefix anchor ghost's preCycleHits, letting us test mixed pre-cycle and already-in-cycle convergence in O(|preCycleHits| * G) before requiring non-empty cycleHits."
+      ],
+      "startedAt": "2026-11-26T06:19:31Z",
+      "verifiedAt": "2026-11-26T06:32:26Z"
     }
   ]
 }
