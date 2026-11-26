@@ -1,6 +1,27 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T18:49:01Z",
-  "parts": []
+  "updatedAt": "2026-11-26T19:07:48Z",
+  "parts": [
+    {
+      "year": 2019,
+      "day": 1,
+      "part": 1,
+      "title": "The Tyranny of the Rocket Equation",
+      "puzzleUrl": "https://adventofcode.com/2019/day/1",
+      "status": "solved",
+      "summary": "Compute the total fuel required to launch all spacecraft modules by applying floor(mass / 3) - 2 (clamped at zero) per module.",
+      "algorithmSummary": "Polymorphic FuelPolicy strategy (SINGLE_STAGE_FUEL_POLICY for Part 1, pre-built RECURSIVE_FUEL_POLICY for zero-churn Part 2) in 2019/day01/shared/ (0.21 ms across 100 modules -> 3,474,920): exact BigInt accumulation, bounded cascade trace, interactive SVG stage-cascade visualizer, cross-verified across 0..500, powers-of-3 transitions, and Number.MAX_SAFE_INTEGER against a BigInt shifted base-3 Legendre oracle.",
+      "complexity": "O(N) time, O(N) parsed storage",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.21,
+      "attemptsCount": 1,
+      "learnings": [
+        "A BigInt shifted base-3 Legendre closed-form oracle independently cross-checks recursive fuel cascades even near Number.MAX_SAFE_INTEGER and across '10'-prefix powers-of-3 boundaries.",
+        "Injecting a polymorphic FuelPolicy strategy into createFuelSolver keeps Part 1 and Part 2 domain solvers to 4 lines each with zero shared edits."
+      ],
+      "startedAt": "2026-11-26T18:54:50Z",
+      "verifiedAt": "2026-11-26T19:07:48Z"
+    }
+  ]
 }
