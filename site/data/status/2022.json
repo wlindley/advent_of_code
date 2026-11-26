@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T07:07:52Z",
+  "updatedAt": "2026-11-26T07:21:49Z",
   "parts": [
     {
       "year": 2022,
@@ -402,6 +402,26 @@
       ],
       "startedAt": "2026-11-26T06:49:53Z",
       "verifiedAt": "2026-11-26T07:07:52Z"
+    },
+    {
+      "year": 2022,
+      "day": 11,
+      "part": 1,
+      "title": "Monkey in the Middle",
+      "puzzleUrl": "https://adventofcode.com/2022/day/11",
+      "status": "solved",
+      "summary": "Simulate 20 rounds of monkey keep-away where each monkey inspects every item in its FIFO queue, transforms its worry level, applies floor(worry / 3) relief, and throws it by divisibility test; return monkey business (the product of the top two inspection counts).",
+      "algorithmSummary": "Queue-free per-item independent trajectory simulation in exact BigInt (O(M) working space, 1.08 ms across 20 rounds) parameterized by polymorphic WorryOperation and KeepAwayRule (DivideByThreeRule using shared/core floorDiv) with dynamic KeepAwaySetup.commonModulus via shared/core lcmBigInt in 2022/day11/shared/, paired with a circular ThrowNetworkSvg and KeepAwayVisualizer for zero-churn Part 2 (10,000-round mod-LCM) reuse; differentially verified against an independent round-by-round FIFO queue oracle across official snapshots, 10,000-round modular relief, and 80 seeded random setups.",
+      "complexity": "O(R * I * H) time, O(M) working space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.08,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because items never interact and each monkey drains its entire queue every turn, simulating each item independently with round += 1 iff nextMonkey < currentMonkey eliminates queue allocations while matching FIFO order exactly.",
+        "Computing KeepAwaySetup.commonModulus dynamically via shared/core lcmBigInt and parameterizing KeepAwayRule.relieve(worry, commonModulus) prepares Part 2 (10,000 rounds mod LCM) with zero shared-module edits."
+      ],
+      "startedAt": "2026-11-26T07:08:33Z",
+      "verifiedAt": "2026-11-26T07:21:49Z"
     }
   ]
 }
