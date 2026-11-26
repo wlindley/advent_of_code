@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-11-26T18:31:34Z",
-  "subagentsScanned": 510,
+  "generatedAt": "2026-11-26T18:40:11Z",
+  "subagentsScanned": 515,
   "budgetTargetTokens": null,
   "tiers": [
     {
       "tier": "Gemini 4 Neon",
-      "turns": 3762,
-      "inputTokens": 23399873,
-      "cacheReadTokens": 442607018,
-      "outputTokens": 7094086
+      "turns": 3793,
+      "inputTokens": 23593720,
+      "cacheReadTokens": 447632838,
+      "outputTokens": 7160356
     },
     {
       "tier": "Gemini Flash",
-      "turns": 5319,
-      "inputTokens": 19607000,
-      "cacheReadTokens": 227877647,
-      "outputTokens": 5207897
+      "turns": 5377,
+      "inputTokens": 19813728,
+      "cacheReadTokens": 230258310,
+      "outputTokens": 5270238
     }
   ],
   "timeline": [
@@ -1713,12 +1713,48 @@
     },
     {
       "bucketStart": "2026-11-26T18:30:00Z",
+      "scope": "2021",
+      "tier": "Gemini 4 Neon",
+      "turns": 13,
+      "inputTokens": 99648,
+      "cacheReadTokens": 261601,
+      "outputTokens": 32712
+    },
+    {
+      "bucketStart": "2026-11-26T18:30:00Z",
+      "scope": "2023",
+      "tier": "Gemini 4 Neon",
+      "turns": 6,
+      "inputTokens": 36935,
+      "cacheReadTokens": 64517,
+      "outputTokens": 18963
+    },
+    {
+      "bucketStart": "2026-11-26T18:30:00Z",
+      "scope": "2023",
+      "tier": "Gemini Flash",
+      "turns": 17,
+      "inputTokens": 73628,
+      "cacheReadTokens": 516927,
+      "outputTokens": 25391
+    },
+    {
+      "bucketStart": "2026-11-26T18:30:00Z",
+      "scope": "2024",
+      "tier": "Gemini Flash",
+      "turns": 41,
+      "inputTokens": 133100,
+      "cacheReadTokens": 1863736,
+      "outputTokens": 36950
+    },
+    {
+      "bucketStart": "2026-11-26T18:30:00Z",
       "scope": "shared",
       "tier": "Gemini 4 Neon",
-      "turns": 5,
-      "inputTokens": 16430,
-      "cacheReadTokens": 771153,
-      "outputTokens": 3912
+      "turns": 17,
+      "inputTokens": 73694,
+      "cacheReadTokens": 5470855,
+      "outputTokens": 18507
     }
   ]
 }

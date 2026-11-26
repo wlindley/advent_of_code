@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T18:12:21Z",
+  "updatedAt": "2026-11-26T18:39:16Z",
   "parts": [
     {
       "year": 2024,
@@ -964,6 +964,45 @@
       ],
       "startedAt": "2026-11-26T17:49:42Z",
       "verifiedAt": "2026-11-26T18:12:21Z"
+    },
+    {
+      "year": 2024,
+      "day": 25,
+      "part": 1,
+      "title": "Code Chronicle",
+      "puzzleUrl": "https://adventofcode.com/2024/day/25",
+      "status": "solved",
+      "summary": "Parse 500 ASCII lock and key schematics into pin-height vectors and count all compatible (lock, key) pairs whose column pin heights sum to at most the available interior clearance.",
+      "algorithmSummary": "General arbitrary-(W, H) TumblerSchematic / TumblerInventory with unified base-outward contiguity parsing and O(L * K * W) early-exit pairwise height-vector scan in 2024/day25/shared/ (5.14 ms across 250 locks x 250 keys = 62,500 pairs -> 3,127 fitting pairs): zero stored derived state in TumblerTraceFrame, bounded streaming trace via shared/core sampleTraceIndices, meshed W x H TumblerMeshSvg visualizer, differentially verified against BOTH an independent Multidimensional SOS DP oracle and a raw 2D grid cell-overlap oracle across the official 5x7 example (3), H=2 edge cases, wide 12x20 schematics, duplicates, and seeded random sets.",
+      "complexity": "O(L * K * W) time, O((L + K) * W) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 5.14,
+      "attemptsCount": 1,
+      "learnings": [
+        "A unified base-outward contiguity scan parameterized by start row and step direction parses both locks (top-down) and keys (bottom-up) for any W >= 1, H >= 2 (including H = 2 with maxPinHeight = 0) with zero duplicate branches.",
+        "Cross-checking pairwise height-vector scanning against both an independent Multidimensional SOS DP oracle and a raw 2D cell-overlap oracle verifies both pin-height extraction and compatibility math independently."
+      ],
+      "startedAt": "2026-11-26T18:12:32Z",
+      "verifiedAt": "2026-11-26T18:38:40Z"
+    },
+    {
+      "year": 2024,
+      "day": 25,
+      "part": 2,
+      "title": "Code Chronicle",
+      "puzzleUrl": "https://adventofcode.com/2024/day/25#part2",
+      "status": "solved",
+      "summary": "Advent of Code 2024 finale star: deliver the complete chronicle of all 49 collected stars across Days 1–25 to claim the 50th and final star.",
+      "algorithmSummary": "Delegates directly to shared/core createFinaleSolver(50) (6-line domain entrypoint) to verify all 49 prerequisite stars and emit bounded 50-star canopy illumination frames; submitted live and confirmed 50/50 stars on adventofcode.com.",
+      "complexity": "O(1) verification, O(S) illumination trace",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.05,
+      "attemptsCount": 1,
+      "learnings": [
+        "Completed all 50 stars of Advent of Code 2024 with 50/50 consecutive first-try submissions (zero wrong guesses), immediately leveraging the newly promoted shared/core createFinaleSolver(50) and finale-aware htmlParser."
+      ],
+      "startedAt": "2026-11-26T18:38:41Z",
+      "verifiedAt": "2026-11-26T18:39:16Z"
     }
   ]
 }
