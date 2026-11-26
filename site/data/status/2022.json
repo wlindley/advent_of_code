@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:44:03Z",
+  "updatedAt": "2026-11-26T17:52:22Z",
   "parts": [
     {
       "year": 2022,
@@ -943,6 +943,26 @@
       ],
       "startedAt": "2026-11-26T17:27:35Z",
       "verifiedAt": "2026-11-26T17:44:03Z"
+    },
+    {
+      "year": 2022,
+      "day": 24,
+      "part": 2,
+      "title": "Blizzard Basin",
+      "puzzleUrl": "https://adventofcode.com/2022/day/24#part2",
+      "status": "solved",
+      "summary": "Find the fewest minutes required to cross the blizzard valley from entrance to exit, return to the entrance for forgotten snacks, and cross back to the exit.",
+      "algorithmSummary": "Zero-churn 3-leg specialization reusing 2022/day24/shared BlizzardBasin, PART2_WAYPOINTS, solveTrip, traceTrip, and BasinVisualizer with zero shared edits (57.04 ms across 3 chained (phase, cell) BFS legs on 20×150 valley, P=300); verified against an independent joint (row, col, stage, phase) Set-BFS differential oracle across the official 6×8 valley (54 = 18 + 23 + 13), 3×3 empty (6), and 3×5 wait-at-every-endpoint (9) valleys.",
+      "complexity": "O(3 * P * H * W) time, O(P * H * W) space where P = lcm(H - 2, W - 2)",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 57.04,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because both entrance and exit cells are perpetually blizzard-free, arriving at any intermediate waypoint as early as possible strictly dominates later arrivals, making sequential leg-chaining provably identical to joint 3-stage BFS while using 1/3 peak memory.",
+        "Pre-building PART2_WAYPOINTS, solveTrip, and traceTrip in 2022/day24/shared/ solved all three legs in 57.04 ms with 20 lines of Part 2 solver code and zero shared-module edits."
+      ],
+      "startedAt": "2026-11-26T17:44:34Z",
+      "verifiedAt": "2026-11-26T17:52:22Z"
     }
   ]
 }
