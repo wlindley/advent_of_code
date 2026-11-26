@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T16:51:48Z",
+  "updatedAt": "2026-11-26T17:01:10Z",
   "parts": [
     {
       "year": 2022,
@@ -863,6 +863,26 @@
       ],
       "startedAt": "2026-11-26T16:30:13Z",
       "verifiedAt": "2026-11-26T16:51:48Z"
+    },
+    {
+      "year": 2022,
+      "day": 22,
+      "part": 2,
+      "title": "Monkey Map",
+      "puzzleUrl": "https://adventofcode.com/2022/day/22#part2",
+      "status": "solved",
+      "summary": "Fold the 200x150 board of six 50x50 faces into a 3D cube so stepping off a face edge wraps across the corresponding 3D cube seam with rotated heading, then compute 1000*row + 4*col + facing.",
+      "algorithmSummary": "Zero-churn 3D folded-cube specialization reusing 2022/day22/shared CubeNetTopology (exact integer 3D orthonormal frame BFS + coordinate-free seam projection), walkMonkeyMap (wall-before-commit preserving pre-wrap facing), traceMonkeyMap, and MonkeyMapVisualizer (with dynamic SxS cube face borders) with zero shared edits (7.24 ms on 200x150 S=50 cube): handles all 11 valid cube nets with zero hardcoded seams, and differentially verifies against an independent 3D voxel-surface cube walker oracle operating directly on [0..S-1]^3 surface stickers across both the official S=4 example (5031) and the 011/010/110/100 S=3 net crossing 90- and 180-degree rotated seams with seam-blocked walls.",
+      "complexity": "O(H * W + K) time, O(H * W) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 7.24,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building coordinate-free 3D orthonormal frame folding (CubeNetTopology) inside 2022/day22/shared/ solved the 50x50 cube walk on the first try in 7.24 ms with 21 lines of Part 2 solver code and zero shared-module edits.",
+        "Building an independent 3D voxel-surface sticker walker ([0..S-1]^3 with tile-level BFS rooted at row 0's leftmost playable cell) differentially verifies arbitrary cube nets without sharing any affine seam-projection math."
+      ],
+      "startedAt": "2026-11-26T16:52:28Z",
+      "verifiedAt": "2026-11-26T17:01:10Z"
     }
   ]
 }
