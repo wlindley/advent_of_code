@@ -482,6 +482,26 @@
       ],
       "startedAt": "2026-11-26T08:00:05Z",
       "verifiedAt": "2026-11-26T08:11:27Z"
+    },
+    {
+      "year": 2023,
+      "day": 13,
+      "part": 1,
+      "title": "Point of Incidence",
+      "puzzleUrl": "https://adventofcode.com/2023/day/13",
+      "status": "solved",
+      "summary": "Locate the unique vertical or horizontal mirror reflection axis in each ash/rock pattern grid (ignoring overhanging edges) and sum columns to the left of vertical axes plus 100 times rows above horizontal axes.",
+      "algorithmSummary": "Arbitrary-width BigInt row/column bitmask Hamming scanner using shared/core bitCount parameterized by targetSmudges (0 for Part 1) in 2023/day13/shared/ in O(R * C + R^2 + C^2) time (2.70 ms across 100 patterns): enforces strict uniqueness across all vertical and horizontal axes, extracts exact mismatched SmudgePair coordinates via lowest-set-bit iteration, exposes ReflectionMatch.mirrorOf() for thin presentation, and pairs with MirrorGridSvg/IncidenceVisualizer for zero-churn Part 2 (targetSmudges = 1) reuse; differentially verified against an independent raw-character cell scanner across official examples (0 & 1 smudges), wide 40x70 grids past bit 64, and 60+ seeded synthetic patterns.",
+      "complexity": "O(R * C + R^2 + C^2) time, O(R + C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.7,
+      "attemptsCount": 1,
+      "learnings": [
+        "Encoding rows and columns as arbitrary-width BigInt bitmasks with shared/core bitCount(a ^ b) eliminates 31-bit width ceilings and parameterizes both Part 1 (targetSmudges = 0) and Part 2 (targetSmudges = 1) in one shared reflection engine with zero shared-module churn.",
+        "Placing mirrorOf(row, col, pattern) directly on ReflectionMatch keeps MirrorGridSvg.tsx completely free of overhang and mirror arithmetic while supporting live mirrored-pair hover and Part 2 smudge highlights."
+      ],
+      "startedAt": "2026-11-26T08:12:17Z",
+      "verifiedAt": "2026-11-26T08:26:33Z"
     }
   ]
 }

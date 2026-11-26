@@ -483,6 +483,26 @@
       ],
       "startedAt": "2026-11-26T08:01:14Z",
       "verifiedAt": "2026-11-26T08:09:17Z"
+    },
+    {
+      "year": 2024,
+      "day": 13,
+      "part": 1,
+      "title": "Claw Contraption",
+      "puzzleUrl": "https://adventofcode.com/2024/day/13",
+      "status": "solved",
+      "summary": "For each two-button claw machine (Button A costs 3 tokens, Button B costs 1 token, max 100 presses per button), compute the minimum tokens required to align the claw exactly with each winnable prize and return the total token spend.",
+      "algorithmSummary": "Exact BigInt Cramer's rule with complete collinear 1D extended-GCD + shared/core ceilDiv/floorDiv interval minimization parameterized by ClawConfig(prizeOffset=0n, maxPresses=100n) in 2024/day13/shared/ in O(M) non-singular time (1.10 ms across 320 machines), paired with a BigInt-safe ray-projection ClawVectorDiagram and ClawContraptionVisualizer for zero-churn Part 2 (10^13 offset, unbounded presses) reuse; differentially verified against an independent brute-force (A, B) in [0..100]^2 minimizer oracle across official examples, curated collinear/tie/cap boundaries, and 150 seeded random machines.",
+      "complexity": "O(M) non-singular, O(M log max(ax, bx)) worst-case time, O(M) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.1,
+      "attemptsCount": 1,
+      "learnings": [
+        "Solving 2x2 claw systems via exact BigInt Cramer's rule and falling back to 1D extended-GCD interval minimization with cost slope (3 * aStep - bStep) when det === 0n makes the shared solver both mathematically complete and overflow-free for Part 2's 10^13 offset.",
+        "Projecting unwinnable button rays onto the bounding box via BigInt cross-multiplication before normalizing prevents ray underflow to (0, 0) when Part 2 prizes jump to 10^13 scale."
+      ],
+      "startedAt": "2026-11-26T08:10:04Z",
+      "verifiedAt": "2026-11-26T08:25:05Z"
     }
   ]
 }

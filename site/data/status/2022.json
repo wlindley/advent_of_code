@@ -502,6 +502,26 @@
       ],
       "startedAt": "2026-11-26T07:58:52Z",
       "verifiedAt": "2026-11-26T08:13:21Z"
+    },
+    {
+      "year": 2022,
+      "day": 13,
+      "part": 2,
+      "title": "Distress Signal",
+      "puzzleUrl": "https://adventofcode.com/2022/day/13#part2",
+      "status": "solved",
+      "summary": "Ignore blank lines, insert divider packets [[2]] and [[6]], order all packets by the recursive Distress Signal comparison rules, and multiply the 1-based sorted indices of the two divider packets to obtain the decoder key.",
+      "algorithmSummary": "Zero-churn single-pass O(N) 3-band divider-rank partitioning reusing 2022/day13/shared SignalInput.packets, parsePacket, comparePackets, traceComparison, and PacketComparePanel with zero shared edits (2.52 ms across 300 packets): short-circuits packets < [[2]] by transitivity ([[2]] < [[6]]) and computes (1 + beforeFirst) * (2 + beforeFirst + between), matching prepended stable sort identically even on equivalent divider ties; differentially verified against an independent JSON.parse + literal [n]-wrapping full stable sort oracle across official examples (140), divider tie/near-tie suites, and 120 seeded random corpora.",
+      "complexity": "O(N * L) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.52,
+      "attemptsCount": 1,
+      "learnings": [
+        "Partitioning packets into three bands (< [[2]], [[2]]..[[6]], > [[6]]) computes the exact decoder key in O(N) without sorting non-divider packets, while matching ES2019+ prepended stable sort identically even when input packets tie a divider.",
+        "Decoupling PacketComparePanel from PacketPair in 2022/day13/shared/viz/ enabled Part 2 to inspect deciding divider comparisons with zero edits to shared/ and zero imports from part1/."
+      ],
+      "startedAt": "2026-11-26T08:14:28Z",
+      "verifiedAt": "2026-11-26T08:27:35Z"
     }
   ]
 }
