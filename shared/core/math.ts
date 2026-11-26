@@ -21,3 +21,20 @@ export function bigintLog2(value: bigint): number {
   const shift = Math.max(0, value.toString(2).length - 53);
   return shift + Math.log2(Number(value >> BigInt(shift)));
 }
+
+/** Exact floor integer square root `floor(sqrt(n))` for non-negative `bigint`s. */
+export function bigintIsqrt(n: bigint): bigint {
+  if (n < 0n) {
+    throw new RangeError(`bigintIsqrt requires a non-negative BigInt, got ${n}`);
+  }
+  if (n < 2n) return n;
+
+  // Seed strictly above sqrt(n) so Newton iteration decreases monotonically to floor(sqrt(n)).
+  let x = 1n << BigInt(Math.ceil(n.toString(2).length / 2));
+  let next = (x + n / x) >> 1n;
+  while (next < x) {
+    x = next;
+    next = (x + n / x) >> 1n;
+  }
+  return x;
+}

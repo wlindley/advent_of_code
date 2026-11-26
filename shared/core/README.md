@@ -5,13 +5,20 @@ Pure, runtime-agnostic contracts and reusable domain utilities shared across Adv
 
 ### Public API (`shared/core/index.ts`)
 - `PuzzleSolver<TInput, TAnswer, TTrace>`: standard interface implemented by every puzzle part's domain module (`parse`, `solve`, optional `trace`).
-- `PuzzleMeta` & `PuzzlePartManifest`: metadata and browser registration shape for solved parts.
+- `PuzzleMeta`, `PuzzlePart`, `RuntimeMode`, `SolveExecution`, `TraceOptions`: solver metadata, execution result, and bounded trace contracts.
 - `executeSolver(solver, rawInput, clock?)`: executes `parse` + `solve` and returns `{ answer, elapsedMs, runtime }`.
 - `formatDayFolder(day)` / `formatPartKey(year, day, part)`: canonical path/ID formatters with boundary validation.
 - `euclideanMod(dividend, divisor)`: non-negative Euclidean modulo in `[0, divisor)` with safe-integer validation.
+- `bigintLog2(value)` / `bigintIsqrt(n)`: exact top-53-bit `log2` (no overflow past `2^1024`) and exact floor integer square root for arbitrary-precision `bigint`s.
+- `Rational`, `gcdBigInt`, `lcmBigInt`, `floorDiv`, `ceilDiv`: exact arbitrary-precision rational arithmetic and BigInt number-theory helpers.
+- `extGcdBigInt(a, b)`, `solveCongruences(congruences)`, `Congruence`, `ExtGcdResult`: extended Euclidean algorithm and generalized Chinese Remainder Theorem solver supporting coprime and non-coprime moduli.
+- `Gf2LinearSystem`, `Gf2Equation`, `bitCount`, `DEFAULT_MAX_NULLITY`: GF(2) linear system solver over BigInt bitmasks.
+- `DirectedGraph`: immutable directed graph with topological sort, cycle detection, and path counting.
 - `Grid2D<T>`, `DIRS_4`, `DIRS_8`, `GridDelta`: immutable rectangular row-major grid parser/container and frozen orthogonal/8-way direction vectors.
-- `ClosedInterval`, `IntervalUnion`: immutable `bigint` inclusive `[start, end]` interval and sorted disjoint non-adjacent interval union with $O(\log K)$ binary-search lookup.
+- `ClosedInterval`, `IntervalUnion`: immutable `bigint` inclusive `[start, end]` interval (with `contains`, `containsInterval`, `overlaps`, `intersection`, `subtract`) and sorted disjoint non-adjacent interval union with $O(\log K)$ binary-search lookup.
 - `DisjointSet`: compact `Int32Array`-backed union-find with union-by-size and iterative path compression.
+- `validateMaxSteps`, `sampleTraceIndices`: bounded endpoint-preserving trace frame sampling helpers.
+- `createFinaleSolver`, `buildStarCanopy`, `verifyFinaleStar`, `traceFinale`, `parsePriorStars`, `FINALE_SUBMISSION_VALUE`, `FinaleStarNode`, `FinaleTraceFrame`: reusable Advent of Code final-day finale solver and star-canopy illumination trace builder.
 - `Clock` & `systemClock`: injectable monotonic timing boundary for deterministic tests.
 
 ## Maintainer Guide

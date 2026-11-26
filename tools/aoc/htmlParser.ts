@@ -67,7 +67,7 @@ export function parseSubmitOutcome(html: string): SubmitOutcome {
   const articleMatch = html.match(/<article>([\s\S]*?)<\/article>/i);
   const plain = (articleMatch ? articleMatch[1]! : html).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
-  if (/That's the right answer/i.test(plain)) return { kind: 'correct' };
+  if (/That's the right answer|You've finished every puzzle/i.test(plain)) return { kind: 'correct' };
   if (/Did you already complete it/i.test(plain)) return { kind: 'already_completed' };
   if (/Please log in|identify yourself/i.test(plain)) return { kind: 'auth_error' };
   if (/You gave an answer too recently/i.test(plain)) {

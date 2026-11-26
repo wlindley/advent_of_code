@@ -19,6 +19,28 @@ export class ClosedInterval {
   contains(value: bigint): boolean {
     return value >= this.start && value <= this.end;
   }
+
+  containsInterval(other: ClosedInterval): boolean {
+    return this.start <= other.start && this.end >= other.end;
+  }
+
+  overlaps(other: ClosedInterval): boolean {
+    return this.start <= other.end && other.start <= this.end;
+  }
+
+  intersection(other: ClosedInterval): ClosedInterval | null {
+    const start = this.start >= other.start ? this.start : other.start;
+    const end = this.end <= other.end ? this.end : other.end;
+    return start <= end ? new ClosedInterval(start, end) : null;
+  }
+
+  subtract(other: ClosedInterval): readonly ClosedInterval[] {
+    if (!this.overlaps(other)) return Object.freeze([this]);
+    const remainder: ClosedInterval[] = [];
+    if (other.start > this.start) remainder.push(new ClosedInterval(this.start, other.start - 1n));
+    if (other.end < this.end) remainder.push(new ClosedInterval(other.end + 1n, this.end));
+    return Object.freeze(remainder);
+  }
 }
 
 function coalesceSortedIntervals(sorted: readonly ClosedInterval[]): ClosedInterval[] {
