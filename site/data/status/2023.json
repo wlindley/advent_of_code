@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:32:26Z",
+  "updatedAt": "2026-11-26T06:45:39Z",
   "parts": [
     {
       "year": 2023,
@@ -322,6 +322,26 @@
       ],
       "startedAt": "2026-11-26T06:19:31Z",
       "verifiedAt": "2026-11-26T06:32:26Z"
+    },
+    {
+      "year": 2023,
+      "day": 9,
+      "part": 1,
+      "title": "Mirage Maintenance",
+      "puzzleUrl": "https://adventofcode.com/2023/day/9",
+      "status": "solved",
+      "summary": "For each signed integer history in the OASIS report, build successive adjacent-difference layers until reaching an all-zero baseline, extrapolate the next rightmost value bottom-up, and sum all predicted values.",
+      "algorithmSummary": "Exact BigInt finite-difference DifferencePyramid with a narrow polymorphic ExtrapolationStrategy (FORWARD_EXTRAPOLATION_STRATEGY) in 2023/day09/shared/ in O(H * L^2) time (2.45 ms on 200x21 signed histories), paired with an edge-windowed DifferencePyramidViz SVG animator for zero-churn Part 2 backward extrapolation reuse; differentially verified against both an O(L) exact BigInt Lagrange/binomial convolution oracle and a recursive finite-difference oracle across 100 seeded polynomials up to degree 18 and ±10^18.",
+      "complexity": "O(H * L^2) time, O(L^2) per-history space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.45,
+      "attemptsCount": 1,
+      "learnings": [
+        "Factoring the shared bottom-up fold into DifferencePyramid.extrapolate(strategy) with a narrow ExtrapolationStrategy (anchorOf, combine) prepares Part 2 backward extrapolation in ~10 lines with zero edits to 2023/day09/shared/.",
+        "Always check row.every(v => v === 0n) (never sum === 0n or some) and fail fast on length-1 non-zero rows before stepping to empty [], avoiding silent false convergence on signed/zero-crossing sequences."
+      ],
+      "startedAt": "2026-11-26T06:32:55Z",
+      "verifiedAt": "2026-11-26T06:45:39Z"
     }
   ]
 }
