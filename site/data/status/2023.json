@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:34:31Z",
+  "updatedAt": "2026-11-26T05:42:01Z",
   "parts": [
     {
       "year": 2023,
@@ -222,6 +222,26 @@
       ],
       "startedAt": "2026-11-26T05:22:32Z",
       "verifiedAt": "2026-11-26T05:34:31Z"
+    },
+    {
+      "year": 2023,
+      "day": 6,
+      "part": 2,
+      "title": "Wait For It",
+      "puzzleUrl": "https://adventofcode.com/2023/day/6#part2",
+      "status": "solved",
+      "summary": "Ignore kerning spaces on the Time and Distance rows to merge all digits into a single long boat race, and count how many integer hold durations strictly beat the merged record distance.",
+      "algorithmSummary": "Zero-churn reuse of 2023/day06/shared BoatRace, RaceSheet, bigintIsqrt, and RaceParabolaVisualizer with a 9-line kerning-stripped parser: solves h(T - h) >= D + 1 in exact BigInt Newton steps in O(log log T) time; differentially verified against an independent monotone binary-search oracle across ties, peak boundaries, personal scale, and T > 10^20.",
+      "complexity": "O(L + log log T) time, O(L) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.29,
+      "attemptsCount": 1,
+      "learnings": [
+        "Factoring extractRaceRows and parseUnsignedBigInt into 2023/day06/shared/parser.ts let Part 2 strip internal whitespace and reuse BoatRace, traceRaceSheet, and RaceParabolaVisualizer with zero shared-module edits.",
+        "Solving the shifted integer quadratic in exact BigInt keeps 16+ digit discriminants completely free of IEEE-754 rounding errors."
+      ],
+      "startedAt": "2026-11-26T05:35:05Z",
+      "verifiedAt": "2026-11-26T05:42:01Z"
     }
   ]
 }
