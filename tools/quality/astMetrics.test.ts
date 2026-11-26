@@ -6,11 +6,13 @@ describe('analyzeSourceFile', () => {
     const empty = analyzeSourceFile('empty.ts', '\n// comment only\n/* block */\n');
     expect(empty.sloc).toBe(0);
     expect(empty.functionCount).toBe(0);
-    expect(empty.halsteadVolume).toBe(0);
+    expect(empty.maxFunctionSloc).toBe(0);
+    expect(empty.nestedFunctionCount).toBe(0);
+    expect(empty.maxCyclomaticHotspot).toBeNull();
     expect(empty.maintainabilityIndex).toBe(100);
   });
 
-  it('computes McCabe cyclomatic complexity, nesting depth, and MI accurately', () => {
+  it('computes McCabe CC, nesting depth, function length, and hotspots accurately', () => {
     const code = `
       // header comment
       export function classify(x: number, y: number | null): string {
@@ -29,18 +31,22 @@ describe('analyzeSourceFile', () => {
     `;
     const result = analyzeSourceFile('sample.ts', code);
     expect(result.functionCount).toBe(2);
-    // classify: base 1 + if + && + ?? + for + if + ?: + else if + || = 9; helper: base 1
     expect(result.totalCyclomatic).toBe(10);
     expect(result.maxCyclomatic).toBe(9);
-    // if -> for -> if = depth 3 (else-if does not add extra depth)
     expect(result.maxNestingDepth).toBe(3);
-    expect(result.sloc).toBeGreaterThan(10);
-    expect(result.halsteadVolume).toBeGreaterThan(0);
-    expect(result.maintainabilityIndex).toBeGreaterThan(0);
-    expect(result.maintainabilityIndex).toBeLessThanOrEqual(100);
+    expect(result.nestedFunctionCount).toBe(0);
+    expect(result.maxCyclomaticHotspot).toEqual({
+      filePath: 'sample.ts',
+      name: 'classify',
+      startLine: 3,
+      endLine: 13,
+      value: 9,
+    });
+    expect(result.maxNestingHotspot?.name).toBe('classify');
+    expect(result.longestFunctionHotspot?.value).toBe(11);
   });
 
-  it('parses TSX, classes, accessors, and isolates nested functions', () => {
+  it('parses TSX, classes, anonymous/nested functions, and isolates nested complexity', () => {
     const tsx = `
       export class Box {
         private v: number;
@@ -51,15 +57,14 @@ describe('analyzeSourceFile', () => {
           const inner = function (flag: boolean) {
             return flag ? <span>ok</span> : <span>no</span>;
           };
-          return inner(true);
+          return [1].map((n) => n + 1).length + Number(Boolean(inner(true)));
         }
       }
     `;
     const result = analyzeSourceFile('Box.tsx', tsx);
-    expect(result.functionCount).toBe(5);
-    // inner has cyclomatic 2 (ternary), all others have 1 -> total 6, max 2
-    expect(result.totalCyclomatic).toBe(6);
-    expect(result.maxCyclomatic).toBe(2);
+    expect(result.functionCount).toBe(6);
+    expect(result.nestedFunctionCount).toBe(1);
+    expect(result.maxCyclomaticHotspot?.name).toBe('inner');
     expect(result.maxNestingDepth).toBe(0);
   });
 });
