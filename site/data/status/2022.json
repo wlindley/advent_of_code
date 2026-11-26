@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:27:08Z",
+  "updatedAt": "2026-11-26T17:44:03Z",
   "parts": [
     {
       "year": 2022,
@@ -923,6 +923,26 @@
       ],
       "startedAt": "2026-11-26T17:19:00Z",
       "verifiedAt": "2026-11-26T17:27:08Z"
+    },
+    {
+      "year": 2022,
+      "day": 24,
+      "part": 1,
+      "title": "Blizzard Basin",
+      "puzzleUrl": "https://adventofcode.com/2022/day/24",
+      "status": "solved",
+      "summary": "Find the fewest minutes required to cross a rectangular valley of wrapping blizzards from the top entrance to the bottom exit without occupying any blizzard cell.",
+      "algorithmSummary": "O(1) modular blizzard-bitmask lookup with time-layered (phase, cell) BFS over period = lcm(innerHeight, innerWidth) in 2022/day24/shared/ (22.21 ms on 25×120 inner valley, P=600): branchless modular phase lookup, exact undoAction boundary reconstruction for all grid sizes including 3×3, pre-built zero-churn Part 2 multi-leg PART2_WAYPOINTS/solveTrip/traceTrip and HiDPI BasinVisualizer, differentially verified against an independent Set-BFS oracle across the official 6×8 valley (18 / 54) and 10 seeded random valleys.",
+      "complexity": "O(P * H * W) time and space where P = lcm(H - 2, W - 2)",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 22.21,
+      "attemptsCount": 1,
+      "learnings": [
+        "O(1) modular blizzard-bitmask lookup plus time-layered (phase, cell) BFS over P = lcm(innerH, innerW) solves a 25×120 valley in 22.21 ms with zero per-minute grid copies.",
+        "Handling entrance/exit boundary steps explicitly in undoAction guarantees exact path backtracking even on minimal 3×3 valleys where startEntryId and endEntryId coincide."
+      ],
+      "startedAt": "2026-11-26T17:27:35Z",
+      "verifiedAt": "2026-11-26T17:44:03Z"
     }
   ]
 }
