@@ -562,6 +562,26 @@
       ],
       "startedAt": "2026-11-26T08:45:02Z",
       "verifiedAt": "2026-11-26T08:54:44Z"
+    },
+    {
+      "year": 2022,
+      "day": 15,
+      "part": 1,
+      "title": "Beacon Exclusion Zone",
+      "puzzleUrl": "https://adventofcode.com/2022/day/15",
+      "status": "solved",
+      "summary": "From sensor-to-nearest-beacon Manhattan distance reports, count how many integer positions on row y = 2,000,000 cannot contain an unknown beacon (union of sensor row slices minus distinct known beacons on that row).",
+      "algorithmSummary": "Exact BigInt Manhattan row-slice projection coalesced via shared/core ClosedInterval and IntervalUnion in 2022/day15/shared/ in O(S log S) time (0.40 ms across 28 sensors): encapsulates SensorReading with dynamic BigInt radius, covers, rowSlice, and outerDiagonals (preparing zero-churn Part 2 O(S^2) perimeter-line intersection) and pairs with an isotropic projected SensorMapSvg visualizer with optional Part 2 overlays; differentially verified against an independent point-by-point brute-force coverage scanner across all official example rows y in [-2..22] (y = 10 -> 26), shared beacons, tangent slices, and 60 seeded random layouts.",
+      "complexity": "O(S log S) time, O(S) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.4,
+      "attemptsCount": 1,
+      "learnings": [
+        "Every known beacon on row y is necessarily an endpoint of its reporting sensor's Manhattan slice, so excluded(y) equals mergedCoverage.totalLength minus distinctBeaconXsOnRow(readings, y).size with zero redundant containment checks.",
+        "Computing radius, rowSlice, covers, and outerDiagonals in exact BigInt inside 2022/day15/shared/sensorReading.ts eliminates safe-integer overflow while preparing Part 2's O(S^2) diagonal intersection with zero shared-module churn."
+      ],
+      "startedAt": "2026-11-26T08:55:29Z",
+      "verifiedAt": "2026-11-26T09:09:10Z"
     }
   ]
 }
