@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T09:39:12Z",
+  "updatedAt": "2026-11-26T09:51:13Z",
   "parts": [
     {
       "year": 2022,
@@ -622,6 +622,26 @@
       ],
       "startedAt": "2026-11-26T09:21:54Z",
       "verifiedAt": "2026-11-26T09:39:12Z"
+    },
+    {
+      "year": 2022,
+      "day": 16,
+      "part": 2,
+      "title": "Proboscidea Volcanium",
+      "puzzleUrl": "https://adventofcode.com/2022/day/16#part2",
+      "status": "solved",
+      "summary": "After spending 4 minutes teaching an elephant to help (leaving 26 minutes), simultaneously coordinate two agents starting at valve AA opening disjoint subsets of positive-flow valves to maximize combined cumulative pressure released.",
+      "algorithmSummary": "Zero-churn block-strided O(K * 2^K) Sum-over-Subsets (SOS) Max-DP with exact argmax submask tracking reusing 2022/day16/shared computeBestByMask, findOptimalSchedule, buildValveTimeline, and ValveNetworkSvg with zero shared edits (8.33 ms on K = 15 positive valves / 32,768 masks): validates DualAgentPlan masks against MAX_INT32 with dynamic totalPressure and openedMask getters, canonicalizes humanScore >= elephantScore, and reconstructs both disjoint agent routes on demand for 2-agent SVG animation; differentially verified against both an independent O(3^K) submask-enumeration oracle and a direct raw-ValveNetwork minute-by-minute 2-agent joint DP oracle across official example (1707), K = 0/1, positive-flow AA, and hub/wing topologies.",
+      "complexity": "O(T_dfs(K, 26) + K * 2^K) time, O(2^K) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 8.33,
+      "attemptsCount": 1,
+      "learnings": [
+        "Block-strided Sum-over-Subsets Max-DP over MaskPressureTable reduces disjoint two-agent partition search from O(3^K) to O(K * 2^(K-1)) while recovering exact disjoint argmax masks so findOptimalSchedule reconstructs both routes in < 2 ms with zero shared-module edits.",
+        "Bounding DualAgentPlan masks to [0, MAX_INT32] before bitwise & / | prevents silent 32-bit JS wrapping on invalid synthetic masks, and computing totalPressure/openedMask via getters maintains a single source of truth."
+      ],
+      "startedAt": "2026-11-26T09:40:20Z",
+      "verifiedAt": "2026-11-26T09:51:13Z"
     }
   ]
 }

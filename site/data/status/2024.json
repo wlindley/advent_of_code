@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T09:32:55Z",
+  "updatedAt": "2026-11-26T09:50:46Z",
   "parts": [
     {
       "year": 2024,
@@ -603,6 +603,26 @@
       ],
       "startedAt": "2026-11-26T09:20:36Z",
       "verifiedAt": "2026-11-26T09:32:55Z"
+    },
+    {
+      "year": 2024,
+      "day": 16,
+      "part": 1,
+      "title": "Reindeer Maze",
+      "puzzleUrl": "https://adventofcode.com/2024/day/16",
+      "status": "solved",
+      "summary": "Find the minimum score to guide a reindeer starting at S facing East to reach E in a walled maze, where stepping forward costs 1 point and rotating 90 degrees clockwise or counterclockwise in place costs 1,000 points.",
+      "algorithmSummary": "Flat typed-array binary-heap Dijkstra (StateMinHeap over Float64Array distances indexed by (cell << 2) | dir) + implicit tight-edge backward BFS in 2024/day16/shared/ in O(W * H * log(W * H)) time (7.74 ms on 141x141): early-stops only once popped cost > bestScore so all optimal multi-heading E arrivals are finalized, extracts the exact optimalTileMask via O(V_opt) backward tight-edge BFS and a zero-dead-branch canonical shortest path, and exposes a polymorphic MazeObjective + HiDPI ReindeerMazeCanvas (with showAllOptimalTiles toggle) for zero-churn Part 2 reuse; differentially verified against an independent forward + explicit reverse-graph FIFO SPFA oracle across official Examples 1 (7036 / 45 tiles) & 2 (11048 / 64 tiles), multi-heading ties, unreachable/walled-off starts, and 40 seeded random mazes.",
+      "complexity": "O(W * H * log(W * H)) time, O(W * H) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 7.74,
+      "attemptsCount": 1,
+      "learnings": [
+        "Stopping forward Dijkstra at popped cost > bestScore (rather than on the first E pop) guarantees every state on every optimal path is settled, letting an allocation-free O(V_opt) tight-edge backward BFS compute Part 2's exact optimalTileMask with zero edits to 2024/day16/shared/.",
+        "Because per-cell minCellDist(S) can be 0 when S is walled off, normalizing the canvas distance gradient with branch-free Math.max(1, maxCellMinDist) prevents division-by-zero without introducing an unreachable V8 coverage branch."
+      ],
+      "startedAt": "2026-11-26T09:33:30Z",
+      "verifiedAt": "2026-11-26T09:50:46Z"
     }
   ]
 }
