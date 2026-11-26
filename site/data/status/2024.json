@@ -543,6 +543,26 @@
       ],
       "startedAt": "2026-11-26T08:36:32Z",
       "verifiedAt": "2026-11-26T08:50:56Z"
+    },
+    {
+      "year": 2024,
+      "day": 14,
+      "part": 2,
+      "title": "Restroom Redoubt",
+      "puzzleUrl": "https://adventofcode.com/2024/day/14#part2",
+      "status": "solved",
+      "summary": "Find the earliest second at which the wrapping robots on the 101x103 toroidal grid align into the hidden Christmas tree picture.",
+      "algorithmSummary": "Zero-churn 2-pass Uint32Array generation-stamped orthogonal adjacency peak scan across the full lcm(W, H) torus period reusing 2024/day14/shared TorusSpace, Robot, RedoubtSnapshot, and RedoubtCanvas with zero shared edits (54.78 ms across 10,403 frames / 500 robots, detecting an 11.5x adjacency spike of 532 pairs vs 46.4 baseline mean at the exact framed tree): uses Pass-1 unique-cell stamping plus Pass-2 non-wrapping right/down neighbor counting for exact order-independent parity with countAdjacentOccupied and pairs with a max-pooled AdjacencySparkline SVG and Jump-to-Peak playback; differentially verified against both exact per-frame countAdjacentOccupied parity and an independent BigInt minimum-variance + Extended-Euclidean CRT oracle on the 15x13 synthetic tree (42) and a seeded 500-robot 101x103 swarm.",
+      "complexity": "O(N * lcm(W, H)) time, O(W * H + N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 54.78,
+      "attemptsCount": 1,
+      "learnings": [
+        "Separating each frame into Pass 1 (generation-stamped unique cell collection + robot stepping) and Pass 2 (counting non-wrapping right/down pairs across unique occupied cells) eliminates grid zeroing while guaranteeing exact order-independent parity with countAdjacentOccupied.",
+        "Cross-checking full-period adjacency peak detection against an independent BigInt minimum-variance + CRT oracle and visually inspecting the rendered frame confirms the framed Christmas tree with zero guesswork."
+      ],
+      "startedAt": "2026-11-26T08:51:32Z",
+      "verifiedAt": "2026-11-26T09:04:44Z"
     }
   ]
 }

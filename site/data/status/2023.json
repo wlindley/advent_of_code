@@ -542,6 +542,26 @@
       ],
       "startedAt": "2026-11-26T08:39:05Z",
       "verifiedAt": "2026-11-26T08:52:44Z"
+    },
+    {
+      "year": 2023,
+      "day": 14,
+      "part": 2,
+      "title": "Parabolic Reflector Dish",
+      "puzzleUrl": "https://adventofcode.com/2023/day/14#part2",
+      "status": "solved",
+      "summary": "Repeatedly run complete 4-direction spin cycles (North, West, South, East) on the rock platform for 1,000,000,000 cycles and return the resulting total north-beam load.",
+      "algorithmSummary": "Zero-churn hash-map rho-cycle detection reusing 2023/day14/shared DishPlatform.tilt(), TILT_DIRECTIONS, TextDecoder('ascii') fingerprint(), and DishCanvas with zero shared edits (51.52 ms on 100x100): keys states strictly by full board fingerprint (avoiding north-load collisions) to locate exact (cycleStart, cycleLength) and projects 1,000,000,000 via cycleStart + ((targetCycles - cycleStart) % cycleLength) in O(1), paired with a RhoLoadChart trajectory SVG preserving closure and projection milestones; differentially verified against an independent Floyd's Tortoise-and-Hare O(1)-memory cycle oracle and direct brute-force spin simulation across official examples (64), fixed points, immediate loops, and 40 seeded random dishes.",
+      "complexity": "O((mu + lambda) * H * W) time, O((mu + lambda) * H * W) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 51.52,
+      "attemptsCount": 1,
+      "learnings": [
+        "Keying rho-cycle detection on full DishPlatform.fingerprint() rather than northLoad prevents false early cycle detection when distinct board states share equal north loads (as occurs in cycles 2 and 3 of the official example).",
+        "Exposing buildTraceFromAnalysis alongside optional targetCycles on traceSpinCycles both avoids double-simulating in DishPart2Visualizer and makes the acyclic (cycleStart === null) trace path 100% testable."
+      ],
+      "startedAt": "2026-11-26T08:53:30Z",
+      "verifiedAt": "2026-11-26T09:06:10Z"
     }
   ]
 }
