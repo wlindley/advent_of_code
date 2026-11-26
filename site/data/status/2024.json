@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:05:38Z",
+  "updatedAt": "2026-11-26T06:16:19Z",
   "parts": [
     {
       "year": 2024,
@@ -263,6 +263,26 @@
       ],
       "startedAt": "2026-11-26T05:50:19Z",
       "verifiedAt": "2026-11-26T06:05:38Z"
+    },
+    {
+      "year": 2024,
+      "day": 7,
+      "part": 2,
+      "title": "Bridge Repair",
+      "puzzleUrl": "https://adventofcode.com/2024/day/7#part2",
+      "status": "solved",
+      "summary": "Extend calibration equation repair by adding the decimal concatenation operator (||) alongside '+' and '*' under strict left-to-right evaluation, and return the sum of targets for all solvable equations.",
+      "algorithmSummary": "Zero-churn CONCAT_OPERATOR strategy plugging into 2024/day07/shared/ reverse-pruned DFS and BridgeRepairVisualizer with zero shared edits: computes exact BigInt base-10 scale (while scale <= right) and guards diff = remaining - right > 0n before testing diff % scale === 0n, solving 850 equations in 4.44 ms on the main thread; differentially verified against an independent forward string-concatenation DFS oracle across 260 seeded equations and power-of-10/suffix traps.",
+      "complexity": "O(M * 3^(k-1)) worst-case, ~O(M * k) typical time, O(k) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.44,
+      "attemptsCount": 1,
+      "learnings": [
+        "Guarding diff = remaining - right <= 0n inside CONCAT_OPERATOR.tryInvert prevents the classic remaining === right false positive (0 || right), and while (scale <= right) handles every exact power of 10 in pure BigInt without string allocations.",
+        "Polymorphic CalibrationOperator + reusable BridgeRepairVisualizer delivered Part 2 in 73 lines of production domain code and a 7-line visualizer wrapper with zero edits to 2024/day07/shared/."
+      ],
+      "startedAt": "2026-11-26T06:07:14Z",
+      "verifiedAt": "2026-11-26T06:16:19Z"
     }
   ]
 }
