@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:28:10Z",
+  "updatedAt": "2026-11-26T21:47:01Z",
   "parts": [
     {
       "year": 2019,
@@ -163,6 +163,26 @@
       ],
       "startedAt": "2026-11-26T21:21:44Z",
       "verifiedAt": "2026-11-26T21:28:10Z"
+    },
+    {
+      "year": 2019,
+      "day": 5,
+      "part": 1,
+      "title": "Sunny with a Chance of Asteroids",
+      "puzzleUrl": "https://adventofcode.com/2019/day/5",
+      "status": "solved",
+      "summary": "Upgrade the Intcode VM with position/immediate parameter modes and I/O opcodes 3/4, run the TEST diagnostic program with input 1, verify all self-tests output 0, and return the final diagnostic code.",
+      "algorithmSummary": "Backward-compatible additive upgrade to 2019/shared/intcode/ (ParameterModeHandler 0/1, O(1)-cursor BufferedIoChannel, opcodes 3..8 in STANDARD_OPCODES with lazy jump targets, covariant DetailedIntcodeStep keeping Day 2 untouched) powering 2019/day05/shared/ (0.82 ms across 678-cell tape -> 7,988,899): validates writeability before consuming input, verifies halted status and zero self-test prefix, interactive I/O stream + IP-windowed memory visualizer with off-window write callout, differentially verified across 40 seeded PRNG programs against an independent flat-loop oracle.",
+      "complexity": "O(N + S) time, O(N + O) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.82,
+      "attemptsCount": 1,
+      "learnings": [
+        "Extending IntcodeStep via covariant DetailedIntcodeStep and keeping CORE_OPCODES intact upgraded 2019/shared/intcode/ with modes 0/1, I/O, waiting-input status, and opcodes 3..8 with zero edits to Day 2.",
+        "Calling ctx.assertWritable(1) before ctx.readInput() in INPUT_OPCODE prevents immediate-mode 103 instructions from pausing or silently consuming input before throwing."
+      ],
+      "startedAt": "2026-11-26T21:28:10Z",
+      "verifiedAt": "2026-11-26T21:47:01Z"
     }
   ]
 }
