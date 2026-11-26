@@ -482,6 +482,26 @@
       ],
       "startedAt": "2026-11-26T07:50:08Z",
       "verifiedAt": "2026-11-26T07:57:34Z"
+    },
+    {
+      "year": 2022,
+      "day": 13,
+      "part": 1,
+      "title": "Distress Signal",
+      "puzzleUrl": "https://adventofcode.com/2022/day/13",
+      "status": "solved",
+      "summary": "Parse pairs of recursively nested integer/list distress-signal packets, determine which pairs are in strictly right order under the recursive int/list/mixed-promotion comparison rules, and sum their 1-based pair indices.",
+      "algorithmSummary": "Strict recursive-descent AST parser (PacketInt/PacketList/SignalInput, MAX_PACKET_DEPTH = 128) and zero-allocation recursive comparator (comparePackets via compareLists/compareIntToList/negateOrder) in 2022/day13/shared/ in O(N) time (2.74 ms across 150 pairs), paired with a decoupled step-by-step PacketComparePanel and PairIndexGrid visualizer for zero-churn Part 2 divider-packet sorting reuse; differentially verified against an independent JSON.parse + literal [n]-wrapping oracle across official examples, empty-list towers, multi-digit integers, and 150 seeded random packet trees validating reflexivity, skew-symmetry, and transitivity.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.74,
+      "attemptsCount": 1,
+      "learnings": [
+        "Implementing compareIntToList directly without allocating temporary [n] arrays keeps packet comparison zero-allocation on the hot path, while traceComparison wraps mixed ints into PacketList([int]) so traceComparison(l, r).outcome === comparePackets(l, r) acts as an independent structural cross-check.",
+        "Day 13 packet comparison is a total preorder (strict weak ordering) rather than strictly antisymmetric on tree identity ([4] === [[4]]), so algebraic property tests should assert reflexivity, skew-symmetry (no -0), and transitivity."
+      ],
+      "startedAt": "2026-11-26T07:58:52Z",
+      "verifiedAt": "2026-11-26T08:13:21Z"
     }
   ]
 }
