@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:28:12Z",
+  "updatedAt": "2026-11-26T04:38:48Z",
   "parts": [
     {
       "year": 2023,
@@ -102,6 +102,26 @@
       ],
       "startedAt": "2026-11-26T04:18:53Z",
       "verifiedAt": "2026-11-26T04:28:12Z"
+    },
+    {
+      "year": 2023,
+      "day": 3,
+      "part": 2,
+      "title": "Gear Ratios",
+      "puzzleUrl": "https://adventofcode.com/2023/day/3#part2",
+      "status": "solved",
+      "summary": "Identify every '*' gear symbol 8-way adjacent to exactly two distinct part numbers on the engine schematic, compute each gear ratio (a * b), and return the sum of all gear ratios.",
+      "algorithmSummary": "Zero-churn reuse of 2023/day03/shared EngineSchematic.adjacentNumbersOf(symbol) and SchematicSymbol.isGearCandidate with exact BigInt ratio products (a * b) in O(R * C) time; differentially verified against a standalone number-border-scatter oracle up to 140x140.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.28,
+      "attemptsCount": 1,
+      "learnings": [
+        "Unlike Part 1, a single part number shared between two gears (e.g. 10*20*30) contributes to both ratios, so Part 2 must never apply a global visited-part bitset when summing ratios.",
+        "Deriving GearTraceFrame.isGear from adjacentParts.length === 2 rather than ratio > 0n preserves zero-valued gears like 0*5 while keeping BigInt products overflow-safe."
+      ],
+      "startedAt": "2026-11-26T04:28:39Z",
+      "verifiedAt": "2026-11-26T04:38:48Z"
     }
   ]
 }

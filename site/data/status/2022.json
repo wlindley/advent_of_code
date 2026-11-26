@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:29:43Z",
+  "updatedAt": "2026-11-26T04:38:21Z",
   "parts": [
     {
       "year": 2022,
@@ -122,6 +122,26 @@
       ],
       "startedAt": "2026-11-26T04:22:15Z",
       "verifiedAt": "2026-11-26T04:29:43Z"
+    },
+    {
+      "year": 2022,
+      "day": 4,
+      "part": 1,
+      "title": "Camp Cleanup",
+      "puzzleUrl": "https://adventofcode.com/2022/day/4",
+      "status": "solved",
+      "summary": "Parse pairs of inclusive integer section assignment ranges (a-b,c-d) and count how many pairs have one range completely containing the other.",
+      "algorithmSummary": "Direct closed-interval endpoint containment scan over immutable AssignmentPair value objects built on shared/core ClosedInterval in 2022/day04/shared/, classifying all 5 PairRelation states dynamically and differentially verified against both sign-product and bitset-subset oracles over 1,000 synthetic pairs.",
+      "complexity": "O(N) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.97,
+      "attemptsCount": 1,
+      "learnings": [
+        "Avoid IntervalUnion for pair overlap/containment checks because it coalesces integer-adjacent ranges like [2,3] and [4,5].",
+        "Scaling SVG interval bars by totalUnits = bounds.end - bounds.start + 1n in BigInt prevents divide-by-zero on single-point domains and keeps huge ranges exact."
+      ],
+      "startedAt": "2026-11-26T04:29:53Z",
+      "verifiedAt": "2026-11-26T04:38:21Z"
     }
   ]
 }
