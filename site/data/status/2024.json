@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T11:10:35Z",
+  "updatedAt": "2026-11-26T11:19:00Z",
   "parts": [
     {
       "year": 2024,
@@ -743,6 +743,26 @@
       ],
       "startedAt": "2026-11-26T10:57:30Z",
       "verifiedAt": "2026-11-26T11:10:35Z"
+    },
+    {
+      "year": 2024,
+      "day": 19,
+      "part": 2,
+      "title": "Linen Layout",
+      "puzzleUrl": "https://adventofcode.com/2024/day/19#part2",
+      "status": "solved",
+      "summary": "Sum the exact number of distinct ordered ways each desired towel design can be assembled from available patterns across all 400 designs.",
+      "algorithmSummary": "Zero-churn exact BigInt arrangement counter reusing 2024/day19/shared PatternTrie, unbounded bigint[] countTotalArrangements, buildLinenTrace, and LinenVisualizer (mode='arrangements') with zero shared edits (6.74 ms across 447 patterns and 400 designs, total ~7.33 x 10^14); differentially verified against both an independent recursive memoized startsWith BigInt oracle (official example 16n + 20 seeded random multi-design layouts) and an exhaustive small-design backtracking partition counter, plus > (1n << 63n) - 1n odd-low-bit precision, duplicate design summing, and duplicate pattern deduplication tests.",
+      "complexity": "O(sum(|p|) + D * L * M) time, O(5 * N_trie + L) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.74,
+      "attemptsCount": 1,
+      "learnings": [
+        "Passing parseLinenLayout, solvePart2, and buildLinenTrace directly into Object.freeze({...}) keeps Part 2's domain solver at 19 lines with zero wrapper branches and zero edits to 2024/day19/shared/.",
+        "Testing an odd BigInt sum strictly above (1n << 63n) - 1n proves exactness beyond both IEEE-754 safe integers and signed 64-bit BigInt64Array limits."
+      ],
+      "startedAt": "2026-11-26T11:11:40Z",
+      "verifiedAt": "2026-11-26T11:19:00Z"
     }
   ]
 }
