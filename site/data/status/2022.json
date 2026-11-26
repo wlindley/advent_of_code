@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T16:20:21Z",
+  "updatedAt": "2026-11-26T16:29:36Z",
   "parts": [
     {
       "year": 2022,
@@ -823,6 +823,26 @@
       "startedAt": "2026-11-26T11:41:07Z",
       "verifiedAt": "2026-11-26T16:20:21Z",
       "humanWaitSeconds": 15791
+    },
+    {
+      "year": 2022,
+      "day": 21,
+      "part": 2,
+      "title": "Monkey Math",
+      "puzzleUrl": "https://adventofcode.com/2022/day/21#part2",
+      "status": "solved",
+      "summary": "Reinterpret root as an equality comparison and humn as an unknown integer variable, then solve for the exact integer humn must yell so both branches of root evaluate to the same value.",
+      "algorithmSummary": "Zero-churn Part 2 specialization reusing 2022/day21/shared solveEqualityUnknown (dispatching unique-path top-down exact Rational operator inversion vs multi-path AffineExpr elimination), buildEqualitySolveTrace, and MonkeyMathVisualizer with zero shared edits (9.18 ms across 2,703 monkeys); verified by substituting solved humn back into raw inputs and independently evaluating both root branches in exact Rational across the official example (301 -> 150 === 150), right-branch humn, reciprocal 10 / humn = 2 with dummy humn: 0, multi-path linear DAGs, and 20 seeded random trees spanning negative, zero, and >53-bit BigInt answers.",
+      "complexity": "O(V + E) time, O(V + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 9.18,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building solveEqualityUnknown and buildEqualitySolveTrace inside 2022/day21/shared/ let Part 2 solve the 2,703-monkey equality in 9.18 ms with 21 lines of domain solver code and zero shared-module edits.",
+        "Independent raw-input substitution verification (replacing humn with the solved BigInt and evaluating both root branches in exact Rational) proves equality correctness end-to-end without sharing any inversion logic."
+      ],
+      "startedAt": "2026-11-26T16:21:24Z",
+      "verifiedAt": "2026-11-26T16:29:36Z"
     }
   ]
 }
