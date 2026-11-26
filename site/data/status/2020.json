@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T20:13:01Z",
+  "updatedAt": "2026-11-26T20:26:05Z",
   "parts": [
     {
       "year": 2020,
@@ -43,6 +43,26 @@
       ],
       "startedAt": "2026-11-26T20:06:49Z",
       "verifiedAt": "2026-11-26T20:13:01Z"
+    },
+    {
+      "year": 2020,
+      "day": 2,
+      "part": 1,
+      "title": "Password Philosophy",
+      "puzzleUrl": "https://adventofcode.com/2020/day/2",
+      "status": "solved",
+      "summary": "Count how many passwords in the corporate database contain their policy letter within the inclusive [min, max] occurrence range.",
+      "algorithmSummary": "Polymorphic PasswordValidationPolicy (SLED_RENTAL_POLICY for Part 1, pre-built TOBOGGAN_POLICY for zero-churn Part 2) in 2020/day02/shared/ (1.63 ms across 1,000 entries -> 447): immutable PasswordEntry/PasswordDatabase, zero-derived-state SledEvaluation/TobogganEvaluation, single-pass bounded tracePasswordAudit, interactive character-strip visualizer, differentially verified against an independent split-count oracle across 40 seeded fixtures.",
+      "complexity": "O(N * L) time, O(N * L) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.63,
+      "attemptsCount": 1,
+      "learnings": [
+        "Polymorphic PolicyEvaluation classes (SledEvaluation & TobogganEvaluation) storing only entry and policy eliminate both stored derived state and type-tag switches in PasswordStrip.tsx.",
+        "Doing a full linear scan instead of early-exiting on count > max keeps displayed occurrence counts and matched character highlights truthful in the visualizer with negligible runtime cost."
+      ],
+      "startedAt": "2026-11-26T20:13:21Z",
+      "verifiedAt": "2026-11-26T20:26:05Z"
     }
   ]
 }
