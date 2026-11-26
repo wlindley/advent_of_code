@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:36:50Z",
+  "updatedAt": "2026-11-26T22:45:13Z",
   "parts": [
     {
       "year": 2021,
@@ -303,6 +303,26 @@
       ],
       "startedAt": "2026-11-26T22:20:21Z",
       "verifiedAt": "2026-11-26T22:36:50Z"
+    },
+    {
+      "year": 2021,
+      "day": 8,
+      "part": 2,
+      "title": "Seven Segment Search",
+      "puzzleUrl": "https://adventofcode.com/2021/day/8#part2",
+      "status": "solved",
+      "summary": "Deduce the per-display wire-to-segment bijection for all four-digit seven-segment displays, decode each four-digit output integer, and sum all decoded values.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day08/shared/ binding DECODED_OUTPUT_SUM_POLICY into SevenSegmentSolver and SevenSegmentVisualizer (3.58 ms across 200 displays -> 1,073,431): zero edits to shared/ or part1/, closed-form wire-frequency classification with 10-pattern canonical round-trip bijection check, leading-zero numeric decoding with preserved 4-digit LED display, differentially verified across 30 seeded PRNG displays against an independent 7! = 5,040 brute-force permutation oracle plus stealth round-trip forged-wiring rejection.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.58,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building DECODED_OUTPUT_SUM_POLICY, WireMapping, and SevenSegmentVisualizer in day08/shared/ reduced Part 2's domain solver to 3 lines with zero shared-module edits.",
+        "Testing a stealth forged wiring that preserves all 7 wire frequencies plus canonical digits 1 and 4 verifies the 10-pattern canonical round-trip check deterministically."
+      ],
+      "startedAt": "2026-11-26T22:36:50Z",
+      "verifiedAt": "2026-11-26T22:45:13Z"
     }
   ]
 }

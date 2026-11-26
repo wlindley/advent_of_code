@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:22:39Z",
+  "updatedAt": "2026-11-26T22:42:39Z",
   "parts": [
     {
       "year": 2020,
@@ -283,6 +283,26 @@
       ],
       "startedAt": "2026-11-26T22:14:35Z",
       "verifiedAt": "2026-11-26T22:22:39Z"
+    },
+    {
+      "year": 2020,
+      "day": 8,
+      "part": 1,
+      "title": "Handheld Halting",
+      "puzzleUrl": "https://adventofcode.com/2020/day/8",
+      "status": "solved",
+      "summary": "Execute a console's acc/jmp/nop boot code and return the accumulator value immediately before any instruction would execute a second time.",
+      "algorithmSummary": "Polymorphic InstructionOperation VM (acc/jmp/nop) with flat Uint8Array visited tracking and BootDiagnosisPolicy (LOOP_ACCUMULATOR_POLICY for Part 1, pre-built O(N) flat Int32Array reverse-BFS REPAIR_BOOT_POLICY for zero-churn Part 2) in 2020/day08/shared/ (0.76 ms across 638 instructions -> 1,521): exact BigInt accumulator, zero-derived-state ExecutionStep/ExecutionRun/BootDiagnosis/BootTraceFrame using jmp<->nop involution, windowed monospace debugger + JumpArcSvg bezier gutter visualizer, differentially verified across 50 seeded PRNG programs against independent interpreter and O(N^2) brute-force repair oracles.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.76,
+      "attemptsCount": 1,
+      "learnings": [
+        "Modeling the boot code as a functional graph on 0..N makes the terminating set R an acyclic in-tree rooted at N, so reverse BFS via flat Int32Arrays runs in O(N) without an unreachable visited-guard V8 branch.",
+        "Advancing a monotonic applied-step cursor during downsampled traceBootDiagnosis guarantees accurate visitOrderAt(pc) history even when maxSteps compresses long runs."
+      ],
+      "startedAt": "2026-11-26T22:22:39Z",
+      "verifiedAt": "2026-11-26T22:42:39Z"
     }
   ]
 }

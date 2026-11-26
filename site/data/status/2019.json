@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:38:11Z",
+  "updatedAt": "2026-11-26T22:48:08Z",
   "parts": [
     {
       "year": 2019,
@@ -263,6 +263,26 @@
       ],
       "startedAt": "2026-11-26T22:18:43Z",
       "verifiedAt": "2026-11-26T22:38:11Z"
+    },
+    {
+      "year": 2019,
+      "day": 7,
+      "part": 2,
+      "title": "Amplification Circuit",
+      "puzzleUrl": "https://adventofcode.com/2019/day/7#part2",
+      "status": "solved",
+      "summary": "Wire five isolated Intcode amplifiers into a closed feedback loop (A -> B -> C -> D -> E -> A) across all 120 permutations of phase settings 5..9 until all halt, returning the highest final thruster signal from E.",
+      "algorithmSummary": "Zero-churn reuse of 2019/shared/intcode/ and 2019/day07/shared/ binding FEEDBACK_LOOP_MODE into AmplifierCircuitSolver and AmplifierVisualizer (18.90 ms across 120 multi-round feedback runs -> 69,816,958): zero edits to intcode/, day07/shared/, or part1/, cooperative round-robin pause/resume via waiting-input with cumulative step-limit livelock protection and dashed E -> A SVG feedback arc, differentially verified against an independent flat-loop feedback Intcode + recursive permutation oracle across official examples, all-negative signals, > 2^63 odd-bit BigInts, and multi-output FIFO rounds.",
+      "complexity": "O(P! * R * S) time (P = 5), O(N + P) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 18.90,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building FEEDBACK_LOOP_MODE, AmplifierStage external output cursors, and conditional E -> A feedback SVG arcs in day07/shared/ reduced Part 2's domain solver to 4 lines with zero shared or Intcode VM edits.",
+        "Testing a perpetual multi-round feedback echo loop verifies that IntcodeMachine's cumulative lifetime step budget catches cross-round livelocks even when each round pauses cleanly on waiting-input."
+      ],
+      "startedAt": "2026-11-26T22:38:11Z",
+      "verifiedAt": "2026-11-26T22:48:08Z"
     }
   ]
 }
