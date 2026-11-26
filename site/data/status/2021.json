@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T23:08:50Z",
+  "updatedAt": "2026-11-26T23:32:29Z",
   "parts": [
     {
       "year": 2021,
@@ -363,6 +363,46 @@
       ],
       "startedAt": "2026-11-26T23:00:30Z",
       "verifiedAt": "2026-11-26T23:08:50Z"
+    },
+    {
+      "year": 2021,
+      "day": 10,
+      "part": 1,
+      "title": "Syntax Scoring",
+      "puzzleUrl": "https://adventofcode.com/2021/day/10",
+      "status": "solved",
+      "summary": "Scan nested navigation-subsystem bracket lines with a stack, locate the first illegal closing bracket on each corrupted line, and sum their corruption scores.",
+      "algorithmSummary": "Explicit pushdown index-stack scanner with upfront full-line bracket validation and polymorphic SyntaxScoringPolicy (CORRUPTION_SCORE_POLICY for Part 1, pre-built BigInt AUTOCOMPLETE_MEDIAN_POLICY for zero-churn Part 2) in 2021/day10/shared/ (1.94 ms across 98 lines -> 388,713): single-source-of-truth openStackIndices deriving roles/completions/scores with zero stored derived state, interactive BracketLineStage + OutcomePanel visualizer with live base-5 trail and bigintLog2 median distribution, differentially verified across 50 seeded PRNG lines (including empty-stack closers and > 2^63 deep stacks) against an independent innermost-pair-reduction oracle.",
+      "complexity": "O(L + K log K) time, O(L) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.94,
+      "attemptsCount": 1,
+      "learnings": [
+        "Running upfront full-line validateBracketText before stack scanning rejects trailing invalid characters on already-corrupted lines (like '(]X') while making the stack loop a clean 2-branch open/close scan.",
+        "Storing only openStackIndices as the single source of truth cleanly derives matched/unclosed/clash character roles, expected closers, and base-5 BigInt autocomplete trails with zero state drift."
+      ],
+      "startedAt": "2026-11-26T23:08:50Z",
+      "verifiedAt": "2026-11-26T23:25:32Z"
+    },
+    {
+      "year": 2021,
+      "day": 10,
+      "part": 2,
+      "title": "Syntax Scoring",
+      "puzzleUrl": "https://adventofcode.com/2021/day/10#part2",
+      "status": "solved",
+      "summary": "Discard corrupted and complete bracket lines, unwind each incomplete line's remaining stack into a base-5 BigInt autocomplete score, and return the median score.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day10/shared/ binding AUTOCOMPLETE_MEDIAN_POLICY into SyntaxScoringSolver and SyntaxScoringVisualizer (2.72 ms across 98 lines -> 3,539,961,434): zero edits to shared/ or part1/, exact BigInt base-5 unwinding with 3-way compareBigIntAsc sorting, live base-5 step badges and bigintLog2-scaled median bar chart in OutcomePanel, differentially verified across 35 seeded PRNG subsystems (plus IEEE-754 collision proof separating 5^30 - 4 from 5^30 - 1) against an independent innermost-pair-reduction oracle.",
+      "complexity": "O(L * N + K log K) time, O(N) stack space per line",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.72,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building AUTOCOMPLETE_MEDIAN_POLICY, AutocompleteScanFrame, and AutocompleteOutcome in day10/shared/ reduced Part 2's domain solver to 4 lines with zero shared-module edits.",
+        "Comparing 5^30 - 4 vs 5^30 - 1 in median sorting proves exact BigInt ordering even where IEEE-754 Numbers collide."
+      ],
+      "startedAt": "2026-11-26T23:25:32Z",
+      "verifiedAt": "2026-11-26T23:32:29Z"
     }
   ]
 }

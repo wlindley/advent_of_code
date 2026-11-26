@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T23:09:18Z",
+  "updatedAt": "2026-11-26T23:21:07Z",
   "parts": [
     {
       "year": 2020,
@@ -343,6 +343,26 @@
       ],
       "startedAt": "2026-11-26T22:50:18Z",
       "verifiedAt": "2026-11-26T23:09:18Z"
+    },
+    {
+      "year": 2020,
+      "day": 9,
+      "part": 2,
+      "title": "Encoding Error",
+      "puzzleUrl": "https://adventofcode.com/2020/day/9#part2",
+      "status": "solved",
+      "summary": "Find a contiguous range of at least two numbers in the XMAS transmission that sums to the Part 1 invalid number, and return the sum of its smallest and largest elements.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day09/shared/ binding ENCRYPTION_WEAKNESS_POLICY into XmasAttackSolver and XmasSignalVisualizer (1.52 ms across 1,000 numbers -> 2,186,361): zero edits to shared/ or part1/, O(N) half-open two-pointer sliding window in exact BigInt with two-phase preamble + weakness trace and green bracket/MIN/MAX markers in XmasSignalChart, differentially verified across 35 seeded PRNG streams (plus 3-element > 2^63 odd-bit BigInt and window-emptying traps) against an independent O(N * W^2) + O(N^2) prefix-sum oracle.",
+      "complexity": "O(N * W) total time (O(N) Part 2 search), O(N + W) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.52,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building ENCRYPTION_WEAKNESS_POLICY, two-phase discriminated traces, and MIN/MAX SVG highlights in day09/shared/ reduced Part 2's domain solver to 7 lines with zero shared-module edits.",
+        "Using a 3-element contiguous range above 2^63 (so min + max != target) with odd low bits tests both exact BigInt summation and extrema extraction simultaneously."
+      ],
+      "startedAt": "2026-11-26T23:09:18Z",
+      "verifiedAt": "2026-11-26T23:21:07Z"
     }
   ]
 }
