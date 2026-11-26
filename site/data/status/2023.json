@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:18:26Z",
+  "updatedAt": "2026-11-26T04:28:12Z",
   "parts": [
     {
       "year": 2023,
@@ -82,6 +82,26 @@
       ],
       "startedAt": "2026-11-26T04:10:36Z",
       "verifiedAt": "2026-11-26T04:18:26Z"
+    },
+    {
+      "year": 2023,
+      "day": 3,
+      "part": 1,
+      "title": "Gear Ratios",
+      "puzzleUrl": "https://adventofcode.com/2023/day/3",
+      "status": "solved",
+      "summary": "Parse a 2D engine schematic of unsigned multi-digit numbers, empty dots, and symbols, and sum all distinct part numbers that have at least one digit 8-way adjacent to any symbol.",
+      "algorithmSummary": "Symbol-centered 8-neighbor lookup over an encapsulated Int32Array cell-to-part-ID grid inside EngineSchematic (reusing shared/core Grid2D and DIRS_8), deduplicating touched PartNumber spans by ID via a Uint8Array bitset; differentially verified against a perimeter-box scan oracle up to 140x140.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.36,
+      "attemptsCount": 1,
+      "learnings": [
+        "Hyphens ('-') appear immediately adjacent to digits in personal inputs; always scan unsigned [0-9]+ spans and treat '-' strictly as a schematic symbol.",
+        "Encapsulating a flat Int32Array cell-to-part-ID spatial index inside EngineSchematic.adjacentNumbersOf(symbol) unifies Part 1 union-of-parts and Part 2 degree-2 '*' gear ratios with zero churn."
+      ],
+      "startedAt": "2026-11-26T04:18:53Z",
+      "verifiedAt": "2026-11-26T04:28:12Z"
     }
   ]
 }

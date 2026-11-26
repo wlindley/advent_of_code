@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:22:10Z",
+  "updatedAt": "2026-11-26T04:29:43Z",
   "parts": [
     {
       "year": 2022,
@@ -102,6 +102,26 @@
       ],
       "startedAt": "2026-11-26T04:14:19Z",
       "verifiedAt": "2026-11-26T04:22:10Z"
+    },
+    {
+      "year": 2022,
+      "day": 3,
+      "part": 2,
+      "title": "Rucksack Reorganization",
+      "puzzleUrl": "https://adventofcode.com/2022/day/3#part2",
+      "status": "solved",
+      "summary": "Partition the ordered rucksacks into consecutive groups of three Elves, identify the unique item type shared by all three Elves in each group (ignoring compartments), and return the sum of badge priorities.",
+      "algorithmSummary": "Zero-churn reuse of 2022/day03/shared Rucksack.allMask and extractSinglePriority via immutable ElfGroup value objects intersecting a.allMask & b.allMask & c.allMask in O(N) time and O(1) auxiliary space; differentially verified against a 3-way Set intersection oracle over 156 groups.",
+      "complexity": "O(N) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.12,
+      "attemptsCount": 1,
+      "learnings": [
+        "Exposing Rucksack.allMask in 2022/day03/shared let Part 2 compute 3-Elf group badges with a single 3-way BigInt bitwise AND and zero edits to shared/ or part1/.",
+        "Passing three explicit Rucksack arguments to ElfGroup's constructor guarantees valid group arity at compile time without dead runtime length branches."
+      ],
+      "startedAt": "2026-11-26T04:22:15Z",
+      "verifiedAt": "2026-11-26T04:29:43Z"
     }
   ]
 }
