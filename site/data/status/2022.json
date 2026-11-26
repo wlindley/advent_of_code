@@ -542,6 +542,26 @@
       ],
       "startedAt": "2026-11-26T08:29:00Z",
       "verifiedAt": "2026-11-26T08:44:25Z"
+    },
+    {
+      "year": 2022,
+      "day": 14,
+      "part": 2,
+      "title": "Regolith Reservoir",
+      "puzzleUrl": "https://adventofcode.com/2022/day/14#part2",
+      "status": "solved",
+      "summary": "Replace the endless abyss with an infinite horizontal bedrock floor at y = maxY + 2 and count how many units of sand settle before a grain finally blocks the source at (500, 0).",
+      "algorithmSummary": "Zero-churn FLOOR_BOUNDARY_POLICY (floorY = scan.maxY + 2, cone bounds [500 - floorY, 500 + floorY], isEscape = () => false) plugging into 2022/day14/shared stack-resumed Int32Array DFS and ReservoirVisualizer/ReservoirCanvas with zero shared edits (3.20 ms across 52k cone cells / 24,166 settled grains): fills row floorY with CELL_ROCK during rasterization so every stack step stays strictly in-bounds; differentially verified on both exact settled grain count and exact (x, y) coordinate sets against an independent row-by-row top-down reachability DP oracle across official examples (93), under-roof hollow pockets, blocked source, out-of-cone rocks, and 50 seeded random caves.",
+      "complexity": "O(H^2) time, O(H^2) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.2,
+      "attemptsCount": 1,
+      "learnings": [
+        "Injecting an 11-line FLOOR_BOUNDARY_POLICY into 2022/day14/shared delivered Part 2 (24,166 grains in 3.20 ms) with zero edits to shared/ or part1/, while preserving chronological pouring animation and bedrock floor rendering.",
+        "Cross-checking stack-resumed sand DFS against top-down row reachability DP (sand(x,y) = !rock(x,y) && any parent reachable) proves exact settled-cell set equality including triangular hollow pockets beneath horizontal ceilings."
+      ],
+      "startedAt": "2026-11-26T08:45:02Z",
+      "verifiedAt": "2026-11-26T08:54:44Z"
     }
   ]
 }

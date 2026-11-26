@@ -522,6 +522,26 @@
       ],
       "startedAt": "2026-11-26T08:28:16Z",
       "verifiedAt": "2026-11-26T08:38:08Z"
+    },
+    {
+      "year": 2023,
+      "day": 14,
+      "part": 1,
+      "title": "Parabolic Reflector Dish",
+      "puzzleUrl": "https://adventofcode.com/2023/day/14",
+      "status": "solved",
+      "summary": "Tilt a 2D platform of rolling rounded rocks ('O') and immovable cube rocks ('#') north so all rounded rocks slide as far north as possible, and sum the north-beam load (height - row) of every rounded rock.",
+      "algorithmSummary": "Unified 4-direction flat Uint8Array line sweep via a SweepSpec dispatch table (north/west/south/east) inside immutable DishPlatform in 2023/day14/shared/ in O(H * W) time (2.60 ms on 100x100): encapsulates a private Uint8Array (never frozen) with dynamic northLoad/roundedCount/rowLoads getters and TextDecoder('ascii') fingerprint() ready for zero-churn Part 2 spin-cycle detection, paired with a HiDPI DishCanvas + per-row load bar chart; differentially verified against both an independent 4-direction bubble-step gravity simulator (40 seeded grids + spin cycles) and a zero-mutation direct arithmetic column-load accumulator (60 seeded grids).",
+      "complexity": "O(H * W) time, O(H * W) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.6,
+      "attemptsCount": 1,
+      "learnings": [
+        "Parameterizing north, west, south, and east tilts through one SweepSpec dispatch table eliminates 4x direction boilerplate and prepares Part 2's N-W-S-E spin cycles and fingerprint() hashing with zero shared-module churn.",
+        "Using TextDecoder('ascii') on a flat ASCII-byte Uint8Array gives both O(H * W) board fingerprints and clean toLines() slicing while keeping DishPlatform frozen without ever calling Object.freeze() on the TypedArray."
+      ],
+      "startedAt": "2026-11-26T08:39:05Z",
+      "verifiedAt": "2026-11-26T08:52:44Z"
     }
   ]
 }
