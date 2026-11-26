@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:11:36Z",
+  "updatedAt": "2026-11-26T05:22:01Z",
   "parts": [
     {
       "year": 2023,
@@ -182,6 +182,26 @@
       ],
       "startedAt": "2026-11-26T05:00:42Z",
       "verifiedAt": "2026-11-26T05:11:36Z"
+    },
+    {
+      "year": 2023,
+      "day": 5,
+      "part": 2,
+      "title": "If You Give A Seed A Fertilizer",
+      "puzzleUrl": "https://adventofcode.com/2023/day/5#part2",
+      "status": "solved",
+      "summary": "Reinterpret the seeds header as (start, length) pairs of inclusive seed ranges (~1.845 billion seeds on personal input), propagate all seed ranges through the seven category-conversion maps, and return the minimum resulting location ID.",
+      "algorithmSummary": "Zero-churn forward two-pointer interval splitting and IntervalUnion coalescing in exact BigInt reusing shared/core ClosedInterval/IntervalUnion and 2023/day05/shared Almanac/RangeMap in O(S * (P + R) log(P + R)) time; differentially verified against both an exhaustive per-seed brute-force oracle on 25 small-range almanacs and a backward critical-endpoint pullback oracle on 20 huge-scale (> 2^32 and > 2^53) almanacs.",
+      "complexity": "O(S * (P + R) log(P + R)) time, O(P + R) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.18,
+      "attemptsCount": 1,
+      "learnings": [
+        "In a two-pointer sweep across sorted intervals and sorted range rules, advance ruleIdx only when matchEnd === rule.source.end so a second disjoint interval falling inside the same wide rule still matches it.",
+        "Coalescing mapped output ribbons through shared/core IntervalUnion after each stage keeps interval count linear in rule count even across 1.845 billion seeds and non-injective overlapping outputs."
+      ],
+      "startedAt": "2026-11-26T05:12:08Z",
+      "verifiedAt": "2026-11-26T05:22:01Z"
     }
   ]
 }
