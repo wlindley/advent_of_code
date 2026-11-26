@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-11-26T20:29:57Z",
-  "subagentsScanned": 550,
+  "generatedAt": "2026-11-26T20:33:10Z",
+  "subagentsScanned": 553,
   "budgetTargetTokens": null,
   "tiers": [
     {
       "tier": "Gemini 4 Neon",
-      "turns": 4080,
-      "inputTokens": 25140116,
-      "cacheReadTokens": 476911210,
-      "outputTokens": 7614568
+      "turns": 4094,
+      "inputTokens": 25228591,
+      "cacheReadTokens": 479088508,
+      "outputTokens": 7660970
     },
     {
       "tier": "Gemini Flash",
-      "turns": 5731,
-      "inputTokens": 21121318,
-      "cacheReadTokens": 246795011,
-      "outputTokens": 5566435
+      "turns": 5766,
+      "inputTokens": 21252518,
+      "cacheReadTokens": 247815239,
+      "outputTokens": 5595402
     }
   ],
   "timeline": [
@@ -1850,10 +1850,10 @@
       "bucketStart": "2026-11-26T20:00:00Z",
       "scope": "2019",
       "tier": "Gemini 4 Neon",
-      "turns": 28,
-      "inputTokens": 174556,
-      "cacheReadTokens": 484334,
-      "outputTokens": 61359
+      "turns": 29,
+      "inputTokens": 179102,
+      "cacheReadTokens": 507800,
+      "outputTokens": 62364
     },
     {
       "bucketStart": "2026-11-26T20:00:00Z",
@@ -1886,10 +1886,10 @@
       "bucketStart": "2026-11-26T20:00:00Z",
       "scope": "2021",
       "tier": "Gemini 4 Neon",
-      "turns": 30,
-      "inputTokens": 217866,
-      "cacheReadTokens": 494652,
-      "outputTokens": 66647
+      "turns": 31,
+      "inputTokens": 221463,
+      "cacheReadTokens": 522327,
+      "outputTokens": 87455
     },
     {
       "bucketStart": "2026-11-26T20:00:00Z",
@@ -1904,10 +1904,64 @@
       "bucketStart": "2026-11-26T20:00:00Z",
       "scope": "shared",
       "tier": "Gemini 4 Neon",
-      "turns": 55,
-      "inputTokens": 214981,
-      "cacheReadTokens": 8734393,
-      "outputTokens": 59994
+      "turns": 56,
+      "inputTokens": 222524,
+      "cacheReadTokens": 8975779,
+      "outputTokens": 61839
+    },
+    {
+      "bucketStart": "2026-11-26T20:30:00Z",
+      "scope": "2019",
+      "tier": "Gemini 4 Neon",
+      "turns": 1,
+      "inputTokens": 3760,
+      "cacheReadTokens": 25963,
+      "outputTokens": 12621
+    },
+    {
+      "bucketStart": "2026-11-26T20:30:00Z",
+      "scope": "2020",
+      "tier": "Gemini 4 Neon",
+      "turns": 2,
+      "inputTokens": 20391,
+      "cacheReadTokens": 6740,
+      "outputTokens": 762
+    },
+    {
+      "bucketStart": "2026-11-26T20:30:00Z",
+      "scope": "2020",
+      "tier": "Gemini Flash",
+      "turns": 12,
+      "inputTokens": 45117,
+      "cacheReadTokens": 209196,
+      "outputTokens": 7600
+    },
+    {
+      "bucketStart": "2026-11-26T20:30:00Z",
+      "scope": "2021",
+      "tier": "Gemini 4 Neon",
+      "turns": 1,
+      "inputTokens": 20928,
+      "cacheReadTokens": 31273,
+      "outputTokens": 53
+    },
+    {
+      "bucketStart": "2026-11-26T20:30:00Z",
+      "scope": "2021",
+      "tier": "Gemini Flash",
+      "turns": 23,
+      "inputTokens": 86083,
+      "cacheReadTokens": 811032,
+      "outputTokens": 21367
+    },
+    {
+      "bucketStart": "2026-11-26T20:30:00Z",
+      "scope": "shared",
+      "tier": "Gemini 4 Neon",
+      "turns": 7,
+      "inputTokens": 27710,
+      "cacheReadTokens": 1820795,
+      "outputTokens": 9308
     }
   ]
 }
