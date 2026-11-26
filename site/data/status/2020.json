@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:12:12Z",
+  "updatedAt": "2026-11-26T21:20:01Z",
   "parts": [
     {
       "year": 2020,
@@ -143,6 +143,26 @@
       ],
       "startedAt": "2026-11-26T20:56:32Z",
       "verifiedAt": "2026-11-26T21:12:12Z"
+    },
+    {
+      "year": 2020,
+      "day": 4,
+      "part": 2,
+      "title": "Passport Processing",
+      "puzzleUrl": "https://adventofcode.com/2020/day/4#part2",
+      "status": "solved",
+      "summary": "Count how many passports contain all seven required fields and satisfy strict per-field format and numeric range rules for byr, iyr, eyr, hgt, hcl, ecl, and pid.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day04/shared/ binding STRICT_FIELD_POLICY into countValidPassports, tracePassportScan, and PassportScanVisualizer (2.05 ms across ~253 passports -> 114): zero edits to shared/ or part1/, polymorphic YearRangeRule/HeightRule/PatternRule/AllowedValuesRule validation with per-field diagnostic feedback in PassportCard, differentially verified across 60 seeded synthetic passports against an independent standalone regex/numeric oracle.",
+      "complexity": "O(N * F) time, O(N * F) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.05,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building STRICT_FIELD_RULES and STRICT_FIELD_POLICY in day04/shared/ allowed Part 2 to ship in ~22 LOC of domain code with zero edits to shared/ or part1/.",
+        "Generating ~50% guaranteed-valid and ~50% targeted-invalid synthetic passports avoids the (0.5)^7 zero-valid degeneracy trap in multi-field differential fuzzing."
+      ],
+      "startedAt": "2026-11-26T21:12:12Z",
+      "verifiedAt": "2026-11-26T21:20:01Z"
     }
   ]
 }
