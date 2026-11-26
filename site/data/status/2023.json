@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:05:02Z",
+  "updatedAt": "2026-11-26T06:18:56Z",
   "parts": [
     {
       "year": 2023,
@@ -282,6 +282,26 @@
       ],
       "startedAt": "2026-11-26T05:56:36Z",
       "verifiedAt": "2026-11-26T06:05:02Z"
+    },
+    {
+      "year": 2023,
+      "day": 8,
+      "part": 1,
+      "title": "Haunted Wasteland",
+      "puzzleUrl": "https://adventofcode.com/2023/day/8",
+      "status": "solved",
+      "summary": "Follow a cyclic Left/Right instruction tape across a directed network of labeled nodes starting at AAA and count the minimum steps needed to arrive at ZZZ.",
+      "algorithmSummary": "Dense Int32Array/Uint8Array finite-state walk in 2023/day08/shared/ (WastelandNetwork) with O(1) transitions, Uint8Array(N * L) visited-(node, ip) cycle detection, and alphanumeric [A-Za-z0-9]+ labels for zero-churn Part 2 reuse (1.71 ms on 750 nodes / 269-turn tape), paired with a dual-scale WastelandVisualizer (FullNetworkSvg / LocalDecisionHubSvg); differentially verified against an independent Map-based string oracle across 50 seeded random graphs.",
+      "complexity": "O(S) time (bounded by O(N * L)), O(N * L) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.71,
+      "attemptsCount": 1,
+      "learnings": [
+        "Accepting [A-Za-z0-9]+ node labels in 2023/day08/shared/parser.ts and exposing O(1) stepFrom/labels primitives prepares Part 2's alphanumeric multi-ghost walks (11A/22Z) with zero parser churn.",
+        "Never call Object.freeze() on TypedArray instances (V8 throws TypeError); encapsulate Int32Array/Uint8Array buffers inside private fields and freeze only the owning WastelandNetwork instance."
+      ],
+      "startedAt": "2026-11-26T06:06:33Z",
+      "verifiedAt": "2026-11-26T06:18:56Z"
     }
   ]
 }
