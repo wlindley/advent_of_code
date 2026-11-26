@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T00:06:00Z",
+  "updatedAt": "2026-11-26T00:13:00Z",
   "years": [
     {
       "year": 2025,
@@ -282,37 +282,18 @@
           "part": 1,
           "title": "Playground",
           "puzzleUrl": "https://adventofcode.com/2025/day/8",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "Given 3D integer coordinates of suspended junction boxes, process the first K closest distinct unordered pairs in ascending Euclidean distance order, linking each pair into a circuit (redundant pairs still count toward K). Return the product of the three largest circuit sizes.",
-          "proposals": [
-            {
-              "id": "bounded-max-heap-select",
-              "name": "Streaming Pair Scan + Fixed-Size K Max-Heap + Union-Find",
-              "summary": "Stream all N(N-1)/2 pairs through a typed-array binary max-heap of size K (Float64Array distSq + Uint32Array u,v), sort the K shortest pairs, and union via DisjointSet.",
-              "complexity": "O(N^2 + K log K) expected time, O(N + K) space",
-              "tradeoffs": "~2–5 ms and ~16 KB memory at N=1000, K=1000; promotes reusable DisjointSet into shared/core and verifies against full-sort Kruskal oracle."
-            },
-            {
-              "id": "full-pair-sort-kruskal",
-              "name": "Full Typed-Array Edge Sort + Kruskal",
-              "summary": "Materialize all N(N-1)/2 pairs, sort all 499,500 edges, and union the first K.",
-              "complexity": "O(N^2 log N) time, O(N^2) space",
-              "tradeoffs": "Simple reference implementation (ideal differential test oracle), but ~10x slower and ~6-8 MB RAM for Part 1."
-            },
-            {
-              "id": "spatial-grid-radius-kruskal",
-              "name": "3D Spatial Hash Grid + Expanding Shells",
-              "summary": "Bucket points into a 3D uniform grid and expand search shells until K pairs are guaranteed.",
-              "complexity": "O(N + K log K) expected on uniform clouds",
-              "tradeoffs": "Best scaling for massive N, but unnecessary complexity at N = 1,000."
-            }
+          "algorithmSummary": "Stream all N(N-1)/2 pairs through a fixed-capacity K binary max-heap backed by Float64Array/Uint32Array (O(N^2 + K log K) expected, ~16 KB memory), sort the K shortest pairs deterministically by (distSq, u, v), and union via promoted shared/core/disjointSet.ts.",
+          "complexity": "O(N^2 + K log K) expected time, O(N + K) space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 6.05,
+          "attemptsCount": 1,
+          "learnings": [
+            "Promoted Int32Array-backed DisjointSet (negative entries = -size, non-negative = parent) to shared/core/disjointSet.ts as a single-source-of-truth Union-Find.",
+            "Keep puzzle-specific parameters like K=10 (example) vs K=1000 (personal) explicit in domain functions and bind example presets strictly at the UI manifest boundary."
           ],
-          "selectedProposalId": "bounded-max-heap-select",
-          "selectionRationale": "Promotes reusable DisjointSet to shared/core, avoids materializing 500k edge objects via a typed-array K-bounded max-heap, and prepares Point3D + JunctionPair for Part 2 MST.",
-          "inFlightWork": "Implementing shared/core/disjointSet, 2025/day08/shared/junctions, pairSelection + solver + differential tests, and 3D orbiting Canvas visualizer via Flash.",
-          "attempts": [],
-          "updatedAt": "2026-11-26T00:06:00Z"
+          "verifiedAt": "2026-11-26T00:12:40Z"
         }
       ]
     }
