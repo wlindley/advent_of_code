@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
+  computeSolveDurationSeconds,
   computeYearProgress,
   findActiveParts,
   findPartRecord,
+  formatDuration,
   validateStatusDocument,
   type StatusDocument,
 } from './status';
@@ -28,6 +30,7 @@ const sampleDoc: StatusDocument = {
           personalInputElapsedMs: 1.4,
           attemptsCount: 1,
           learnings: ['Normalize negative modulo in JS'],
+          startedAt: '2026-11-25T20:00:00Z',
           verifiedAt: '2026-11-25T20:05:00Z',
         },
         {
@@ -83,9 +86,15 @@ describe('status schema and selectors', () => {
       blockedParts: 1,
       pendingParts: 21,
       completionPercent: 4,
+      totalSolveSeconds: 300,
     });
+    const solved = findPartRecord(validated, 2025, 1, 1);
+    expect(solved?.status).toBe('solved');
+    expect(computeSolveDurationSeconds(solved as Extract<NonNullable<typeof solved>, { status: 'solved' }>)).toBe(300);
+    expect(formatDuration(45)).toBe('45s');
+    expect(formatDuration(300)).toBe('5m 00s');
+    expect(formatDuration(3725)).toBe('1h 02m');
     expect(findActiveParts(validated).map((p) => `${p.day}.${p.part}`)).toEqual(['1.2', '2.1']);
-    expect(findPartRecord(validated, 2025, 1, 1)?.status).toBe('solved');
     expect(findPartRecord(validated, 2025, 9, 1)).toBeUndefined();
   });
 
@@ -118,5 +127,16 @@ describe('status schema and selectors', () => {
       }],
     };
     expect(() => validateStatusDocument(badSolved)).toThrow('personalInputElapsedMs must be non-negative');
+
+    const badTimestamps: StatusDocument = {
+      updatedAt: 'x',
+      years: [{
+        year: 2025,
+        totalDays: 12,
+        parts: [{ ...(sampleDoc.years[0]!.parts[0]! as Extract<StatusDocument['years'][0]['parts'][number], { status: 'solved' }>), startedAt: '2026-11-25T20:10:00Z' }],
+      }],
+    };
+    expect(() => validateStatusDocument(badTimestamps)).toThrow('verifiedAt must not precede startedAt');
+    expect(() => formatDuration(-1)).toThrow('Duration seconds must be a non-negative integer');
   });
 });

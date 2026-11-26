@@ -36,6 +36,7 @@ export type PartRecord =
       readonly selectionRationale: string;
       readonly inFlightWork: string;
       readonly attempts: readonly AttemptLog[];
+      readonly startedAt?: string;
       readonly updatedAt: string;
     })
   | (PartBase & {
@@ -47,6 +48,7 @@ export type PartRecord =
       readonly personalInputElapsedMs: number;
       readonly attemptsCount: number;
       readonly learnings: readonly string[];
+      readonly startedAt: string;
       readonly verifiedAt: string;
     })
   | (PartBase & {
@@ -75,4 +77,5 @@ export interface YearProgress {
   readonly blockedParts: number;
   readonly pendingParts: number;
   readonly completionPercent: number;
+  readonly totalSolveSeconds: number;
 }

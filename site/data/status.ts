@@ -26,12 +26,37 @@ export function validateStatusDocument(doc: StatusDocument): StatusDocument {
         const exists = part.proposals.some((proposal) => proposal.id === part.selectedProposalId);
         if (!exists) throw new Error(`Unknown selectedProposalId: ${part.selectedProposalId}`);
       }
-      if (part.status === 'solved' && part.personalInputElapsedMs < 0) {
-        throw new Error(`personalInputElapsedMs must be non-negative for ${key}`);
+      if (part.status === 'solved') {
+        if (part.personalInputElapsedMs < 0) {
+          throw new Error(`personalInputElapsedMs must be non-negative for ${key}`);
+        }
+        const startMs = Date.parse(part.startedAt);
+        const endMs = Date.parse(part.verifiedAt);
+        if (Number.isNaN(startMs) || Number.isNaN(endMs) || endMs < startMs) {
+          throw new Error(`verifiedAt must not precede startedAt for ${key}`);
+        }
       }
     }
   }
   return doc;
+}
+
+export function computeSolveDurationSeconds(
+  part: Extract<PartRecord, { status: 'solved' }>,
+): number {
+  return Math.round((Date.parse(part.verifiedAt) - Date.parse(part.startedAt)) / 1000);
+}
+
+export function formatDuration(totalSeconds: number): string {
+  if (!Number.isInteger(totalSeconds) || totalSeconds < 0) {
+    throw new Error('Duration seconds must be a non-negative integer');
+  }
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  if (hours > 0) return `${hours}h ${String(minutes).padStart(2, '0')}m`;
+  if (minutes > 0) return `${minutes}m ${String(seconds).padStart(2, '0')}s`;
+  return `${seconds}s`;
 }
 
 export function computeYearProgress(yearStatus: YearStatus): YearProgress {
@@ -39,10 +64,13 @@ export function computeYearProgress(yearStatus: YearStatus): YearProgress {
   let solvedParts = 0;
   let inProgressParts = 0;
   let blockedParts = 0;
+  let totalSolveSeconds = 0;
 
   for (const part of yearStatus.parts) {
-    if (part.status === 'solved') solvedParts += 1;
-    else if (part.status === 'in_progress') inProgressParts += 1;
+    if (part.status === 'solved') {
+      solvedParts += 1;
+      totalSolveSeconds += computeSolveDurationSeconds(part);
+    } else if (part.status === 'in_progress') inProgressParts += 1;
     else if (part.status === 'blocked') blockedParts += 1;
   }
 
@@ -53,6 +81,7 @@ export function computeYearProgress(yearStatus: YearStatus): YearProgress {
     blockedParts,
     pendingParts: Math.max(0, totalParts - solvedParts - inProgressParts - blockedParts),
     completionPercent: Math.round((solvedParts / totalParts) * 100),
+    totalSolveSeconds,
   };
 }
 
