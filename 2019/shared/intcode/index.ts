@@ -1,6 +1,7 @@
 export { BufferedIoChannel, type IoChannel } from './io';
 export {
   IntcodeMachine,
+  type CompleteMachineOptions,
   type DetailedIntcodeStep,
   type IntcodeMachineOptions,
   type IntcodeStep,
@@ -9,12 +10,15 @@ export {
 } from './machine';
 export { IntcodeMemory, type MemoryAccess } from './memory';
 export {
+  COMPLETE_MODES,
   CORE_MODES,
   IMMEDIATE_MODE,
   POSITION_MODE,
+  RELATIVE_MODE,
   createModeRegistry,
   decodeOpcode,
   extractModeCode,
+  type CompleteParameterMode,
   type DecodedMemoryRead,
   type MemoryRead,
   type ParameterMode,
@@ -23,6 +27,8 @@ export {
 } from './modes';
 export {
   ADD_OPCODE,
+  ADJUST_RELATIVE_BASE_OPCODE,
+  COMPLETE_OPCODES,
   CONTROL_OPCODES,
   CORE_OPCODES,
   EQUALS_OPCODE,
@@ -34,6 +40,7 @@ export {
   LESS_THAN_OPCODE,
   MUL_OPCODE,
   OUTPUT_OPCODE,
+  RELATIVE_BASE_OPCODES,
   STANDARD_OPCODES,
   createOpcodeRegistry,
   type ExecutionContext,
@@ -42,3 +49,8 @@ export {
   type ParamOffset,
 } from './opcodes';
 export { IntcodeProgram, parseIntcodeProgram, type MemoryPatch } from './program';
+export {
+  SparseIntcodeMemory,
+  type SparseMemoryAccess,
+  type SparseMemoryEntry,
+} from './sparseMemory';

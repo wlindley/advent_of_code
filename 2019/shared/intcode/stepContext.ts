@@ -4,6 +4,7 @@ import {
   extractModeCode,
   type DecodedMemoryRead,
   type MemoryRead,
+  type ParameterMode,
   type ParameterModeHandler,
 } from './modes';
 import type { ExecutionContext, OpcodeArity, ParamOffset } from './opcodes';
@@ -28,26 +29,27 @@ export interface IntcodeStep {
 }
 
 /** Extended step trace record with decoded parameter modes and I/O telemetry. */
-export interface DetailedIntcodeStep extends IntcodeStep {
+export interface DetailedIntcodeStep<TMode extends string = ParameterMode> extends IntcodeStep {
   readonly rawInstruction: bigint;
   readonly arity: OpcodeArity;
-  readonly reads: readonly DecodedMemoryRead[];
+  readonly reads: readonly DecodedMemoryRead<TMode>[];
   readonly inputConsumed: bigint | null;
   readonly outputEmitted: bigint | null;
   readonly waitingForInput: boolean;
 }
 
 /** Per-step ExecutionContext that decodes modes, enforces write rules, and records telemetry. */
-export class StepRecorderContext implements ExecutionContext {
+export class StepRecorderContext<TMode extends string = ParameterMode> implements ExecutionContext {
   private readonly memory: MemoryAccess;
   private readonly ipBefore: bigint;
   private readonly rawInstruction: bigint;
-  private readonly modes: ReadonlyMap<bigint, ParameterModeHandler>;
+  private readonly modes: ReadonlyMap<bigint, ParameterModeHandler<TMode>>;
   private readonly io: IoChannel;
+  private nextRelativeBase: bigint;
   private nextIp: bigint;
   private haltedFlag = false;
   private waitingFlag = false;
-  private readonly recordedReads: DecodedMemoryRead[] = [];
+  private readonly recordedReads: DecodedMemoryRead<TMode>[] = [];
   private recordedWrite: MemoryWrite | null = null;
   private consumedInput: bigint | null = null;
   private emittedOutput: bigint | null = null;
@@ -56,19 +58,25 @@ export class StepRecorderContext implements ExecutionContext {
     memory: MemoryAccess,
     ipBefore: bigint,
     rawInstruction: bigint,
-    modes: ReadonlyMap<bigint, ParameterModeHandler>,
+    modes: ReadonlyMap<bigint, ParameterModeHandler<TMode>>,
     io: IoChannel,
+    relativeBaseBefore: bigint,
   ) {
     this.memory = memory;
     this.ipBefore = ipBefore;
     this.rawInstruction = rawInstruction;
     this.modes = modes;
     this.io = io;
+    this.nextRelativeBase = relativeBaseBefore;
     this.nextIp = ipBefore;
   }
 
   get ipAfter(): bigint {
     return this.nextIp;
+  }
+
+  get relativeBaseAfter(): bigint {
+    return this.nextRelativeBase;
   }
 
   get isHalted(): boolean {
@@ -79,7 +87,7 @@ export class StepRecorderContext implements ExecutionContext {
     return this.waitingFlag;
   }
 
-  private resolveMode(offset: ParamOffset): ParameterModeHandler {
+  private resolveMode(offset: ParamOffset): ParameterModeHandler<TMode> {
     const modeCode = extractModeCode(this.rawInstruction, offset);
     const handler = this.modes.get(modeCode);
     if (!handler) {
@@ -89,12 +97,20 @@ export class StepRecorderContext implements ExecutionContext {
   }
 
   private resolveWriteAddress(offset: ParamOffset): bigint {
-    return this.resolveMode(offset).resolveWriteAddress(this.memory, this.ipBefore + BigInt(offset));
+    return this.resolveMode(offset).resolveWriteAddress(
+      this.memory,
+      this.ipBefore + BigInt(offset),
+      this.nextRelativeBase,
+    );
   }
 
   readParam(offset: ParamOffset): bigint {
     const handler = this.resolveMode(offset);
-    const resolved = handler.read(this.memory, this.ipBefore + BigInt(offset));
+    const resolved = handler.read(
+      this.memory,
+      this.ipBefore + BigInt(offset),
+      this.nextRelativeBase,
+    );
     this.recordedReads.push(
       Object.freeze({
         address: resolved.address,
@@ -138,6 +154,10 @@ export class StepRecorderContext implements ExecutionContext {
     this.emittedOutput = value;
   }
 
+  adjustRelativeBase(delta: bigint): void {
+    this.nextRelativeBase += delta;
+  }
+
   waitForInput(): void {
     this.waitingFlag = true;
   }
@@ -151,7 +171,7 @@ export class StepRecorderContext implements ExecutionContext {
     opcode: bigint,
     mnemonic: string,
     arity: OpcodeArity,
-  ): DetailedIntcodeStep {
+  ): DetailedIntcodeStep<TMode> {
     return Object.freeze({
       stepIndex,
       ipBefore: this.ipBefore,
