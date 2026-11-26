@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:53:43Z",
+  "updatedAt": "2026-11-26T22:00:25Z",
   "parts": [
     {
       "year": 2020,
@@ -223,6 +223,26 @@
       ],
       "startedAt": "2026-11-26T21:42:31Z",
       "verifiedAt": "2026-11-26T21:53:43Z"
+    },
+    {
+      "year": 2020,
+      "day": 6,
+      "part": 2,
+      "title": "Custom Customs",
+      "puzzleUrl": "https://adventofcode.com/2020/day/6#part2",
+      "status": "solved",
+      "summary": "Sum across blank-line-separated passenger groups the number of questions (a-z) to which every member of the group answered yes.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day06/shared/ binding ALL_YES_POLICY into CustomsSolver and CustomsVisualizer (1.08 ms across ~466 groups -> 3,445): zero edits to shared/ or part1/, folds 26-bit declaration masks via bitwise AND with SWAR popcount26, CustomsMatrixSvg highlights the active AND consensus strip, differentially verified across 50 high-density seeded PRNG batches against an independent Set<string> intersection oracle plus P2 <= P1 monotonicity and non-trivial multi-person intersection checks.",
+      "complexity": "O(C) parse & O(P) solve time, O(P) retained space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.08,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building ALL_YES_POLICY and dual OR/AND strips in day06/shared/ let Part 2 ship in 3 lines of domain code with zero edits to shared/ or part1/.",
+        "Sampling high LCG bits at ~67% letter density in differential fuzzing prevents multi-person intersections from degenerating to all-zero and ensures non-trivial multi-person agreement is verified."
+      ],
+      "startedAt": "2026-11-26T21:53:43Z",
+      "verifiedAt": "2026-11-26T22:00:25Z"
     }
   ]
 }
