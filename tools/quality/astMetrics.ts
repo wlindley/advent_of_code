@@ -40,6 +40,15 @@ const LOGICAL_OPERATORS = new Set<ts.SyntaxKind>([
   ts.SyntaxKind.QuestionQuestionToken,
 ]);
 
+const OPERAND_KINDS = new Set<ts.SyntaxKind>([
+  ts.SyntaxKind.Identifier,
+  ts.SyntaxKind.NumericLiteral,
+  ts.SyntaxKind.BigIntLiteral,
+  ts.SyntaxKind.StringLiteral,
+  ts.SyntaxKind.NoSubstitutionTemplateLiteral,
+  ts.SyntaxKind.RegularExpressionLiteral,
+]);
+
 function isFunctionLike(node: ts.Node): boolean {
   return (
     ts.isFunctionDeclaration(node) ||
@@ -70,17 +79,9 @@ function scanTokens(
 
   while (scanner.scan() !== ts.SyntaxKind.EndOfFileToken) {
     const kind = scanner.getToken();
-    const pos = scanner.getTokenPos();
-    codeLines.add(sourceFile.getLineAndCharacterOfPosition(pos).line);
+    codeLines.add(sourceFile.getLineAndCharacterOfPosition(scanner.getTokenPos()).line);
     const text = scanner.getTokenText();
-    if (
-      kind === ts.SyntaxKind.Identifier ||
-      kind === ts.SyntaxKind.NumericLiteral ||
-      kind === ts.SyntaxKind.BigIntLiteral ||
-      kind === ts.SyntaxKind.StringLiteral ||
-      kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral ||
-      kind === ts.SyntaxKind.RegularExpressionLiteral
-    ) {
+    if (OPERAND_KINDS.has(kind)) {
       operands.add(text);
       totalOperands += 1;
     } else {
@@ -95,28 +96,57 @@ function scanTokens(
   return { sloc: codeLines.size, halsteadVolume };
 }
 
-function measureFunctionBody(root: ts.Node): { cyclomatic: number; maxDepth: number } {
-  let cyclomatic = 1;
-  let maxDepth = 0;
+interface BodyAcc {
+  cyclomatic: number;
+  maxDepth: number;
+}
 
-  function visit(node: ts.Node, depth: number): void {
-    // Nested functions are measured independently so outer complexity isn't double-counted.
-    if (node !== root && isFunctionLike(node)) return;
-
-    if (BRANCH_KINDS.has(node.kind)) {
-      cyclomatic += 1;
-    } else if (ts.isBinaryExpression(node) && LOGICAL_OPERATORS.has(node.operatorToken.kind)) {
-      cyclomatic += 1;
-    }
-
-    const addsNesting = NESTING_KINDS.has(node.kind) && !isElseIf(node);
-    const nextDepth = addsNesting ? depth + 1 : depth;
-    if (nextDepth > maxDepth) maxDepth = nextDepth;
-    ts.forEachChild(node, (child) => visit(child, nextDepth));
+function visitFunctionNode(node: ts.Node, root: ts.Node, depth: number, acc: BodyAcc): void {
+  // Nested functions are measured independently so outer complexity isn't double-counted.
+  if (node !== root && isFunctionLike(node)) return;
+  if (BRANCH_KINDS.has(node.kind)) {
+    acc.cyclomatic += 1;
+  } else if (ts.isBinaryExpression(node) && LOGICAL_OPERATORS.has(node.operatorToken.kind)) {
+    acc.cyclomatic += 1;
   }
+  const nextDepth = NESTING_KINDS.has(node.kind) && !isElseIf(node) ? depth + 1 : depth;
+  if (nextDepth > acc.maxDepth) acc.maxDepth = nextDepth;
+  ts.forEachChild(node, (child) => visitFunctionNode(child, root, nextDepth, acc));
+}
 
-  ts.forEachChild(root, (child) => visit(child, 0));
-  return { cyclomatic, maxDepth };
+function measureFunctionBody(root: ts.Node): BodyAcc {
+  const acc: BodyAcc = { cyclomatic: 1, maxDepth: 0 };
+  ts.forEachChild(root, (child) => visitFunctionNode(child, root, 0, acc));
+  return acc;
+}
+
+interface FileFnAcc {
+  functionCount: number;
+  totalCyclomatic: number;
+  maxCyclomatic: number;
+  maxNestingDepth: number;
+}
+
+function collectFunctions(node: ts.Node, acc: FileFnAcc): void {
+  if (isFunctionLike(node)) {
+    acc.functionCount += 1;
+    const { cyclomatic, maxDepth } = measureFunctionBody(node);
+    acc.totalCyclomatic += cyclomatic;
+    if (cyclomatic > acc.maxCyclomatic) acc.maxCyclomatic = cyclomatic;
+    if (maxDepth > acc.maxNestingDepth) acc.maxNestingDepth = maxDepth;
+  }
+  ts.forEachChild(node, (child) => collectFunctions(child, acc));
+}
+
+function computeMaintainabilityIndex(sloc: number, halsteadVolume: number, totalCc: number, fnCount: number): number {
+  if (sloc === 0) return 100;
+  // Per-function SEI Maintainability Index (0-100): rewards small, low-CC functions without penalizing modular files.
+  const denom = Math.max(1, fnCount);
+  const meanSloc = sloc / denom;
+  const meanVolume = halsteadVolume / denom;
+  const meanCc = Math.max(1, totalCc) / denom;
+  const rawMi = 171 - 5.2 * Math.log(Math.max(1, meanVolume)) - 0.23 * meanCc - 16.2 * Math.log(Math.max(1, meanSloc));
+  return Math.round(Math.max(0, Math.min(100, rawMi)) * 10) / 10;
 }
 
 export function analyzeSourceFile(filePath: string, sourceText: string): FileAstMetrics {
@@ -125,44 +155,14 @@ export function analyzeSourceFile(filePath: string, sourceText: string): FileAst
   const variant = isTsx ? ts.LanguageVariant.JSX : ts.LanguageVariant.Standard;
   const sourceFile = ts.createSourceFile(filePath, sourceText, ts.ScriptTarget.Latest, true, scriptKind);
   const { sloc, halsteadVolume } = scanTokens(sourceFile, sourceText, variant);
-
-  let functionCount = 0;
-  let totalCyclomatic = 0;
-  let maxCyclomatic = 0;
-  let maxNestingDepth = 0;
-
-  function collectFunctions(node: ts.Node): void {
-    if (isFunctionLike(node)) {
-      functionCount += 1;
-      const { cyclomatic, maxDepth } = measureFunctionBody(node);
-      totalCyclomatic += cyclomatic;
-      if (cyclomatic > maxCyclomatic) maxCyclomatic = cyclomatic;
-      if (maxDepth > maxNestingDepth) maxNestingDepth = maxDepth;
-    }
-    ts.forEachChild(node, collectFunctions);
-  }
-
-  collectFunctions(sourceFile);
-
-  // Per-function SEI Maintainability Index (0-100): rewards small, low-CC functions without penalizing modular files.
-  const denom = Math.max(1, functionCount);
-  const meanSloc = sloc / denom;
-  const meanVolume = halsteadVolume / denom;
-  const meanCc = Math.max(1, totalCyclomatic) / denom;
-  const rawMi =
-    sloc === 0
-      ? 100
-      : 171 - 5.2 * Math.log(Math.max(1, meanVolume)) - 0.23 * meanCc - 16.2 * Math.log(Math.max(1, meanSloc));
-  const maintainabilityIndex = Math.round(Math.max(0, Math.min(100, rawMi)) * 10) / 10;
+  const fns: FileFnAcc = { functionCount: 0, totalCyclomatic: 0, maxCyclomatic: 0, maxNestingDepth: 0 };
+  collectFunctions(sourceFile, fns);
 
   return {
     filePath,
     sloc,
-    functionCount,
-    totalCyclomatic,
-    maxCyclomatic,
-    maxNestingDepth,
+    ...fns,
     halsteadVolume,
-    maintainabilityIndex,
+    maintainabilityIndex: computeMaintainabilityIndex(sloc, halsteadVolume, fns.totalCyclomatic, fns.functionCount),
   };
 }
