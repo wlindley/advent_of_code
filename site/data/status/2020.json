@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T20:26:05Z",
+  "updatedAt": "2026-11-26T20:32:27Z",
   "parts": [
     {
       "year": 2020,
@@ -63,6 +63,26 @@
       ],
       "startedAt": "2026-11-26T20:13:21Z",
       "verifiedAt": "2026-11-26T20:26:05Z"
+    },
+    {
+      "year": 2020,
+      "day": 2,
+      "part": 2,
+      "title": "Password Philosophy",
+      "puzzleUrl": "https://adventofcode.com/2020/day/2#part2",
+      "status": "solved",
+      "summary": "Count how many passwords contain their policy letter at exactly one of the two 1-based positions.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day02/shared/ binding TOBOGGAN_POLICY into countValidPasswords, tracePasswordAudit, and PasswordAuditVisualizer (1.19 ms across 1,000 entries -> 249): O(1) 1-based positional XOR evaluation handling equal positions and out-of-bounds slots branch-free, differentially verified against an independent 1-based XOR oracle across 40 seeded fixtures.",
+      "complexity": "O(N * L) parse & storage, O(N) solve",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.19,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building TOBOGGAN_POLICY with independent slot probes (matchedIndices.length === 1) handled first === second and out-of-bounds slots cleanly with zero Part 2 shared edits.",
+        "Explicitly testing extra unchecked occurrences and 0-based off-by-one traps guards against Part 1 count logic leaking into Part 2."
+      ],
+      "startedAt": "2026-11-26T20:26:29Z",
+      "verifiedAt": "2026-11-26T20:32:27Z"
     }
   ]
 }
