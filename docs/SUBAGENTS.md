@@ -39,9 +39,12 @@ This document defines the specialized subagents used to solve Advent of Code yea
 - **Model Tier**: `flash` (or handled strictly by the parent coordinator with a single-writer lock)
 - **Purpose**: Coordinate **3 concurrent year workers** (`year/<YYYY>` git worktrees via `Workspace: 'share'`) with zero merge conflicts and strict AoC etiquette.
 - **Protocol**:
-  1. **Conflict-Free Isolation**:
-     - Each year worker edits ONLY `<YYYY>/**` and its own isolated status file `site/data/status/<YYYY>.json` (discovered via Vite `import.meta.glob('./status/*.json')`).
-     - Year workers **never** edit `shared/`, `site/data/quality.json`, `site/data/tokenUsage.json`, or `docs/LEARNINGS.md` directly — they emit proposed shared-promotion notes and learnings in their part completion report.
+  1. **Conflict-Free Isolation (`shared/` Single-Writer Rule)**:
+     - Each year worker runs in `.worktrees/<YYYY>` (branch `year/<YYYY>`), editing ONLY `<YYYY>/**` and its own isolated status file `site/data/status/<YYYY>.json` (discovered via Vite `import.meta.glob('./status/*.json')`).
+     - Year workers treat `shared/` as **strictly read-only** — they implement day-local utilities in `<YYYY>/dayNN/shared/` and flag `shared/` promotion candidates in their part completion report.
+     - **Two controlled `shared/` promotion paths** (owned solely on `main`):
+       - *End-of-year barrier*: `refactorer` promotes recurring primitives and performs structural refactors on `main`, followed by full verification and rebasing active worktrees.
+       - *Fast-track additive promotion*: If two active years independently need the same missing primitive mid-year, the coordinator may land a purely additive module on `main` between part merges (never breaking existing APIs), picked up by active worktrees on their next rebase.
   2. **Per-Part Merge Cadence (1 Star = 1 Live Update)**:
      - On each verified star from any active year worktree, the coordinator:
        1. Serializes AoC submissions through `.aoc-cache/rate-limit.json`.

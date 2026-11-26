@@ -9,6 +9,7 @@ export default defineConfig({
       'site/data/**/*.test.ts',
       '[0-9][0-9][0-9][0-9]/**/*.test.ts',
     ],
+    exclude: ['**/node_modules/**', '**/.worktrees/**', '**/archive/**', '**/dist/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'json-summary'],

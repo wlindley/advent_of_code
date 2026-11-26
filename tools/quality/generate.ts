@@ -3,7 +3,7 @@ import { join, relative, resolve } from 'node:path';
 import { analyzeSourceFile } from './astMetrics';
 import { buildQualityReport, type AnalyzedFileEntry, type RawCoverageSummary } from './report';
 
-const IGNORED_DIRS = new Set(['node_modules', 'dist', 'coverage', '.git', '.aoc-cache', 'archive']);
+const IGNORED_DIRS = new Set(['node_modules', 'dist', 'coverage', '.git', '.aoc-cache', '.worktrees', 'archive']);
 
 function collectSourceFiles(dir: string, rootDir: string, out: AnalyzedFileEntry[]): void {
   for (const name of readdirSync(dir)) {
