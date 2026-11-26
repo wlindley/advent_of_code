@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T16:29:36Z",
+  "updatedAt": "2026-11-26T16:51:48Z",
   "parts": [
     {
       "year": 2022,
@@ -843,6 +843,26 @@
       ],
       "startedAt": "2026-11-26T16:21:24Z",
       "verifiedAt": "2026-11-26T16:29:36Z"
+    },
+    {
+      "year": 2022,
+      "day": 22,
+      "part": 1,
+      "title": "Monkey Map",
+      "puzzleUrl": "https://adventofcode.com/2022/day/22",
+      "status": "solved",
+      "summary": "Walk a 200x150 board of open tiles, walls, and void spaces along alternating move and 90-degree turn instructions with flat row/column edge wraparound, then compute 1000*row + 4*col + facing.",
+      "algorithmSummary": "Polymorphic Topology strategy (FlatTorusTopology scan-back wrap + pre-built zero-churn CubeNetTopology for arbitrary 6-face cube nets via exact integer 3D orthonormal frame BFS) over an immutable Uint8Array MonkeyBoard in 2022/day22/shared/ (3.42 ms on 200x150): preserves significant leading void spaces during parsing, checks walls before committing wrapped poses (protecting pre-wrap facing on cube seams), records compressed straight-run TrailSegments + <= 240 sampled MonkeyMapTraceFrames rendered on a HiDPI canvas, and pre-verifies CubeNetTopology via exact 24-edge boundary involutions across S=4 (official Part 2 example = 5031), S=2 (011/010/110/100 net), and S=1 cube nets alongside U-shaped internal-void torus involution.",
+      "complexity": "O(H * W + K) time, O(H * W) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.42,
+      "attemptsCount": 1,
+      "learnings": [
+        "Scanning backward by (-dr, -dc) in FlatTorusTopology instead of storing rowMin/rowMax arrays eliminates stored derived state and preserves exact topological involution even on synthetic U-shaped boards with internal void gaps.",
+        "Implementing negateVec3 as [0 - v[0], 0 - v[1], 0 - v[2]] prevents -0 values in exact 3D integer cube frames with zero branches, and folding arbitrary 6-face cube nets via coordinate-free orthonormal frames (P_B = P_tangent - (S-1)*nB + (S-1)*nA) handles every cube net shape with zero hardcoded seams."
+      ],
+      "startedAt": "2026-11-26T16:30:13Z",
+      "verifiedAt": "2026-11-26T16:51:48Z"
     }
   ]
 }
