@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:18:44Z",
+  "updatedAt": "2026-11-26T05:25:58Z",
   "parts": [
     {
       "year": 2022,
@@ -222,6 +222,26 @@
       ],
       "startedAt": "2026-11-26T05:08:27Z",
       "verifiedAt": "2026-11-26T05:18:44Z"
+    },
+    {
+      "year": 2022,
+      "day": 6,
+      "part": 2,
+      "title": "Tuning Trouble",
+      "puzzleUrl": "https://adventofcode.com/2022/day/6#part2",
+      "status": "solved",
+      "summary": "Scan the same lowercase ASCII datastream buffer to find the 1-based end position of the first contiguous 14-character start-of-message marker whose characters are all pairwise distinct.",
+      "algorithmSummary": "Zero-churn reuse of 2022/day06/shared createMarkerSolver(14) and SignalTapeVisualizer: monotonic last-seen jump window over a 26-entry Int32Array in O(N) time and O(1) space; differentially verified against both a Set window oracle and a BigInt XOR parity oracle (reusing shared/core bitCount) across 40 seeded streams.",
+      "complexity": "O(N) time, O(1) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.3,
+      "attemptsCount": 1,
+      "learnings": [
+        "Parameterizing createMarkerSolver(windowSize) and SignalTapeVisualizer in 2022/day06/shared/ reduced Part 2 to 6 lines of domain code and a 14-line visualizer wrapper with zero edits to shared/.",
+        "Using BigInt masks in the test-only XOR parity oracle (mask ^= 1n << BigInt(code)) plugs directly into shared/core bitCount without 32-bit sign-bit edge cases."
+      ],
+      "startedAt": "2026-11-26T05:19:14Z",
+      "verifiedAt": "2026-11-26T05:25:58Z"
     }
   ]
 }

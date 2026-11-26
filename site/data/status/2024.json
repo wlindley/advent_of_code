@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:14:54Z",
+  "updatedAt": "2026-11-26T05:25:14Z",
   "parts": [
     {
       "year": 2024,
@@ -183,6 +183,26 @@
       ],
       "startedAt": "2026-11-26T05:03:58Z",
       "verifiedAt": "2026-11-26T05:14:54Z"
+    },
+    {
+      "year": 2024,
+      "day": 5,
+      "part": 2,
+      "title": "Print Queue",
+      "puzzleUrl": "https://adventofcode.com/2024/day/5#part2",
+      "status": "solved",
+      "summary": "Filter to only the invalid print updates, reorder each update to satisfy all applicable page ordering rules, and return the sum of the middle page numbers of the repaired updates.",
+      "algorithmSummary": "Zero-churn per-update induced DAG topological repair reusing 2024/day05/shared PageOrderRules.inducedGraph and shared/core DirectedGraph.topologicalOrder in O(R + U * L^2) time: handles both transitive tournaments and sparse partial orders while detecting induced cycles cleanly; differentially verified against both a pairwise-comparator sort oracle and a tournament in-degree ranking oracle across 30 seeded tournaments.",
+      "complexity": "O(R + U * L^2) time, O(R + L^2) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.46,
+      "attemptsCount": 1,
+      "learnings": [
+        "Reusing PageOrderRules.inducedGraph(update.pages).topologicalOrder() via shared/core DirectedGraph gave Part 2 zero-churn repair that stays sound on sparse DAGs and throws loudly on induced cycles.",
+        "Omitting redundant empty-list early returns when sampleTraceIndices(0, maxSteps) natively produces [] keeps tracePrintRepairs branch-minimal with 100% v8 coverage."
+      ],
+      "startedAt": "2026-11-26T05:15:24Z",
+      "verifiedAt": "2026-11-26T05:25:14Z"
     }
   ]
 }
