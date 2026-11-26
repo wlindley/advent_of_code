@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:36:53Z",
+  "updatedAt": "2026-11-26T21:49:58Z",
   "parts": [
     {
       "year": 2021,
@@ -203,6 +203,26 @@
       ],
       "startedAt": "2026-11-26T21:28:49Z",
       "verifiedAt": "2026-11-26T21:36:53Z"
+    },
+    {
+      "year": 2021,
+      "day": 6,
+      "part": 1,
+      "title": "Lanternfish",
+      "puzzleUrl": "https://adventofcode.com/2021/day/6",
+      "status": "solved",
+      "summary": "Simulate an exponentially growing school of lanternfish with 7-day adult and 9-day juvenile spawn cycles for 80 days and return the total population.",
+      "algorithmSummary": "Fixed 9-bucket BigInt cohort rotation (LanternfishSchool.advance(days), PART1_DAYS = 80 and pre-built PART2_DAYS = 256 for zero-churn Part 2) in 2021/day06/shared/ (0.20 ms across 300 fish -> 352,195): exact BigInt arithmetic overflow-proof past 2^1100, smooth bigintLog2 growth curve & 9-bucket SVG cohort bar chart with Linear/Log2 toggle, cross-verified against both a naive per-fish simulator (days 0..25) and a 9x9 BigInt companion-matrix binary exponentiation oracle (days 0, 18, 80, 256, 1000).",
+      "complexity": "O(N + D) time, O(1) solve space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.20,
+      "attemptsCount": 1,
+      "learnings": [
+        "Modeling lanternfish cohorts as a frozen 9-tuple CohortTuple eliminates noUncheckedIndexedAccess fallback branches and achieves 100% V8 branch coverage with zero allocations inside advance(days).",
+        "shared/core's bigintLog2 already computes top-53-bit floating-point log2, yielding smooth overflow-proof Log2 growth curves past 2^1100."
+      ],
+      "startedAt": "2026-11-26T21:36:53Z",
+      "verifiedAt": "2026-11-26T21:49:58Z"
     }
   ]
 }
