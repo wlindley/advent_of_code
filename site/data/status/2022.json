@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T11:29:58Z",
+  "updatedAt": "2026-11-26T11:39:58Z",
   "parts": [
     {
       "year": 2022,
@@ -782,6 +782,26 @@
       ],
       "startedAt": "2026-11-26T11:15:11Z",
       "verifiedAt": "2026-11-26T11:29:58Z"
+    },
+    {
+      "year": 2022,
+      "day": 20,
+      "part": 2,
+      "title": "Grove Positioning System",
+      "puzzleUrl": "https://adventofcode.com/2022/day/20#part2",
+      "status": "solved",
+      "summary": "Multiply every number in the encrypted circular file by decryption key 811589153, mix the list for 10 full rounds in original file order, and sum the values at offsets +1000, +2000, and +3000 after 0.",
+      "algorithmSummary": "Zero-churn 10-round decryption-key specialization reusing 2022/day20/shared SqrtCircularList, exact BigInt Euclidean modulo (N - 1), solveGroveCoordinates, buildMixingTrace, and GroveMixerVisualizer with zero shared edits (21.35 ms across 50,000 relocations on 5,000 entries); differentially verified against an independent naive Array.splice 10-round oracle (comparing both exact cyclic ID permutation anchored on zeroId and grove coordinate sum) across official example (1623178306), duplicate-heavy lists, N = 1..3, and odd-low-bit BigInt values strictly above Number.MAX_SAFE_INTEGER.",
+      "complexity": "O(R * N * sqrt(N)) amortized time (R = 10), O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 21.35,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building exact BigInt Euclidean modulo (N - 1) and SqrtCircularList inside 2022/day20/shared/ solved 50,000 10-round relocations in 21.35 ms with 22 lines of Part 2 solver code and zero shared-module edits.",
+        "Comparing cyclic ID permutations anchored at zeroId against an Array.splice oracle verifies multi-round duplicate tracking independently of the 0 vs N - 1 linear wrap convention."
+      ],
+      "startedAt": "2026-11-26T11:31:05Z",
+      "verifiedAt": "2026-11-26T11:39:58Z"
     }
   ]
 }
