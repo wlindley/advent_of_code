@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { euclideanMod } from './index';
+import { bigintLog2, euclideanMod } from './index';
 
 describe('euclideanMod', () => {
   it('computes non-negative remainders for positive and zero dividends', () => {
@@ -29,5 +29,19 @@ describe('euclideanMod', () => {
     expect(() => euclideanMod(5, -3)).toThrow(RangeError);
     expect(() => euclideanMod(5, 2.5)).toThrow(RangeError);
     expect(() => euclideanMod(5, Number.MAX_SAFE_INTEGER + 1)).toThrow(RangeError);
+  });
+});
+
+describe('bigintLog2', () => {
+  it('computes accurate base-2 logs across small and >2^1024 values', () => {
+    expect(bigintLog2(1n)).toBe(0);
+    expect(bigintLog2(8n)).toBe(3);
+    expect(bigintLog2(1n << 1200n)).toBe(1200);
+    expect(bigintLog2(3n << 1200n)).toBeCloseTo(1200 + Math.log2(3), 10);
+  });
+
+  it('rejects non-positive BigInts', () => {
+    expect(() => bigintLog2(0n)).toThrow(RangeError);
+    expect(() => bigintLog2(-4n)).toThrow(RangeError);
   });
 });
