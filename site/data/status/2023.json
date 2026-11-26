@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T11:06:50Z",
+  "updatedAt": "2026-11-26T11:15:24Z",
   "parts": [
     {
       "year": 2023,
@@ -742,6 +742,26 @@
       ],
       "startedAt": "2026-11-26T10:52:08Z",
       "verifiedAt": "2026-11-26T11:06:50Z"
+    },
+    {
+      "year": 2023,
+      "day": 19,
+      "part": 2,
+      "title": "Aplenty",
+      "puzzleUrl": "https://adventofcode.com/2023/day/19#part2",
+      "status": "solved",
+      "summary": "Count every distinct (x, m, a, s) rating combination in [1, 4000]^4 that is accepted ('A') by the workflow DAG starting at 'in'.",
+      "algorithmSummary": "Zero-churn [1..4000]^4 hyperrectangle splitter reusing 2023/day19/shared WorkflowSystem, RatingBox.uniform(1n, 4000n), countAcceptedCombinations, buildBoxSplitTrace, and WorkflowTraceVisualizer with zero shared edits (3.61 ms across 522 workflows): supports both standard two-section AoC inputs and workflow-only inputs via extractWorkflowBlock and accumulates exact BigInt accepted volumes in O(T) hyperrectangle splits; differentially verified against an independent plain-tuple recursive DFS interval oracle, pairwise 4D box disjointness + A<->R complement conservation (sum === 4000^4), and an end-to-end [1..5]^4 brute-force 625-point grid oracle.",
+      "complexity": "O(T) time, O(D + T) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.61,
+      "attemptsCount": 1,
+      "learnings": [
+        "Gating a synthetic [1..5]^4 test workflow with in{x>5:R,m>5:R,a>5:R,s>5:R,sub} lets an exhaustive 625-point brute-force grid oracle test the unmodified [1..4000]^4 Part 2 solver end-to-end.",
+        "Pre-building RatingBox splitting and box-split visualization inside 2023/day19/shared/ delivered Part 2 with 33 lines of domain solver code and zero shared-module edits."
+      ],
+      "startedAt": "2026-11-26T11:07:56Z",
+      "verifiedAt": "2026-11-26T11:15:24Z"
     }
   ]
 }
