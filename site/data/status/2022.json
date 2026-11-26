@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:08:48Z",
+  "updatedAt": "2026-11-26T04:14:08Z",
   "parts": [
     {
       "year": 2022,
@@ -62,6 +62,26 @@
       ],
       "startedAt": "2026-11-26T04:00:27Z",
       "verifiedAt": "2026-11-26T04:08:48Z"
+    },
+    {
+      "year": 2022,
+      "day": 2,
+      "part": 2,
+      "title": "Rock Paper Scissors",
+      "puzzleUrl": "https://adventofcode.com/2022/day/2#part2",
+      "status": "solved",
+      "summary": "Reinterpret column two (X/Y/Z) as the desired round outcome (Lose/Draw/Win), select the unique player shape achieving that outcome against A/B/C, and sum shape plus outcome points across all rounds.",
+      "algorithmSummary": "Modular inverse RoundResolver (DesiredOutcomeResolver) plugging into 2022/day02/shared with zero churn: derives playerShape = euclideanMod(opponent + desiredOutcome - 1, 3), verified across all 9 combinations and differentially checked against a hardcoded LUT oracle over 2,500 rounds.",
+      "complexity": "O(N) time, O(1) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.59,
+      "attemptsCount": 1,
+      "learnings": [
+        "Inverting the Z_3 outcome equation via shared/core euclideanMod(opponent + desiredOutcome - 1, 3) handles the negative wrap on (Rock, Lose) cleanly and eliminates magic payoff tables.",
+        "Reusing MatchupSummary.countOf(opp, derivePlayerShape(opp, outcome)) lets the Part 2 visualizer display the 3x3 target-outcome matrix with zero changes to shared/."
+      ],
+      "startedAt": "2026-11-26T04:08:50Z",
+      "verifiedAt": "2026-11-26T04:14:08Z"
     }
   ]
 }

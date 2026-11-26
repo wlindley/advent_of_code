@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:03:12Z",
+  "updatedAt": "2026-11-26T04:13:21Z",
   "parts": [
     {
       "year": 2024,
@@ -43,6 +43,26 @@
       ],
       "startedAt": "2026-11-26T03:55:28Z",
       "verifiedAt": "2026-11-26T04:03:12Z"
+    },
+    {
+      "year": 2024,
+      "day": 2,
+      "part": 1,
+      "title": "Red-Nosed Reports",
+      "puzzleUrl": "https://adventofcode.com/2024/day/2",
+      "status": "solved",
+      "summary": "Count how many reactor level reports are strictly monotonic (all ascending or all descending) with every adjacent difference between 1 and 3 inclusive.",
+      "algorithmSummary": "Single-pass directional scan on immutable Report entities in 2024/day02/shared/: derive trend on pair 0 and short-circuit on the first StepFailure (flat, reversal, or jump), differentially verified against a delta-range envelope oracle across 1,000 synthetic reports.",
+      "complexity": "O(N * L) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.02,
+      "attemptsCount": 1,
+      "learnings": [
+        "Separating TrendDirection (1 | -1) from flat pair 0 (trend === null) and scanning from index 0 cleanly catches flat starts and initial jumps while leaving isSafeStep reusable for Part 2 bridged checks.",
+        "Computing delta, length, trend, and isSafe dynamically on frozen StepFailure and Report value objects eliminates derived-state drift."
+      ],
+      "startedAt": "2026-11-26T04:03:43Z",
+      "verifiedAt": "2026-11-26T04:13:21Z"
     }
   ]
 }
