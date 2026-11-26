@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:55:24Z",
+  "updatedAt": "2026-11-26T05:03:32Z",
   "parts": [
     {
       "year": 2024,
@@ -143,6 +143,26 @@
       ],
       "startedAt": "2026-11-26T04:44:21Z",
       "verifiedAt": "2026-11-26T04:55:24Z"
+    },
+    {
+      "year": 2024,
+      "day": 4,
+      "part": 2,
+      "title": "Ceres Search",
+      "puzzleUrl": "https://adventofcode.com/2024/day/4#part2",
+      "status": "solved",
+      "summary": "Count every 3x3 X-MAS cross centered on 'A' whose two diagonal arms (NW-SE and NE-SW) each spell MAS either forwards or backwards, ignoring orthogonal neighbors and allowing overlapping corners.",
+      "algorithmSummary": "Zero-churn interior 'A'-center diagonal-pair classifier reusing 2024/day04/shared WordSearchGrid in O(R * C) time: validates each diagonal independently against {M, S} into four XMasOrientation variants with zero char-code collision risk; differentially verified against a top-left 3x3 WordSearchGrid.matchesAt oracle up to 40x30.",
+      "complexity": "O(R * C) time, O(K) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.06,
+      "attemptsCount": 1,
+      "learnings": [
+        "Checking each diagonal independently against exact 'M'/'S' pairs avoids both the MAM/SAS corner-count trap (M.S/.A./S.M) and ASCII sum collisions like 'P'+'P' === 'M'+'S'.",
+        "Driving XMasCross.diagonals from a total Record<XMasOrientation, ...> lookup table keeps every orientation branch covered with zero unreachable switch defaults."
+      ],
+      "startedAt": "2026-11-26T04:56:06Z",
+      "verifiedAt": "2026-11-26T05:03:32Z"
     }
   ]
 }
