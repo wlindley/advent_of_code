@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:38:09Z",
+  "updatedAt": "2026-11-26T05:47:27Z",
   "parts": [
     {
       "year": 2022,
@@ -262,6 +262,26 @@
       ],
       "startedAt": "2026-11-26T05:26:52Z",
       "verifiedAt": "2026-11-26T05:38:09Z"
+    },
+    {
+      "year": 2022,
+      "day": 7,
+      "part": 2,
+      "title": "No Space Left On Device",
+      "puzzleUrl": "https://adventofcode.com/2022/day/7#part2",
+      "status": "solved",
+      "summary": "Given a 70,000,000-byte disk requiring at least 30,000,000 bytes of free space, find the smallest single directory whose deletion frees enough space to run the update and return its total size.",
+      "algorithmSummary": "Zero-churn post-order threshold scan reusing 2022/day07/shared FilesystemTree, DirectoryMetrics, and DirectoryAuditSvg: computes minRequiredToDelete = max(0, 30_000_000 - (70_000_000 - rootTotalSize)) and selects the minimum qualifying directory in O(D) time and O(D) space; differentially verified against a path-stack prefix accumulator oracle across seeded random terminal logs.",
+      "complexity": "O(L) time, O(D + F) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.76,
+      "attemptsCount": 1,
+      "learnings": [
+        "Reusing FilesystemTree, DirectoryMetrics, and the log-scaled DirectoryAuditSvg in 2022/day07/shared/ delivered Part 2 with zero edits to shared/ and zero imports from part1/.",
+        "Handling the already-sufficient-free-space boundary (minRequiredToDelete = 0) and exact-threshold equality (>= rather than >) prevents subtle off-by-one bugs."
+      ],
+      "startedAt": "2026-11-26T05:38:44Z",
+      "verifiedAt": "2026-11-26T05:47:27Z"
     }
   ]
 }
