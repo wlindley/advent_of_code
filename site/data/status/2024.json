@@ -463,6 +463,26 @@
       ],
       "startedAt": "2026-11-26T07:49:28Z",
       "verifiedAt": "2026-11-26T08:00:40Z"
+    },
+    {
+      "year": 2024,
+      "day": 12,
+      "part": 2,
+      "title": "Garden Groups",
+      "puzzleUrl": "https://adventofcode.com/2024/day/12#part2",
+      "status": "solved",
+      "summary": "Under the bulk discount, compute each 4-connected garden region's fencing price as area * sides (where each continuous straight fence segment counts as one side, with kissing diagonal corners staying separate) and return the total cost.",
+      "algorithmSummary": "Zero-churn 4-quadrant convex/concave corner-counting SIDES_METRIC plugging into 2024/day12/shared RegionPartition and GardenGroupsVisualizer with zero shared edits in O(R * C) time (14.12 ms on 140x140): queries partition.sameRegion(regionId, r, c) across all 4 diagonal quadrants so outer, interior-hole, and Möbius kissing-diagonal corners are counted exactly without segment materialization; differentially verified against an independent DisjointSet + directed outward-normal fence-edge run-merging oracle across all 5 official examples, pinch diagonals, nested enclaves, and 50 seeded random grids.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 14.12,
+      "attemptsCount": 1,
+      "learnings": [
+        "Counting convex (!sameV && !sameH) and concave (sameV && sameH && !sameDiag) corners via partition.sameRegion(region.id, ...) handles kissing-diagonal/Möbius pinches and nested holes automatically in O(1) auxiliary space with zero edits to 2024/day12/shared/.",
+        "Cross-checking corner counting against a directed outward-normal (N/S/E/W) fence-edge run-merging oracle independently confirms that opposite-facing edges at pinch vertices never merge."
+      ],
+      "startedAt": "2026-11-26T08:01:14Z",
+      "verifiedAt": "2026-11-26T08:09:17Z"
     }
   ]
 }

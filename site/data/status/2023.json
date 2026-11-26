@@ -462,6 +462,26 @@
       ],
       "startedAt": "2026-11-26T07:45:15Z",
       "verifiedAt": "2026-11-26T07:59:32Z"
+    },
+    {
+      "year": 2023,
+      "day": 12,
+      "part": 2,
+      "title": "Hot Springs",
+      "puzzleUrl": "https://adventofcode.com/2023/day/12#part2",
+      "status": "solved",
+      "summary": "Unfold every damaged-spring record 5x (joining 5 copies of the pattern with '?' and repeating the damaged-group counts 5 times) and compute the exact sum of valid arrangements across all unfolded rows.",
+      "algorithmSummary": "Zero-churn PART2_UNFOLD_FACTOR = 5 specialization reusing 2023/day12/shared rolling-row BigInt suffix block-placement DP, O(1) dot-prefix checks, and HotSpringsVisualizer with zero shared edits (18.19 ms across 1,000 unfolded rows up to length 104 / 30 groups, totaling 37.36 trillion arrangements in exact BigInt); differentially verified against an independent top-down memoized (pos, groupIdx, currentRun) BigInt DP oracle, closed-form binomial C(L' - sum(G') + 1, |G'|) checks exceeding Number.MAX_SAFE_INTEGER, cross-boundary '#' bridging, and 35 seeded PRNG unfolded records.",
+      "complexity": "O(sum(L' * G')) time, O(L') working space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 18.19,
+      "attemptsCount": 1,
+      "learnings": [
+        "Parameterizing unfoldFactor inside 2023/day12/shared/solverFactory.ts and HotSpringsVisualizer reduced Part 2 to 7 lines of domain code and a 14-line visualizer wrapper with zero edits to shared/ or part1/.",
+        "Rolling-row BigInt suffix DP computes 37.36 trillion unfolded arrangements across 1,000 rows in 18.19 ms on the main thread, while bigintLog2 keeps the interactive DP heatmap overflow-free even past 2^53."
+      ],
+      "startedAt": "2026-11-26T08:00:05Z",
+      "verifiedAt": "2026-11-26T08:11:27Z"
     }
   ]
 }
