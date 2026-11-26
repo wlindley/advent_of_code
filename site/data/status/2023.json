@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:15:05Z",
+  "updatedAt": "2026-11-26T17:31:20Z",
   "parts": [
     {
       "year": 2023,
@@ -883,6 +883,26 @@
       ],
       "startedAt": "2026-11-26T17:06:59Z",
       "verifiedAt": "2026-11-26T17:15:05Z"
+    },
+    {
+      "year": 2023,
+      "day": 23,
+      "part": 1,
+      "title": "A Long Walk",
+      "puzzleUrl": "https://adventofcode.com/2023/day/23",
+      "status": "solved",
+      "summary": "Find the longest simple hike (never revisiting a tile) through a 141x141 forest trail maze from the top-row entrance to the bottom-row exit while obeying one-way icy slopes (^, >, v, <).",
+      "algorithmSummary": "Degree-2 corridor contraction (TrailGraph collapsing 141x141 into 36 junctions / 60 corridors, discarding self-loops, from === endId, and to === startId, and collapsing parallel corridors to max weight while retaining full cell polylines) + descending-weight flat-CSR branch-and-bound DFS (unique preEnd forced exit + provably admissible incremental maxIncoming upper bound) in 2023/day23/shared/ (42.88 ms on 141x141 -> 2,130 steps): records search improvements inside one DFS pass for HiDPI TrailCanvas maze+hike playback, pre-builds zero-churn Part 2 undirected search (ignoreSlopes = true), and differentially verifies both modes against an independent uncontracted cell-by-cell brute-force DFS oracle across the official 23x23 example (94 P1, 154 P2) and synthetic cyclic/parallel/dead-end mazes.",
+      "complexity": "O(R * C) contraction + O(P_pruned) CSR branch-and-bound DFS, O(R * C + V + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 42.88,
+      "attemptsCount": 1,
+      "learnings": [
+        "Skipping from === endId and to === startId during corridor contraction shrinks the edge set and strictly tightens maxIncoming[preEnd] in Part 2 by preventing the unusable endId -> preEnd edge from inflating the upper bound.",
+        "Combining unique preEnd forced exit with an incremental maxIncoming[v] upper bound on a descending-weight flat-CSR graph keeps Part 1 and 36-junction undirected Part 2 exact and fast on the main thread."
+      ],
+      "startedAt": "2026-11-26T17:15:54Z",
+      "verifiedAt": "2026-11-26T17:31:20Z"
     }
   ]
 }
