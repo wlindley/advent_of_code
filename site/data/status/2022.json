@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T09:51:13Z",
+  "updatedAt": "2026-11-26T10:10:19Z",
   "parts": [
     {
       "year": 2022,
@@ -642,6 +642,26 @@
       ],
       "startedAt": "2026-11-26T09:40:20Z",
       "verifiedAt": "2026-11-26T09:51:13Z"
+    },
+    {
+      "year": 2022,
+      "day": 17,
+      "part": 1,
+      "title": "Pyroclastic Flow",
+      "puzzleUrl": "https://adventofcode.com/2022/day/17",
+      "status": "solved",
+      "summary": "Simulate 2,022 non-rotating polyomino rocks (cycling through 5 shapes) falling into a 7-unit-wide vertical chamber under a repeating left/right hot-gas jet stream and return the resulting tower height.",
+      "algorithmSummary": "Packed 32-bit rock/window bitwise chamber physics + exact top-down {down, left, right} reachable-cavity bisimulation cycle fast-forwarding in BigInt in 2022/day17/shared/ (3.45 ms for 2,022 rocks): packs each 4-row rock into a bit-31-safe 32-bit int with O(1) wall/collision shifts, encapsulates a floor-sentinel row array (rows[0] = 0x7F) with dynamic height and zero stored derived state, and exposes BigInt simulateTower/traceTower plus HiDPI ChamberCanvas/PyroclasticVisualizer (rendering reachable cavity tint and BigInt height ruler) for zero-churn Part 2 (10^12 rocks) reuse; differentially verified against an independent 2D Set<string> coordinate simulator across rocks 1..2,022 on the official example (3068), Part 2 lookahead (1,514,285,714,288), overhang/pocket patterns, and seeded random jet streams.",
+      "complexity": "O(min(N, S + P) * (F + D)) time, O(min(N, S + P) * D) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.45,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because falling rocks only move down, left, or right, a single top-down horizontal-flood reachability sweep from y = height down to 1 computes the exact reachable empty cavity R(C), making (rockIdx, jetIdx, R(C)) a mathematically sound bisimulation invariant for cycle fast-forwarding even under arbitrary overhangs.",
+        "Packing 4 chamber rows of 7-bit masks (bit 7 always 0) into a non-negative 32-bit int turns every jet push and downward fall collision check into two bitwise operations while keeping Part 2's 10^12-rock solver zero-churn."
+      ],
+      "startedAt": "2026-11-26T09:52:25Z",
+      "verifiedAt": "2026-11-26T10:10:19Z"
     }
   ]
 }
