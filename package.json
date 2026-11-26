@@ -10,6 +10,7 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "metrics": "tsx tools/quality/generate.ts",
+    "tokens": "tsx tools/quality/tokens.ts",
     "typecheck": "tsc --noEmit",
     "aoc": "tsx tools/aoc/cli.ts"
   },
