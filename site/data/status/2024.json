@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T11:36:21Z",
+  "updatedAt": "2026-11-26T16:13:15Z",
   "parts": [
     {
       "year": 2024,
@@ -783,6 +783,27 @@
       ],
       "startedAt": "2026-11-26T11:20:23Z",
       "verifiedAt": "2026-11-26T11:36:21Z"
+    },
+    {
+      "year": 2024,
+      "day": 20,
+      "part": 2,
+      "title": "Race Condition",
+      "puzzleUrl": "https://adventofcode.com/2024/day/20#part2",
+      "status": "solved",
+      "summary": "Find every single-use collision-disabled cheat lasting up to 20 picoseconds on the 141x141 racetrack that saves at least 100 picoseconds compared to the shortest uncheated S-to-E path.",
+      "algorithmSummary": "Zero-churn K=20 Manhattan diamond specialization reusing 2024/day20/shared dual flat-Int32Array BFS DistanceField, clamped Manhattan diamond analyzeCheats, buildCheatTrace, and HiDPI RaceConditionVisualizer (with translucent K=20 diamond halo) with zero shared edits (38.15 ms on 141x141, 1,009,299 qualifying cheats); differentially verified against an independent O(T^2) dual-BFS all-pairs Manhattan oracle across official example (285 at >= 50 ps), synthetic 5x52 long-detour U-bend (4 cheats where Part 1 finds 0), exact d = 20 vs d = 21 U-bend boundary, branching/pocket tracks, and 8 seeded random mazes.",
+      "complexity": "O(W * H + T * K^2) time (K = 20), O(W * H) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 38.15,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building the row/col-clamped Manhattan diamond scanner and O(baseline) Int32Array bucket histogram in 2024/day20/shared/ scaled directly from K = 2 to K = 20 (1,009,299 cheats in 38.15 ms) with 26 lines of Part 2 solver code and zero shared edits.",
+        "Testing exact d = 20 (21x2 U-bend -> 1) vs d = 21 (22x2 U-bend -> 0) and a 5x52 thick-wall detour (4 cheats for Part 2 vs 0 for Part 1) locks in both the upper duration cutoff and long-cheat reach."
+      ],
+      "startedAt": "2026-11-26T11:37:51Z",
+      "verifiedAt": "2026-11-26T16:13:15Z",
+      "humanWaitSeconds": 15858
     }
   ]
 }
