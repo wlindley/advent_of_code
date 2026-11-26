@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T11:05:27Z",
+  "updatedAt": "2026-11-26T11:14:17Z",
   "parts": [
     {
       "year": 2022,
@@ -742,6 +742,26 @@
       ],
       "startedAt": "2026-11-26T10:50:21Z",
       "verifiedAt": "2026-11-26T11:05:27Z"
+    },
+    {
+      "year": 2022,
+      "day": 19,
+      "part": 2,
+      "title": "Not Enough Minerals",
+      "puzzleUrl": "https://adventofcode.com/2022/day/19#part2",
+      "status": "solved",
+      "summary": "Extend the factory horizon to 32 minutes for only the first three blueprints, maximize cracked geodes for each, and return the product of those three maxima.",
+      "algorithmSummary": "Zero-churn 32-minute top-3 specialization reusing 2022/day19/shared BlueprintOptimizer (jump-to-next-build branch-and-bound + 3-tier decoupled relaxation upper bound + monotonic surplus pruning), multiplyMaxGeodes, buildFactoryTrace, and FactoryVisualizer ('geode-product') with zero shared edits (2.44 ms across the first 3 blueprints at T = 32); verified by replaying every optimal 32-minute plan through simulatePlan, official example (56 * 62 = 3472), 4-blueprint slicing with a 0-geode 4th blueprint guard, 1-blueprint, and 0-geode product edge cases.",
+      "complexity": "Branch-and-bound exponential worst-case; ~10^3-10^4 pruned nodes/blueprint at T=32, O(T) stack space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.44,
+      "attemptsCount": 1,
+      "learnings": [
+        "The provably admissible 3-tier decoupled relaxation bound and exact surplus pruning scale effortlessly from 24 to 32 minutes, solving all 3 Part 2 blueprints in 2.44 ms with 23 lines of domain solver code and zero shared-module edits.",
+        "Placing a 0-geode blueprint in slot #4 of the 4-blueprint slicing test turns any accidental off-by-one slice bug into an immediate product collapse to 0."
+      ],
+      "startedAt": "2026-11-26T11:06:39Z",
+      "verifiedAt": "2026-11-26T11:14:17Z"
     }
   ]
 }
