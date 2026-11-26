@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:01:15Z",
+  "updatedAt": "2026-11-26T06:11:54Z",
   "parts": [
     {
       "year": 2022,
@@ -302,6 +302,26 @@
       ],
       "startedAt": "2026-11-26T05:47:52Z",
       "verifiedAt": "2026-11-26T06:01:15Z"
+    },
+    {
+      "year": 2022,
+      "day": 8,
+      "part": 2,
+      "title": "Treetop Tree House",
+      "puzzleUrl": "https://adventofcode.com/2022/day/8#part2",
+      "status": "solved",
+      "summary": "Compute every tree's scenic score as the product of its four cardinal viewing distances (counting trees up to and including the first tree of equal or greater height, or the grid edge), and return the highest scenic score in the forest.",
+      "algorithmSummary": "Zero-churn monotonic-stack scenic scan reusing 2022/day08/shared ForestGrid, ForestSightlines, and CanopySightlineSvg (mode='scenic'): precomputes all four directional viewing distances in O(R * C) time (3.88 ms on 99x99) and scans interior rows with deterministic row-major tie-breaking via ScenicScanTimeline and ScenicTraceFrame (zero stored derived state); differentially verified against an independent DIRS_4 direct-ray oracle across 60 seeded rectangular grids and 99x99 scale.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.88,
+      "attemptsCount": 1,
+      "learnings": [
+        "Precomputing all four viewing distances inside 2022/day08/shared/ForestSightlines and wiring CanopySightlineSvg mode='scenic' delivered Part 2 with zero edits to shared/ and zero imports from part1/.",
+        "Evaluating sightlines.scenicScore(row, col) before checking row <= scannedRow inside isInteriorScanned ensures out-of-bounds coordinates always throw RangeError rather than silently returning false."
+      ],
+      "startedAt": "2026-11-26T06:01:43Z",
+      "verifiedAt": "2026-11-26T06:11:54Z"
     }
   ]
 }
