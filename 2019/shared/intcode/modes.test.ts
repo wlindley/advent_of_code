@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { IntcodeMemory } from './memory';
 import {
+  COMPLETE_MODES,
   CORE_MODES,
   IMMEDIATE_MODE,
   POSITION_MODE,
+  RELATIVE_MODE,
   createModeRegistry,
   decodeOpcode,
   extractModeCode,
@@ -52,5 +54,26 @@ describe('Intcode parameter modes', () => {
       resolveWriteAddress: POSITION_MODE.resolveWriteAddress,
     };
     expect(() => createModeRegistry([POSITION_MODE, duplicate])).toThrow(Error);
+  });
+
+  it('reads and resolves write addresses in relative mode and registers COMPLETE_MODES', () => {
+    const memory = new IntcodeMemory([109n, 3n, -1n, 77n, 99n]);
+
+    const defaultBaseRead = RELATIVE_MODE.read(memory, 1n);
+    expect(Object.isFrozen(defaultBaseRead)).toBe(true);
+    expect(defaultBaseRead).toEqual({ address: 3n, rawParam: 3n, value: 77n });
+
+    const offsetRead = RELATIVE_MODE.read(memory, 2n, 4n);
+    expect(offsetRead).toEqual({ address: 3n, rawParam: -1n, value: 77n });
+
+    expect(RELATIVE_MODE.resolveWriteAddress(memory, 1n)).toBe(3n);
+    expect(RELATIVE_MODE.resolveWriteAddress(memory, 2n, 4n)).toBe(3n);
+    expect(() => RELATIVE_MODE.resolveWriteAddress(memory, 2n, 0n)).toThrow(RangeError);
+    expect(() => RELATIVE_MODE.resolveWriteAddress(memory, 2n)).toThrow(RangeError);
+
+    expect(Object.isFrozen(COMPLETE_MODES)).toBe(true);
+    const complete = createModeRegistry(COMPLETE_MODES);
+    expect(complete.size).toBe(3);
+    expect(complete.get(2n)).toBe(RELATIVE_MODE);
   });
 });

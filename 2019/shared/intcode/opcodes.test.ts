@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
   ADD_OPCODE,
+  ADJUST_RELATIVE_BASE_OPCODE,
+  COMPLETE_OPCODES,
   CONTROL_OPCODES,
   CORE_OPCODES,
   EQUALS_OPCODE,
@@ -12,6 +14,7 @@ import {
   LESS_THAN_OPCODE,
   MUL_OPCODE,
   OUTPUT_OPCODE,
+  RELATIVE_BASE_OPCODES,
   STANDARD_OPCODES,
   createOpcodeRegistry,
   type ExecutionContext,
@@ -30,6 +33,7 @@ class FakeExecutionContext implements ExecutionContext {
   advancedBy: bigint | null = null;
   jumpedTo: bigint | null = null;
   emittedOutputs: bigint[] = [];
+  relativeBaseDelta: bigint | null = null;
   waitingForInput = false;
   halted = false;
 
@@ -73,6 +77,10 @@ class FakeExecutionContext implements ExecutionContext {
 
   writeOutput(value: bigint): void {
     this.emittedOutputs.push(value);
+  }
+
+  adjustRelativeBase(delta: bigint): void {
+    this.relativeBaseDelta = delta;
   }
 
   waitForInput(): void {
@@ -175,6 +183,17 @@ describe('core and extended Intcode opcodes', () => {
     EQUALS_OPCODE.execute(eqFalse);
     expect(eqFalse.writtenValue).toBe(0n);
   });
+
+  it('executes ADJUST_RELATIVE_BASE_OPCODE (RBO) with arity 1 and IP advance 2', () => {
+    expect(ADJUST_RELATIVE_BASE_OPCODE.code).toBe(9n);
+    expect(ADJUST_RELATIVE_BASE_OPCODE.mnemonic).toBe('RBO');
+    expect(ADJUST_RELATIVE_BASE_OPCODE.arity).toBe(1);
+    const ctx = new FakeExecutionContext(new Map([[1, 19n]]), [], null);
+    ADJUST_RELATIVE_BASE_OPCODE.execute(ctx);
+    expect(ctx.readOffsets).toEqual([1]);
+    expect(ctx.relativeBaseDelta).toBe(19n);
+    expect(ctx.advancedBy).toBe(2n);
+  });
 });
 
 describe('opcode suites and createOpcodeRegistry', () => {
@@ -183,10 +202,15 @@ describe('opcode suites and createOpcodeRegistry', () => {
     expect(Object.isFrozen(IO_OPCODES)).toBe(true);
     expect(Object.isFrozen(CONTROL_OPCODES)).toBe(true);
     expect(Object.isFrozen(STANDARD_OPCODES)).toBe(true);
+    expect(Object.isFrozen(RELATIVE_BASE_OPCODES)).toBe(true);
+    expect(Object.isFrozen(COMPLETE_OPCODES)).toBe(true);
 
     expect(createOpcodeRegistry(CORE_OPCODES).size).toBe(3);
     const std = createOpcodeRegistry(STANDARD_OPCODES);
     expect(std.size).toBe(9);
+    const complete = createOpcodeRegistry(COMPLETE_OPCODES);
+    expect(complete.size).toBe(10);
+    expect(complete.get(9n)).toBe(ADJUST_RELATIVE_BASE_OPCODE);
     expect(std.get(3n)).toBe(INPUT_OPCODE);
     expect(std.get(4n)).toBe(OUTPUT_OPCODE);
     expect(std.get(5n)).toBe(JUMP_IF_TRUE_OPCODE);

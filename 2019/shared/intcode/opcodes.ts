@@ -14,6 +14,7 @@ export interface ExecutionContext {
   jump(targetAddress: bigint): void;
   readInput(): bigint | null;
   writeOutput(value: bigint): void;
+  adjustRelativeBase(delta: bigint): void;
   waitForInput(): void;
   halt(): void;
 }
@@ -126,6 +127,17 @@ export const EQUALS_OPCODE: OpcodeHandler = Object.freeze({
   },
 });
 
+/** Opcode 9: adjust relative base by parameter 1 and advance IP by 2. */
+export const ADJUST_RELATIVE_BASE_OPCODE: OpcodeHandler = Object.freeze({
+  code: 9n,
+  mnemonic: 'RBO',
+  arity: 1,
+  execute(ctx: ExecutionContext): void {
+    ctx.adjustRelativeBase(ctx.readParam(1));
+    ctx.advance(2n);
+  },
+});
+
 /** Opcode 99: halt execution immediately without advancing IP. */
 export const HALT_OPCODE: OpcodeHandler = Object.freeze({
   code: 99n,
@@ -162,6 +174,20 @@ export const STANDARD_OPCODES: readonly OpcodeHandler[] = Object.freeze([
   ...CORE_OPCODES.slice(0, 2),
   ...IO_OPCODES,
   ...CONTROL_OPCODES,
+  HALT_OPCODE,
+]);
+
+/** Relative-base adjustment opcode suite introduced in Day 9. */
+export const RELATIVE_BASE_OPCODES: readonly OpcodeHandler[] = Object.freeze([
+  ADJUST_RELATIVE_BASE_OPCODE,
+]);
+
+/** Complete Intcode opcode suite (opcodes 1..9 and 99). */
+export const COMPLETE_OPCODES: readonly OpcodeHandler[] = Object.freeze([
+  ...CORE_OPCODES.slice(0, 2),
+  ...IO_OPCODES,
+  ...CONTROL_OPCODES,
+  ...RELATIVE_BASE_OPCODES,
   HALT_OPCODE,
 ]);
 
