@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T07:03:44Z",
+  "updatedAt": "2026-11-26T07:16:03Z",
   "parts": [
     {
       "year": 2024,
@@ -363,6 +363,26 @@
       ],
       "startedAt": "2026-11-26T06:53:54Z",
       "verifiedAt": "2026-11-26T07:03:44Z"
+    },
+    {
+      "year": 2024,
+      "day": 10,
+      "part": 1,
+      "title": "Hoof It",
+      "puzzleUrl": "https://adventofcode.com/2024/day/10",
+      "status": "solved",
+      "summary": "On a 2D topographic elevation grid (0–9, with optional '.' barriers), score each height-0 trailhead by the number of distinct height-9 peaks reachable via strictly +1 orthogonal hiking trails, and return the sum of all trailhead scores.",
+      "algorithmSummary": "Generation-stamped height-ordered BFS (0 -> 9) using reusable encapsulated Int32Array buffers (queue capped at the exact Manhattan radius-9 lattice bound of 181 cells) parameterized by PeakContributionMetric (SCORE_METRIC) in 2024/day10/shared/ in O(V) time (4.41 ms on 57x57), paired with a HiDPI TopographicVisualizer for zero-churn Part 2 rating reuse; differentially verified against an independent bottom-up 9 -> 0 BigInt bitset DP oracle (reusing shared/core bitCount) across all 5 official examples and 40 seeded random grids.",
+      "complexity": "O(V) time, O(V) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.41,
+      "attemptsCount": 1,
+      "learnings": [
+        "A 9-step orthogonal hiking trail stays strictly inside Manhattan radius 9 (at most 181 cells) and FIFO order guarantees height-layered pops, so accumulating ways[nb] += ways[u] on revisit unifies Part 1 scores and Part 2 ratings in one O(V) kernel with zero shared edits.",
+        "Validating maxSteps via validateMaxSteps + sampleTraceIndices before short-circuiting empty trailhead lists catches invalid trace caps consistently even on zero-trailhead maps."
+      ],
+      "startedAt": "2026-11-26T07:04:16Z",
+      "verifiedAt": "2026-11-26T07:16:03Z"
     }
   ]
 }
