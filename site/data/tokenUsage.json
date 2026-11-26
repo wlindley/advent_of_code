@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-11-26T09:24:27Z",
-  "subagentsScanned": 337,
+  "generatedAt": "2026-11-26T09:34:28Z",
+  "subagentsScanned": 344,
   "budgetTargetTokens": null,
   "tiers": [
     {
       "tier": "Gemini 4 Neon",
-      "turns": 2452,
-      "inputTokens": 14708526,
-      "cacheReadTokens": 298759312,
-      "outputTokens": 4441555
+      "turns": 2498,
+      "inputTokens": 15059523,
+      "cacheReadTokens": 300392831,
+      "outputTokens": 4549076
     },
     {
       "tier": "Gemini Flash",
-      "turns": 3275,
-      "inputTokens": 12259244,
-      "cacheReadTokens": 129524739,
-      "outputTokens": 3238204
+      "turns": 3347,
+      "inputTokens": 12523193,
+      "cacheReadTokens": 132031994,
+      "outputTokens": 3315230
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T07:44:38Z",
+  "updatedAt": "2026-11-26T09:30:32Z",
   "parts": [
     {
       "year": 2023,
@@ -582,6 +582,26 @@
       ],
       "startedAt": "2026-11-26T09:06:53Z",
       "verifiedAt": "2026-11-26T09:18:54Z"
+    },
+    {
+      "year": 2023,
+      "day": 15,
+      "part": 2,
+      "title": "Lens Library",
+      "puzzleUrl": "https://adventofcode.com/2023/day/15#part2",
+      "status": "solved",
+      "summary": "Execute the HASHMAP lens-installation procedure across 256 ordered boxes (removing by label on '-' or inserting/replacing in place on '=f' using HASH(label) as the box index) and return the total focusing power sum of (box + 1) * slot * focalLength.",
+      "algorithmSummary": "Zero-churn polymorphic LensInstruction hierarchy (RemoveLensInstruction / UpsertLensInstruction) executing against an encapsulated 256-Map OpticalBench reusing 2023/day15/shared hashAscii, parseInitSequence, traceHashCharacters, and HashPipelineRibbon with zero shared edits in O(C + sum boxLen) time (3.52 ms on ~4,000 instructions): derives focusingPower, occupiedBoxCount, totalLensCount, rawToken, and boxIndex dynamically with zero stored derived state, paired with an interactive OpticalBenchRack slot-chip visualizer; differentially verified against an independent array-of-256-arrays + BigInt base-17 polynomial hash oracle across the official example (145), box-3 collision churn, and 120 seeded random instruction sequences.",
+      "complexity": "O(C + sum boxLen) time, O(B + L) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.52,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using JavaScript Map per box preserves insertion order on in-place replacement (set on existing key) and shifts trailing entries forward on delete, while a single findLensSlot helper shared by upsert and remove eliminates unreachable fallback branches.",
+        "Reusing 2023/day15/shared hashAscii, parseInitSequence, traceHashCharacters, and HashPipelineRibbon delivered Part 2 with zero edits to shared/ and zero imports from part1/."
+      ],
+      "startedAt": "2026-11-26T09:19:32Z",
+      "verifiedAt": "2026-11-26T09:30:32Z"
     }
   ]
 }

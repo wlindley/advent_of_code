@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T07:47:49Z",
+  "updatedAt": "2026-11-26T09:32:55Z",
   "parts": [
     {
       "year": 2024,
@@ -583,6 +583,26 @@
       ],
       "startedAt": "2026-11-26T09:05:14Z",
       "verifiedAt": "2026-11-26T09:19:58Z"
+    },
+    {
+      "year": 2024,
+      "day": 15,
+      "part": 2,
+      "title": "Warehouse Woes",
+      "puzzleUrl": "https://adventofcode.com/2024/day/15#part2",
+      "status": "solved",
+      "summary": "Double the warehouse map horizontally ('#' -> '##', 'O' -> '[]', '.' -> '..', '@' -> '@.'), simulate the robot pushing linked 2-wide crates horizontally in rows and vertically across branching/converging DAGs (aborting atomically if any pushed crate hits a wall), and return the sum of all crate GPS coordinates (100 * row + leftCol).",
+      "algorithmSummary": "Zero-churn PART2_PUSH_RULE plugging into 2024/day15/shared WarehouseState, createWarehouseSolver, and WarehouseVisualizer with zero shared edits in O(M * K_avg) time (6.02 ms across 50x100 widened grid / 20,000 moves): runs 1D ray-shift on horizontal pushes and iterative Set-deduplicated BFS closure with 2-pass clear-then-write updates on vertical DAG pushes so diamond merges shift once and blocked branches abort with zero partial mutation; differentially verified against an independent memoized recursive canPush + copy-on-write string[][] oracle across all 11 steps of the small example (618), the large example final board (9021), diamond/asymmetric partial blocks, and 50 seeded random warehouses.",
+      "complexity": "O(M * K_avg) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.02,
+      "attemptsCount": 1,
+      "learnings": [
+        "Iterative BFS closure with Set<number> deduplication and 2-pass clear-then-write prevents double-shifting in diamond box merges and guarantees atomic zero-mutation rollbacks on asymmetric partial blocks.",
+        "Because 2024/day15/shared already supported linked '['/']' tiles in WarehouseState, gpsSum, and WarehouseCanvas, Part 2 required zero edits to shared/ and zero imports from part1/."
+      ],
+      "startedAt": "2026-11-26T09:20:36Z",
+      "verifiedAt": "2026-11-26T09:32:55Z"
     }
   ]
 }
