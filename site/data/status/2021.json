@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T20:48:47Z",
+  "updatedAt": "2026-11-26T21:02:45Z",
   "parts": [
     {
       "year": 2021,
@@ -123,6 +123,26 @@
       ],
       "startedAt": "2026-11-26T20:36:11Z",
       "verifiedAt": "2026-11-26T20:48:47Z"
+    },
+    {
+      "year": 2021,
+      "day": 4,
+      "part": 1,
+      "title": "Giant Squid",
+      "puzzleUrl": "https://adventofcode.com/2021/day/4",
+      "status": "solved",
+      "summary": "Determine which 5x5 bingo board wins first as numbers are drawn and return the product of its unmarked cell sum and the winning drawn number.",
+      "algorithmSummary": "Draw-time minimax ranking engine in 2021/day04/shared/ with FIRST_WINNER_POLICY and pre-built LAST_WINNER_POLICY for zero-churn Part 2 (2.04 ms across 100 boards -> 2,745): flat 25-cell immutable BingoBoard, zero-derived-state BoardWin/BoardSnapshot/BingoTraceFrame, interactive 5x5 board grid + windowed draw stream + 100-board status strip, differentially verified against an independent draw-by-draw simulator across 50 seeded PRNG games.",
+      "complexity": "O(D + B * 25 + W log W) time, O(D + B * 25) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.04,
+      "attemptsCount": 1,
+      "learnings": [
+        "Draw-time minimax maps each number to its first draw index once and evaluates each board independently in O(25), handling duplicate draws, duplicate cells, and full Part 1/Part 2 ranking without mutating board state.",
+        "Returning Object.freeze(new PolicyBingoSolver(policy)) from a top-level class eliminates nested function closures inside solver factories."
+      ],
+      "startedAt": "2026-11-26T20:49:36Z",
+      "verifiedAt": "2026-11-26T21:02:45Z"
     }
   ]
 }
