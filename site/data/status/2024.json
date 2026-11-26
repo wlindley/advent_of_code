@@ -1,6 +1,28 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T03:42:00Z",
-  "parts": []
+  "updatedAt": "2026-11-26T03:54:29Z",
+  "parts": [
+    {
+      "year": 2024,
+      "day": 1,
+      "part": 1,
+      "title": "Historian Hysteria",
+      "puzzleUrl": "https://adventofcode.com/2024/day/1",
+      "status": "solved",
+      "summary": "Reconcile two equal-length columns of integer location IDs by sorting each list independently in ascending order, pairing elements by rank, and summing the absolute differences across all pairs.",
+      "algorithmSummary": "Typed-array numeric sort & linear zip: copy left and right columns from immutable LocationLists into private Float64Arrays, call native numeric .sort(), and sum |L[i] - R[i]| with safe-integer overflow validation; differentially verified against a 1D Wasserstein CDF sweep oracle.",
+      "complexity": "O(N log N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.99,
+      "attemptsCount": 1,
+      "learnings": [
+        "Preserving raw unsorted left and right columns in 2024/day01/shared/LocationLists keeps Part 2 frequency similarity zero-churn.",
+        "Sorting private Float64Array copies avoids JavaScript's lexicographic Array.prototype.sort() footgun while covering all safe integers.",
+        "A 1D Wasserstein CDF sweep over net multiplicities provides a completely independent differential test oracle for rank-paired distances."
+      ],
+      "startedAt": "2026-11-26T03:42:34Z",
+      "verifiedAt": "2026-11-26T03:54:29Z"
+    }
+  ]
 }

@@ -1,6 +1,27 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T03:42:00Z",
-  "parts": []
+  "updatedAt": "2026-11-26T03:52:50Z",
+  "parts": [
+    {
+      "year": 2023,
+      "day": 1,
+      "part": 1,
+      "title": "Trebuchet?!",
+      "puzzleUrl": "https://adventofcode.com/2023/day/1",
+      "status": "solved",
+      "summary": "For each line of a multi-line calibration document, locate the earliest and latest ASCII decimal digits, combine them into a two-digit number (repeating a sole digit), and return the sum across all lines.",
+      "algorithmSummary": "Converging two-pointer scan parameterized by a DigitExtractor strategy: scan inward from index 0 and from line.length - 1 via AsciiDigitExtractor, yielding O(L) worst-case / sublinear average time and O(1) auxiliary space per line with zero-churn extensibility for Part 2.",
+      "complexity": "O(N) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.15,
+      "attemptsCount": 1,
+      "learnings": [
+        "Parameterizing calibrateLine with a DigitExtractor strategy lets Part 2 plug in spelled-word matching with zero changes to 2023/day01/shared/.",
+        "Storing DigitMatch spans (value, start, length) cleanly supports both single-character ASCII digits and overlapping multi-character word matches."
+      ],
+      "startedAt": "2026-11-26T03:42:43Z",
+      "verifiedAt": "2026-11-26T03:52:50Z"
+    }
+  ]
 }

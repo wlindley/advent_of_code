@@ -1,6 +1,27 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T03:42:00Z",
-  "parts": []
+  "updatedAt": "2026-11-26T03:53:06Z",
+  "parts": [
+    {
+      "year": 2022,
+      "day": 1,
+      "part": 1,
+      "title": "Calorie Counting",
+      "puzzleUrl": "https://adventofcode.com/2022/day/1",
+      "status": "solved",
+      "summary": "Group blank-line-separated positive integer calorie items into per-Elf inventories, compute each Elf's total calories, and find the highest single-Elf calorie total.",
+      "algorithmSummary": "Single-pass bounded top-k leaderboard scan (k = 1) over immutable ElfInventory value objects (computing totalCalories dynamically from raw items), verified against an independent descending-sort oracle and matching the pre-verified AoC star answer.",
+      "complexity": "O(N) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.93,
+      "attemptsCount": 1,
+      "learnings": [
+        "Generalizing rankTopElves and traceTopElves to parameter k in 2022/day01/shared/ handles Part 1 (k = 1) and Part 2 (k = 3) with zero parser or engine churn.",
+        "Computing totalCalories and itemCount via getters on frozen ElfInventory keeps raw snack items as the single source of truth."
+      ],
+      "startedAt": "2026-11-26T03:42:53Z",
+      "verifiedAt": "2026-11-26T03:53:06Z"
+    }
+  ]
 }
