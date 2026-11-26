@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:57:23Z",
+  "updatedAt": "2026-11-26T22:12:29Z",
   "parts": [
     {
       "year": 2021,
@@ -243,6 +243,26 @@
       ],
       "startedAt": "2026-11-26T21:49:58Z",
       "verifiedAt": "2026-11-26T21:57:23Z"
+    },
+    {
+      "year": 2021,
+      "day": 7,
+      "part": 1,
+      "title": "The Treachery of Whales",
+      "puzzleUrl": "https://adventofcode.com/2021/day/7",
+      "status": "solved",
+      "summary": "Find the integer horizontal alignment position minimizing total linear fuel consumption across a swarm of crab submarines.",
+      "algorithmSummary": "Exact BigInt discrete convex binary search using shared/core floorDiv and polymorphic FuelCostModel (LINEAR_FUEL_MODEL for Part 1, pre-built TRIANGULAR_FUEL_MODEL for zero-churn Part 2) in 2021/day07/shared/ (2.17 ms across 1,000 crabs -> 328,187): non-empty tuple CrabFleet, exact global-minimum anchor in buildFuelLandscape, contiguous ceilDiv swarm histogram & convex fuel-curve dual-panel SVG visualizer, differentially verified across 40 seeded PRNG fleets against both full-range brute-force and analytic median/mean oracles for both fuel models.",
+      "complexity": "O(N log R) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.17,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using shared/core floorDiv(lo + hi, 2n) prevents negative BigInt truncation loops on adjacent ranges like [-1n, 0n] while deterministically finding the leftmost global minimizer on even-median plateaus.",
+        "Explicitly inserting optimal.target into sampled fuel-landscape points guarantees landscape.minFuel === optimal.fuel so chart scaling never throws RangeError when uniform samples straddle the minimum."
+      ],
+      "startedAt": "2026-11-26T21:57:23Z",
+      "verifiedAt": "2026-11-26T22:12:29Z"
     }
   ]
 }
