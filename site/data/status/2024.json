@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:48:52Z",
+  "updatedAt": "2026-11-26T18:12:21Z",
   "parts": [
     {
       "year": 2024,
@@ -944,6 +944,26 @@
       ],
       "startedAt": "2026-11-26T17:28:51Z",
       "verifiedAt": "2026-11-26T17:48:52Z"
+    },
+    {
+      "year": 2024,
+      "day": 24,
+      "part": 2,
+      "title": "Crossed Wires",
+      "puzzleUrl": "https://adventofcode.com/2024/day/24#part2",
+      "status": "solved",
+      "summary": "Identify the 4 disjoint pairs of swapped gate output wires in a 45-bit ripple-carry binary adder network (222 gates) and return the 8 sorted wire names joined by commas.",
+      "algorithmSummary": "Zero-churn adder-repair specialization reusing 2024/day24/shared repairAdder (bit-by-bit ripple-carry blueprint matching + candidate swap backtracking + compiled typed-array verifyAdderFunctionally), buildRepairTrace, and CircuitVisualizer with zero shared edits (6.98 ms on 45-bit / 222-gate personal input -> 8 swapped wires); verified across a synthetic 4-bit 11+13=24 example and 8-bit adders covering within-bit, acyclic cross-bit, cyclic initial corruption, and doubly-corrupted bit-slice swaps.",
+      "complexity": "O(N * G) typical time, O(G) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.98,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building general bit-by-bit ripple-carry blueprint backtracking (repairAdder + verifyAdderFunctionally) in 2024/day24/shared/ found all 4 swapped wire pairs across the 222-gate 45-bit adder in 6.98 ms with 25 lines of Part 2 solver code and zero shared edits.",
+        "When designing synthetic adder tests, swapping an upstream carry/half-carry wire with a downstream z-output creates a cycle, whereas swapping sink/same-layer wires yields clean acyclic cross-bit test cases."
+      ],
+      "startedAt": "2026-11-26T17:49:42Z",
+      "verifiedAt": "2026-11-26T18:12:21Z"
     }
   ]
 }
