@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:49:53Z",
+  "updatedAt": "2026-11-26T07:07:52Z",
   "parts": [
     {
       "year": 2022,
@@ -382,6 +382,26 @@
       ],
       "startedAt": "2026-11-26T06:34:26Z",
       "verifiedAt": "2026-11-26T06:49:53Z"
+    },
+    {
+      "year": 2022,
+      "day": 10,
+      "part": 2,
+      "title": "Cathode-Ray Tube",
+      "puzzleUrl": "https://adventofcode.com/2022/day/10#part2",
+      "status": "solved",
+      "summary": "Drive a 40x6 CRT beam at 1 pixel per cycle using register X as the center of a 3-pixel horizontal sprite ([X-1, X, X+1]), render the 240-cycle bitmap, and decode the eight capital letters displayed on screen.",
+      "algorithmSummary": "Zero-churn 40x6 CRT rasterizer and 30-bit 5x6 bitmap OCR decoder reusing 2022/day10/shared CpuProgram and CpuTimeline in O(C) time (0.54 ms across 240 cycles): stores only a private 240-byte Uint8Array inside immutable CrtScreen, packs 5x6 glyph masks dynamically into a collision-checked 19-template AoC font map, and renders an interactive phosphor CRT monitor with live 3px sprite bracket and progressive 8-slot OCR ribbon; verified against an independent streaming string-OCR oracle and constructive 2-pixel-pair round-trip encoder covering every font glyph.",
+      "complexity": "O(N + C) time, O(C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.54,
+      "attemptsCount": 1,
+      "learnings": [
+        "Packing each 5x6 CRT slot into a 30-bit integer mask checks the separator column strictly (rejecting stray noise) while supporting 5-wide glyphs like Y with zero sign-bit overflow and O(1) Map lookup.",
+        "Because X starts at 1 and cannot change before end of cycle 2, pixels (0,0) and (0,1) are always lit ('##'); a constructive 2-pixel-pair encoder verifies every single glyph in the font table end-to-end through CpuProgram -> CpuTimeline -> CrtScreen -> OCR."
+      ],
+      "startedAt": "2026-11-26T06:49:53Z",
+      "verifiedAt": "2026-11-26T07:07:52Z"
     }
   ]
 }

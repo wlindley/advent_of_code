@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:54:31Z",
+  "updatedAt": "2026-11-26T07:09:02Z",
   "parts": [
     {
       "year": 2023,
@@ -362,6 +362,26 @@
       ],
       "startedAt": "2026-11-26T06:46:21Z",
       "verifiedAt": "2026-11-26T06:54:31Z"
+    },
+    {
+      "year": 2023,
+      "day": 10,
+      "part": 1,
+      "title": "Pipe Maze",
+      "puzzleUrl": "https://adventofcode.com/2023/day/10",
+      "status": "solved",
+      "summary": "Infer the hidden pipe shape at start tile S on a 2D pipe grid, trace the unique closed main loop of mutually connected pipes ignoring disconnected clutter, and find the farthest step distance from S along the loop.",
+      "algorithmSummary": "Deterministic 4-bit DIRS_4-aligned bitwise cycle walk in 2023/day10/shared/ (PipeMaze + immutable MainLoop storing ordered tiles and a private Int32Array cycle-index map) in O(R * C) time (6.32 ms on 140x140): derives farthestDistance = length / 2 dynamically and pairs with a dual-mode SVG/HiDPI Canvas PipeMazeCanvas with clutter toggle and Part 2 enclosed/scanline overlay props built in upfront; differentially verified against both a full-grid Wavefront BFS distance oracle and a shared/core DisjointSet component-size oracle.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.32,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because every non-S pipe tile has degree <= 2 and S has exact degree 2 in the mutual-connection graph, walking from S can only hit a dead end or return cleanly via S's second port—eliminating unreachable visited/port branches while keeping MainLoop constructor invariants strictly enforced.",
+        "Storing the ordered loop cycle and inferred PipeShape for S in 2023/day10/shared/ plus optional enclosedMask/activeScanRow props in PipeMazeCanvas prepares Part 2 (Pick's/Shoelace + scanline parity) with zero shared-module churn."
+      ],
+      "startedAt": "2026-11-26T06:54:58Z",
+      "verifiedAt": "2026-11-26T07:09:02Z"
     }
   ]
 }
