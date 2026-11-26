@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T09:46:30Z",
+  "updatedAt": "2026-11-26T09:57:03Z",
   "parts": [
     {
       "year": 2023,
@@ -622,6 +622,26 @@
       ],
       "startedAt": "2026-11-26T09:31:15Z",
       "verifiedAt": "2026-11-26T09:46:30Z"
+    },
+    {
+      "year": 2023,
+      "day": 16,
+      "part": 2,
+      "title": "The Floor Will Be Lava",
+      "puzzleUrl": "https://adventofcode.com/2023/day/16#part2",
+      "status": "solved",
+      "summary": "Evaluate every inward perimeter entry beam (top heading south, bottom heading north, left heading east, right heading west) across the 2D optical contraption and find the maximum number of energized tiles achievable.",
+      "algorithmSummary": "Zero-churn reusable BeamTracer full perimeter scan over all 2 * (H + W) Contraption.edgeEntries() reusing 2023/day16/shared optics, BeamTracer, and ContraptionCanvas perimeter heatmap with zero shared edits in O((H + W) * H * W) time (39.47 ms across all 440 perimeter entries on 110x110 with zero per-entry TypedArray allocations): encapsulates frozen PerimeterScanResult (deriving best dynamically with strict '>' first-entry tie-breaking and zero stored derived state) and single-tracer traceOptimalPerimeter feeding ContraptionCanvas's rim heatmap ring; differentially verified entry-for-entry against an independent plain-JS Set<string> full-perimeter oracle across official example (51 at (0, 3) S), 1x1, rectangular, corner-asymmetric, loop-heavy, and seeded random contraptions.",
+      "complexity": "O((H + W) * H * W) time, O(H * W) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 39.47,
+      "attemptsCount": 1,
+      "learnings": [
+        "Storing only frozen scores inside PerimeterScanResult and computing best dynamically eliminates stored derived state, while traceOptimalPerimeter reuses one BeamTracer for both the 440-port perimeter scan and optimal wavefront capture.",
+        "Pre-building Contraption.edgeEntries(), reusable BeamTracer TypedArrays, and optional edgeScores/optimalEntry rim heatmap props on ContraptionCanvas delivered Part 2 with zero edits to 2023/day16/shared/ and zero imports from part1/."
+      ],
+      "startedAt": "2026-11-26T09:47:20Z",
+      "verifiedAt": "2026-11-26T09:57:03Z"
     }
   ]
 }

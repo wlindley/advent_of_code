@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T09:50:46Z",
+  "updatedAt": "2026-11-26T09:59:51Z",
   "parts": [
     {
       "year": 2024,
@@ -623,6 +623,26 @@
       ],
       "startedAt": "2026-11-26T09:33:30Z",
       "verifiedAt": "2026-11-26T09:50:46Z"
+    },
+    {
+      "year": 2024,
+      "day": 16,
+      "part": 2,
+      "title": "Reindeer Maze",
+      "puzzleUrl": "https://adventofcode.com/2024/day/16#part2",
+      "status": "solved",
+      "summary": "Count every distinct maze tile (including S and E) that lies on at least one minimum-score path from (S, East) to E.",
+      "algorithmSummary": "Zero-churn part2Objective specialization reusing 2024/day16/shared forward Dijkstra (stopping at popped cost > bestScore), implicit tight-edge backward BFS (MazeAnalysis.optimalTileCount), and ReindeerMazeVisualizer with showAllOptimalTiles={true} with zero shared edits (8.16 ms on 141x141): seeds all tied optimal (E, dir) states and walks incoming tight transitions (dist[prev] + w === dist[cur]) to populate the deduplicated optimal tile mask rendered in amber; differentially verified against both an independent Bidirectional Dijkstra oracle (distStart[(c<<2)|d] + distEnd[(c<<2)|d] === bestScore across official Examples 1 (45) & 2 (64), ties, and 30 seeded random mazes) and an Exhaustive State-Visited DFS oracle on tie-heavy <= 7x7 mazes.",
+      "complexity": "O(W * H * log(W * H)) time, O(W * H) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 8.16,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-computing the O(V_opt) tight-edge backward BFS optimalMask and showAllOptimalTiles canvas layer inside 2024/day16/shared/ reduced Part 2 to an 11-line MazeObjective and 15-line visualizer wrapper with zero shared edits.",
+        "Bidirectional Dijkstra differential verification must check distStart[(c<<2)|d] + distEnd[(c<<2)|d] === bestScore per identical directed state (c, d) rather than taking separate per-cell minimums across headings."
+      ],
+      "startedAt": "2026-11-26T09:52:25Z",
+      "verifiedAt": "2026-11-26T09:59:51Z"
     }
   ]
 }
