@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T19:07:36Z",
+  "updatedAt": "2026-11-26T20:15:53Z",
   "parts": [
     {
       "year": 2021,
@@ -42,6 +42,27 @@
       ],
       "startedAt": "2026-11-26T19:01:08Z",
       "verifiedAt": "2026-11-26T19:07:36Z"
+    },
+    {
+      "year": 2021,
+      "day": 2,
+      "part": 1,
+      "title": "Dive!",
+      "puzzleUrl": "https://adventofcode.com/2021/day/2",
+      "status": "solved",
+      "summary": "Track a submarine's horizontal position and depth through forward, down, and up commands and return their product.",
+      "algorithmSummary": "Polymorphic NavigationPolicy state fold (DIRECT_NAVIGATION_POLICY for Part 1, pre-built AIM_NAVIGATION_POLICY for zero-churn Part 2) in 2021/day02/shared/ (1.36 ms across 1,000 commands -> 1,989,265): immutable BigInt SubmarinePose with dynamic product getter, prototype-safe TableNavigationPolicy, BigInt-safe SVG trajectory projection with waterline & conditional gold aim ray, differentially verified across 50 seeded courses against an independent commutative vector-sum and permutation-invariance oracle.",
+      "complexity": "O(N) time, O(N) parsed storage / O(1) extra solve space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.36,
+      "attemptsCount": 1,
+      "learnings": [
+        "Always anchoring TrajectoryGeometry at SubmarinePose.ORIGIN guarantees 0n lies inside [minDepth, maxDepth], letting waterlineY compute unconditionally without an unreachable V8 branch.",
+        "BigInt fixed-point coordinate scaling and aspect-adjusted BigInt aim-slope clamping prevent Infinity/NaN SVG projection faults even for > 2^1024 custom inputs."
+      ],
+      "startedAt": "2026-11-26T19:08:04Z",
+      "verifiedAt": "2026-11-26T20:15:53Z",
+      "humanWaitSeconds": 3356
     }
   ]
 }
