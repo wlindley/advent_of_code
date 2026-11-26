@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:47:27Z",
+  "updatedAt": "2026-11-26T06:01:15Z",
   "parts": [
     {
       "year": 2022,
@@ -282,6 +282,26 @@
       ],
       "startedAt": "2026-11-26T05:38:44Z",
       "verifiedAt": "2026-11-26T05:47:27Z"
+    },
+    {
+      "year": 2022,
+      "day": 8,
+      "part": 1,
+      "title": "Treetop Tree House",
+      "puzzleUrl": "https://adventofcode.com/2022/day/8",
+      "status": "solved",
+      "summary": "Given a rectangular 2D grid of single-digit tree heights (0–9), count how many trees are visible from outside the grid along any of the four cardinal lines of sight (all intervening trees strictly shorter).",
+      "algorithmSummary": "4-pass strictly-decreasing monotonic stack sightlines engine in 2022/day08/shared/ built on shared/core Grid2D and DIRS_4 with a reusable 10-slot Int32Array stack in O(R * C) time (2.72 ms on 99x99): computes both explicit 4-bit visibilityMask and all 4 Int32Array viewing distances in one pass, paired with a 10-band batched-SVG CanopySightlineSvg visualizer for zero-churn Part 2 reuse; differentially verified cell-by-cell against a direct DIRS_4 ray-cast oracle across 30 seeded rectangular grids.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.72,
+      "attemptsCount": 1,
+      "learnings": [
+        "Replacing equal-height entries on the monotonic stack (after recording viewing distance) bounds stack depth to <= 10 across heights 0..9 while tracking visibility explicitly via 4-bit masks to avoid edge-blocker false positives.",
+        "Batching 9,801 grid cells into 10 elevation-band SVG <path> elements in 2022/day08/shared/viz/CanopySightlineSvg.tsx keeps 99x99 interactive ray inspection crisp at ~30 SVG DOM nodes and ready for zero-churn Part 2 scenic mode."
+      ],
+      "startedAt": "2026-11-26T05:47:52Z",
+      "verifiedAt": "2026-11-26T06:01:15Z"
     }
   ]
 }
