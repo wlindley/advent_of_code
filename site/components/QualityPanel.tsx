@@ -35,28 +35,35 @@ export function QualityPanel({ title, subtitle, scope }: QualityPanelProps) {
         <div className="metric-tile">
           <span className="eyebrow">Coverage</span>
           <strong className="nowrap">{minCov}%</strong>
-          <span className="metric-sub nowrap">
-            L {lines}% · B {branches}% · F {funcs}% · S {stmts}%
-          </span>
+          <div className="metric-sub">
+            <span className="nowrap">Lines {lines}%</span>
+            <span className="nowrap">Branches {branches}%</span>
+            <span className="nowrap">Funcs {funcs}%</span>
+            <span className="nowrap">Stmts {stmts}%</span>
+          </div>
         </div>
         <div className="metric-tile">
           <span className="eyebrow">Maintainability</span>
           <strong className="nowrap">{complexity.maintainabilityIndex} / 100</strong>
-          <span className="metric-sub nowrap">{complexity.fileCount} source files</span>
+          <div className="metric-sub">
+            <span className="nowrap">{complexity.fileCount} source files</span>
+          </div>
         </div>
         <div className="metric-tile">
           <span className="eyebrow">Cyclomatic (CC)</span>
           <strong className="nowrap">avg {averageCyclomatic(complexity)}</strong>
-          <span className="metric-sub nowrap">
-            max {complexity.maxCyclomatic} · {complexity.functionCount} fns
-          </span>
+          <div className="metric-sub">
+            <span className="nowrap">max {complexity.maxCyclomatic}</span>
+            <span className="nowrap">{complexity.functionCount} functions</span>
+          </div>
         </div>
         <div className="metric-tile">
           <span className="eyebrow">Nesting &amp; Size</span>
           <strong className="nowrap">depth {complexity.maxNestingDepth}</strong>
-          <span className="metric-sub nowrap">
-            {complexity.sloc} SLOC · {testToCodeRatio(complexity)}x tests
-          </span>
+          <div className="metric-sub">
+            <span className="nowrap">{complexity.sloc} SLOC</span>
+            <span className="nowrap">{testToCodeRatio(complexity)}x tests</span>
+          </div>
         </div>
       </div>
     </div>

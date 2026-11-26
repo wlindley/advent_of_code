@@ -64,9 +64,16 @@ export function DashboardView({ statusDoc, qualityReport, selectedYear, onSelect
           <span>{progress.completionPercent}%</span>
         </div>
         <p className="muted">
-          In progress: {progress.inProgressParts} · Blocked: {progress.blockedParts} · Pending: {progress.pendingParts} · Solve time:{' '}
-          <span className="nowrap">{formatDuration(progress.totalSolveSeconds)} total</span> /{' '}
-          <span className="nowrap">{formatDuration(progress.elapsedSolveSeconds)} elapsed</span> · Updated {statusDoc.updatedAt}
+          In progress: {progress.inProgressParts} · Blocked: {progress.blockedParts} · Pending: {progress.pendingParts} ·{' '}
+          {progress.solvedParts === progress.totalParts ? (
+            <>
+              <span className="nowrap">Total time: {formatDuration(progress.totalSolveSeconds)}</span> ·{' '}
+              <span className="nowrap">Final elapsed: {formatDuration(progress.elapsedSolveSeconds)}</span>
+            </>
+          ) : (
+            <span className="nowrap">Elapsed: {formatDuration(progress.elapsedSolveSeconds)}</span>
+          )}{' '}
+          · Updated {statusDoc.updatedAt}
         </p>
       </section>
 
@@ -105,22 +112,35 @@ export function DashboardView({ statusDoc, qualityReport, selectedYear, onSelect
           const title = p1?.title || p2?.title || `Day ${day}`;
           const renderPartPill = (partNum: PuzzlePart, record = partNum === 1 ? p1 : p2) => {
             const state = record?.status ?? 'pending';
+            const quality = qualityReport
+              ? findPartQuality(qualityReport, formatPartKey(yearData.year, day, partNum))
+              : undefined;
             return (
               <a
                 key={partNum}
                 className={`part-pill status-${state}`}
                 href={`#/${yearData.year}/${formatDayFolder(day)}/part${partNum}`}
               >
-                P{partNum}: {record?.status === 'solved' ? `★ ${formatDuration(computeSolveDurationSeconds(record))}` : state === 'in_progress' ? 'WIP' : state === 'blocked' ? '!' : '—'}
+                <span className="part-pill-main">
+                  P{partNum}:{' '}
+                  {record?.status === 'solved'
+                    ? `★ ${formatDuration(computeSolveDurationSeconds(record))}`
+                    : state === 'in_progress'
+                      ? 'WIP'
+                      : state === 'blocked'
+                        ? '!'
+                        : '—'}
+                </span>
+                {quality && (
+                  <span className="part-pill-quality">
+                    <span className="nowrap">Grade {computeQualityGrade(quality)}</span>
+                    <span className="nowrap">Coverage {minCoveragePercent(quality.coverage)}%</span>
+                    <span className="nowrap">Maintainability {quality.complexity.maintainabilityIndex}</span>
+                  </span>
+                )}
               </a>
             );
           };
-
-          const q1 = qualityReport ? findPartQuality(qualityReport, formatPartKey(yearData.year, day, 1)) : undefined;
-          const q2 = qualityReport ? findPartQuality(qualityReport, formatPartKey(yearData.year, day, 2)) : undefined;
-          const renderMiniQuality = (label: string, q?: ReturnType<typeof findPartQuality>) =>
-            q ? `${label} ${computeQualityGrade(q)} (${minCoveragePercent(q.coverage)}% · MI ${q.complexity.maintainabilityIndex})` : null;
-          const qLine = [renderMiniQuality('P1', q1), renderMiniQuality('P2', q2)].filter(Boolean);
 
           return (
             <article key={day} className="day-card">
@@ -135,13 +155,6 @@ export function DashboardView({ statusDoc, qualityReport, selectedYear, onSelect
                 {renderPartPill(1)}
                 {renderPartPill(2)}
               </div>
-              {qLine.length > 0 && (
-                <div className="day-quality">
-                  {qLine.map((text) => (
-                    <span key={text}>{text}</span>
-                  ))}
-                </div>
-              )}
             </article>
           );
         })}
