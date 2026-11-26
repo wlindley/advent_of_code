@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T10:49:08Z",
+  "updatedAt": "2026-11-26T11:05:27Z",
   "parts": [
     {
       "year": 2022,
@@ -722,6 +722,26 @@
       ],
       "startedAt": "2026-11-26T10:40:28Z",
       "verifiedAt": "2026-11-26T10:49:08Z"
+    },
+    {
+      "year": 2022,
+      "day": 19,
+      "part": 1,
+      "title": "Not Enough Minerals",
+      "puzzleUrl": "https://adventofcode.com/2022/day/19",
+      "status": "solved",
+      "summary": "Evaluate 30 robot factory blueprints over a 24-minute horizon to maximize cracked geodes per blueprint, compute each blueprint's quality level (id * maxGeodes), and sum all quality levels.",
+      "algorithmSummary": "Jump-to-next-robot-build Branch-and-Bound DFS with exact surplus-stock pruning and a provably admissible 3-tier decoupled relaxation upper bound in 2022/day19/shared/ (1.94 ms across all 30 blueprints): fast-forwards directly to each candidate robot's earliest affordable minute with immediate geode accounting (geodes += remAfter), enforces exact remAfter bounds (1/3/3/5) and monotonic surplus-stock bounds, captures zero-allocation optimal build plans verified by simulatePlan, and exposes multiplyMaxGeodes + FactoryVisualizer ('quality-sum' | 'geode-product') for zero-churn 32-minute Part 2 reuse; differentially verified against an independent unpruned minute-by-minute memoized brute-force DFS oracle plus official T=24 (9, 12 -> 33) and T=32 (56, 62) benchmarks.",
+      "complexity": "Branch-and-bound exponential worst-case; ~10^2-10^4 pruned nodes/blueprint at T=24, O(T) stack space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.94,
+      "attemptsCount": 1,
+      "learnings": [
+        "Macro-jumping to each robot type's earliest build minute paired with a provably admissible 3-tier decoupled relaxation upper bound (free ore, independent clay/obsidian/geode builds) solves all 30 blueprints in 1.94 ms without risking the classic inadmissible 'build geode else obsidian' bug.",
+        "Proving monotonicity of surplus stock D(k) = res + (k - 1) * bots - k * maxCost guarantees exact surplus pruning when bots < maxCost, while keeping maxGeodes and qualityLevel as dynamic getters on BlueprintResult prevents derived-state drift."
+      ],
+      "startedAt": "2026-11-26T10:50:21Z",
+      "verifiedAt": "2026-11-26T11:05:27Z"
     }
   ]
 }
