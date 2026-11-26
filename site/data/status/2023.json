@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T03:52:50Z",
+  "updatedAt": "2026-11-26T04:01:44Z",
   "parts": [
     {
       "year": 2023,
@@ -22,6 +22,26 @@
       ],
       "startedAt": "2026-11-26T03:42:43Z",
       "verifiedAt": "2026-11-26T03:52:50Z"
+    },
+    {
+      "year": 2023,
+      "day": 1,
+      "part": 2,
+      "title": "Trebuchet?!",
+      "puzzleUrl": "https://adventofcode.com/2023/day/1#part2",
+      "status": "solved",
+      "summary": "Extend calibration extraction so valid digits include both ASCII 0–9 and lowercase spelled English words one through nine (excluding zero), resolving overlapping word pairs like twone and oneight before summing all per-line calibration values.",
+      "algorithmSummary": "First-character bucketed SpelledDigitExtractor plugging into 2023/day01/shared with zero churn: checks ASCII digits first then dispatches at most two startsWith comparisons per starting letter during converging two-pointer scans, differentially verified across all 8 overlapping word pairs.",
+      "complexity": "O(L) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.57,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because 'one'..'nine' are prefix- and substring-free, scanning right-to-left down to first.start + 1 handles all 8 overlapping word pairs (twone, oneight, etc.) without backtracking or consuming regex traps.",
+        "Partitioning overlapping highlight spans into [first.start, last.start), [last.start, first.end), and [first.end, last.end) keeps rendered text verbatim in the visualizer."
+      ],
+      "startedAt": "2026-11-26T03:53:23Z",
+      "verifiedAt": "2026-11-26T04:01:44Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T03:54:29Z",
+  "updatedAt": "2026-11-26T04:03:12Z",
   "parts": [
     {
       "year": 2024,
@@ -23,6 +23,26 @@
       ],
       "startedAt": "2026-11-26T03:42:34Z",
       "verifiedAt": "2026-11-26T03:54:29Z"
+    },
+    {
+      "year": 2024,
+      "day": 1,
+      "part": 2,
+      "title": "Historian Hysteria",
+      "puzzleUrl": "https://adventofcode.com/2024/day/1#part2",
+      "status": "solved",
+      "summary": "Compute the similarity score between the two location ID columns by multiplying each left-column ID by its frequency in the right column and summing across all left-column entries.",
+      "algorithmSummary": "Right-column hash frequency map with exact BigInt accumulation: count right-column multiplicities in one O(N) pass, then scan raw left entries accumulating BigInt(id) * BigInt(rightCount) with zero churn to 2024/day01/shared; differentially verified against a sorted two-pointer merge oracle.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1,
+      "attemptsCount": 1,
+      "learnings": [
+        "Converting operands to BigInt before multiplying (BigInt(id) * BigInt(count)) prevents silent IEEE-754 overflow on arbitrary safe-integer inputs.",
+        "Scaling BigInt coordinates in BigInt ((val - min) * 1_000_000n / span) before Number conversion keeps SVG score curves exact across huge ranges."
+      ],
+      "startedAt": "2026-11-26T03:55:28Z",
+      "verifiedAt": "2026-11-26T04:03:12Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T03:53:06Z",
+  "updatedAt": "2026-11-26T04:00:16Z",
   "parts": [
     {
       "year": 2022,
@@ -22,6 +22,26 @@
       ],
       "startedAt": "2026-11-26T03:42:53Z",
       "verifiedAt": "2026-11-26T03:53:06Z"
+    },
+    {
+      "year": 2022,
+      "day": 1,
+      "part": 2,
+      "title": "Calorie Counting",
+      "puzzleUrl": "https://adventofcode.com/2022/day/1#part2",
+      "status": "solved",
+      "summary": "Using the same blank-line-separated Elf calorie inventories from Part 1, identify the three Elves carrying the highest individual totals and return their combined calorie sum.",
+      "algorithmSummary": "Zero-churn reuse of 2022/day01/shared rankTopElves(inventories, 3) and sumCalories: single-pass bounded top-3 insertion in O(N) time and O(1) extra space, differentially verified against a descending-sort oracle and matching the pre-verified AoC star answer.",
+      "complexity": "O(N) time, O(1) extra tracking space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.99,
+      "attemptsCount": 1,
+      "learnings": [
+        "Parameterizing the shared leaderboard engine by k let Part 2 achieve 100% coverage in 30 lines of domain code with zero imports from part1/.",
+        "Wrapping both parse and trace inside try/catch in the visualizer cleanly handles valid 1- or 2-Elf inputs that reject top-3 selection."
+      ],
+      "startedAt": "2026-11-26T03:53:30Z",
+      "verifiedAt": "2026-11-26T04:00:16Z"
     }
   ]
 }
