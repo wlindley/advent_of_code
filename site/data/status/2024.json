@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T10:44:37Z",
+  "updatedAt": "2026-11-26T10:56:24Z",
   "parts": [
     {
       "year": 2024,
@@ -703,6 +703,26 @@
       ],
       "startedAt": "2026-11-26T10:30:20Z",
       "verifiedAt": "2026-11-26T10:44:37Z"
+    },
+    {
+      "year": 2024,
+      "day": 18,
+      "part": 2,
+      "title": "RAM Run",
+      "puzzleUrl": "https://adventofcode.com/2024/day/18#part2",
+      "status": "solved",
+      "summary": "Find the first falling byte coordinate in the full corruption stream whose landing permanently severs all orthogonal paths from (0, 0) to (70, 70).",
+      "algorithmSummary": "Zero-churn reverse-time DisjointSet percolation reusing 2024/day18/shared MemorySpace, findShortestPath, createStaticSnapshot, RamRunCanvas, and shared/core DisjointSet with zero shared edits (3.53 ms on 71x71 / 3,450 bytes): activates all never-corrupted cells first, then unwinds k from B down until (0, 0) and (S - 1, S - 1) are both open and connected (activating cell idx only when firstFall[idx] === k so duplicate coordinates cannot prematurely reopen blocked cells); differentially verified against both a binary-search BFS oracle (80 seeded grids including duplicates, 1x1, and endpoint hits) and a linear forward BFS oracle (25 small grids).",
+      "complexity": "O(S^2 + B * alpha(S^2)) time, O(S^2) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.53,
+      "attemptsCount": 1,
+      "learnings": [
+        "Reverse-time DisjointSet percolation checking firstFall[idx] === k and open[0] === 1 && open[goalIdx] === 1 handles duplicate byte coordinates, direct endpoint hits, and 1x1 grids cleanly in a single O(S^2 + B * alpha(S^2)) pass.",
+        "Omitting a redundant k > 0 loop guard when termination at k = 0 is mathematically guaranteed preserves 100% V8 branch coverage without artificial dead-code branches."
+      ],
+      "startedAt": "2026-11-26T10:45:42Z",
+      "verifiedAt": "2026-11-26T10:56:24Z"
     }
   ]
 }
