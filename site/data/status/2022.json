@@ -522,6 +522,26 @@
       ],
       "startedAt": "2026-11-26T08:14:28Z",
       "verifiedAt": "2026-11-26T08:27:35Z"
+    },
+    {
+      "year": 2022,
+      "day": 14,
+      "part": 1,
+      "title": "Regolith Reservoir",
+      "puzzleUrl": "https://adventofcode.com/2022/day/14",
+      "status": "solved",
+      "summary": "Simulate sand pouring one grain at a time from (500, 0) into a 2D cave of axis-aligned rock polylines (falling down, down-left, then down-right) and count how many units come to rest before sand begins falling into the endless abyss.",
+      "algorithmSummary": "Stack-resumed DFS over a single encapsulated Int32Array (-1 rock, 0 air, 1..N grain settlement order) parameterized by polymorphic CaveBoundaryPolicy (ABYSS_BOUNDARY_POLICY with tight cone-clamped bounds) in 2022/day14/shared/ in O(W * H) time (2.19 ms across 149 rock paths / 793 grains): captures the exact abyss escape stream directly from the residual stack and pairs with a HiDPI Canvas 2D ReservoirCanvas/ReservoirVisualizer (with floor-band rendering built in) for zero-churn Part 2 floor reuse; differentially verified on both count and exact settled coordinate sets against an independent grain-by-grain Set<string> oracle across official examples (24), blocked source, out-of-cone rocks, negative-x walls, and 50 seeded random caves.",
+      "complexity": "O(W * H) time, O(W * H) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.19,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because cave occupancy grows monotonically, resuming each sand grain from the previous grain's descent stack visits every reachable cell at most once in O(W * H) while preserving exact physical settlement order and yielding the Part 1 abyss escape path for free.",
+        "Storing 1..N grain order directly inside one private Int32Array powers zero-copy timeline scrubbing across 160 frames while keeping CaveBoundaryPolicy open for zero-churn Part 2 floor injection."
+      ],
+      "startedAt": "2026-11-26T08:29:00Z",
+      "verifiedAt": "2026-11-26T08:44:25Z"
     }
   ]
 }
