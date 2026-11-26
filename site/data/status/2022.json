@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:18:14Z",
+  "updatedAt": "2026-11-26T17:27:08Z",
   "parts": [
     {
       "year": 2022,
@@ -903,6 +903,26 @@
       ],
       "startedAt": "2026-11-26T17:01:54Z",
       "verifiedAt": "2026-11-26T17:18:14Z"
+    },
+    {
+      "year": 2022,
+      "day": 23,
+      "part": 2,
+      "title": "Unstable Diffusion",
+      "puzzleUrl": "https://adventofcode.com/2022/day/23#part2",
+      "status": "solved",
+      "summary": "Continue simulating synchronous elf diffusion rounds until reaching equilibrium and return the 1-based round number of the first round in which no elf moves.",
+      "algorithmSummary": "Zero-churn equilibrium specialization reusing 2022/day23/shared DiffusionGrid (dynamic padded flat Uint8Array + 1 KB bitmask DIR_LUT + 1-based round-stamped Int32Array propTag), findFirstStaticRound, traceUntilStatic, and DiffusionVisualizer with zero shared edits (44.72 ms across 895 rounds on ~2,500 elves); differentially verified against an independent Set<string>/Map<string, number> oracle across the official 22-elf (20) and 5-elf (4) examples, single elf (1), head-on N/S and E/W round-1 collision fixtures, and 8 seeded random clusters.",
+      "complexity": "O(R * N + G) time, O(G + N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 44.72,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building dynamic flat-grid DiffusionGrid, findFirstStaticRound, and two-pass sampled traceUntilStatic in 2022/day23/shared/ solved 895 diffusion rounds in 44.72 ms with 20 lines of Part 2 solver code and zero shared-module edits.",
+        "Adding blocker neighbors to head-on collision fixtures (#.# / .#. / ... / .#. / #.#) ensures elves are non-isolated on round 1 so opposite-direction collisions are genuinely exercised."
+      ],
+      "startedAt": "2026-11-26T17:19:00Z",
+      "verifiedAt": "2026-11-26T17:27:08Z"
     }
   ]
 }
