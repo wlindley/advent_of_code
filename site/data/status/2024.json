@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:33:49Z",
+  "updatedAt": "2026-11-26T04:43:50Z",
   "parts": [
     {
       "year": 2024,
@@ -103,6 +103,26 @@
       ],
       "startedAt": "2026-11-26T04:23:54Z",
       "verifiedAt": "2026-11-26T04:33:49Z"
+    },
+    {
+      "year": 2024,
+      "day": 3,
+      "part": 2,
+      "title": "Mull It Over",
+      "puzzleUrl": "https://adventofcode.com/2024/day/3#part2",
+      "status": "solved",
+      "summary": "Execute the same continuous corrupted memory stream while honoring do() and don't() conditional gates (starting enabled and persisting across newlines), summing X * Y only for enabled mul(X,Y) instructions.",
+      "algorithmSummary": "Zero-churn stateful token fold over 2024/day03/shared ParsedMemory.instructions in O(K) time and O(1) auxiliary space, exposing computeInstructionStates so the visualizer never re-implements the gate state machine; differentially verified against a raw-text streaming-skip oracle over a 20 KB synthetic corpus.",
+      "complexity": "O(N) parse, O(K) fold, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.22,
+      "attemptsCount": 1,
+      "learnings": [
+        "Tokenizing do() and don't() alongside mul(X,Y) in 2024/day03/shared made Part 2 a pure O(K) fold with zero parser edits and exact cross-line gate persistence.",
+        "Exporting computeInstructionStates from domain keeps the React tape and gate-ribbon visualizer thin without duplicating conditional state logic."
+      ],
+      "startedAt": "2026-11-26T04:34:40Z",
+      "verifiedAt": "2026-11-26T04:43:50Z"
     }
   ]
 }
