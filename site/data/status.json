@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T01:03:00Z",
+  "updatedAt": "2026-11-26T01:08:19Z",
   "years": [
     {
       "year": 2025,
@@ -376,38 +376,19 @@
           "part": 1,
           "title": "Factory",
           "puzzleUrl": "https://adventofcode.com/2025/day/10",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "Each factory machine has indicator lights starting off, a target on/off pattern, wiring buttons that toggle subsets of lights, and joltage requirements. Find the minimum total button presses across all machines to match every target light pattern.",
-          "proposals": [
-            {
-              "id": "gf2-rref-nullspace",
-              "name": "GF(2) RREF + Gray-Code Nullspace Search",
-              "summary": "Promote arbitrary-width BigInt Gauss-Jordan GF(2) RREF into shared/core/gf2.ts, extract particular solution and k nullspace basis vectors, and Gray-code enumerate all 2^k affine solutions for minimum Hamming weight.",
-              "complexity": "O(L * B + 2^k) time, O(L + B) space",
-              "tradeoffs": "Solves all 198 machines in < 1 ms, scales to L,B > 100 when nullity is modest, and yields a reusable shared/core/gf2.ts primitive."
-            },
-            {
-              "id": "state-space-bfs",
-              "name": "Bitmask Hypercube BFS",
-              "summary": "Run BFS over the 2^L bitmask state graph from 0 to targetMask using flat Int32Array tables.",
-              "complexity": "O(B * 2^L) time, O(2^L) space",
-              "tradeoffs": "Simple and immune to large nullity (ideal differential test oracle), but exponential in L."
-            },
-            {
-              "id": "meet-in-the-middle",
-              "name": "Split-Button Meet-in-the-Middle",
-              "summary": "Enumerate 2^(B/2) subsets of each half of buttons and match complementary XOR masks in a map.",
-              "complexity": "O(2^(B/2)) time and space",
-              "tradeoffs": "Independent of L and nullity, but allocates hash tables and reveals less algebraic structure for Part 2."
-            }
+          "algorithmSummary": "Promoted arbitrary-width BigInt Gauss-Jordan GF(2) RREF into shared/core/gf2.ts, extracting each machine's particular solution and nullspace basis, then Gray-code enumerating all 2^k affine solutions for minimum Hamming weight (verified against a 50-machine state-space BFS oracle).",
+          "complexity": "O(L * B + 2^k) time, O(L + B) space per machine",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 4.07,
+          "attemptsCount": 1,
+          "learnings": [
+            "Promoted arbitrary-width BigInt Gf2LinearSystem and bitCount to shared/core/gf2.ts for reusable GF(2) RREF and Gray-code minimum-weight nullspace search.",
+            "Preserve unused input fields like joltageRequirements inside 2025/day10/shared/machine.ts with zero GF(2) coupling so Part 2 reuses the parser verbatim."
           ],
-          "selectedProposalId": "gf2-rref-nullspace",
-          "selectionRationale": "Promotes reusable shared/core/gf2.ts, runs in < 1 ms on personal input, verifies via state-space-bfs differential oracle, and preserves joltageRequirements in 2025/day10/shared/ for Part 2.",
-          "inFlightWork": "Implementing shared/core/gf2.ts, 2025/day10/shared/machine.ts, GF(2) solver + BFS oracle tests, and interactive LED/RREF visualizer.",
-          "attempts": [],
           "startedAt": "2026-11-26T00:56:57Z",
-          "updatedAt": "2026-11-26T01:03:00Z"
+          "verifiedAt": "2026-11-26T01:08:19Z"
         }
       ]
     }
