@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T10:14:11Z",
+  "updatedAt": "2026-11-26T10:29:24Z",
   "parts": [
     {
       "year": 2024,
@@ -663,6 +663,26 @@
       ],
       "startedAt": "2026-11-26T10:00:30Z",
       "verifiedAt": "2026-11-26T10:14:11Z"
+    },
+    {
+      "year": 2024,
+      "day": 17,
+      "part": 2,
+      "title": "Chronospatial Computer",
+      "puzzleUrl": "https://adventofcode.com/2024/day/17#part2",
+      "status": "solved",
+      "summary": "Find the lowest positive initial Register A value that causes the 3-bit Chronospatial VM program to emit an exact copy of its own instructions (a self-reproducing quine).",
+      "algorithmSummary": "Zero-churn backward 3-bit octal DFS + live BigInt VM suffix verification reusing 2024/day17/shared ChronospatialProgram, runProgram, traceProgram, and ChronospatialDebugger (with targetOutput match highlighting and a QuineOctalPanel reconstruction table) with zero shared edits (2.75 ms on 16-token 48-bit personal quine): searches pos = N - 1 down to 0 trying ascending octal digits (skipping leading 0 when prefix === 0n) so the first leaf reached is guaranteed globally minimal across both adv-before-out and adv-after-out loop layouts; differentially verified against both a brute-force minimality proof on 0,3,5,4,3,0 (117440) and an independent non-recursive backward-octal-BFS all-quines oracle across official and multi-branching 16-token synthetic programs.",
+      "complexity": "O(V * N * L) time (V ~ 50-500 visited octal nodes), O(N) stack space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.75,
+      "attemptsCount": 1,
+      "learnings": [
+        "Backward 3-bit octal DFS with startDigit = (prefix === 0n ? 1 : 0) enumerates exact N-octal-digit positive integers in strictly ascending order, working uniformly whether adv 3 runs before or after out with zero hardcoded algebra.",
+        "Deriving QuineReconstructionStep.candidate and QuineSearchResult.registerA via getters eliminates stored derived state while reusing ChronospatialDebugger's targetOutput and extraPanel hooks delivered Part 2 with zero edits to 2024/day17/shared/."
+      ],
+      "startedAt": "2026-11-26T10:16:15Z",
+      "verifiedAt": "2026-11-26T10:29:24Z"
     }
   ]
 }
