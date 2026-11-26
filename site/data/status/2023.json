@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T10:40:46Z",
+  "updatedAt": "2026-11-26T10:51:00Z",
   "parts": [
     {
       "year": 2023,
@@ -702,6 +702,26 @@
       ],
       "startedAt": "2026-11-26T10:24:50Z",
       "verifiedAt": "2026-11-26T10:40:46Z"
+    },
+    {
+      "year": 2023,
+      "day": 18,
+      "part": 2,
+      "title": "Lavaduct Lagoon",
+      "puzzleUrl": "https://adventofcode.com/2023/day/18#part2",
+      "status": "solved",
+      "summary": "Decode the true orthogonal dig instructions from the 6-digit hexadecimal color codes (first 5 hex digits as distance, final digit 0/1/2/3 as R/D/L/U) and compute the total cubic meters of lava held by the massive closed lagoon.",
+      "algorithmSummary": "Zero-churn HEX_DIG_PLAN_DECODER strategy plugging into 2023/day18/shared createLagoonSolver, exact BigInt Shoelace + Pick's LagoonPolygon, BigInt-scaled SVG projection, and LagoonPolygonVisualizer with zero shared edits (1.75 ms on 670 hex steps spanning ~10^7 coordinates): preserves exact precision far beyond IEEE-754 MAX_SAFE_INTEGER (~4.75 x 10^13 personal volume); differentially verified against an independent exact BigInt horizontal scanline oracle (reusing ClosedInterval & IntervalUnion from shared/core) across official example (952408144115), 10^8-side > MAX_SAFE_INTEGER polygons, and CW/CCW concave/collinear hex loops.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.75,
+      "attemptsCount": 1,
+      "learnings": [
+        "Injecting HEX_DIG_PLAN_DECODER into createLagoonSolver solved 10^13-scale Part 2 in 1.75 ms with 5 lines of solver code and zero edits to 2023/day18/shared/.",
+        "Testing a chained 10^8-side hex square (10,995,095,515,965,001 > Number.MAX_SAFE_INTEGER) plus an exact BigInt horizontal scanline oracle proves zero float64 precision loss across both geometry and SVG projection."
+      ],
+      "startedAt": "2026-11-26T10:41:56Z",
+      "verifiedAt": "2026-11-26T10:51:00Z"
     }
   ]
 }
