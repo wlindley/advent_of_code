@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T09:57:03Z",
+  "updatedAt": "2026-11-26T10:15:02Z",
   "parts": [
     {
       "year": 2023,
@@ -642,6 +642,26 @@
       ],
       "startedAt": "2026-11-26T09:47:20Z",
       "verifiedAt": "2026-11-26T09:57:03Z"
+    },
+    {
+      "year": 2023,
+      "day": 17,
+      "part": 1,
+      "title": "Clumsy Crucible",
+      "puzzleUrl": "https://adventofcode.com/2023/day/17",
+      "status": "solved",
+      "summary": "Route a crucible from top-left (0, 0) to bottom-right (H - 1, W - 1) on a 1..9 heat-loss grid minimizing entered block heat loss without reversing 180 degrees or moving more than 3 consecutive blocks in one direction.",
+      "algorithmSummary": "Axis-alternating macro-leg graph ((r, c, axis) with 2 * H * W states) + intrusive O(1) Int32Array circular DialBucketQueue in 2023/day17/shared/ parameterized by CrucibleRule(1, 3) (6.04 ms on 141x141): automatically enforces no-reversal, [minRun, maxRun] turns, and Part 2's final-leg stopping length in one unified search() pass with zero per-frame array copies in trace() and reusable HiDPI CrucibleVisualizer for zero-churn Part 2 ([4, 10]) reuse; differentially verified against an independent full 4D (r, c, dir, run) 1-step binary-heap Dijkstra oracle across official examples (102 Part 1, 94 & 71 Part 2), unreachable strips, path-legality invariants, and 25 seeded rectangular grids x 4 rules.",
+      "complexity": "O(H * W * (M - m + 1) + D*) time, O(H * W + M) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.04,
+      "attemptsCount": 1,
+      "learnings": [
+        "Contracting straight runs into macro-legs on the axis-alternating (r, c, axis) graph shrinks the state space to 2 * H * W while enforcing both turn lengths and Part 2's stopping rule automatically.",
+        "Pairing a unified search() pass with an intrusive circular DialBucketQueue (bucketCount = 9 * effectiveMaxRun + 1) solves 141x141 in 6.04 ms with zero GC churn and zero divergence between solve() and trace()."
+      ],
+      "startedAt": "2026-11-26T09:57:50Z",
+      "verifiedAt": "2026-11-26T10:15:02Z"
     }
   ]
 }

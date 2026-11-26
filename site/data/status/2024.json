@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T09:59:51Z",
+  "updatedAt": "2026-11-26T10:14:11Z",
   "parts": [
     {
       "year": 2024,
@@ -643,6 +643,26 @@
       ],
       "startedAt": "2026-11-26T09:52:25Z",
       "verifiedAt": "2026-11-26T09:59:51Z"
+    },
+    {
+      "year": 2024,
+      "day": 17,
+      "part": 1,
+      "title": "Chronospatial Computer",
+      "puzzleUrl": "https://adventofcode.com/2024/day/17",
+      "status": "solved",
+      "summary": "Simulate a 3-bit virtual machine with three arbitrary-precision registers (A, B, C) and 8 opcodes (adv, bxl, bst, jnz, bxc, out, bdv, cdv) over a program tape of 3-bit integers and return the comma-joined output stream.",
+      "algorithmSummary": "Table-driven arbitrary-precision BigInt 3-bit VM (OPCODE_TABLE + COMBO_RESOLVERS) in 2024/day17/shared/ in O(T * W) time (0.39 ms on personal input): enforces non-negative BigInt registers ready for Part 2's ~48-bit quine A, handles odd-IP jnz jumps and dynamic runtime combo-7 validation (keeping literal/ignored 7 in bxl/jnz/bxc valid), uses shift-safe divPow2 without huge 2^k allocations, exposes 2-pass bounded-memory traceProgram and interactive ChronospatialDebugger (with decimal/octal/binary RegisterPanel, DisassemblyTape, and Part 2 targetOutput/extraPanel hooks) for zero-churn Part 2 reuse; differentially verified against an independent textbook switch-based BigInt VM oracle across all 5 short official examples, main example (4,6,3,5,6,3,5,2,1,0), 64-bit registers, odd-IP jumps, and 100 seeded synthetic programs.",
+      "complexity": "O(T * W) time, O(P + K) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.39,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using non-negative BigInt registers and shift-safe divPow2 (returning 0n when shift >= bitLength) prevents 32-bit JS bitwise truncation and prepares Part 2's ~48-bit quine search with zero shared-module edits.",
+        "Validating reserved combo operand 7 dynamically inside resolveCombo (rather than at parse time) preserves valid literal/ignored 7 instructions (bxl 7, jnz 7, bxc 7) while placing disassembleProgram in opcodes.ts keeps the internal DAG strictly acyclic."
+      ],
+      "startedAt": "2026-11-26T10:00:30Z",
+      "verifiedAt": "2026-11-26T10:14:11Z"
     }
   ]
 }
