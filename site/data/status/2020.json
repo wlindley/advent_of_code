@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T20:06:27Z",
+  "updatedAt": "2026-11-26T20:13:01Z",
   "parts": [
     {
       "year": 2020,
@@ -23,6 +23,26 @@
       "startedAt": "2026-11-26T18:54:50Z",
       "verifiedAt": "2026-11-26T20:06:27Z",
       "humanWaitSeconds": 3470
+    },
+    {
+      "year": 2020,
+      "day": 1,
+      "part": 2,
+      "title": "Report Repair",
+      "puzzleUrl": "https://adventofcode.com/2020/day/1#part2",
+      "status": "solved",
+      "summary": "Find the three distinct entries in an expense report that sum to 2020 and multiply them together.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day01/shared/ with k = 3 sorted anchor + converging two-pointer scan (0.52 ms across 200 entries -> 140,379,120): reuses findKSumTuple, bounded two-pass traceKSumSearch, and ExpenseRepairVisualizer with gold A1 anchor + L/R markers, differentially verified across 30 seeded PRNG fixtures against an independent O(N^3) all-valid-products brute-force oracle.",
+      "complexity": "O(N^2) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.52,
+      "attemptsCount": 1,
+      "learnings": [
+        "Having a differential brute-force oracle return the full Set of all valid triple products avoids spurious mismatches on random fixtures that happen to contain multiple valid 2020 triples.",
+        "Pre-building generalized k-sum probing and A1/L/R visualizer tags in day01/shared/ let Part 2 land with zero shared edits."
+      ],
+      "startedAt": "2026-11-26T20:06:49Z",
+      "verifiedAt": "2026-11-26T20:13:01Z"
     }
   ]
 }
