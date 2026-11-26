@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T20:35:30Z",
+  "updatedAt": "2026-11-26T20:48:47Z",
   "parts": [
     {
       "year": 2021,
@@ -103,6 +103,26 @@
       ],
       "startedAt": "2026-11-26T20:23:39Z",
       "verifiedAt": "2026-11-26T20:35:30Z"
+    },
+    {
+      "year": 2021,
+      "day": 3,
+      "part": 2,
+      "title": "Binary Diagnostic",
+      "puzzleUrl": "https://adventofcode.com/2021/day/3#part2",
+      "status": "solved",
+      "summary": "Iteratively filter binary diagnostic readings left-to-right by most-common (oxygen) and least-common (CO2) bit criteria until one candidate remains, returning their product.",
+      "algorithmSummary": "Iterative index filtering reusing 2021/day03/shared/ with unanimous-column guard selectFilterBit (1.53 ms across 1,000 12-bit readings -> 2,981,085): zero edits to shared/ or part1/, zero-derived-state RatingSelection/LifeSupportRates/LaneStepSnapshot, dual-lane mirrored SVG narrowing funnel & lane detail visualizer, differentially verified across 50 seeded fixtures (up to 72 bits) against an independent binary-prefix-trie oracle.",
+      "complexity": "O(N * W) worst-case (O(N) expected), O(N) candidate working set",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.53,
+      "attemptsCount": 1,
+      "learnings": [
+        "Guarding unanimous columns (ones === 0 -> '0', zeros === 0 -> '1') before delegating to LEAST_COMMON_CRITERION prevents CO2 filtering from emptying the candidate pool when distinct remaining rows share a bit.",
+        "Testing an explicit asymmetric witness where oxygen locks before CO2 (['110', '100', '000', '001']) covers both early-lock branches symmetrically."
+      ],
+      "startedAt": "2026-11-26T20:36:11Z",
+      "verifiedAt": "2026-11-26T20:48:47Z"
     }
   ]
 }
