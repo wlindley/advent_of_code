@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T07:32:58Z",
+  "updatedAt": "2026-11-26T07:48:39Z",
   "parts": [
     {
       "year": 2022,
@@ -442,6 +442,26 @@
       ],
       "startedAt": "2026-11-26T07:22:21Z",
       "verifiedAt": "2026-11-26T07:32:58Z"
+    },
+    {
+      "year": 2022,
+      "day": 12,
+      "part": 1,
+      "title": "Hill Climbing Algorithm",
+      "puzzleUrl": "https://adventofcode.com/2022/day/12",
+      "status": "solved",
+      "summary": "Find the shortest 4-directional path from start S (elevation 'a') to summit E (elevation 'z') on a 2D lowercase heightmap where each step climbs at most +1 elevation (dropping any amount is allowed).",
+      "algorithmSummary": "Single-pass reverse BFS from E using flat Int32Array queue/distance/parent buffers (neighborHeight >= currentHeight - 1) parameterized by polymorphic StartCondition (FIXED_START_CONDITION) in 2022/day12/shared/ in O(R * C) time (4.21 ms on 41x181), exposing nullable distanceAt/nextStepFrom APIs and pairing with a HiDPI ElevationCanvas and HillClimbingVisualizer for zero-churn Part 2 ('a'-elevation start) reuse; differentially verified against an independent forward-BFS oracle in both single-start and multi-source 'a' modes across 60 seeded random heightmaps.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.21,
+      "attemptsCount": 1,
+      "learnings": [
+        "Running reverse BFS from summit E along reversed climb edges (neighborHeight >= currHeight - 1) produces a distance-sorted visitOrder that unifies Part 1 (S) and Part 2 (nearest 'a') via a 5-line StartCondition predicate with zero shared-module edits.",
+        "Keeping -1 strictly internal to private Int32Arrays and returning number | null at the ReverseBfsField public boundary makes the classic dist <= frame.distance unreachable-cell bug impossible in TypeScript."
+      ],
+      "startedAt": "2026-11-26T07:33:51Z",
+      "verifiedAt": "2026-11-26T07:48:39Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T07:38:26Z",
+  "updatedAt": "2026-11-26T07:47:49Z",
   "parts": [
     {
       "year": 2024,
@@ -423,6 +423,26 @@
       ],
       "startedAt": "2026-11-26T07:26:10Z",
       "verifiedAt": "2026-11-26T07:38:26Z"
+    },
+    {
+      "year": 2024,
+      "day": 11,
+      "part": 2,
+      "title": "Plutonian Pebbles",
+      "puzzleUrl": "https://adventofcode.com/2024/day/11#part2",
+      "status": "solved",
+      "summary": "Evolve the same line of integer-engraved stones through 75 simultaneous blinks and return the exact total stone count.",
+      "algorithmSummary": "Zero-churn PART2_BLINKS = 75 specialization reusing 2024/day11/shared frequency-histogram DP and PebbleEvolutionVisualizer with zero shared edits (33.69 ms in exact BigInt across 75 blinks / ~3,800 distinct attractor values, tracing all 76 blinks 1:1 under DEFAULT_MAX_TRACE_STEPS = 80); differentially verified against both a pure-arithmetic top-down memoized recursive DP oracle (using / and % digit splitting) and a Chapman-Kolmogorov semigroup split (37 + 38 = 75) oracle.",
+      "complexity": "O(B * D) time, O(D) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 33.69,
+      "attemptsCount": 1,
+      "learnings": [
+        "Even though total stones explode past 2.48e14 at 75 blinks, repeated even-digit splitting collapses distinct values into a ~3,800-label attractor, solving Part 2 in 33.69 ms in exact BigInt with 7 lines of production domain code and zero edits to 2024/day11/shared/.",
+        "Cross-checking against both pure-arithmetic top-down memoized DP and a 37+38 Chapman-Kolmogorov semigroup split independently validates both intermediate histograms and digit-splitting transitions."
+      ],
+      "startedAt": "2026-11-26T07:39:06Z",
+      "verifiedAt": "2026-11-26T07:47:49Z"
     }
   ]
 }
