@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T07:48:39Z",
+  "updatedAt": "2026-11-26T09:39:12Z",
   "parts": [
     {
       "year": 2022,
@@ -602,6 +602,26 @@
       ],
       "startedAt": "2026-11-26T09:09:55Z",
       "verifiedAt": "2026-11-26T09:21:19Z"
+    },
+    {
+      "year": 2022,
+      "day": 16,
+      "part": 1,
+      "title": "Proboscidea Volcanium",
+      "puzzleUrl": "https://adventofcode.com/2022/day/16",
+      "status": "solved",
+      "summary": "Navigate a network of tunnels starting at valve AA with a 30-minute limit (1 minute to move along a tunnel, 1 minute to open a valve) and maximize total cumulative pressure released by opened valves.",
+      "algorithmSummary": "BFS graph compression onto K = 15 reachable positive-flow valves sorted by descending flowRate + admissible Rearrangement-Inequality Branch-and-Bound DFS (findOptimalSchedule) and exact feasibility-pruned per-mask Int32Array DP (computeBestByMask) in 2022/day16/shared/ (2.37 ms on 60 valves / 15 positive valves): validates allowedMask non-wrapping bounds, guards directed-tunnel unreachability and overflow, exposes MaskPressureTable.copyScores() + multi-agent buildValveTimeline/ValveNetworkSvg for zero-churn Part 2 SOS Max-DP reuse; differentially verified against an independent uncompressed minute-by-minute raw-network DP oracle across official examples (1651 at T=30 and 1707 at T=26 via SOS DP), positive-flow AA, directed edges, and 35 seeded random valve networks.",
+      "complexity": "O(K * (V + E)) compression + Branch-and-Bound DFS (< 3 ms), O(2^K) mask table",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.37,
+      "attemptsCount": 1,
+      "learnings": [
+        "Separating admissible Branch-and-Bound (findOptimalSchedule for single-agent optimal routes) from feasibility-pruned MaskPressureTable (computeBestByMask with no global-best pruning) solves Part 1 in 2.37 ms while preparing Part 2's O(K * 2^K) SOS Max-DP with zero edits to 2022/day16/shared/.",
+        "Checking (remainingMask & (1 << node)) !== 0 for the first opening slot tightens the Rearrangement-Inequality upper bound even when AA has positive flowRate and is excluded from allowedMask."
+      ],
+      "startedAt": "2026-11-26T09:21:54Z",
+      "verifiedAt": "2026-11-26T09:39:12Z"
     }
   ]
 }
