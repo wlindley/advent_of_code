@@ -523,6 +523,26 @@
       ],
       "startedAt": "2026-11-26T08:25:54Z",
       "verifiedAt": "2026-11-26T08:35:53Z"
+    },
+    {
+      "year": 2024,
+      "day": 14,
+      "part": 1,
+      "title": "Restroom Redoubt",
+      "puzzleUrl": "https://adventofcode.com/2024/day/14",
+      "status": "solved",
+      "summary": "Simulate robots with constant velocities wrapping around a 101x103 toroidal room for 100 seconds, count robots strictly inside each of the four quadrants (excluding centerlines), and multiply the four counts to compute the safety factor.",
+      "algorithmSummary": "Overflow-safe O(N) closed-form modular teleportation using shared/core euclideanMod(euclideanMod(pos, size) + euclideanMod(vel, size) * (seconds % size), size) in 2024/day14/shared/ (0.84 ms across 500 robots): encapsulates a private Uint32Array occupancy buffer inside immutable RedoubtSnapshot with dynamic getters (quadrants, safetyFactor, uniqueCells, adjacentPairs) and pairs with a HiDPI Canvas 2D RedoubtCanvas for zero-churn Part 2 Christmas-tree clustering reuse; differentially verified against an independent tick-by-tick t = 1..T simulator across the 11x7 example (12), single-robot trajectories, multi-period wraps, crosshair exclusions, stacked cells, and 60 seeded random swarms.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.84,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-reducing seconds % size before multiplying by euclideanMod(vel, size) prevents safe-integer overflow at arbitrarily large horizons while computing exact wrapped positions in O(1) per robot.",
+        "Exposing fillOccupancy, countAdjacentOccupied, RedoubtSnapshot (zero stored derived state), and RedoubtCanvas in 2024/day14/shared/ prepares Part 2's Christmas-tree clustering search with zero shared-module churn."
+      ],
+      "startedAt": "2026-11-26T08:36:32Z",
+      "verifiedAt": "2026-11-26T08:50:56Z"
     }
   ]
 }
