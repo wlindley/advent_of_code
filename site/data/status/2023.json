@@ -502,6 +502,26 @@
       ],
       "startedAt": "2026-11-26T08:12:17Z",
       "verifiedAt": "2026-11-26T08:26:33Z"
+    },
+    {
+      "year": 2023,
+      "day": 13,
+      "part": 2,
+      "title": "Point of Incidence",
+      "puzzleUrl": "https://adventofcode.com/2023/day/13#part2",
+      "status": "solved",
+      "summary": "Repair the single defective cell ('smudge') in each ash/rock pattern so that a new valid vertical or horizontal reflection line emerges (distinct from Part 1's axis), and sum the new mirror scores across all patterns.",
+      "algorithmSummary": "Zero-churn PART2_TARGET_SMUDGES = 1 specialization reusing 2023/day13/shared arbitrary-width BigInt row/column bitmask Hamming scanner, exact lowest-set-bit SmudgePair extraction, and IncidenceVisualizer/MirrorGridSvg with zero shared edits (2.66 ms across 100 patterns): finds the unique axis with total Hamming distance 1 and highlights both smudge coordinates automatically in the SVG viewer; differentially verified against an independent literal single-cell flip brute-force oracle (filtering out the original Part 1 axis) across official examples (400), edge/overhang/A0-destroying cases, 6x66 wide BigInt grids, and 60 seeded synthetic patterns.",
+      "complexity": "O(R * C + R^2 + C^2) time, O(R + C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.66,
+      "attemptsCount": 1,
+      "learnings": [
+        "Flipping a single cell changes a candidate axis's mismatch count by 0 (overhang) or ±1 (paired), so locating the unique new reflection line after fixing one smudge is mathematically identical to finding the unique axis with Hamming distance 1—delivering Part 2 in 7 lines of domain code with zero edits to 2023/day13/shared/.",
+        "Cross-checking against a literal single-cell flip brute-force oracle that excludes original Part 1 axes confirms equivalence even when the smudge lies in Part 1's overhang and keeps the old axis valid."
+      ],
+      "startedAt": "2026-11-26T08:28:16Z",
+      "verifiedAt": "2026-11-26T08:38:08Z"
     }
   ]
 }

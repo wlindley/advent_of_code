@@ -503,6 +503,26 @@
       ],
       "startedAt": "2026-11-26T08:10:04Z",
       "verifiedAt": "2026-11-26T08:25:05Z"
+    },
+    {
+      "year": 2024,
+      "day": 13,
+      "part": 2,
+      "title": "Claw Contraption",
+      "puzzleUrl": "https://adventofcode.com/2024/day/13#part2",
+      "status": "solved",
+      "summary": "Shift every claw machine prize coordinate upward by 10,000,000,000,000 on both axes with no upper press limit and compute the exact minimum total tokens needed to win all winnable prizes.",
+      "algorithmSummary": "Zero-churn PART2_CONFIG = new ClawConfig(10_000_000_000_000n, null) specialization reusing 2024/day13/shared exact BigInt Cramer's rule, collinear extended-GCD minimization, and BigInt-safe ClawContraptionVisualizer with zero shared edits (0.90 ms across 320 machines, totaling 92.87 trillion tokens in exact BigInt); differentially verified against an independent shared/core Rational 2x2 Gauss-Jordan elimination and modular-inverse collinear oracle across official examples (875318608908n), curated 10^13 edge cases, and 150 seeded random machines.",
+      "complexity": "O(M) non-singular, O(M log max(ax, bx)) worst-case time, O(M) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.9,
+      "attemptsCount": 1,
+      "learnings": [
+        "Parameterizing ClawConfig(prizeOffset, maxPresses) and using exact BigInt arithmetic in 2024/day13/shared/ reduced Part 2 (10^13 offset, unbounded presses) to 10 lines of domain code and a 14-line visualizer wrapper running in 0.90 ms with zero edits to shared/.",
+        "Cross-checking BigInt Cramer + extended-GCD against shared/core Rational 2x2 Gauss-Jordan elimination and modular-inverse collinear minimization independently validates 10^15-scale cross products and arbitrary determinant signs."
+      ],
+      "startedAt": "2026-11-26T08:25:54Z",
+      "verifiedAt": "2026-11-26T08:35:53Z"
     }
   ]
 }
