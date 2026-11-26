@@ -11,10 +11,11 @@ export default defineConfig({
     ],
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'html'],
+      reporter: ['text', 'html', 'json-summary'],
       include: [
         'shared/core/**/*.ts',
         'tools/aoc/**/*.ts',
+        'tools/quality/**/*.ts',
         'site/data/**/*.ts',
         '2025/**/shared/**/*.ts',
         '2025/**/domain/**/*.ts',
@@ -23,6 +24,7 @@ export default defineConfig({
         '**/*.test.ts',
         'tools/aoc/cli.ts',
         'tools/aoc/nodeAdapters.ts',
+        'tools/quality/generate.ts',
       ],
     },
   },

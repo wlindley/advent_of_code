@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "metrics": "tsx tools/quality/generate.ts",
     "typecheck": "tsc --noEmit",
     "aoc": "tsx tools/aoc/cli.ts"
   },
