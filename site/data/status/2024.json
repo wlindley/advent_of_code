@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:43:50Z",
+  "updatedAt": "2026-11-26T04:55:24Z",
   "parts": [
     {
       "year": 2024,
@@ -123,6 +123,26 @@
       ],
       "startedAt": "2026-11-26T04:34:40Z",
       "verifiedAt": "2026-11-26T04:43:50Z"
+    },
+    {
+      "year": 2024,
+      "day": 4,
+      "part": 1,
+      "title": "Ceres Search",
+      "puzzleUrl": "https://adventofcode.com/2024/day/4",
+      "status": "solved",
+      "summary": "Search a rectangular 2D grid of uppercase letters for all straight-line occurrences of the word XMAS in all 8 compass directions (horizontal, vertical, and diagonal, forward and backward), allowing overlapping letters and shared endpoints.",
+      "algorithmSummary": "X-origin 8-direction ray scan reusing shared/core Grid2D and DIRS_8 via an immutable WordSearchGrid wrapper in 2024/day04/shared/ with O(1) convex-box endpoint bounds checks; differentially verified against an independent 4-axis scanline bidirectional window oracle over seeded rectangular grids up to 40x30.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.45,
+      "attemptsCount": 1,
+      "learnings": [
+        "Wrapping Grid2D<string> in WordSearchGrid with a generic matchesAt(row, col, dr, dc, word) and convex-box endpoint bounds check handles all 8 directions in Part 1 and leaves Part 2 diagonal X-MAS checks zero-churn.",
+        "Validating non-negative endpoints inside WordMatch makes invalid negative-coordinate rays unrepresentable while keeping endRow, endCol, and cells dynamically derived."
+      ],
+      "startedAt": "2026-11-26T04:44:21Z",
+      "verifiedAt": "2026-11-26T04:55:24Z"
     }
   ]
 }
