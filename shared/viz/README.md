@@ -8,6 +8,7 @@ Reusable React UI controls and manifest contract shared across per-puzzle visual
 - `PlaybackControls`: accessible Play/Pause, Step, Reset, timeline scrubber, and speed slider for animated visualizations.
 - `usePlayback`: step-playback timer hook with auto-rewind when pressing Play at the final frame and auto-pause on manual scrubbing/stepping.
 - `InputRunner`: interactive example/custom-input runner executing a `PuzzleSolver` locally in the browser with timing output.
+- `FinaleCanopyVisualizer`: reusable Advent of Code final-day star-canopy illumination visualizer delegating to `createFinaleSolver`, `usePlayback`, and `PlaybackControls`.
 
 ## Maintainer Guide
 - **Strict DAG rule**: `shared/viz` may depend only on `shared/core` and React. Never import from `site/`, `tools/`, or any `<year>/` puzzle folder.
