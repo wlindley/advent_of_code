@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:13:21Z",
+  "updatedAt": "2026-11-26T04:23:28Z",
   "parts": [
     {
       "year": 2024,
@@ -63,6 +63,26 @@
       ],
       "startedAt": "2026-11-26T04:03:43Z",
       "verifiedAt": "2026-11-26T04:13:21Z"
+    },
+    {
+      "year": 2024,
+      "day": 2,
+      "part": 2,
+      "title": "Red-Nosed Reports",
+      "puzzleUrl": "https://adventofcode.com/2024/day/2#part2",
+      "status": "solved",
+      "summary": "Apply the Problem Dampener allowing at most one level to be omitted from each report, and count how many reports are natively safe or become strictly safe after deleting a single level.",
+      "algorithmSummary": "Localized first-failure candidate probe reusing 2024/day02/shared with zero churn: if Report.firstFailure() occurs at index k, test minimal ascending skip candidates ([0, 1, 2] when k === 1 to catch index-0 trend flips, else [k, k + 1]) in O(N * L) time and O(1) auxiliary space; differentially verified against an exhaustive O(N * L^2) brute-force oracle across 1,000 reports.",
+      "complexity": "O(N * L) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.12,
+      "attemptsCount": 1,
+      "learnings": [
+        "When Report.firstFailure() triggers at index k === 1, removing index 0 can reverse the inferred initial trend and rescue the report; probing [0, 1, 2] for k === 1 and [k, k + 1] otherwise is provably exact and minimal.",
+        "Modeling DampenerOutcome as a discriminated union makes inconsistent states (such as unsafe with a removedIndex) compile-time impossible."
+      ],
+      "startedAt": "2026-11-26T04:13:48Z",
+      "verifiedAt": "2026-11-26T04:23:28Z"
     }
   ]
 }

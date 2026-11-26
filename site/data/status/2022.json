@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:14:08Z",
+  "updatedAt": "2026-11-26T04:22:10Z",
   "parts": [
     {
       "year": 2022,
@@ -82,6 +82,26 @@
       ],
       "startedAt": "2026-11-26T04:08:50Z",
       "verifiedAt": "2026-11-26T04:14:08Z"
+    },
+    {
+      "year": 2022,
+      "day": 3,
+      "part": 1,
+      "title": "Rucksack Reorganization",
+      "puzzleUrl": "https://adventofcode.com/2022/day/3",
+      "status": "solved",
+      "summary": "Split each rucksack string into two equal compartments, find the unique item type present in both halves (a–z = 1–26, A–Z = 27–52), and return the sum of priorities across all rucksacks.",
+      "algorithmSummary": "52-bit BigInt bitmask intersection reusing shared/core bigintLog2: immutable Rucksack value objects in 2022/day03/shared/ derive compartment masks dynamically, verify power-of-two uniqueness, and extract 1-based priorities in O(N) time; differentially verified against a Set intersection oracle over 312 rucksacks.",
+      "complexity": "O(N) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.47,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using 52-bit BigInt bitmasks with shared/core bigintLog2 avoids JavaScript's 32-bit bitwise truncation on uppercase priorities 32..52 and exposes Rucksack.allMask for Part 2 group intersections.",
+        "Keeping Rucksack constructor validation structural (even length and ASCII letters) rather than requiring compartment overlap lets Part 2 reuse Rucksack for arbitrary valid lines."
+      ],
+      "startedAt": "2026-11-26T04:14:19Z",
+      "verifiedAt": "2026-11-26T04:22:10Z"
     }
   ]
 }
