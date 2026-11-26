@@ -1,0 +1,26 @@
+export {
+  AIR_CONDITIONER_SYSTEM_ID,
+  DEFAULT_MAX_MACHINE_STEPS,
+  DEFAULT_MAX_TRACE_STEPS,
+  DiagnosticReport,
+  DiagnosticSolver,
+  THERMAL_RADIATOR_SYSTEM_ID,
+  createDiagnosticSolver,
+  runDiagnostic,
+  solveDiagnostic,
+  traceDiagnostic,
+  type DiagnosticTraceFrame,
+} from './diagnosticRunner';
+export {
+  MAX_VISIBLE_TAPE_CELLS,
+  classifyDiagnosticCellRole,
+  classifyOutputBadge,
+  computeTapeGridDimensions,
+  computeTapeWindow,
+  formatDecodedOperand,
+  formatDiagnosticStepSummary,
+  type DiagnosticCellRole,
+  type OutputBadgeKind,
+  type TapeGridDimensions,
+  type TapeWindow,
+} from './vizLayout';
