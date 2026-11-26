@@ -563,6 +563,26 @@
       ],
       "startedAt": "2026-11-26T08:51:32Z",
       "verifiedAt": "2026-11-26T09:04:44Z"
+    },
+    {
+      "year": 2024,
+      "day": 15,
+      "part": 1,
+      "title": "Warehouse Woes",
+      "puzzleUrl": "https://adventofcode.com/2024/day/15",
+      "status": "solved",
+      "summary": "Simulate a robot executing directional moves inside a walled warehouse pushing contiguous lines of 1x1 boxes ('O') whenever an open floor tile lies behind them, and return the sum of all box GPS coordinates (100 * row + col).",
+      "algorithmSummary": "Flat Uint8Array ray-scan with O(1) endpoint-swap push (PART1_PUSH_RULE) behind a polymorphic WarehouseRule strategy in 2024/day15/shared/ in O(M * L) time (4.79 ms across 50x50 grid / 20,000 moves): encapsulates terrain and robot coordinates inside WarehouseState/immutable WarehouseSnapshot (never freezing TypedArrays, deriving gpsSum over both 'O' and '[' dynamically) and pairs with a HiDPI WarehouseCanvas/WarehouseVisualizer (already supporting linked wide '[]' crates) for zero-churn Part 2 reuse; differentially verified against an independent string[][] tail-to-head shift oracle across all 15 steps of the small example (2028), the large example final board (10092), and 50 seeded random warehouses.",
+      "complexity": "O(M * L) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.79,
+      "attemptsCount": 1,
+      "learnings": [
+        "Returning immutable WarehouseSnapshot copies from runWarehouseSimulation and WarehouseFrame keeps Uint8Array mutation strictly encapsulated inside WarehouseState while deriving gpsSum and boxCount dynamically with zero stored derived state.",
+        "Supporting both 'O' and paired '[]' tiles in WarehouseState.fromRows, gpsSum, and WarehouseCanvas prepares Part 2's doubled warehouse and branching vertical box pushes with zero shared-module churn."
+      ],
+      "startedAt": "2026-11-26T09:05:14Z",
+      "verifiedAt": "2026-11-26T09:19:58Z"
     }
   ]
 }

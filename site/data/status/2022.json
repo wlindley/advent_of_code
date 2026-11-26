@@ -582,6 +582,26 @@
       ],
       "startedAt": "2026-11-26T08:55:29Z",
       "verifiedAt": "2026-11-26T09:09:10Z"
+    },
+    {
+      "year": 2022,
+      "day": 15,
+      "part": 2,
+      "title": "Beacon Exclusion Zone",
+      "puzzleUrl": "https://adventofcode.com/2022/day/15#part2",
+      "status": "solved",
+      "summary": "Find the unique integer point inside [0, 4,000,000]^2 not covered by any sensor's Manhattan exclusion diamond and return its tuning frequency (x * 4,000,000 + y).",
+      "algorithmSummary": "Zero-churn mathematically complete O(S^3) outer-diagonal intersection search reusing 2022/day15/shared SensorReading.outerDiagonals, covers(), and SensorMapSvg with zero shared edits (12.37 ms across 28 sensors, exact BigInt tuning frequency): enumerates all 4 search-box corners, diagonal-to-box-edge intersections, even (s + d) diagonal intersections, and all 4 surrounding lattice corners for odd (s + d) diagonal diamond-pinches via exact floor division k = (s + d - 1n) / 2n, enforcing strict uniqueness and bounding revealed SVG candidates to maxSteps; differentially verified against an independent row-by-row mergedRowCoverage interval-gap oracle across official examples (56000011), corners, edges, odd-parity pinches, and 40 seeded random [0, 25]^2 layouts.",
+      "complexity": "O(S^3) time, O(S^2) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 12.37,
+      "attemptsCount": 1,
+      "learnings": [
+        "Adding search-box corners, box-edge intersections, and the 4 lattice points around odd (s + d) intersections via exact floor k = (s + d - 1n) / 2n makes outer-diagonal candidate search 100% mathematically complete—including diagonal diamond-pinch interiors that naive even-parity intersection misses.",
+        "Pre-building SensorReading.outerDiagonals and optional Part 2 overlays on SensorMapSvg enabled Part 2 to ship with zero edits to 2022/day15/shared/ and zero imports from part1/."
+      ],
+      "startedAt": "2026-11-26T09:09:55Z",
+      "verifiedAt": "2026-11-26T09:21:19Z"
     }
   ]
 }
