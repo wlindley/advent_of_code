@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:56:27Z",
+  "updatedAt": "2026-11-26T18:17:22Z",
   "parts": [
     {
       "year": 2023,
@@ -943,6 +943,26 @@
       ],
       "startedAt": "2026-11-26T17:39:58Z",
       "verifiedAt": "2026-11-26T17:56:27Z"
+    },
+    {
+      "year": 2023,
+      "day": 24,
+      "part": 2,
+      "title": "Never Tell Me The Odds",
+      "puzzleUrl": "https://adventofcode.com/2023/day/24#part2",
+      "status": "solved",
+      "summary": "Find the unique integer 3D starting position P and velocity V of a rock that collides with all 300 hailstones at non-negative integer timestamps and return Px + Py + Pz.",
+      "algorithmSummary": "Zero-churn 3D rock trajectory specialization reusing 2023/day24/shared RationalLinearSystem (exact Rational incremental Gauss-Jordan RREF over cross-product differencing P x dv + dp x V = p_i x v_i - p_0 x v_0), axis-agnostic solveRockTrajectory (verifying exact integer t_i >= 0 across all 300 stones including shared-velocity dv = 0n axes), and buildRockTrace with zero shared edits (2.08 ms on 300 hailstones -> 1033770143421619); paired with exact BigInt XY/XZ SVG trajectory projections and a 7-row chronological collision table.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.08,
+      "attemptsCount": 1,
+      "learnings": [
+        "Linearizing (P - p_i) x (V - v_i) = 0 relative to anchor stone 0 yields 3 exact linear equations per stone whose incremental Rational RREF solves the 6x6 system and verifies all 300 hailstones in 2.08 ms with 23 lines of Part 2 solver code and zero shared edits.",
+        "Axis-agnostic collision verification (checking every axis with dv !== 0n and confirming dp === 0n when dv === 0n) guarantees exact t_i >= 0n validation even when hailstones share a velocity component with the rock."
+      ],
+      "startedAt": "2026-11-26T17:57:26Z",
+      "verifiedAt": "2026-11-26T18:17:22Z"
     }
   ]
 }
