@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { formatPartKey, type PuzzlePart } from '../shared/core';
 import { DashboardView } from './components/DashboardView';
 import { DayNavBar } from './components/DayNavBar';
@@ -11,9 +11,25 @@ import { loadStatusDocument } from './data/status/index';
 import rawTokenUsage from './data/tokenUsage.json';
 import type { TokenUsageReport } from './data/tokenUsage';
 import { VersionMonitor } from './data/versionMonitor';
+import {
+  type DashboardTab,
+  type MetricsScope,
+  normalizeRouteKey,
+  resolveMetricsScope,
+  resolveSelectedYear,
+  ViewStateStore,
+} from './data/viewState';
 import { getPartManifest } from './registry';
 
 const POLL_INTERVAL_MS = 30_000;
+
+function createBrowserViewStore(): ViewStateStore {
+  try {
+    return new ViewStateStore(window.sessionStorage, window.localStorage);
+  } catch {
+    return new ViewStateStore(null, null);
+  }
+}
 
 async function fetchRemoteBuildId(): Promise<string | null> {
   const response = await fetch(`./version.json?t=${Date.now()}`, { cache: 'no-store' });
@@ -44,26 +60,103 @@ function parseHash(hash: string): Route {
 
 export function App() {
   const statusDoc = useMemo(() => loadStatusDocument(), []);
+  const availableYears = useMemo(() => statusDoc.years.map((y) => y.year), [statusDoc]);
+  const viewStore = useMemo(() => createBrowserViewStore(), []);
+  const initialView = useMemo(() => viewStore.load(), [viewStore]);
   const qualityReport = rawQuality as unknown as QualityReport;
   const tokenUsage = rawTokenUsage as unknown as TokenUsageReport;
+
+  const [routeKey, setRouteKey] = useState<string>(() => normalizeRouteKey(window.location.hash));
   const [route, setRoute] = useState<Route>(() => parseHash(window.location.hash));
-  const [selectedYear, setSelectedYear] = useState<number>(statusDoc.years[0]?.year ?? 2025);
+  const [selectedYear, setSelectedYear] = useState<number>(() =>
+    resolveSelectedYear(initialView.selectedYear, availableYears),
+  );
+  const [dashboardTab, setDashboardTab] = useState<DashboardTab>(() => initialView.dashboardTab);
+  const [metricsScope, setMetricsScope] = useState<MetricsScope>(() =>
+    resolveMetricsScope(initialView.metricsScope, availableYears),
+  );
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [updatePending, setUpdatePending] = useState(false);
+  const routeKeyRef = useRef(routeKey);
+  routeKeyRef.current = routeKey;
+
+  const handleSelectYear = (year: number) => {
+    setSelectedYear(year);
+    viewStore.saveSelection({ selectedYear: year });
+  };
+
+  const handleSelectTab = (tab: DashboardTab) => {
+    setDashboardTab(tab);
+    viewStore.saveSelection({ dashboardTab: tab });
+  };
+
+  const handleSelectMetricsScope = (scope: MetricsScope) => {
+    setMetricsScope(scope);
+    viewStore.saveSelection({ metricsScope: scope });
+  };
 
   useEffect(() => {
-    const onHashChange = () => setRoute(parseHash(window.location.hash));
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    const onHashChange = () => {
+      viewStore.saveScroll(routeKeyRef.current, window.scrollY);
+      const nextKey = normalizeRouteKey(window.location.hash);
+      routeKeyRef.current = nextKey;
+      setRouteKey(nextKey);
+      setRoute(parseHash(window.location.hash));
+    };
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
-  }, []);
+  }, [viewStore]);
+
+  useEffect(() => {
+    let rafId = 0;
+    const persistScroll = () => {
+      rafId = 0;
+      viewStore.saveScroll(routeKeyRef.current, window.scrollY);
+    };
+    const onScroll = () => {
+      if (rafId !== 0) return;
+      rafId = window.requestAnimationFrame(persistScroll);
+    };
+    const flushNow = () => viewStore.saveScroll(routeKeyRef.current, window.scrollY);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('pagehide', flushNow);
+    window.addEventListener('beforeunload', flushNow);
+    return () => {
+      if (rafId !== 0) window.cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('pagehide', flushNow);
+      window.removeEventListener('beforeunload', flushNow);
+    };
+  }, [viewStore]);
+
+  useEffect(() => {
+    const savedY = viewStore.readScroll(routeKey);
+    let innerRaf = 0;
+    const outerRaf = window.requestAnimationFrame(() => {
+      innerRaf = window.requestAnimationFrame(() => {
+        window.scrollTo({ top: savedY, left: 0, behavior: 'instant' });
+      });
+    });
+    return () => {
+      window.cancelAnimationFrame(outerRaf);
+      if (innerRaf !== 0) window.cancelAnimationFrame(innerRaf);
+    };
+  }, [routeKey, viewStore]);
 
   useEffect(() => {
     if (!autoRefresh) return;
+    const reloadPreservingScroll = () => {
+      viewStore.saveScroll(routeKeyRef.current, window.scrollY);
+      window.location.reload();
+    };
     const monitor = new VersionMonitor({
       currentBuildId: __APP_BUILD_ID__,
       fetchBuildId: fetchRemoteBuildId,
       isReloadSafe,
-      onUpdate: () => window.location.reload(),
+      onUpdate: reloadPreservingScroll,
     });
     const poll = () => {
       if (document.visibilityState !== 'visible') return;
@@ -80,7 +173,7 @@ export function App() {
       document.removeEventListener('visibilitychange', poll);
       document.removeEventListener('focusout', onFocusOut);
     };
-  }, [autoRefresh]);
+  }, [autoRefresh, viewStore]);
 
   const activeParts = findActiveParts(statusDoc);
 
@@ -88,7 +181,7 @@ export function App() {
     <div className="shell">
       <header className="topbar">
         <a className="brand" href="#/">Advent of Code · Autonomous Solver</a>
-        <nav className="nav" aria-label="Primary navigation">
+        <nav className="nav" aria-label="Primary">
           <a href="#/">Dashboard</a>
           <a href="#/in-progress">In Progress ({activeParts.length})</a>
           <button type="button" onClick={() => setAutoRefresh((enabled) => !enabled)}>
@@ -100,7 +193,14 @@ export function App() {
       {updatePending && (
         <div className="card meta-row" role="status">
           <span>A newer deployment is live.</span>
-          <button type="button" className="primary" onClick={() => window.location.reload()}>
+          <button
+            type="button"
+            className="primary"
+            onClick={() => {
+              viewStore.saveScroll(routeKeyRef.current, window.scrollY);
+              window.location.reload();
+            }}
+          >
             Reload now
           </button>
         </div>
@@ -112,8 +212,12 @@ export function App() {
             statusDoc={statusDoc}
             qualityReport={qualityReport}
             tokenUsage={tokenUsage}
+            activeTab={dashboardTab}
+            onSelectTab={handleSelectTab}
             selectedYear={selectedYear}
-            onSelectYear={setSelectedYear}
+            onSelectYear={handleSelectYear}
+            metricsScope={metricsScope}
+            onSelectMetricsScope={handleSelectMetricsScope}
           />
         )}
 
