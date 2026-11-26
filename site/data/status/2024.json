@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:19:42Z",
+  "updatedAt": "2026-11-26T17:28:12Z",
   "parts": [
     {
       "year": 2024,
@@ -904,6 +904,26 @@
       ],
       "startedAt": "2026-11-26T17:05:08Z",
       "verifiedAt": "2026-11-26T17:19:42Z"
+    },
+    {
+      "year": 2024,
+      "day": 23,
+      "part": 2,
+      "title": "LAN Party",
+      "puzzleUrl": "https://adventofcode.com/2024/day/23#part2",
+      "status": "solved",
+      "summary": "Find the largest mutually interconnected clique of computers in the 3,380-link LAN graph and join their alphabetically sorted names with commas.",
+      "algorithmSummary": "Zero-churn maximum-clique specialization reusing 2024/day23/shared LanGraph, findMaximumClique (ordered-root pivoted Bron-Kerbosch with R normalization and canonical lex-smallest tie-breaking), buildMaximumCliqueTrace, and adaptive LanPartyVisualizer with zero shared edits (6.51 ms across 520 nodes / 3,380 edges -> 13-clique password); differentially verified against an independent O(2^V) bottom-up bitmask DP oracle across the 32-edge official example ('co,de,ka,ta'), single edge, tied bowtie, disjoint equal-size cliques, the 8-node unsorted-R pivot regression ('n0,n1,n2,n6'), and 15 seeded random graphs.",
+      "complexity": "O(V * d * 3^(d/3)) worst-case time, O(V + E + d^2) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.51,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building ordered-root pivoted Bron-Kerbosch (findMaximumClique) and buildMaximumCliqueTrace in 2024/day23/shared/ found the 13-node maximum clique in 6.51 ms with 19 lines of Part 2 solver code and zero shared-module edits.",
+        "An independent O(2^V) bottom-up bitmask DP oracle with explicit element-wise tuple comparison provides a fast (< 1 ms for V <= 16) ground-truth cross-check of both clique size and canonical tie-breaking."
+      ],
+      "startedAt": "2026-11-26T17:20:21Z",
+      "verifiedAt": "2026-11-26T17:28:12Z"
     }
   ]
 }
