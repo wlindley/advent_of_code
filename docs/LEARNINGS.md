@@ -38,3 +38,4 @@ Reusable algorithmic patterns, parsing idioms, performance tricks, and AoC pitfa
 
 ## Future Scaling Notes
 - **Multi-year parallelism (post-2025)**: After completing 2025, prior years can be tackled **2–3 years in parallel** (e.g., isolated worktrees/branches per year merged into `main`, with `site/data/status.json` updates merged cleanly and AoC submissions serialized around `.aoc-cache/rate-limit.json`). When reaching 2022, archive the existing `2022/` Rust solutions to `archive/2022-rust/` first.
+- **Finale star submission**: On the final day of each AoC year (Day 12 in 2025; Day 25 in 2015–2024), Part 2 is unlocked automatically after collecting all prior stars (`level=2`, `answer=0`) and returns a celebratory `"Congratulations! You've finished..."` epilogue instead of `"That's the right answer"`.

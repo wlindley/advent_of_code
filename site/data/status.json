@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T02:08:04Z",
+  "updatedAt": "2026-11-26T02:09:52Z",
   "years": [
     {
       "year": 2025,
@@ -469,6 +469,25 @@
           ],
           "startedAt": "2026-11-26T01:51:46Z",
           "verifiedAt": "2026-11-26T02:08:04Z"
+        },
+        {
+          "year": 2025,
+          "day": 12,
+          "part": 2,
+          "title": "Christmas Tree Farm",
+          "puzzleUrl": "https://adventofcode.com/2025/day/12#part2",
+          "status": "solved",
+          "summary": "Advent of Code 2025 finale star: once all 23 preceding stars across Days 1–12 are collected, finish decorating the North Pole to claim the 24th and final star.",
+          "algorithmSummary": "Validated all 23 prerequisite stars and submitted the AoC finale completion trigger (level=2, answer=0), paired with a 24-star SVG tree illumination visualizer.",
+          "complexity": "O(1) verification, O(S) animation",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 0.05,
+          "attemptsCount": 1,
+          "learnings": [
+            "AoC final-day Part 2 stars submit level=2 with answer=0 once all preceding stars are earned and respond with a celebratory epilogue ('Congratulations! You've finished...')."
+          ],
+          "startedAt": "2026-11-26T02:08:41Z",
+          "verifiedAt": "2026-11-26T02:09:52Z"
         }
       ]
     }
