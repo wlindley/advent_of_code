@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T07:36:12Z",
+  "updatedAt": "2026-11-26T07:44:38Z",
   "parts": [
     {
       "year": 2023,
@@ -422,6 +422,26 @@
       ],
       "startedAt": "2026-11-26T07:23:59Z",
       "verifiedAt": "2026-11-26T07:36:12Z"
+    },
+    {
+      "year": 2023,
+      "day": 11,
+      "part": 2,
+      "title": "Cosmic Expansion",
+      "puzzleUrl": "https://adventofcode.com/2023/day/11#part2",
+      "status": "solved",
+      "summary": "Expand every galaxy-free row and column on the sky-survey grid by a replacement factor of 1,000,000 and compute the exact sum of shortest Manhattan distances across all unordered pairs of distinct galaxies.",
+      "algorithmSummary": "Zero-churn PART2_EXPANSION_FACTOR = 1_000_000n specialization reusing 2023/day11/shared separable 1D axis edge-cut sweep and CosmicExpansionVisualizer with zero shared edits (2.01 ms on 140x140 in exact BigInt); differentially verified against an independent raw-text O(G^2) pairwise expanded Manhattan oracle, exact affine extrapolation S(1_000_000) = S(1) + 999_999 * (S(2) - S(1)), and an independent sorted-coordinate prefix-sum oracle.",
+      "complexity": "O(R * C) parse, O(R + C) sweep, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.01,
+      "attemptsCount": 1,
+      "learnings": [
+        "Separable 1D axis edge-cut sweeping in exact BigInt solves 1,000,000x cosmic expansion in 2.01 ms with zero grid materialization and delivered Part 2 in 6 lines of production domain code with zero edits to 2023/day11/shared/.",
+        "Each empty row or column has replacement width F = 1_000_000n (net delta +(F - 1n)), confirmed by official 10x (1030) and 100x (8410) checkpoints and the exact affine law S(F) = S(1) + (F - 1) * (S(2) - S(1))."
+      ],
+      "startedAt": "2026-11-26T07:36:49Z",
+      "verifiedAt": "2026-11-26T07:44:38Z"
     }
   ]
 }
