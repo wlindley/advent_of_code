@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:00:25Z",
+  "updatedAt": "2026-11-26T22:14:35Z",
   "parts": [
     {
       "year": 2020,
@@ -243,6 +243,26 @@
       ],
       "startedAt": "2026-11-26T21:53:43Z",
       "verifiedAt": "2026-11-26T22:00:25Z"
+    },
+    {
+      "year": 2020,
+      "day": 7,
+      "part": 1,
+      "title": "Handy Haversacks",
+      "puzzleUrl": "https://adventofcode.com/2020/day/7",
+      "status": "solved",
+      "summary": "Count how many distinct outer bag colors can transitively contain at least one shiny gold bag under the weighted luggage containment rules.",
+      "algorithmSummary": "Unified LayeredBagQueryPolicy Template Method in 2020/day07/shared/ (ANCESTOR_COLORS_POLICY reverse-edge BFS for Part 1, pre-built NESTED_BAG_COUNT_POLICY Kahn topological longest-path rank + BigInt DP via shared/core/dag.ts for zero-churn Part 2; 9.76 ms across 594 bag rules -> 348): strict singular/plural parser, bounded layered SVG with lifted cubic Bezier skip-layer arcs and overflow summary pills, differentially verified across 35 seeded PRNG DAGs against independent reachability and recursive BigInt oracles.",
+      "complexity": "O(V + E) time, O(V + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 9.76,
+      "attemptsCount": 1,
+      "learnings": [
+        "Validating that all referenced inner bag colors exist in BagRuleGraph before constructing shared/core DirectedGraph prevents silent sink synthesis.",
+        "Indexing all visible nodes across revealed layers in one nodeByColor map and lifting skip-layer Bezier curves proportionally to (toDepth - fromDepth - 1) keeps diamond DAG layouts crisp."
+      ],
+      "startedAt": "2026-11-26T22:00:25Z",
+      "verifiedAt": "2026-11-26T22:14:35Z"
     }
   ]
 }
