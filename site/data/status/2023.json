@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:56:11Z",
+  "updatedAt": "2026-11-26T06:05:02Z",
   "parts": [
     {
       "year": 2023,
@@ -262,6 +262,26 @@
       ],
       "startedAt": "2026-11-26T05:42:38Z",
       "verifiedAt": "2026-11-26T05:56:11Z"
+    },
+    {
+      "year": 2023,
+      "day": 7,
+      "part": 2,
+      "title": "Camel Cards",
+      "puzzleUrl": "https://adventofcode.com/2023/day/7#part2",
+      "status": "solved",
+      "summary": "Re-rank the Camel Cards hands treating J as a wildcard Joker that maximizes hand type while acting as the weakest literal card (J < 2 < ... < A) in positional tie-breaks, then sum rank * bid.",
+      "algorithmSummary": "Zero-churn greedy max-bucket CamelHandRule (jokerHandRule) plugging into 2023/day07/shared/ and CamelCardsVisualizer with zero shared edits: adds all j jokers to the largest non-joker frequency bucket (mapping all-J JJJJJ to FiveOfAKind with key 0x600000) and packs 24-bit SMI strength keys in O(N log N) time (3.51 ms on 1,000 hands); differentially verified against an independent exhaustive wildcard substitution oracle across all 19 (j, partition) patterns, 50 uniform deals, and 20 joker-heavy deals.",
+      "complexity": "O(N log N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.51,
+      "attemptsCount": 1,
+      "learnings": [
+        "Adding all j jokers to the highest non-joker multiplicity bucket (with JJJJJ -> FiveOfAKind) provably maximizes Camel Cards hand tier across all 19 (j, partition) states because the 7 hand types follow exact lexicographic partition order.",
+        "Zero-churn parameterization of CamelHandRule and CardSpotlight wildLabel highlighting delivered Part 2 in 73 lines of production domain code and a 7-line visualizer wrapper with zero edits to 2023/day07/shared/."
+      ],
+      "startedAt": "2026-11-26T05:56:36Z",
+      "verifiedAt": "2026-11-26T06:05:02Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:49:50Z",
+  "updatedAt": "2026-11-26T06:05:38Z",
   "parts": [
     {
       "year": 2024,
@@ -243,6 +243,26 @@
       ],
       "startedAt": "2026-11-26T05:37:45Z",
       "verifiedAt": "2026-11-26T05:49:50Z"
+    },
+    {
+      "year": 2024,
+      "day": 7,
+      "part": 1,
+      "title": "Bridge Repair",
+      "puzzleUrl": "https://adventofcode.com/2024/day/7",
+      "status": "solved",
+      "summary": "Determine which calibration equations can produce their target integer by inserting '+' or '*' between adjacent operands evaluated strictly left-to-right (no operator precedence), and return the sum of targets for all solvable equations.",
+      "algorithmSummary": "Right-to-left inverse pruned DFS parameterized by a polymorphic CalibrationOperator interface in 2024/day07/shared/ using exact BigInt arithmetic end-to-end (3.52 ms across 850 equations), paired with a pure-TS treeLayout engine and reusable BridgeRepairVisualizer in 2024/day07/shared/viz/ for zero-churn Part 2 concatenation reuse; differentially verified against an independent left-to-right forwardPrunedSolve oracle across 100 seeded equations, operand-1 traps, and >2^60 targets.",
+      "complexity": "O(M * 2^(k-1)) worst-case, ~O(M * k) typical time, O(k) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.52,
+      "attemptsCount": 1,
+      "learnings": [
+        "Right-to-left inverse branching (checking divisibility for '*' before subtracting for '+') prunes >90% of branches immediately while keeping operand-1 transitions exact by pruning only prev < 1n rather than prev < target.",
+        "Using BigInt end-to-end prevents silent IEEE-754 overflow across 15-digit targets and cumulative sums, and parameterizing CalibrationOperator.tryInvert/explainPrune prepares Part 2 concatenation (||) with zero shared-module churn."
+      ],
+      "startedAt": "2026-11-26T05:50:19Z",
+      "verifiedAt": "2026-11-26T06:05:38Z"
     }
   ]
 }
