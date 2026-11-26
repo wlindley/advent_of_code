@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:09:05Z",
+  "updatedAt": "2026-11-26T21:21:44Z",
   "parts": [
     {
       "year": 2019,
@@ -123,6 +123,26 @@
       ],
       "startedAt": "2026-11-26T21:02:01Z",
       "verifiedAt": "2026-11-26T21:09:05Z"
+    },
+    {
+      "year": 2019,
+      "day": 4,
+      "part": 1,
+      "title": "Secure Container",
+      "puzzleUrl": "https://adventofcode.com/2019/day/4",
+      "status": "solved",
+      "summary": "Count how many 6-digit integers in the inclusive input range have non-decreasing digits left-to-right and at least one adjacent pair of equal digits.",
+      "algorithmSummary": "Monotone-jumping odometer enumeration (ceilNonDecreasing / nextNonDecreasing visiting <= 3,003 candidates across [100000, 999999]) in 2019/day04/shared/ with AT_LEAST_PAIR_POLICY and pre-built EXACT_PAIR_POLICY for zero-churn Part 2 (2.46 ms -> 2,150): top-level SecureContainerSolver, zero-derived-state PasswordAnalysis/PasswordTraceFrame, 6-wheel SVG OdometerStrip with run-length brackets, differentially verified across 30 seeded PRNG ranges against an independent decimal brute-force oracle for both policies.",
+      "complexity": "O(D * M) time (D = 6, M <= 3,003), O(D) extra space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.46,
+      "attemptsCount": 1,
+      "learnings": [
+        "Jumping directly across non-decreasing 6-digit numbers via ceilNonDecreasing(v + 1) visits at most C(14, 6) = 3,003 candidates across the entire 6-digit universe instead of scanning ~500,000 numbers.",
+        "On the first left-to-right digit drop in ceilNonDecreasing, clamping all remaining trailing digits to floorDigit (e.g., 123199 -> 123333) is essential to find the true ceiling non-decreasing number."
+      ],
+      "startedAt": "2026-11-26T21:09:56Z",
+      "verifiedAt": "2026-11-26T21:21:44Z"
     }
   ]
 }
