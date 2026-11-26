@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T20:23:09Z",
+  "updatedAt": "2026-11-26T20:35:30Z",
   "parts": [
     {
       "year": 2021,
@@ -83,6 +83,26 @@
       ],
       "startedAt": "2026-11-26T20:16:25Z",
       "verifiedAt": "2026-11-26T20:23:09Z"
+    },
+    {
+      "year": 2021,
+      "day": 3,
+      "part": 1,
+      "title": "Binary Diagnostic",
+      "puzzleUrl": "https://adventofcode.com/2021/day/3",
+      "status": "solved",
+      "summary": "Compute the submarine's power consumption by multiplying the most-common-bit gamma rate and least-common-bit epsilon rate across all binary diagnostic columns.",
+      "algorithmSummary": "Arbitrary-width BigInt column bit-tally in 2021/day03/shared/ (1.40 ms across 1,000 12-bit readings -> 3,309,596): immutable DiagnosticReport with subset counting/filtering pre-built for Part 2, polymorphic BitCriterion strategies, PowerRates with dynamic getters, 100%-stacked SVG column chart with branchless 64-column sliding window, differentially verified across 50 seeded fixtures up to 80 bits against a BigInt shift-and-mask oracle.",
+      "complexity": "O(N * W) time, O(N * W) parsed storage",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.40,
+      "attemptsCount": 1,
+      "learnings": [
+        "Putting countBitsAtColumn(col, subset?) and filterRowsByBit(col, bit, subset) directly on DiagnosticReport prepares Part 2's O2/CO2 iterative bit filtering with zero edits to report.ts.",
+        "Branchless sliding-window clamping (Math.max(0, Math.min(maxStart, active - half))) handles both narrow and > 64-bit reports cleanly with 100% V8 branch coverage."
+      ],
+      "startedAt": "2026-11-26T20:23:39Z",
+      "verifiedAt": "2026-11-26T20:35:30Z"
     }
   ]
 }
