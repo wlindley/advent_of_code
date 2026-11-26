@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T18:17:22Z",
+  "updatedAt": "2026-11-26T18:45:17Z",
   "parts": [
     {
       "year": 2023,
@@ -963,6 +963,45 @@
       ],
       "startedAt": "2026-11-26T17:57:26Z",
       "verifiedAt": "2026-11-26T18:17:22Z"
+    },
+    {
+      "year": 2023,
+      "day": 25,
+      "part": 1,
+      "title": "Snowverload",
+      "puzzleUrl": "https://adventofcode.com/2023/day/25",
+      "status": "solved",
+      "summary": "Find the 3 bridge wires in a ~1,500-node undirected wiring diagram whose disconnection partitions the graph into two connected components and return the product of their sizes.",
+      "algorithmSummary": "Deterministic forward-star (head/to/next Int32Array) fixed-source 4-path Edmonds-Karp max-flow probing targets in descending BFS-distance order in 2023/day25/shared/ (5.92 ms on ~1,500 vertices / ~3,300 edges -> 582,626): upfront minDegree >= 3 check, O(1) he ^ 1 reverse half-edges, queue-exhausting 3-path flow decomposition yielding 3 simple pairwise edge-disjoint s-t paths, deterministic bipartite chasm HiDPI SnowverloadCanvas visualizer, differentially verified against an independent O(V^3) Stoer-Wagner global min-cut oracle across the official 15-node example (54), asymmetric 3-cuts, farthest-vertex-same-side fallback, reverse-edge flow cancellation, and 20 seeded random two-cluster graphs.",
+      "complexity": "O(V + E) typical (O(V * (V + E)) worst-case deterministic) time, O(V + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 5.92,
+      "attemptsCount": 1,
+      "learnings": [
+        "Storing undirected graphs in a flat Int32Array forward-star (head/to/next) keeps paired half-edges at 2e and 2e+1 so he ^ 1 gives O(1) reverse-edge cancellation without a separate rev[] array, solving a 1,500-node global 3-cut deterministically in 5.92 ms.",
+        "Checking minDegree >= 3 upfront closes stray low-degree edge cases, and letting the tiny 3-path flow-decomposition BFS drain its queue avoids an uncovered V8 branch while still yielding 3 simple pairwise edge-disjoint s-t paths."
+      ],
+      "startedAt": "2026-11-26T18:17:33Z",
+      "verifiedAt": "2026-11-26T18:44:46Z"
+    },
+    {
+      "year": 2023,
+      "day": 25,
+      "part": 2,
+      "title": "Snowverload",
+      "puzzleUrl": "https://adventofcode.com/2023/day/25#part2",
+      "status": "solved",
+      "summary": "Advent of Code 2023 finale star: push the big red button once all 49 stars across Days 1–25 are collected to restore global snow production and claim the 50th star.",
+      "algorithmSummary": "Delegates directly to shared/core createFinaleSolver(50) (6-line domain entrypoint) to verify all 49 prerequisite stars and emit bounded 50-star canopy illumination frames; submitted live and confirmed 50/50 stars on adventofcode.com.",
+      "complexity": "O(1) verification, O(S) illumination trace",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.05,
+      "attemptsCount": 1,
+      "learnings": [
+        "Completed all 50 stars of Advent of Code 2023 with 50/50 consecutive first-try submissions (zero wrong guesses), finishing the entire 2024–2022 trio at 150/150 first-try stars."
+      ],
+      "startedAt": "2026-11-26T18:44:47Z",
+      "verifiedAt": "2026-11-26T18:45:17Z"
     }
   ]
 }
