@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:38:31Z",
+  "updatedAt": "2026-11-26T06:53:21Z",
   "parts": [
     {
       "year": 2024,
@@ -323,6 +323,26 @@
       ],
       "startedAt": "2026-11-26T06:29:49Z",
       "verifiedAt": "2026-11-26T06:38:31Z"
+    },
+    {
+      "year": 2024,
+      "day": 9,
+      "part": 1,
+      "title": "Disk Fragmenter",
+      "puzzleUrl": "https://adventofcode.com/2024/day/9",
+      "status": "solved",
+      "summary": "Expand a dense alternating file/free-space digit disk map into block runs, compact files one block at a time from the rightmost file into the leftmost free space until no gaps remain between file blocks, and compute the exact filesystem checksum sum(position * fileId).",
+      "algorithmSummary": "Two-pointer extent-based compaction parameterized by CompactionStrategy in 2024/day09/shared/ using BigInt arithmetic-series range checksums and incremental deltaChecksum accounting in O(N) time (6.9 ms across 19,999 digits / ~95,000 blocks), paired with an encapsulated zero-copy DiskBlockReplay and dual-scale DiskStripSvg / DiskPlatterCanvas DiskCompactionVisualizer for zero-churn Part 2 whole-file reuse; differentially verified against a flat block-by-block Int32Array swap oracle across 80 seeded random disk maps.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.9,
+      "attemptsCount": 1,
+      "learnings": [
+        "Operating directly on alternating file/gap extents with exact BigInt arithmetic-series checksums solves 95,000-block disk maps in 6.9 ms while keeping totalBlocks and initialChecksum dynamically derived from raw digits.",
+        "Separating CompactionStrategy, DiskBlockReplay, and the dual-scale DiskStripSvg / DiskPlatterCanvas visualizer in 2024/day09/shared/ prepares Part 2's whole-file compaction with zero shared-module churn."
+      ],
+      "startedAt": "2026-11-26T06:39:03Z",
+      "verifiedAt": "2026-11-26T06:53:21Z"
     }
   ]
 }

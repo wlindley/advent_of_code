@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:45:39Z",
+  "updatedAt": "2026-11-26T06:54:31Z",
   "parts": [
     {
       "year": 2023,
@@ -342,6 +342,26 @@
       ],
       "startedAt": "2026-11-26T06:32:55Z",
       "verifiedAt": "2026-11-26T06:45:39Z"
+    },
+    {
+      "year": 2023,
+      "day": 9,
+      "part": 2,
+      "title": "Mirage Maintenance",
+      "puzzleUrl": "https://adventofcode.com/2023/day/9#part2",
+      "status": "solved",
+      "summary": "Using the same finite-difference pyramids from the OASIS report, extrapolate one step backward to the left edge of each history (newLeft = first - belowLeft) from the all-zero baseline and sum all reconstructed preceding values.",
+      "algorithmSummary": "Zero-churn BACKWARD_EXTRAPOLATION_STRATEGY plugging into 2023/day09/shared DifferencePyramid, OasisReport, traceOasisReport, and DifferencePyramidViz with zero shared edits in O(H * L^2) time (2.37 ms on 200x21 signed histories); differentially verified against both an O(L) exact BigInt backward Lagrange/binomial convolution oracle and a reversed-sequence forward difference reduction oracle across 100 seeded polynomials up to degree 18 and ±10^18.",
+      "complexity": "O(H * L^2) time, O(L^2) per-history space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.37,
+      "attemptsCount": 1,
+      "learnings": [
+        "Injecting a 10-line BACKWARD_EXTRAPOLATION_STRATEGY (anchor = layer[0], combine = anchor - below) into 2023/day09/shared delivered Part 2 with zero edits to shared/ and zero imports from part1/.",
+        "Cross-checking against both closed-form backward binomial convolution and reversed-sequence forward reduction catches sign/order bugs like below - anchor immediately."
+      ],
+      "startedAt": "2026-11-26T06:46:21Z",
+      "verifiedAt": "2026-11-26T06:54:31Z"
     }
   ]
 }
