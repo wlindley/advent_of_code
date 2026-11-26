@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:01:44Z",
+  "updatedAt": "2026-11-26T04:10:03Z",
   "parts": [
     {
       "year": 2023,
@@ -42,6 +42,26 @@
       ],
       "startedAt": "2026-11-26T03:53:23Z",
       "verifiedAt": "2026-11-26T04:01:44Z"
+    },
+    {
+      "year": 2023,
+      "day": 2,
+      "part": 1,
+      "title": "Cube Conundrum",
+      "puzzleUrl": "https://adventofcode.com/2023/day/2",
+      "status": "solved",
+      "summary": "Determine which cube-drawing games are possible with a bag containing 12 red, 13 green, and 14 blue cubes (drawn with replacement) and return the sum of the possible game IDs.",
+      "algorithmSummary": "Per-game peak envelope filter over immutable CubeBag and GameRecord value objects in 2023/day02/shared/: compute each game's component-wise minimumBag dynamically and check fitsWithin(12, 13, 14), differentially verified against a standalone early-exit reveal scanner over 500 synthetic games.",
+      "complexity": "O(T) time, O(G + R) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.21,
+      "attemptsCount": 1,
+      "learnings": [
+        "Computing GameRecord.minimumBag as a component-wise CubeBag join handles Part 1 feasibility (fitsWithin) and Part 2 bag power (minimumBag.power) with zero parser or model churn.",
+        "Delegating non-negative safe-integer and id>=1 validation exclusively to CubeBag and GameRecord avoids unreachable duplicate branches in the parser."
+      ],
+      "startedAt": "2026-11-26T04:02:14Z",
+      "verifiedAt": "2026-11-26T04:10:03Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:00:16Z",
+  "updatedAt": "2026-11-26T04:08:48Z",
   "parts": [
     {
       "year": 2022,
@@ -42,6 +42,26 @@
       ],
       "startedAt": "2026-11-26T03:53:30Z",
       "verifiedAt": "2026-11-26T04:00:16Z"
+    },
+    {
+      "year": 2022,
+      "day": 2,
+      "part": 1,
+      "title": "Rock Paper Scissors",
+      "puzzleUrl": "https://adventofcode.com/2022/day/2",
+      "status": "solved",
+      "summary": "Score a Rock Paper Scissors strategy guide where A/B/C denote the opponent's Rock/Paper/Scissors and X/Y/Z denote your direct Rock/Paper/Scissors throw, summing shape points (1/2/3) plus outcome points (0/3/6) across all rounds.",
+      "algorithmSummary": "Cyclic Z_3 modular scoring via shared/core euclideanMod(player - opponent + 1, 3) with immutable StrategyRound, ResolvedRound, and 9-cell MatchupSummary value objects in 2022/day02/shared/; exhaustively tested across all 9 pairs and differentially verified against an explicit 3x3 rule matrix over 2,500 rounds.",
+      "complexity": "O(N) time, O(1) working space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.12,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using shared/core euclideanMod(player - opponent + 1, 3) avoids JavaScript negative modulo bugs on Scissors vs Rock and mirrors Part 2's inverse formula.",
+        "Storing raw A/B/C and X/Y/Z tokens in StrategyRound plus a RoundResolver interface lets Part 2 reinterpret X/Y/Z as desired outcomes with zero parser churn."
+      ],
+      "startedAt": "2026-11-26T04:00:27Z",
+      "verifiedAt": "2026-11-26T04:08:48Z"
     }
   ]
 }
