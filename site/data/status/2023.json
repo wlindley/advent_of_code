@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T16:17:32Z",
+  "updatedAt": "2026-11-26T16:34:18Z",
   "parts": [
     {
       "year": 2023,
@@ -803,6 +803,26 @@
       "startedAt": "2026-11-26T11:34:34Z",
       "verifiedAt": "2026-11-26T16:17:32Z",
       "humanWaitSeconds": 15923
+    },
+    {
+      "year": 2023,
+      "day": 21,
+      "part": 1,
+      "title": "Step Counter",
+      "puzzleUrl": "https://adventofcode.com/2023/day/21",
+      "status": "solved",
+      "summary": "Count how many distinct walkable garden plots on a 131x131 grid with rocks can be reached in exactly 64 orthogonal steps from the starting plot S.",
+      "algorithmSummary": "Bipartite parity flat-Int32Array BFS (FiniteDistanceMap + GardenMap with Uint8Array rocks) in 2023/day21/shared/ (3.99 ms on 131x131): explicitly handles isolated-S grids (steps > 0 && no walkable neighbor -> 0), pre-builds tight-radius infinite-tiled BFS (countInfiniteReachable with proven in-bounds tileRadius invariant and zero unreachable branches), exact BigInt QuadraticProgression (Newton forward differences with dynamic firstDifference/secondDifference), O(HW) distanceHistogram trace playback, and HiDPI GardenCanvas for zero-churn Part 2 reuse; differentially verified against an independent Set<string> step-by-step brute-force oracle across official 11x11 finite (6 -> 16) and infinite (6/10/50/100 -> 16/50/1594/6536) examples, isolated S, corner-start wrapping, and enclosed pockets.",
+      "complexity": "O(W * H) time, O(W * H) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.99,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because tileRadius(steps, start, span) mathematically guarantees every neighbor expanded at dist < steps stays strictly inside the tiled buffer, omitting redundant bounds checks in countInfiniteReachable keeps V8 branch coverage at 100%.",
+        "Pre-building tight-radius countInfiniteReachable, exact BigInt QuadraticProgression, and structural periodicity predicates in 2023/day21/shared/ prepares Part 2's 26,501,365-step extrapolation with zero shared-module edits."
+      ],
+      "startedAt": "2026-11-26T16:18:57Z",
+      "verifiedAt": "2026-11-26T16:34:18Z"
     }
   ]
 }
