@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 
 export interface PlaybackState {
   readonly step: number;
@@ -9,39 +9,65 @@ export interface PlaybackState {
   readonly setSpeedMs: (nextSpeedMs: number) => void;
 }
 
-/** Shared step-playback timer hook for interactive puzzle visualizers. */
-export function usePlayback(
-  totalSteps: number,
+function clampStep(step: number, maxStep: number): number {
+  return Math.max(0, Math.min(step, maxStep));
+}
+
+function usePlaybackReset(
   resetKey: unknown,
-  defaultSpeedMs = 180,
-): PlaybackState {
-  const [step, setStep] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [speedMs, setSpeedMs] = useState(defaultSpeedMs);
-
+  setStepState: Dispatch<SetStateAction<number>>,
+  setIsPlaying: Dispatch<SetStateAction<boolean>>,
+): void {
   useEffect(() => {
-    setStep(0);
+    setStepState(0);
     setIsPlaying(false);
-  }, [resetKey]);
+  }, [resetKey, setStepState, setIsPlaying]);
+}
 
+function usePlaybackTimer(
+  isPlaying: boolean,
+  step: number,
+  maxStep: number,
+  speedMs: number,
+  setStepState: Dispatch<SetStateAction<number>>,
+  setIsPlaying: Dispatch<SetStateAction<boolean>>,
+): void {
   useEffect(() => {
-    if (!isPlaying || step >= totalSteps - 1) return;
+    if (!isPlaying || step >= maxStep) return;
     const timer = window.setTimeout(() => {
-      setStep((prev) => {
-        const next = Math.min(totalSteps - 1, prev + 1);
-        if (next >= totalSteps - 1) setIsPlaying(false);
-        return next;
-      });
+      const next = Math.min(maxStep, step + 1);
+      setStepState(next);
+      if (next >= maxStep) setIsPlaying(false);
     }, speedMs);
     return () => window.clearTimeout(timer);
-  }, [isPlaying, step, totalSteps, speedMs]);
+  }, [isPlaying, step, maxStep, speedMs, setStepState, setIsPlaying]);
+}
 
-  return {
-    step: Math.min(step, Math.max(0, totalSteps - 1)),
-    isPlaying,
-    speedMs,
-    setStep,
-    togglePlay: () => setIsPlaying((playing) => !playing),
-    setSpeedMs,
-  };
+/** Shared step-playback timer hook for interactive puzzle visualizers. */
+export function usePlayback(totalSteps: number, resetKey: unknown, defaultSpeedMs = 180): PlaybackState {
+  const [step, setStepState] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [speedMs, setSpeedMs] = useState(defaultSpeedMs);
+  const maxStep = Math.max(0, totalSteps - 1);
+  const clampedStep = clampStep(step, maxStep);
+
+  usePlaybackReset(resetKey, setStepState, setIsPlaying);
+  usePlaybackTimer(isPlaying, clampedStep, maxStep, speedMs, setStepState, setIsPlaying);
+
+  const setStep = useCallback((nextStep: number) => {
+    setIsPlaying(false);
+    setStepState(clampStep(nextStep, maxStep));
+  }, [maxStep]);
+
+  const togglePlay = useCallback(() => {
+    if (isPlaying) {
+      setIsPlaying(false);
+      return;
+    }
+    if (maxStep === 0) return;
+    if (clampedStep >= maxStep) setStepState(0);
+    setIsPlaying(true);
+  }, [isPlaying, clampedStep, maxStep]);
+
+  return { step: clampedStep, isPlaying, speedMs, setStep, togglePlay, setSpeedMs };
 }
