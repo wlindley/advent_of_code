@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:56:50Z",
+  "updatedAt": "2026-11-26T22:10:35Z",
   "parts": [
     {
       "year": 2019,
@@ -203,6 +203,26 @@
       ],
       "startedAt": "2026-11-26T21:47:01Z",
       "verifiedAt": "2026-11-26T21:56:50Z"
+    },
+    {
+      "year": 2019,
+      "day": 6,
+      "part": 1,
+      "title": "Universal Orbit Map",
+      "puzzleUrl": "https://adventofcode.com/2019/day/6",
+      "status": "solved",
+      "summary": "Compute the total number of direct and indirect orbits across a universal orbit tree rooted at COM.",
+      "algorithmSummary": "Iterative BFS flat Int32Array CSR orbit tree with Zero-Extra-Branch tree validation and polymorphic OrbitQueryPolicy (TOTAL_ORBITS_POLICY for Part 1, pre-built SANTA_TRANSFER_POLICY via two-pointer LCA for zero-churn Part 2) in 2019/day06/shared/ (1.93 ms across 1,800 objects -> 315,757): O(1) maxDepth from BFS ordering, adaptive layered tree SVG (<= 64 nodes) + 48-bin depth-shell histogram & elevation strip, differentially verified across 30 seeded PRNG rooted trees against independent parent-walk and undirected BFS shortest-path oracles.",
+      "complexity": "O(N) build & solve time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.93,
+      "attemptsCount": 1,
+      "learnings": [
+        "Given edges >= 1, inDeg(v) <= 1, and inDeg(COM) === 0, iterative BFS from COM never revisits a node and labels.length === parentByChild.size + 1 simultaneously proves connectedness and acyclicity with zero extra visited-set branches.",
+        "Assigning dense BFS level-order IDs guarantees non-decreasing depths (O(1) maxDepth = depths[N - 1]) and parentId < childId for stack-safe reverse-BFS leaf counting."
+      ],
+      "startedAt": "2026-11-26T21:56:50Z",
+      "verifiedAt": "2026-11-26T22:10:35Z"
     }
   ]
 }
