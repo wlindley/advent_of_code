@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:18:43Z",
+  "updatedAt": "2026-11-26T22:38:11Z",
   "parts": [
     {
       "year": 2019,
@@ -243,6 +243,26 @@
       ],
       "startedAt": "2026-11-26T22:10:35Z",
       "verifiedAt": "2026-11-26T22:18:43Z"
+    },
+    {
+      "year": 2019,
+      "day": 7,
+      "part": 1,
+      "title": "Amplification Circuit",
+      "puzzleUrl": "https://adventofcode.com/2019/day/7",
+      "status": "solved",
+      "summary": "Evaluate all 120 permutations of phase settings 0..4 across five isolated Intcode amplifiers wired in series and return the highest thruster signal emitted by amplifier E.",
+      "algorithmSummary": "Zero-edit reuse of 2019/shared/intcode/ via external output cursor in AmplifierStage and polymorphic AmplifierCircuitMode (SERIES_CIRCUIT_MODE for 0..4, pre-built FEEDBACK_LOOP_MODE for 5..9 zero-churn Part 2) in 2019/day07/shared/ (6.91 ms across 120 permutations -> 21,760): iterative Narayana lexicographic permutations, exact BigInt signal formatting and normalizeSignalRatio, 5-stage SVG chain & top-5 leaderboard visualizer, differentially verified against an independent flat-loop Intcode + recursive permutation oracle across all 5 official Part 1/2 examples and synthetic branching/negative/BigInt programs.",
+      "complexity": "O(k! * k * S) time (k = 5), O(k * N + F) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.91,
+      "attemptsCount": 1,
+      "learnings": [
+        "Encapsulating an external emittedCursor inside AmplifierStage slices newly emitted outputs cleanly off BufferedIoChannel without any edits to 2019/shared/intcode/.",
+        "Checking nextStage.status !== 'halted' before forwarding feedback outputs avoids polluting already-halted A on the final round while keeping every feedback branch 100% V8-covered."
+      ],
+      "startedAt": "2026-11-26T22:18:43Z",
+      "verifiedAt": "2026-11-26T22:38:11Z"
     }
   ]
 }

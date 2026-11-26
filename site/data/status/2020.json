@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:14:35Z",
+  "updatedAt": "2026-11-26T22:22:39Z",
   "parts": [
     {
       "year": 2020,
@@ -263,6 +263,26 @@
       ],
       "startedAt": "2026-11-26T22:00:25Z",
       "verifiedAt": "2026-11-26T22:14:35Z"
+    },
+    {
+      "year": 2020,
+      "day": 7,
+      "part": 2,
+      "title": "Handy Haversacks",
+      "puzzleUrl": "https://adventofcode.com/2020/day/7#part2",
+      "status": "solved",
+      "summary": "Calculate the total number of individual bags required inside a single shiny gold bag under the weighted luggage containment rules.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day07/shared/ binding NESTED_BAG_COUNT_POLICY into BagRuleSolver and HandyHaversacksVisualizer (9.31 ms across 594 bag rules -> 18,885): zero edits to shared/ or part1/, computes Kahn topological order and longest-path layer depth over shared/core DirectedGraph with bottom-up exact BigInt DP, differentially verified across 35 seeded PRNG DAGs (including deep multiplicative chains > Number.MAX_SAFE_INTEGER) against an independent memoized DFS BigInt oracle.",
+      "complexity": "O(V + E) time, O(V + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 9.31,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building NESTED_BAG_COUNT_POLICY and Kahn topological DP in day07/shared/ reduced Part 2's domain solver to 3 lines with zero edits to shared/ or part1/.",
+        "Testing deep multiplicative chains (> Number.MAX_SAFE_INTEGER) and cyclic reachable subgraphs proves exact BigInt precision and cycle rejection at the Part 2 boundary."
+      ],
+      "startedAt": "2026-11-26T22:14:35Z",
+      "verifiedAt": "2026-11-26T22:22:39Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:20:21Z",
+  "updatedAt": "2026-11-26T22:36:50Z",
   "parts": [
     {
       "year": 2021,
@@ -283,6 +283,26 @@
       ],
       "startedAt": "2026-11-26T22:12:29Z",
       "verifiedAt": "2026-11-26T22:20:21Z"
+    },
+    {
+      "year": 2021,
+      "day": 8,
+      "part": 1,
+      "title": "Seven Segment Search",
+      "puzzleUrl": "https://adventofcode.com/2021/day/8",
+      "status": "solved",
+      "summary": "Count how many times digits 1, 4, 7, or 8 (having unique active segment counts 2, 4, 3, or 7) appear in the four-digit seven-segment output values.",
+      "algorithmSummary": "Closed-form wire-frequency classification (e:4, b:6, f:9, c/a:8 split by mask1, d/g:7 split by mask4) with bijection validation and 10-pattern canonical round-trip verification in 2021/day08/shared/ (UNIQUE_DIGITS_POLICY for Part 1, pre-built DECODED_OUTPUT_SUM_POLICY for zero-churn Part 2; 4.00 ms across 200 displays -> 504): zero-derived-state SignalPattern/DisplayEntry/DecodedDisplay/DisplayTraceFrame, beveled 4-digit LED SVG & wire-frequency deduction visualizer, differentially verified across 40 seeded PRNG displays against an independent 7! = 5,040 Heap's-algorithm permutation oracle plus a frequency-sum-preserving forged wiring rejection test.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.00,
+      "attemptsCount": 1,
+      "learnings": [
+        "Direct frequency-sum fingerprinting is unsound on forged wirings (swapping a<->c in digits 1 and 5 preserves all 7 wire frequencies and all 10 canonical frequency sums yet admits zero bijections), whereas closed-form wire deduction + WireMapping bijection + 10-pattern round-trip verification is provably 100% equivalent to 7! search.",
+        "Because DisplayEntry enforces 10 distinct signal masks and WireMapping enforces a 7-bit bijection, verifying all 10 remapped signal masks are canonical digits is mathematically sufficient for bijectivity onto 0..9 without an unreachable duplicate-digit V8 branch."
+      ],
+      "startedAt": "2026-11-26T22:20:21Z",
+      "verifiedAt": "2026-11-26T22:36:50Z"
     }
   ]
 }
