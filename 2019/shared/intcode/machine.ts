@@ -1,112 +1,57 @@
 import { validateMaxSteps } from '../../../shared/core';
+import { BufferedIoChannel, type IoChannel } from './io';
 import { IntcodeMemory, type MemoryAccess } from './memory';
-import type { ExecutionContext, OpcodeHandler, ParamOffset } from './opcodes';
+import {
+  CORE_MODES,
+  createModeRegistry,
+  decodeOpcode,
+  type ParameterModeHandler,
+} from './modes';
+import type { OpcodeHandler } from './opcodes';
 import type { IntcodeProgram } from './program';
+import { StepRecorderContext, type DetailedIntcodeStep } from './stepContext';
+
+export type { DecodedMemoryRead, MemoryRead } from './modes';
+export type { DetailedIntcodeStep, IntcodeStep, MemoryWrite } from './stepContext';
 
 /** Execution lifecycle status of an Intcode VM instance. */
-export type MachineStatus = 'running' | 'halted';
+export type MachineStatus = 'running' | 'waiting-input' | 'halted';
 
-/** Recorded positional memory read performed while executing an opcode. */
-export interface MemoryRead {
-  readonly address: bigint;
-  readonly value: bigint;
+/** Optional configuration overrides for IntcodeMachine mode registry and I/O channel. */
+export interface IntcodeMachineOptions {
+  readonly modes?: ReadonlyMap<bigint, ParameterModeHandler>;
+  readonly io?: IoChannel;
 }
 
-/** Recorded positional memory write with before/after cell values. */
-export interface MemoryWrite {
-  readonly address: bigint;
-  readonly previousValue: bigint;
-  readonly value: bigint;
-}
+const DEFAULT_MODE_REGISTRY = createModeRegistry(CORE_MODES);
 
-/** Single executed instruction trace record emitted by IntcodeMachine.step(). */
-export interface IntcodeStep {
-  readonly stepIndex: number;
-  readonly ipBefore: bigint;
-  readonly ipAfter: bigint;
-  readonly opcode: bigint;
-  readonly mnemonic: string;
-  readonly reads: readonly MemoryRead[];
-  readonly write: MemoryWrite | null;
-  readonly halted: boolean;
-}
-
-class StepRecorderContext implements ExecutionContext {
-  private readonly memory: MemoryAccess;
-  private readonly ipBefore: bigint;
-  private nextIp: bigint;
-  private haltedFlag = false;
-  private readonly recordedReads: MemoryRead[] = [];
-  private recordedWrite: MemoryWrite | null = null;
-
-  constructor(memory: MemoryAccess, ipBefore: bigint) {
-    this.memory = memory;
-    this.ipBefore = ipBefore;
-    this.nextIp = ipBefore;
-  }
-
-  get ipAfter(): bigint {
-    return this.nextIp;
-  }
-
-  get isHalted(): boolean {
-    return this.haltedFlag;
-  }
-
-  readParam(offset: ParamOffset): bigint {
-    const pointer = this.memory.read(this.ipBefore + BigInt(offset));
-    const value = this.memory.read(pointer);
-    this.recordedReads.push(Object.freeze({ address: pointer, value }));
-    return value;
-  }
-
-  writeParam(offset: ParamOffset, value: bigint): void {
-    const pointer = this.memory.read(this.ipBefore + BigInt(offset));
-    const previousValue = this.memory.read(pointer);
-    this.memory.write(pointer, value);
-    this.recordedWrite = Object.freeze({ address: pointer, previousValue, value });
-  }
-
-  advance(delta: bigint): void {
-    this.nextIp = this.ipBefore + delta;
-  }
-
-  halt(): void {
-    this.haltedFlag = true;
-  }
-
-  toStep(stepIndex: number, opcode: bigint, mnemonic: string): IntcodeStep {
-    return Object.freeze({
-      stepIndex,
-      ipBefore: this.ipBefore,
-      ipAfter: this.nextIp,
-      opcode,
-      mnemonic,
-      reads: Object.freeze([...this.recordedReads]),
-      write: this.recordedWrite,
-      halted: this.haltedFlag,
-    });
-  }
-}
-
-/** Reusable steppable Intcode virtual machine parameterized by memory and opcode registry. */
+/** Reusable steppable Intcode virtual machine parameterized by memory, opcodes, modes, and I/O. */
 export class IntcodeMachine {
   private readonly memory: MemoryAccess;
   private readonly opcodes: ReadonlyMap<bigint, OpcodeHandler>;
+  private readonly modes: ReadonlyMap<bigint, ParameterModeHandler>;
+  private readonly io: IoChannel;
   private ipValue = 0n;
   private statusValue: MachineStatus = 'running';
   private executedSteps = 0;
 
-  constructor(memory: MemoryAccess, opcodes: ReadonlyMap<bigint, OpcodeHandler>) {
+  constructor(
+    memory: MemoryAccess,
+    opcodes: ReadonlyMap<bigint, OpcodeHandler>,
+    options?: IntcodeMachineOptions,
+  ) {
     this.memory = memory;
     this.opcodes = opcodes;
+    this.modes = options?.modes ?? DEFAULT_MODE_REGISTRY;
+    this.io = options?.io ?? new BufferedIoChannel([]);
   }
 
   static fromProgram(
     program: IntcodeProgram,
     opcodes: ReadonlyMap<bigint, OpcodeHandler>,
+    options?: IntcodeMachineOptions,
   ): IntcodeMachine {
-    return new IntcodeMachine(new IntcodeMemory(program.cells), opcodes);
+    return new IntcodeMachine(new IntcodeMemory(program.cells), opcodes, options);
   }
 
   get ip(): bigint {
@@ -121,6 +66,21 @@ export class IntcodeMachine {
     return this.executedSteps;
   }
 
+  get pendingInputCount(): number {
+    return this.io.pendingInputCount;
+  }
+
+  get outputCount(): number {
+    return this.io.outputCount;
+  }
+
+  pushInput(value: bigint): void {
+    this.io.pushInput(value);
+    if (this.statusValue === 'waiting-input') {
+      this.statusValue = 'running';
+    }
+  }
+
   readMemory(address: bigint): bigint {
     return this.memory.read(address);
   }
@@ -129,25 +89,38 @@ export class IntcodeMachine {
     return this.memory.snapshot();
   }
 
-  step(): IntcodeStep {
-    if (this.statusValue === 'halted') {
-      throw new Error('Cannot step a halted Intcode machine');
+  snapshotInputs(): readonly bigint[] {
+    return this.io.snapshotInputs();
+  }
+
+  snapshotOutputs(): readonly bigint[] {
+    return this.io.snapshotOutputs();
+  }
+
+  step(): DetailedIntcodeStep {
+    if (this.statusValue !== 'running') {
+      throw new Error(`Cannot step Intcode machine with status "${this.statusValue}"`);
     }
     const ipBefore = this.ipValue;
-    const opcode = this.memory.read(ipBefore);
+    const rawInstruction = this.memory.read(ipBefore);
+    const opcode = decodeOpcode(rawInstruction);
     const handler = this.opcodes.get(opcode);
     if (!handler) {
       throw new Error(`Unknown opcode ${opcode} at address ${ipBefore}`);
     }
-    const ctx = new StepRecorderContext(this.memory, ipBefore);
+    const ctx = new StepRecorderContext(this.memory, ipBefore, rawInstruction, this.modes, this.io);
     handler.execute(ctx);
+    if (ctx.isWaitingForInput) {
+      this.statusValue = 'waiting-input';
+      return ctx.toStep(this.executedSteps, opcode, handler.mnemonic, handler.arity);
+    }
     this.ipValue = ctx.ipAfter;
     if (ctx.isHalted) {
       this.statusValue = 'halted';
     }
     const stepIndex = this.executedSteps;
     this.executedSteps += 1;
-    return ctx.toStep(stepIndex, opcode, handler.mnemonic);
+    return ctx.toStep(stepIndex, opcode, handler.mnemonic, handler.arity);
   }
 
   run(maxSteps: number): number {
