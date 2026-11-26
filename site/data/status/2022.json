@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:08:02Z",
+  "updatedAt": "2026-11-26T05:18:44Z",
   "parts": [
     {
       "year": 2022,
@@ -202,6 +202,26 @@
       ],
       "startedAt": "2026-11-26T05:01:27Z",
       "verifiedAt": "2026-11-26T05:08:02Z"
+    },
+    {
+      "year": 2022,
+      "day": 6,
+      "part": 1,
+      "title": "Tuning Trouble",
+      "puzzleUrl": "https://adventofcode.com/2022/day/6",
+      "status": "solved",
+      "summary": "Scan a single-line lowercase ASCII datastream buffer to find the 1-based end position of the first contiguous 4-character start-of-packet marker whose characters are all pairwise distinct.",
+      "algorithmSummary": "Monotonic last-seen jump window parameterized by windowSize in 2022/day06/shared/ using a 26-entry Int32Array (-1 sentinel) in O(N) time and O(1) space independent of window width, paired with a reusable SignalTapeVisualizer in 2022/day06/shared/viz/ for zero-churn Part 2 reuse; differentially verified against both a Set window oracle and a 26-bit XOR parity oracle (reusing shared/core bitCount) across 60+ PRNG strings.",
+      "complexity": "O(N) time, O(1) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.21,
+      "attemptsCount": 1,
+      "learnings": [
+        "Guarding prev >= start in the last-seen jump window prevents stale pre-window duplicates from pulling the left boundary backward while running in O(N) independent of windowSize K.",
+        "Parameterizing createMarkerSolver(windowSize) and SignalTapeVisualizer in 2022/day06/shared/ prepares Part 2 (windowSize = 14) with zero shared-module churn."
+      ],
+      "startedAt": "2026-11-26T05:08:27Z",
+      "verifiedAt": "2026-11-26T05:18:44Z"
     }
   ]
 }
