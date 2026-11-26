@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T11:33:12Z",
+  "updatedAt": "2026-11-26T16:17:32Z",
   "parts": [
     {
       "year": 2023,
@@ -782,6 +782,27 @@
       ],
       "startedAt": "2026-11-26T11:16:43Z",
       "verifiedAt": "2026-11-26T11:33:12Z"
+    },
+    {
+      "year": 2023,
+      "day": 20,
+      "part": 2,
+      "title": "Pulse Propagation",
+      "puzzleUrl": "https://adventofcode.com/2023/day/20#part2",
+      "status": "solved",
+      "summary": "Determine the fewest button presses required to deliver a single low pulse to the rx sink module in the 58-module pulse circuit.",
+      "algorithmSummary": "Unified direct-hit simulation + verified zero-phase conjunction-feeder cycle LCM reusing 2023/day20/shared CircuitSimulator, CircuitBlueprint topology accessors, PulseCircuitVisualizer, and shared/core lcmBigInt with zero shared edits (32.94 ms on personal input, 244,055,946,148,853 presses): detects both immediate low->rx hits on small circuits and 1st/2nd high->feeder occurrences across all 4 independent counter inputs, proves zero-phase periodicity (second - first === first) before folding lcmBigInt, and emits bounded milestone PulseTraceFrames; differentially verified against a press-by-press brute-force simulator oracle across coprime/non-coprime 2- and 3-counter circuits, direct/double-low topologies, unreachable timeouts, and non-zero-phase rejection.",
+      "complexity": "O(max(T_i) * (V + E)) time, O(V + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 32.94,
+      "attemptsCount": 1,
+      "learnings": [
+        "Verifying secondPress - firstPress === firstPress dynamically on every feeder input proves exact zero-phase periodicity before combining with lcmBigInt while avoiding any static assumptions about binary-counter wiring.",
+        "Using a polymorphic RxSearchObserver (NOOP_OBSERVER for solve vs Part2TraceRecorder for trace) keeps solve() free of module-snapshot allocations while sharing one search loop with zero divergence."
+      ],
+      "startedAt": "2026-11-26T11:34:34Z",
+      "verifiedAt": "2026-11-26T16:17:32Z",
+      "humanWaitSeconds": 15923
     }
   ]
 }
