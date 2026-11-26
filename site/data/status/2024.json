@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:53:21Z",
+  "updatedAt": "2026-11-26T07:03:44Z",
   "parts": [
     {
       "year": 2024,
@@ -343,6 +343,26 @@
       ],
       "startedAt": "2026-11-26T06:39:03Z",
       "verifiedAt": "2026-11-26T06:53:21Z"
+    },
+    {
+      "year": 2024,
+      "day": 9,
+      "part": 2,
+      "title": "Disk Fragmenter",
+      "puzzleUrl": "https://adventofcode.com/2024/day/9#part2",
+      "status": "solved",
+      "summary": "Compact the same alternating-digit disk map by moving whole files intact in strictly descending file-ID order (attempting each file at most once) into the leftmost contiguous free span strictly to the file's left that fits it, then compute the exact filesystem checksum.",
+      "algorithmSummary": "Zero-churn iterative Int32Array max-length segment tree (LeftmostSpanIndex.claimLeftmost) plugging into 2024/day09/shared CompactionStrategy, DiskBlockReplay, and DiskCompactionVisualizer with zero shared edits: coalesces adjacent initial free spans across zero-length files and performs O(log S) left-biased descents in O(N + F log S) time (9.33 ms on 19,999 digits / 10,000 files); differentially verified against both a coalesced linear-span oracle and a literal flat Int32Array block-array simulator across 100 zero-heavy PRNG disk maps.",
+      "complexity": "O(N + F log S) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 9.33,
+      "attemptsCount": 1,
+      "learnings": [
+        "An iterative Int32Array max-length segment tree handles arbitrarily wide coalesced initial free spans (> 9 across zero-length files) natively in O(log S) per file with a narrow claimLeftmost(length, beforeStart) boundary that makes invalid index/over-consumption states impossible.",
+        "Because files move strictly left in descending ID order, vacated trailing extents can never sit left of any remaining unmoved file and never require re-insertion—verified end-to-end against a literal block-array simulator."
+      ],
+      "startedAt": "2026-11-26T06:53:54Z",
+      "verifiedAt": "2026-11-26T07:03:44Z"
     }
   ]
 }
