@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:42:01Z",
+  "updatedAt": "2026-11-26T05:56:11Z",
   "parts": [
     {
       "year": 2023,
@@ -242,6 +242,26 @@
       ],
       "startedAt": "2026-11-26T05:35:05Z",
       "verifiedAt": "2026-11-26T05:42:01Z"
+    },
+    {
+      "year": 2023,
+      "day": 7,
+      "part": 1,
+      "title": "Camel Cards",
+      "puzzleUrl": "https://adventofcode.com/2023/day/7",
+      "status": "solved",
+      "summary": "Rank 5-card Camel Cards hands from weakest (rank 1) to strongest (rank N) by 7 hand types and positional left-to-right card strength (2 < ... < A), then sum rank * bid across all hands.",
+      "algorithmSummary": "Packed 24-bit SMI strength-key sort parameterized by a polymorphic CamelHandRule in 2023/day07/shared/ with exact BigInt winnings in O(N log N) time (3.11 ms on 1,000 hands), paired with a reusable CamelCardsVisualizer in 2023/day07/shared/viz/ for zero-churn Part 2 Joker reuse; differentially verified against an independent lexicographic-comparator-sort oracle across boundary cases and 50 seeded random deals.",
+      "complexity": "O(N log N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.11,
+      "attemptsCount": 1,
+      "learnings": [
+        "Packing (handType << 20) | (s0 << 16) | ... | s4 into a 23-bit non-negative SMI gives single-subtraction comparisons and decodable hex strength keys while remaining identical across Part 1 and Part 2.",
+        "Parameterizing CamelHandRule and placing CamelCardsVisualizer in 2023/day07/shared/viz/ (outside the pure-TS shared/index.ts barrel) lets Part 2 inject Joker rules with zero shared-module churn."
+      ],
+      "startedAt": "2026-11-26T05:42:38Z",
+      "verifiedAt": "2026-11-26T05:56:11Z"
     }
   ]
 }
