@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T04:38:48Z",
+  "updatedAt": "2026-11-26T04:48:51Z",
   "parts": [
     {
       "year": 2023,
@@ -122,6 +122,26 @@
       ],
       "startedAt": "2026-11-26T04:28:39Z",
       "verifiedAt": "2026-11-26T04:38:48Z"
+    },
+    {
+      "year": 2023,
+      "day": 4,
+      "part": 1,
+      "title": "Scratchcards",
+      "puzzleUrl": "https://adventofcode.com/2023/day/4",
+      "status": "solved",
+      "summary": "For each scratchcard listing winning numbers and your numbers, count how many of your numbers match a winning number, score 2^(k - 1) points for k > 0 (or 0 for k = 0), and sum the points across all cards.",
+      "algorithmSummary": "Hash-set winning-number lookup on immutable Scratchcard value objects in 2023/day04/shared/: derive matchingNumbers, matchCount, and doubling points dynamically with safe-integer overflow guards in O(N * (W + H)) time; differentially verified against both a BigInt bitset oracle (reusing shared/core bitCount) and a sorted two-pointer oracle over 250 synthetic cards.",
+      "complexity": "O(N * (W + H)) time, O(W) auxiliary space per card",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.22,
+      "attemptsCount": 1,
+      "learnings": [
+        "Keeping Scratchcard.matchCount dynamic in 2023/day04/shared/ lets Part 2 copy-cascade DP reuse the exact parsed cards and match counts with zero churn.",
+        "Guarding both per-card points (k <= 53) and cumulative sums with Number.isSafeInteger prevents silent IEEE-754 precision loss on large synthetic match counts."
+      ],
+      "startedAt": "2026-11-26T04:40:19Z",
+      "verifiedAt": "2026-11-26T04:48:51Z"
     }
   ]
 }
