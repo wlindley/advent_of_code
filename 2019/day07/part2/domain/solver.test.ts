@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { AmplifierCircuitSolver, FEEDBACK_LOOP_MODE } from '../../shared';
 import { solver } from './index';
 
 const EX1 =
@@ -150,8 +151,12 @@ describe('2019 Day 7 Part 2 solver', () => {
   it('rejects deadlock, silent E, perpetual livelock, malformed inputs, and invalid phases', () => {
     expect(() => solver.evaluate(solver.parse('3,5,3,5,3,5,99,0'), [5n, 6n, 7n, 8n, 9n])).toThrow(/deadlock/i);
     expect(() => solver.evaluate(solver.parse('3,5,99,0,0,0'), [5n, 6n, 7n, 8n, 9n])).toThrow(/no thruster signal/i);
+    const boundedSolver = new AmplifierCircuitSolver(FEEDBACK_LOOP_MODE, 500);
     expect(() =>
-      solver.evaluate(solver.parse('3,14,3,15,1001,15,1,15,4,15,1105,1,2,99,0,0'), [5n, 6n, 7n, 8n, 9n]),
+      boundedSolver.evaluate(
+        boundedSolver.parse('3,14,3,15,1001,15,1,15,4,15,1105,1,2,99,0,0'),
+        [5n, 6n, 7n, 8n, 9n],
+      ),
     ).toThrow(RangeError);
     expect(() => solver.parse('')).toThrow(/empty/i);
     expect(() => solver.parse('3,abc,99')).toThrow(/Invalid Intcode/);
