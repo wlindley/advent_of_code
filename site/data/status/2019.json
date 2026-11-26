@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T23:17:32Z",
+  "updatedAt": "2026-11-26T23:38:51Z",
   "parts": [
     {
       "year": 2019,
@@ -323,6 +323,26 @@
       ],
       "startedAt": "2026-11-26T23:06:29Z",
       "verifiedAt": "2026-11-26T23:17:32Z"
+    },
+    {
+      "year": 2019,
+      "day": 9,
+      "part": 1,
+      "title": "Sensor Boost",
+      "puzzleUrl": "https://adventofcode.com/2019/day/9",
+      "status": "solved",
+      "summary": "Complete the Intcode VM with relative parameter mode (2), opcode 9 (adjust relative base), and expandable sparse BigInt memory, then run the BOOST program in test mode (input 1) to obtain the BOOST keycode.",
+      "algorithmSummary": "Backward-compatible completion of 2019/shared/intcode/ (SparseIntcodeMemory implements SparseMemoryAccess, parameterized IntcodeMachine<TMode> & StepRecorderContext<TMode>, RELATIVE_MODE with pre-I/O negative write guard for atomic 203 input, opcode 9 RBO in COMPLETE_OPCODES, zero edits to Days 2/5/7) powering 2019/day09/shared/ (BOOST_TEST_MODE 1n for Part 1, pre-built BOOST_SENSOR_MODE 2n for zero-churn Part 2; 1.27 ms -> 2,955,820,355): interactive BoostVisualizer with live RB delta, POS/IMM/REL parameter badges, and sparse high-memory table, differentially verified across all 3 official examples and 25 synthetic programs against an independent flat-loop reference VM.",
+      "complexity": "O(S) time, O(N + W_sparse) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.27,
+      "attemptsCount": 1,
+      "learnings": [
+        "Parameterizing DecodedMemoryRead<TMode>, StepRecorderContext<TMode>, and IntcodeMachine<TMode> with default ParameterMode = 'position' | 'immediate' completes the Intcode VM for Days 9-25 with zero breaking changes to Day 2, Day 5, or Day 7.",
+        "Enforcing address >= 0n inside RELATIVE_MODE.resolveWriteAddress guarantees opcode 203 fails atomically before consuming queued input or pausing on waiting-input."
+      ],
+      "startedAt": "2026-11-26T23:17:32Z",
+      "verifiedAt": "2026-11-26T23:38:51Z"
     }
   ]
 }

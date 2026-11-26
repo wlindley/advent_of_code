@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T23:21:07Z",
+  "updatedAt": "2026-11-26T23:37:02Z",
   "parts": [
     {
       "year": 2020,
@@ -363,6 +363,46 @@
       ],
       "startedAt": "2026-11-26T23:09:18Z",
       "verifiedAt": "2026-11-26T23:21:07Z"
+    },
+    {
+      "year": 2020,
+      "day": 10,
+      "part": 1,
+      "title": "Adapter Array",
+      "puzzleUrl": "https://adventofcode.com/2020/day/10",
+      "status": "solved",
+      "summary": "Chain every joltage adapter in ascending order from outlet 0 to device max+3 and return the count of 1-jolt differences multiplied by the count of 3-jolt differences.",
+      "algorithmSummary": "Sorted AdapterChain scan with branchless JoltHistogram and pre-built O(N) sliding-3-predecessor exact-BigInt ArrangementTable DP in 2020/day10/shared/ (0.40 ms across 107 adapters -> 2,516): zero-derived-state models, O(1) shared ArrangementTable across trace frames, monotonic bigintLog2 ChainViewport with clipped Bezier jump arcs, light-mode AdapterChainChart SVG staircase visualizer, differentially verified across 30 seeded PRNG chains (plus explicit 2-jolt gaps and N=81 > 2^70 Tribonacci) against shared/core DirectedGraph.countPaths.",
+      "complexity": "O(N log N) sort, O(N) scan & DP, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.40,
+      "attemptsCount": 1,
+      "learnings": [
+        "Sharing one frozen ArrangementTable across all ArrangementTraceFrames gives O(1) per-frame memory and lets ChainViewport compute exact maxWaysLog2 from frame.ways in O(1) by monotonicity.",
+        "Explicitly testing 2-jolt steps (absent from both official examples) and maxSlots = 2 clipped predecessor arcs ensures 100% V8 branch coverage and verifies general {1, 2, 3} gap handling."
+      ],
+      "startedAt": "2026-11-26T23:21:07Z",
+      "verifiedAt": "2026-11-26T23:37:02Z"
+    },
+    {
+      "year": 2020,
+      "day": 10,
+      "part": 2,
+      "title": "Adapter Array",
+      "puzzleUrl": "https://adventofcode.com/2020/day/10#part2",
+      "status": "solved",
+      "summary": "Count the total number of distinct valid ways to arrange a subset of joltage adapters connecting the 0-jolt outlet to the built-in device with gaps of at most 3 jolts.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day10/shared/ binding ARRANGEMENT_COUNT_POLICY into AdapterArraySolver and AdapterChainVisualizer (0.46 ms across 107 adapters -> 296,196,766,695,424): zero edits to shared/ or part1/, O(N) sliding-3-predecessor exact-BigInt DP over sorted AdapterChain with O(1)-shared ArrangementTable trace frames and logarithmic jump-arc SVG visualization, differentially verified across 35 seeded PRNG shuffled chains (plus N=81 > 2^70 Tribonacci) against both top-down memoized DFS and shared/core DirectedGraph.countPaths.",
+      "complexity": "O(N log N) sort, O(N) DP, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.46,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building ARRANGEMENT_COUNT_POLICY and logarithmic AdapterChainChart jump arcs in day10/shared/ reduced Part 2's domain solver to 4 lines with zero edits to shared/ or part1/.",
+        "Triple-oracle differential testing (DP vs top-down memoized DFS vs shared/core DirectedGraph.countPaths) on shuffled PRNG chains verifies exact BigInt counts independent of input order."
+      ],
+      "startedAt": "2026-11-26T23:37:02Z",
+      "verifiedAt": "2026-11-26T23:45:35Z"
     }
   ]
 }
