@@ -9,6 +9,7 @@ Reusable algorithmic patterns, parsing idioms, performance tricks, and AoC pitfa
 - `interval.ts` — immutable `BigInt` `ClosedInterval` and canonical `IntervalUnion` (coalesces overlapping & integer-adjacent ranges, exposes `findContaining`, `contains`, `totalLength`; added in 2025 Day 5 Part 1).
 - `disjointSet.ts` — `Int32Array`-backed `DisjointSet` (Union-Find with iterative path compression, union-by-size in negative root slots, `componentCount`, `componentSizes`; added in 2025 Day 8 Part 1).
 - `gf2.ts` — arbitrary-width `BigInt` `Gf2LinearSystem` (full Gauss-Jordan RREF, consistency check, nullspace basis, Gray-code `minWeightSolution`) and `bitCount` (added in 2025 Day 10 Part 1).
+- `rational.ts` — immutable `BigInt` `Rational` value object plus `gcdBigInt`, `lcmBigInt`, `floorDiv`, and `ceilDiv` for exact rational elimination and integer-inequality bound propagation (added in 2025 Day 10 Part 2).
 
 ## Algorithmic Patterns & Scaling Traps
 - **Preserve raw magnitudes when parsing Part 1** (2025 Day 1): Example inputs often use small numbers (`< 100`) while personal inputs include multi-revolution/large values (`up to 998`); preserve unreduced values in `<year>/dayNN/shared/` so Part 2 can reuse the exact parser without churn.
