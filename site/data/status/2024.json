@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T16:13:15Z",
+  "updatedAt": "2026-11-26T16:31:11Z",
   "parts": [
     {
       "year": 2024,
@@ -804,6 +804,26 @@
       "startedAt": "2026-11-26T11:37:51Z",
       "verifiedAt": "2026-11-26T16:13:15Z",
       "humanWaitSeconds": 15858
+    },
+    {
+      "year": 2024,
+      "day": 21,
+      "part": 1,
+      "title": "Keypad Conundrum",
+      "puzzleUrl": "https://adventofcode.com/2024/day/21",
+      "status": "solved",
+      "summary": "Find the shortest human directional-keypad button sequence needed to type each 4-character door code through a chain of two directional-keypad robots and one numeric-keypad robot without ever pointing at a keypad gap, then sum each code's complexity (shortest length times numeric value).",
+      "algorithmSummary": "Bottom-up layered exact BigInt DP (DirectionalCostTable for depth 0..D) over corner-gap-validated Keypad<K> candidate paths in 2024/day21/shared/ (0.75 ms for D = 2): enforces the corner-gap invariant in Keypad's constructor so straight/L-shaped 1-2 path pruning is exact for every constructible keypad, expands reconstructed layers in descending depth order D..1 with an O(|code|) pre-flight length cap for zero allocation at D = 25, pre-builds PART2_DIRECTIONAL_ROBOTS = 25 + KeypadConundrumVisualizer (4x3 numeric SVG + 5x5 log-scaled cost heatmap via bigintLog2) for zero-churn Part 2 reuse, and verifies every optimal D = 0, 1, 2 sequence end-to-end by replaying it through an independent simulateRobotChain forward simulator (official 5-code example = 126384).",
+      "complexity": "O(D * 25 + |codes|) time, O(D * 25) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.75,
+      "attemptsCount": 1,
+      "learnings": [
+        "Enforcing the corner-gap invariant and validated startKey in Keypad<K>'s constructor guarantees candidatePaths emits 1-2 valid paths with zero dead branches and eliminates unchecked casts in simulateKeypad.",
+        "Expanding reconstructed robot layers in descending depth order (D down to 1) with an upfront exact BigInt length gate guarantees optimality whenever bestPath differs by depth while avoiding exponential allocation at D = 25."
+      ],
+      "startedAt": "2026-11-26T16:14:29Z",
+      "verifiedAt": "2026-11-26T16:31:11Z"
     }
   ]
 }
