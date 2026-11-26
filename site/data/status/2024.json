@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:25:14Z",
+  "updatedAt": "2026-11-26T05:37:15Z",
   "parts": [
     {
       "year": 2024,
@@ -203,6 +203,26 @@
       ],
       "startedAt": "2026-11-26T05:15:24Z",
       "verifiedAt": "2026-11-26T05:25:14Z"
+    },
+    {
+      "year": 2024,
+      "day": 6,
+      "part": 1,
+      "title": "Guard Gallivant",
+      "puzzleUrl": "https://adventofcode.com/2024/day/6",
+      "status": "solved",
+      "summary": "Simulate a patrolling guard on a 2D floorplan who turns 90 degrees clockwise in place whenever blocked by an obstacle and otherwise steps forward, counting distinct cells visited before leaving the map.",
+      "algorithmSummary": "Flat Uint8Array 4-bit direction-mask patrol engine in 2024/day06/shared/ built on shared/core Grid2D and clockwise DIRS_4 in O(R * C) time: handles multi-turn corners in place without forced steps, detects loops via bitmask collisions, and supports optional extraObstacle for zero-churn Part 2 reuse; differentially verified against an independent Set-based reference simulator across 20 seeded random grids.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.45,
+      "attemptsCount": 1,
+      "learnings": [
+        "Re-evaluating the facing direction in place on every turn (instead of stepping after a single 90-degree rotation) cleanly handles 2-, 3-, and 4-wall corners and catches boxed-in loops.",
+        "Packing 4-bit direction masks in a flat Uint8Array(R * C) gives O(1) loop detection and exposes LabMap + simulatePatrol(map, { extraObstacle }) for zero-churn Part 2 reuse."
+      ],
+      "startedAt": "2026-11-26T05:26:28Z",
+      "verifiedAt": "2026-11-26T05:37:15Z"
     }
   ]
 }

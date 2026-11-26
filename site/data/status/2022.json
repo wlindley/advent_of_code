@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:25:58Z",
+  "updatedAt": "2026-11-26T05:38:09Z",
   "parts": [
     {
       "year": 2022,
@@ -242,6 +242,26 @@
       ],
       "startedAt": "2026-11-26T05:19:14Z",
       "verifiedAt": "2026-11-26T05:25:58Z"
+    },
+    {
+      "year": 2022,
+      "day": 7,
+      "part": 1,
+      "title": "No Space Left On Device",
+      "puzzleUrl": "https://adventofcode.com/2022/day/7",
+      "status": "solved",
+      "summary": "Replay a terminal navigation and directory listing transcript to reconstruct the filesystem tree rooted at '/', compute each directory's recursive total size, and sum all directories with total size at most 100,000.",
+      "algorithmSummary": "Immutable FilesystemTree built from an encapsulated canonical-path builder in 2022/day07/shared/ with single-pass O(D + F) post-order DFS metrics and a reusable log-scaled DirectoryAuditSvg in 2022/day07/shared/viz/ for zero-churn Part 2 reuse; differentially verified against a path-stack prefix accumulator oracle across 30 seeded random terminal logs up to ~200 directories and depth 9.",
+      "complexity": "O(L) time, O(D + F) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.84,
+      "attemptsCount": 1,
+      "learnings": [
+        "Personal inputs reuse identical directory basenames across unrelated subtrees and even across nested parent/child directories (/a/a), so directories must always be keyed by canonical path or tree-node identity rather than basename.",
+        "Log-scaling directory sizes (log10(bytes + 1)) in the shared stacked bar chart keeps 584-byte subdirectories, the 100,000-byte threshold line, and a 48 MB root simultaneously legible."
+      ],
+      "startedAt": "2026-11-26T05:26:52Z",
+      "verifiedAt": "2026-11-26T05:38:09Z"
     }
   ]
 }
