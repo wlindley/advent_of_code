@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T10:22:24Z",
+  "updatedAt": "2026-11-26T10:38:43Z",
   "parts": [
     {
       "year": 2022,
@@ -682,6 +682,26 @@
       ],
       "startedAt": "2026-11-26T10:11:15Z",
       "verifiedAt": "2026-11-26T10:22:24Z"
+    },
+    {
+      "year": 2022,
+      "day": 18,
+      "part": 1,
+      "title": "Boiling Boulders",
+      "puzzleUrl": "https://adventofcode.com/2022/day/18",
+      "status": "solved",
+      "summary": "Given 3D integer coordinates of 1x1x1 lava droplet voxels, compute the total surface area by counting all orthogonal voxel faces not immediately adjacent to another lava cube.",
+      "algorithmSummary": "1-cell padded dense 3D Uint8Array VoxelDroplet + flat Int32Array ExteriorFlood BFS in 2022/day18/shared/ in O(N + V_box) time (2.66 ms across 2,759 cubes inside a 23x24x24 padded grid): shifts coordinates by (min - 1) so zero/negative coordinates map strictly inside [1..size-2] for branch-free 6-neighbor face counting, deduplicates duplicate inputs, guards sparse bounding volume in BigInt, and exposes ExteriorFlood + traceExteriorSurface + dual HiDPI Canvas visualizers (rotatable isometric painter's-order cutaway + XY slice viewer) for zero-churn Part 2 reuse; differentially verified against independent Set<string> 6N - 2E and bounding-box BFS oracles across official examples (10, 64, 58), hollow/breached/nested shells, and 40 seeded random 3D voxel clusters.",
+      "complexity": "O(N + V_box) time, O(V_box) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.66,
+      "attemptsCount": 1,
+      "learnings": [
+        "Padding the 3D bounding box by 1 voxel on all 6 sides maps all lava cubes strictly inside [1..size-2], eliminating inner bounds checks during 6-neighbor face counting while guaranteeing a connected outer shell seeded at (0, 0, 0) for Part 2 exterior BFS.",
+        "Replacing a ~8,000-polygon isometric SVG with a HiDPI painter's-order Canvas renderer with interior-face occlusion culling keeps 2,759-cube playback smooth at 60 FPS with zero DOM churn."
+      ],
+      "startedAt": "2026-11-26T10:23:10Z",
+      "verifiedAt": "2026-11-26T10:38:43Z"
     }
   ]
 }
