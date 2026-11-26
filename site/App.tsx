@@ -1,17 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { formatPartKey, type PuzzlePart } from '../shared/core';
 import { DashboardView } from './components/DashboardView';
+import { DayNavBar } from './components/DayNavBar';
 import { InProgressPanel } from './components/InProgressPanel';
 import { SolvedPartView } from './components/SolvedPartView';
 import rawQuality from './data/quality.json';
-import { findPartQuality, type QualityReport } from './data/quality';
-import rawStatus from './data/status.json';
-import {
-  findActiveParts,
-  findPartRecord,
-  validateStatusDocument,
-  type StatusDocument,
-} from './data/status';
+import { filterFilesForScope, findPartQuality, type QualityReport } from './data/quality';
+import { findActiveParts, findPartRecord } from './data/status';
+import { loadStatusDocument } from './data/status/index';
+import rawTokenUsage from './data/tokenUsage.json';
+import type { TokenUsageReport } from './data/tokenUsage';
 import { VersionMonitor } from './data/versionMonitor';
 import { getPartManifest } from './registry';
 
@@ -45,8 +43,9 @@ function parseHash(hash: string): Route {
 }
 
 export function App() {
-  const statusDoc = useMemo(() => validateStatusDocument(rawStatus as unknown as StatusDocument), []);
+  const statusDoc = useMemo(() => loadStatusDocument(), []);
   const qualityReport = rawQuality as unknown as QualityReport;
+  const tokenUsage = rawTokenUsage as unknown as TokenUsageReport;
   const [route, setRoute] = useState<Route>(() => parseHash(window.location.hash));
   const [selectedYear, setSelectedYear] = useState<number>(statusDoc.years[0]?.year ?? 2025);
   const [autoRefresh, setAutoRefresh] = useState(true);
@@ -72,9 +71,7 @@ export function App() {
         if (monitor.hasPendingUpdate) setUpdatePending(true);
       });
     };
-    const onFocusOut = () => {
-      monitor.flushPending();
-    };
+    const onFocusOut = () => monitor.flushPending();
     const timer = window.setInterval(poll, POLL_INTERVAL_MS);
     document.addEventListener('visibilitychange', poll);
     document.addEventListener('focusout', onFocusOut);
@@ -114,6 +111,7 @@ export function App() {
           <DashboardView
             statusDoc={statusDoc}
             qualityReport={qualityReport}
+            tokenUsage={tokenUsage}
             selectedYear={selectedYear}
             onSelectYear={setSelectedYear}
           />
@@ -125,7 +123,11 @@ export function App() {
           ) : (
             activeParts.map((record) =>
               record.status === 'in_progress' || record.status === 'blocked' ? (
-                <InProgressPanel key={`${record.year}-${record.day}-${record.part}`} record={record} />
+                <InProgressPanel
+                  key={`${record.year}-${record.day}-${record.part}`}
+                  record={record}
+                  siblingPartStatus={findPartRecord(statusDoc, record.year, record.day, record.part === 1 ? 2 : 1)?.status}
+                />
               ) : null,
             )
           )
@@ -133,15 +135,25 @@ export function App() {
 
         {route.kind === 'part' && (() => {
           const record = findPartRecord(statusDoc, route.year, route.day, route.part);
+          const sibling = findPartRecord(statusDoc, route.year, route.day, route.part === 1 ? 2 : 1);
           if (!record || record.status === 'pending') {
             return (
-              <section className="card">
-                <h2>{route.year} Day {route.day} Part {route.part}</h2>
-                <p className="muted">This puzzle part has not been started yet.</p>
-                <a href={`https://adventofcode.com/${route.year}/day/${route.day}`} target="_blank" rel="noreferrer">
-                  Official Puzzle Page ↗
-                </a>
-              </section>
+              <>
+                <DayNavBar
+                  year={route.year}
+                  day={route.day}
+                  activePart={route.part}
+                  part1Status={route.part === 1 ? 'pending' : sibling?.status}
+                  part2Status={route.part === 2 ? 'pending' : sibling?.status}
+                />
+                <section className="card">
+                  <h2>{route.year} Day {route.day} Part {route.part}</h2>
+                  <p className="muted">This puzzle part has not been started yet.</p>
+                  <a href={`https://adventofcode.com/${route.year}/day/${route.day}`} target="_blank" rel="noreferrer">
+                    Official Puzzle Page ↗
+                  </a>
+                </section>
+              </>
             );
           }
           if (record.status === 'solved') {
@@ -151,10 +163,12 @@ export function App() {
                 record={record}
                 manifest={getPartManifest(route.year, route.day, route.part)}
                 quality={findPartQuality(qualityReport, key)}
+                qualityFiles={filterFilesForScope(qualityReport.files, key)}
+                siblingPartStatus={sibling?.status}
               />
             );
           }
-          return <InProgressPanel record={record} />;
+          return <InProgressPanel record={record} siblingPartStatus={sibling?.status} />;
         })()}
       </main>
     </div>

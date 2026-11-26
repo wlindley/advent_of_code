@@ -1,14 +1,24 @@
 import type { PartRecord } from '../data/status';
+import { DayNavBar } from './DayNavBar';
 
 export interface InProgressPanelProps {
   readonly record: Extract<PartRecord, { status: 'in_progress' | 'blocked' }>;
+  readonly siblingPartStatus?: string;
 }
 
-export function InProgressPanel({ record }: InProgressPanelProps) {
+export function InProgressPanel({ record, siblingPartStatus }: InProgressPanelProps) {
   const isBlocked = record.status === 'blocked';
 
   return (
-    <section className="card">
+    <>
+      <DayNavBar
+        year={record.year}
+        day={record.day}
+        activePart={record.part}
+        part1Status={record.part === 1 ? record.status : siblingPartStatus}
+        part2Status={record.part === 2 ? record.status : siblingPartStatus}
+      />
+      <section className="card">
       <div className="meta-row">
         <span className={`badge status-${record.status}`}>
           {isBlocked ? 'Blocked' : `In Progress · ${record.phase}`}
@@ -74,6 +84,7 @@ export function InProgressPanel({ record }: InProgressPanelProps) {
           </ul>
         </>
       )}
-    </section>
+      </section>
+    </>
   );
 }
