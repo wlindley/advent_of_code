@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:01:22Z",
+  "updatedAt": "2026-11-26T21:09:05Z",
   "parts": [
     {
       "year": 2019,
@@ -103,6 +103,26 @@
       ],
       "startedAt": "2026-11-26T20:46:52Z",
       "verifiedAt": "2026-11-26T21:01:22Z"
+    },
+    {
+      "year": 2019,
+      "day": 3,
+      "part": 2,
+      "title": "Crossed Wires",
+      "puzzleUrl": "https://adventofcode.com/2019/day/3#part2",
+      "status": "solved",
+      "summary": "Find the minimum combined step count (signal delay) along both wires to reach any non-origin intersection, using each wire's earliest visit.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day03/shared/ binding SIGNAL_DELAY_METRIC into createCrossedWiresSolver and CrossedWiresVisualizer (7.98 ms across 301x301 segments -> 101,956): earliest-visit BigInt step deduplication across orthogonal and collinear spans, differentially verified across 30 additional seeded PRNG wire pairs (plus symmetric self-crossing and same/opposite collinear traps) against an independent unit-step grid-walk signal-delay oracle.",
+      "complexity": "O(S1 * S2) time, O(S1 + S2 + K) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 7.98,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building SIGNAL_DELAY_METRIC and earliest-visit minBigInt deduplication in day03/shared/ reduced Part 2's domain solver to 4 lines with zero shared-module edits.",
+        "On any collinear overlap segment pair, combined step delay is affine (slope +/-2 or 0), guaranteeing its exact global minimum lies at an overlap endpoint."
+      ],
+      "startedAt": "2026-11-26T21:02:01Z",
+      "verifiedAt": "2026-11-26T21:09:05Z"
     }
   ]
 }
