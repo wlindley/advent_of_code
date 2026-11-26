@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:29:13Z",
+  "updatedAt": "2026-11-26T06:38:31Z",
   "parts": [
     {
       "year": 2024,
@@ -303,6 +303,26 @@
       ],
       "startedAt": "2026-11-26T06:16:51Z",
       "verifiedAt": "2026-11-26T06:29:13Z"
+    },
+    {
+      "year": 2024,
+      "day": 8,
+      "part": 2,
+      "title": "Resonant Collinearity",
+      "puzzleUrl": "https://adventofcode.com/2024/day/8#part2",
+      "status": "solved",
+      "summary": "With resonant harmonics enabled, project every in-bounds grid lattice point collinear with at least two same-frequency antennas (including the antennas themselves whenever a frequency has two or more antennas) and count unique antinode positions.",
+      "algorithmSummary": "Zero-churn HARMONIC_LINE_RULE AntinodeProjectionRule plugging into 2024/day08/shared collectAntinodes, traceAntinodes, and ResonanceVisualizer with zero shared edits: reduces (dr, dc) by gcd(|dr|, |dc|) and steps forward and backward across the grid in O(R * C + sum(k_f^2) * max(R, C)) time (1.63 ms on 50x50 / 237 pairs); differentially verified against an independent cell-by-cell Euclidean cross-product collinearity oracle across both official examples and 60 seeded grids.",
+      "complexity": "O(R * C + sum(k_f^2) * max(R, C)) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.63,
+      "attemptsCount": 1,
+      "learnings": [
+        "Reducing (dr, dc) by gcd(|dr|, |dc|) guarantees exact Euclidean lattice collinearity even on non-coprime or axis-aligned pairs, while computing backward steps with 0 - sr avoids JavaScript -0 artifacts cleanly with zero extra branches.",
+        "Parameterizing AntinodeProjectionRule and ResonanceVisualizer in 2024/day08/shared/ delivered Part 2 in 100 lines of domain code and an 8-line visualizer wrapper with zero edits to shared/."
+      ],
+      "startedAt": "2026-11-26T06:29:49Z",
+      "verifiedAt": "2026-11-26T06:38:31Z"
     }
   ]
 }
