@@ -1,0 +1,91 @@
+import { sampleTraceIndices, type TraceOptions, validateMaxSteps } from '../../../shared/core';
+import type { SettledBrick, SettledStack } from './settleStack';
+import type { SupportGraph } from './supportAnalysis';
+
+export const DEFAULT_MAX_TRACE_STEPS = 128;
+
+export interface SlabTraceFrame {
+  readonly step: number;
+  readonly totalSteps: number;
+  readonly settledCount: number;
+  readonly totalBricks: number;
+  readonly lastBrickIndex: number;
+  readonly lastBrickDrop: number;
+  readonly cumulativeDrop: number;
+  readonly isFinal: boolean;
+  readonly safeCount: number;
+  readonly loadBearingCount: number;
+  readonly caption: string;
+}
+
+/** Formats brick id `0..25` as `A..Z` and larger ids as `#N`. */
+export function formatBrickLabel(id: number): string {
+  if (!Number.isInteger(id) || id < 0) {
+    throw new RangeError(`Brick id must be a non-negative integer, got ${id}`);
+  }
+  return id < 26 ? String.fromCharCode(65 + id) : `#${id}`;
+}
+
+function buildCaption(
+  step: number,
+  totalBricks: number,
+  lastBrick: SettledBrick | undefined,
+  safeCount: number,
+  loadBearingCount: number,
+): string {
+  if (step === 0 || !lastBrick) {
+    return `Step 0/${totalBricks}: ${totalBricks} bricks suspended in initial airborne snapshot`;
+  }
+  const label = formatBrickLabel(lastBrick.id);
+  const dropNote =
+    lastBrick.dropDistance > 0 ? `dropped ${lastBrick.dropDistance}` : 'already supported';
+  if (step === totalBricks) {
+    return `Settled ${totalBricks}/${totalBricks} (last ${label} ${dropNote} to z=${lastBrick.zMin}..${lastBrick.zMax}) — ${safeCount} safe, ${loadBearingCount} load-bearing`;
+  }
+  return `Settled ${step}/${totalBricks}: Brick ${label} ${dropNote} to z=${lastBrick.zMin}..${lastBrick.zMax}`;
+}
+
+function computePrefixDrops(stack: SettledStack): Int32Array {
+  const prefix = new Int32Array(stack.length + 1);
+  for (let i = 0; i < stack.length; i += 1) {
+    prefix[i + 1] = prefix[i]! + stack.bricks[i]!.dropDistance;
+  }
+  return prefix;
+}
+
+/** Builds bounded scalar-only settling trace frames without cloning per-step state. */
+export function buildSlabTrace(
+  stack: SettledStack,
+  graph: SupportGraph,
+  options?: TraceOptions,
+): readonly SlabTraceFrame[] {
+  const limit = validateMaxSteps(options?.maxSteps, DEFAULT_MAX_TRACE_STEPS);
+  const totalBricks = stack.length;
+  const prefixDrops = computePrefixDrops(stack);
+  const sampled = sampleTraceIndices(totalBricks + 1, limit);
+  const frames: SlabTraceFrame[] = [];
+  for (let i = 0; i < sampled.length; i += 1) {
+    const step = sampled[i]!;
+    const isFinal = step === totalBricks;
+    const lastBrickIndex = step - 1;
+    const lastBrick = lastBrickIndex >= 0 ? stack.bricks[lastBrickIndex] : undefined;
+    const safeCount = isFinal ? graph.safeCount : 0;
+    const loadBearingCount = isFinal ? graph.loadBearingCount : 0;
+    frames.push(
+      Object.freeze({
+        step,
+        totalSteps: totalBricks,
+        settledCount: step,
+        totalBricks,
+        lastBrickIndex,
+        lastBrickDrop: lastBrick ? lastBrick.dropDistance : 0,
+        cumulativeDrop: prefixDrops[step]!,
+        isFinal,
+        safeCount,
+        loadBearingCount,
+        caption: buildCaption(step, totalBricks, lastBrick, safeCount, loadBearingCount),
+      }),
+    );
+  }
+  return Object.freeze(frames);
+}
