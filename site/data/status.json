@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T01:39:07Z",
+  "updatedAt": "2026-11-26T01:46:10Z",
   "years": [
     {
       "year": 2025,
@@ -429,6 +429,45 @@
           ],
           "startedAt": "2026-11-26T01:27:36Z",
           "verifiedAt": "2026-11-26T01:39:07Z"
+        },
+        {
+          "year": 2025,
+          "day": 11,
+          "part": 2,
+          "title": "Reactor",
+          "puzzleUrl": "https://adventofcode.com/2025/day/11#part2",
+          "status": "in_progress",
+          "phase": "design_selected",
+          "summary": "Using the same directed device wiring network, count every distinct directed path starting at 'svr' and ending at 'out' that visits both 'dac' and 'fft' (in either order).",
+          "proposals": [
+            {
+              "id": "bitmask-topo-dp",
+              "name": "4-State Bitmask Topological DP",
+              "summary": "Prune to relevantSubgraph('svr', 'out'), verify acyclicity with iterative Kahn's sort, and sweep once propagating immutable 4-state BigInt WaypointCounts ([neither, dacOnly, fftOnly, both]).",
+              "complexity": "O(V + E) time and space",
+              "tradeoffs": "Single pass handles arbitrary waypoint order, coincident endpoints, parallel edges, and emits per-node 4-state distributions directly for visualization."
+            },
+            {
+              "id": "topo-waypoint-legs",
+              "name": "Topological-Order Waypoint-Leg Product",
+              "summary": "Sort unique waypoints by topological rank and multiply DirectedGraph.countPaths across consecutive legs.",
+              "complexity": "O(V + E) time and space",
+              "tradeoffs": "Concise and ideal as an independent differential test oracle, but needs multiple passes and does not yield per-node 4-state trace snapshots."
+            },
+            {
+              "id": "inclusion-exclusion-dag",
+              "name": "Inclusion-Exclusion Over Excluded Subgraphs",
+              "summary": "Compute P(empty) - P({dac}) - P({fft}) + P({dac, fft}) via 4 filtered passes.",
+              "complexity": "O(V + E) time and space",
+              "tradeoffs": "Order-agnostic, but requires 4 separate graph passes and subtraction."
+            }
+          ],
+          "selectedProposalId": "bitmask-topo-dp",
+          "selectionRationale": "Single-pass O(V + E) BigInt DP with immutable WaypointCounts, zero edits to shared/core/dag.ts or 2025/day11/shared/, verified against topo-waypoint-legs and brute-force walk oracles.",
+          "inFlightWork": "Implementing WaypointCounts, 4-state bitmask DP solver & trace, dual differential oracle tests, and 4-state SVG funnel visualizer.",
+          "attempts": [],
+          "startedAt": "2026-11-26T01:39:44Z",
+          "updatedAt": "2026-11-26T01:46:10Z"
         }
       ]
     }
