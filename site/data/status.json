@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T00:25:04Z",
+  "updatedAt": "2026-11-26T00:36:00Z",
   "years": [
     {
       "year": 2025,
@@ -329,6 +329,45 @@
           ],
           "startedAt": "2026-11-26T00:13:24Z",
           "verifiedAt": "2026-11-26T00:25:04Z"
+        },
+        {
+          "year": 2025,
+          "day": 9,
+          "part": 1,
+          "title": "Movie Theater",
+          "puzzleUrl": "https://adventofcode.com/2025/day/9",
+          "status": "in_progress",
+          "phase": "design_selected",
+          "summary": "Given 2D integer grid coordinates of red floor tiles, pick any two tiles as opposite corners of an axis-aligned rectangle and return the maximum inclusive tile area (|x1 - x2| + 1) * (|y1 - y2| + 1).",
+          "proposals": [
+            {
+              "id": "all-pairs-scan",
+              "name": "Exhaustive Pairwise Scan",
+              "summary": "Scan all N(N-1)/2 pairs and compute inclusive BigInt area.",
+              "complexity": "O(N^2) time, O(1) aux space",
+              "tradeoffs": "Simplest baseline and ideal differential oracle, but quadratic on large N."
+            },
+            {
+              "id": "pareto-skyline",
+              "name": "Four-Corner Pareto Pruning",
+              "summary": "Extract SW, NE, NW, and SE Pareto staircases in O(N log N) and scan opposite staircase pairs.",
+              "complexity": "O(N log N + |SW||NE| + |NW||SE|)",
+              "tradeoffs": "Prunes interior points cleanly, but still degrades to O(N^2) on anti-diagonal point sets."
+            },
+            {
+              "id": "monotone-dnc-skyline",
+              "name": "Monotone D&C on Pareto Skylines",
+              "summary": "Extract SW/NE (and y-reflected NW/SE) Pareto staircases and maximize unclamped (X_j - x_i + 1)(Y_j - y_i + 1) via Monotone Divide-and-Conquer exploiting the strict Monge quadrangle inequality.",
+              "complexity": "O(N log N) time, O(N) space",
+              "tradeoffs": "Guaranteed O(N log N) worst-case even on adversarial anti-diagonals; verified against an all-pairs differential oracle."
+            }
+          ],
+          "selectedProposalId": "monotone-dnc-skyline",
+          "selectionRationale": "Guaranteed O(N log N) worst-case time in O(N) space with exact BigInt coordinates, clean vertical reflection for NW-SE, and raw vertex order preserved in 2025/day09/shared/ for Part 2.",
+          "inFlightWork": "Implementing 2025/day09/shared geometry, Monotone D&C skyline solver, 100%-coverage differential tests, and interactive SVG visualizer.",
+          "attempts": [],
+          "startedAt": "2026-11-26T00:28:49Z",
+          "updatedAt": "2026-11-26T00:36:00Z"
         }
       ]
     }
