@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T01:51:02Z",
+  "updatedAt": "2026-11-26T02:01:05Z",
   "years": [
     {
       "year": 2025,
@@ -449,6 +449,45 @@
           ],
           "startedAt": "2026-11-26T01:39:44Z",
           "verifiedAt": "2026-11-26T01:51:02Z"
+        },
+        {
+          "year": 2025,
+          "day": 12,
+          "part": 1,
+          "title": "Christmas Tree Farm",
+          "puzzleUrl": "https://adventofcode.com/2025/day/12",
+          "status": "in_progress",
+          "phase": "design_selected",
+          "summary": "Given a catalog of 2D polyomino present shapes (freely rotatable and reflectable) and rectangular tree regions with required shape counts, count how many regions can pack all required presents without overlapping solid cells.",
+          "proposals": [
+            {
+              "id": "fast-path-scanline-memo",
+              "name": "Two-Sided Fast-Path Bounds + Column-Scanline Frontier Memo DFS",
+              "summary": "Resolve trivial empty, area-impossible, dimension-impossible, and disjoint-box tileable regions in O(S); solve borderline interlocking regions via transposed column-major BigInt frontier DFS with column-boundary dead-state memoization.",
+              "complexity": "O(S) fast-path; O(W * 2^((span-1)*min(W,H)) * prod(c_i+1)) exact borderline",
+              "tradeoffs": "Solves all 1,000 personal regions in < 5 ms AND proves both SAT witnesses and UNSAT on tight interlocking examples with automatic identical-piece symmetry breaking."
+            },
+            {
+              "id": "fast-path-dlx",
+              "name": "Two-Sided Bounds + Knuth Algorithm X (DLX)",
+              "summary": "Model borderline packing as exact cover with budgeted slack cells and canonical copy ordering.",
+              "complexity": "O(S) fast-path; exponential global MRV exact",
+              "tradeoffs": "Strong MRV on square boards, but slack cells and identical-piece multiplicities add heavy pointer complexity without column-frontier memoization."
+            },
+            {
+              "id": "fast-path-piece-floodfill",
+              "name": "Two-Sided Bounds + Piece-First Backtracking with Dead-Pocket Pruning",
+              "summary": "Place pieces in canonical index order using BigInt bitboards and prune connected empty pockets smaller than min remaining piece area.",
+              "complexity": "O(S) fast-path; exponential exact",
+              "tradeoffs": "Clean and aspect-ratio agnostic (ideal as an independent differential test oracle), but lacks memoization on UNSAT branches."
+            }
+          ],
+          "selectedProposalId": "fast-path-scanline-memo",
+          "selectionRationale": "Combines O(S) two-sided bounds (constructive disjoint tiling + necessary area/bbox rejection) with exact, symmetry-free column-scanline frontier memoization, verified against a piece-first brute-force differential oracle.",
+          "inFlightWork": "Implementing 2025/day12/shared polyomino/farm models, fast-path + exact scanline packer, differential tests, and interactive SVG tree-farm packing visualizer.",
+          "attempts": [],
+          "startedAt": "2026-11-26T01:51:46Z",
+          "updatedAt": "2026-11-26T02:01:05Z"
         }
       ]
     }
