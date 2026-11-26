@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T06:33:45Z",
+  "updatedAt": "2026-11-26T06:49:53Z",
   "parts": [
     {
       "year": 2022,
@@ -362,6 +362,26 @@
       ],
       "startedAt": "2026-11-26T06:26:55Z",
       "verifiedAt": "2026-11-26T06:33:45Z"
+    },
+    {
+      "year": 2022,
+      "day": 10,
+      "part": 1,
+      "title": "Cathode-Ray Tube",
+      "puzzleUrl": "https://adventofcode.com/2022/day/10",
+      "status": "solved",
+      "summary": "Execute a sequence of 1-cycle noop and 2-cycle addx V CPU instructions updating register X (starting at 1) after each instruction finishes, and sum the signal strengths (cycle * X) sampled during cycles 20, 60, 100, 140, 180, and 220.",
+      "algorithmSummary": "Direct cycle-level Int32Array RegisterTimeline in 2022/day10/shared/ mapping every 1-based cycle directly to its during-cycle X value in O(N + C) time (0.44 ms across 240 cycles), paired with a reusable SVG OscilloscopeChart and CrtTimelineVisualizer for zero-churn Part 2 CRT raster reuse; differentially verified against an event-driven instruction clock oracle across official examples and 40 seeded random programs.",
+      "complexity": "O(N + C) time, O(C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.44,
+      "attemptsCount": 1,
+      "learnings": [
+        "Storing every during-cycle register X value in an encapsulated Int32Array RegisterTimeline (indexed by 1-based cycle) makes both Part 1 signal sampling and Part 2's 240-cycle 40x6 CRT beam scan O(1) per cycle with zero shared-module churn.",
+        "Splitting addx V into two explicit execution cycles while updating X only after the second cycle completes eliminates off-by-one timing bugs at sample boundaries."
+      ],
+      "startedAt": "2026-11-26T06:34:26Z",
+      "verifiedAt": "2026-11-26T06:49:53Z"
     }
   ]
 }
