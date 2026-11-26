@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:20:01Z",
+  "updatedAt": "2026-11-26T21:35:12Z",
   "parts": [
     {
       "year": 2020,
@@ -163,6 +163,26 @@
       ],
       "startedAt": "2026-11-26T21:12:12Z",
       "verifiedAt": "2026-11-26T21:20:01Z"
+    },
+    {
+      "year": 2020,
+      "day": 5,
+      "part": 1,
+      "title": "Binary Boarding",
+      "puzzleUrl": "https://adventofcode.com/2020/day/5",
+      "status": "solved",
+      "summary": "Decode 10-character binary space partitioning boarding passes ([FB]{7}[LR]{3}) into 10-bit seat IDs (row * 8 + col) and return the highest seat ID.",
+      "algorithmSummary": "Direct 10-bit binary seat decoding with flat Uint8Array(1024) CabinOccupancy and polymorphic SeatQueryPolicy (HIGHEST_SEAT_POLICY for Part 1, pre-built MISSING_INTERIOR_SEAT_POLICY for zero-churn Part 2) in 2020/day05/shared/ (0.82 ms across 824 passes -> 878): non-circular iterative [lo, hi] BSP trace engine, single-SVG-path 128x8 horizontal cabin map + 10-bit BSP narrowing ribbon visualizer, exhaustively cross-verified across all 1,024 seat IDs plus 50 seeded PRNG manifests.",
+      "complexity": "O(N) time, O(N) manifest storage + O(1) 1 KB occupancy bitmap",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.82,
+      "attemptsCount": 1,
+      "learnings": [
+        "Batching all occupied seats in a 128x8 airplane cabin into a single SVG <path> element keeps 60fps playback smooth without creating 1,024 DOM nodes.",
+        "Keeping traceSeatNarrowing(code: string) operating directly on raw F/B/L/R characters creates a genuinely non-circular exhaustive 1,024-seat differential oracle for bit-shift decoding."
+      ],
+      "startedAt": "2026-11-26T21:20:01Z",
+      "verifiedAt": "2026-11-26T21:35:12Z"
     }
   ]
 }
