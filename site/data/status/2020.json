@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:42:39Z",
+  "updatedAt": "2026-11-26T22:50:18Z",
   "parts": [
     {
       "year": 2020,
@@ -303,6 +303,26 @@
       ],
       "startedAt": "2026-11-26T22:22:39Z",
       "verifiedAt": "2026-11-26T22:42:39Z"
+    },
+    {
+      "year": 2020,
+      "day": 8,
+      "part": 2,
+      "title": "Handheld Halting",
+      "puzzleUrl": "https://adventofcode.com/2020/day/8#part2",
+      "status": "solved",
+      "summary": "Identify the single corrupted jmp or nop instruction whose toggle makes the console boot code terminate cleanly at pc = length, and return the final accumulator.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day08/shared/ binding REPAIR_BOOT_POLICY into BootCodeSolver and BootDebuggerVisualizer (1.11 ms across 638 instructions -> 1,016): zero edits to shared/ or part1/, O(N) flat Int32Array reverse BFS from exit pc = N identifies the unique repairable instruction along the unpatched trajectory, gold patch-diff highlight & EXIT banner in BootDebuggerVisualizer, differentially verified across 40 seeded PRNG programs (checking both exact BigInt answer and patchedIndex) against an independent O(N^2) raw-string brute-force oracle.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.11,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building REPAIR_BOOT_POLICY and BootDebuggerVisualizer patch-diff badges in day08/shared/ reduced Part 2's domain solver to 4 lines with zero shared-module edits.",
+        "Testing > 2^53 accumulation via multiple safe-integer acc lines (9007199254740991 + 2) verifies BigInt accumulator precision without tripping BootInstruction's per-line safe-integer guard."
+      ],
+      "startedAt": "2026-11-26T22:42:39Z",
+      "verifiedAt": "2026-11-26T22:50:18Z"
     }
   ]
 }

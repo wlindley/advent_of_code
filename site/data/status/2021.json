@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:45:13Z",
+  "updatedAt": "2026-11-26T23:00:30Z",
   "parts": [
     {
       "year": 2021,
@@ -323,6 +323,26 @@
       ],
       "startedAt": "2026-11-26T22:36:50Z",
       "verifiedAt": "2026-11-26T22:45:13Z"
+    },
+    {
+      "year": 2021,
+      "day": 9,
+      "part": 1,
+      "title": "Smoke Basin",
+      "puzzleUrl": "https://adventofcode.com/2021/day/9",
+      "status": "solved",
+      "summary": "Find every low point in a 2D cavern heightmap that is strictly lower than all four orthogonal neighbors and return the sum of their risk levels (height + 1).",
+      "algorithmSummary": "Row-major 4-neighbor low-point scan and component-at-a-time iterative flat-Int32Array-queue BFS over height < 9 cells in 2021/day09/shared/ (LOW_POINT_RISK_POLICY for Part 1, pre-built LARGEST_BASINS_PRODUCT_POLICY with O(R*C) wave-depth counting sort for zero-churn Part 2; 6.65 ms across 100x100 grid -> 560): discriminated union LowPointScanFrame | BasinFloodFrame, HiDPI light-mode BathymetryCanvas resolving CSS tokens via getComputedStyle, differentially verified across 40 seeded PRNG heightmaps against three independent oracles (brute-force 4-neighbor scan, shared/core DisjointSet percolation, and Set<string> DFS).",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.65,
+      "attemptsCount": 1,
+      "learnings": [
+        "Grouping row-major lowPoints into lowPointsByBasin after component-at-a-time BFS (Pass 1 from non-ridge low points, Pass 2 from remaining non-9 plateau cells) matches 4-connected DisjointSet percolation 100% even on multi-minima bowls like '152' and 1x1 '[9]' grids.",
+        "Using a discriminated union LowPointScanFrame | BasinFloodFrame eliminates nullable-bag fields and keeps Part 1 and Part 2 traces cleanly typed with zero stored derived state."
+      ],
+      "startedAt": "2026-11-26T22:45:13Z",
+      "verifiedAt": "2026-11-26T23:00:30Z"
     }
   ]
 }

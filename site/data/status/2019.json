@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:48:08Z",
+  "updatedAt": "2026-11-26T23:06:29Z",
   "parts": [
     {
       "year": 2019,
@@ -283,6 +283,26 @@
       ],
       "startedAt": "2026-11-26T22:38:11Z",
       "verifiedAt": "2026-11-26T22:48:08Z"
+    },
+    {
+      "year": 2019,
+      "day": 8,
+      "part": 1,
+      "title": "Space Image Format",
+      "puzzleUrl": "https://adventofcode.com/2019/day/8",
+      "status": "solved",
+      "summary": "Partition a flat Space Image Format digit stream into 25x6 layers, locate the layer with the fewest 0 digits, and return its count of 1 digits multiplied by its count of 2 digits.",
+      "algorithmSummary": "Flat Uint8Array layer scanner and early-exit front-to-back compositor with 30-bit 5x6 AoC bitmap font OCR in 2019/day08/shared/ (MIN_ZERO_CHECKSUM_POLICY for Part 1, pre-built DECODED_MESSAGE_POLICY for zero-churn Part 2; 1.12 ms across 100 25x6 layers -> 2,460): zero-derived-state SpaceImageTraceFrame via Int32Array resolvedByLayer, unified manifestSolver dimension selection for 3x2 example vs 25x6 inputs, dual pixel-grid & stacked 0/1/2 histogram SVG visualizer, differentially verified across 50 seeded PRNG images against independent string-slicing and vertical raycast oracles.",
+      "complexity": "O(N) time, O(N) parsed storage / O(1) Part 1 solve scratch",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.12,
+      "attemptsCount": 1,
+      "learnings": [
+        "Keeping structural parsing over digits 0..9 in SpaceImage and trace compositing while enforcing strict {0, 1, 2} pixels inside compositeSpaceImage lets the official 3x2 example ('123456789012') trace cleanly in Part 1 without weakening Part 2 validation.",
+        "Packing all 5 columns (30 bits) of AoC 6-tall bitmap glyphs preserves 5-wide 'Y' and non-colliding 'I'/'S' variants accurately inside JS 32-bit bitwise ops."
+      ],
+      "startedAt": "2026-11-26T22:48:08Z",
+      "verifiedAt": "2026-11-26T23:06:29Z"
     }
   ]
 }
