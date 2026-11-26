@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T10:51:00Z",
+  "updatedAt": "2026-11-26T11:06:50Z",
   "parts": [
     {
       "year": 2023,
@@ -722,6 +722,26 @@
       ],
       "startedAt": "2026-11-26T10:41:56Z",
       "verifiedAt": "2026-11-26T10:51:00Z"
+    },
+    {
+      "year": 2023,
+      "day": 19,
+      "part": 1,
+      "title": "Aplenty",
+      "puzzleUrl": "https://adventofcode.com/2023/day/19",
+      "status": "solved",
+      "summary": "Route machine parts with (x, m, a, s) ratings from workflow 'in' through ordered conditional rules until accepted ('A') or rejected ('R'), and sum x + m + a + s over all accepted parts.",
+      "algorithmSummary": "DAG-validated WorkflowSystem (reusing DirectedGraph.topologicalOrder and ClosedInterval from shared/core) + unified 4D RatingBox interval splitter in 2023/day19/shared/ (3.04 ms across 522 workflows and 200 parts): validates all targets before cycle detection, routes each PartRating via Workflow.matchRule in O(P * D * R) time, and pre-builds exact BigInt RatingBox.split / collectAcceptedBoxes / buildBoxSplitTrace + AxisGaugeBars + WorkflowTraceVisualizer for zero-churn Part 2 ([1..4000]^4) reuse; differentially verified against a standalone recursive string-rule evaluator, an exhaustive [1..6]^4 brute-force grid count, and the official [1..4000]^4 count (167409079868000n).",
+      "complexity": "O(V + E + P * D * R) time, O(V + E + P) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.04,
+      "attemptsCount": 1,
+      "learnings": [
+        "Validating every non-terminal workflow target before constructing DirectedGraph prevents auto-synthesizing undefined targets as sinks while letting DirectedGraph.topologicalOrder() reject any self-loop or cycle in one pass.",
+        "Representing both individual PartRatings (via RatingBox.fromPart) and 4D hypercubes (RatingBox.uniform) with ClosedInterval makes AxisGaugeBars and WorkflowTraceVisualizer 100% reusable across Part 1 and Part 2 with zero mode-specific rendering branches."
+      ],
+      "startedAt": "2026-11-26T10:52:08Z",
+      "verifiedAt": "2026-11-26T11:06:50Z"
     }
   ]
 }
