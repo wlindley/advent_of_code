@@ -50,6 +50,8 @@ export type PartRecord =
       readonly learnings: readonly string[];
       readonly startedAt: string;
       readonly verifiedAt: string;
+      /** Seconds spent waiting on human input during this part (subtracted from solve time). */
+      readonly humanWaitSeconds?: number;
     })
   | (PartBase & {
       readonly status: 'blocked';
@@ -62,12 +64,19 @@ export type PartRecord =
 export interface YearStatus {
   readonly year: number;
   readonly totalDays: number;
+  readonly updatedAt?: string;
   readonly parts: readonly PartRecord[];
 }
 
 export interface StatusDocument {
   readonly updatedAt: string;
   readonly years: readonly YearStatus[];
+}
+
+export interface PartDurationSummary {
+  readonly day: number;
+  readonly part: PuzzlePart;
+  readonly seconds: number;
 }
 
 export interface YearProgress {
@@ -78,5 +87,9 @@ export interface YearProgress {
   readonly pendingParts: number;
   readonly completionPercent: number;
   readonly totalSolveSeconds: number;
-  readonly elapsedSolveSeconds: number;
+  readonly firstTryCount: number;
+  readonly medianSolveSeconds: number;
+  readonly medianRunMs: number;
+  readonly fastestPart: PartDurationSummary | null;
+  readonly slowestPart: PartDurationSummary | null;
 }

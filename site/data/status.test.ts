@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  combineYearStatuses,
   computeSolveDurationSeconds,
   computeYearProgress,
   findActiveParts,
@@ -76,8 +77,8 @@ const sampleDoc: StatusDocument = {
   ],
 };
 
-describe('status schema and selectors', () => {
-  it('validates a well-formed status document and computes derived progress', () => {
+describe('status schema, human-wait subtraction, and year stats', () => {
+  it('validates status documents, subtracts humanWaitSeconds, and computes year summary stats', () => {
     const validated = validateStatusDocument(sampleDoc);
     expect(computeYearProgress(validated.years[0]!)).toEqual({
       totalParts: 24,
@@ -87,8 +88,13 @@ describe('status schema and selectors', () => {
       pendingParts: 21,
       completionPercent: 4,
       totalSolveSeconds: 300,
-      elapsedSolveSeconds: 300,
+      firstTryCount: 1,
+      medianSolveSeconds: 300,
+      medianRunMs: 1.4,
+      fastestPart: { day: 1, part: 1, seconds: 300 },
+      slowestPart: { day: 1, part: 1, seconds: 300 },
     });
+
     expect(computeYearProgress({ year: 2024, totalDays: 25, parts: [] })).toEqual({
       totalParts: 50,
       solvedParts: 0,
@@ -97,22 +103,31 @@ describe('status schema and selectors', () => {
       pendingParts: 50,
       completionPercent: 0,
       totalSolveSeconds: 0,
-      elapsedSolveSeconds: 0,
+      firstTryCount: 0,
+      medianSolveSeconds: 0,
+      medianRunMs: 0,
+      fastestPart: null,
+      slowestPart: null,
     });
-    const baseSolved = sampleDoc.years[0]!.parts[0]! as Extract<StatusDocument['years'][0]['parts'][number], { status: 'solved' }>;
-    const gappedYear = computeYearProgress({
+
+    const base = sampleDoc.years[0]!.parts[0]! as Extract<StatusDocument['years'][0]['parts'][number], { status: 'solved' }>;
+    const multi = computeYearProgress({
       year: 2025,
       totalDays: 12,
       parts: [
-        { ...baseSolved, day: 1, part: 2, startedAt: '2026-11-25T20:10:00Z', verifiedAt: '2026-11-25T20:14:00Z' },
-        { ...baseSolved, day: 1, part: 1, startedAt: '2026-11-25T20:00:00Z', verifiedAt: '2026-11-25T20:05:00Z' },
+        { ...base, day: 1, part: 1, startedAt: '2026-11-25T20:00:00Z', verifiedAt: '2026-11-25T20:06:00Z', humanWaitSeconds: 60, personalInputElapsedMs: 2.0, attemptsCount: 2 },
+        { ...base, day: 1, part: 2, startedAt: '2026-11-25T20:10:00Z', verifiedAt: '2026-11-25T20:13:00Z', personalInputElapsedMs: 4.0, attemptsCount: 1 },
       ],
     });
-    expect(gappedYear.totalSolveSeconds).toBe(540);
-    expect(gappedYear.elapsedSolveSeconds).toBe(840);
+    expect(multi.totalSolveSeconds).toBe(480);
+    expect(multi.firstTryCount).toBe(1);
+    expect(multi.medianSolveSeconds).toBe(240);
+    expect(multi.medianRunMs).toBe(3);
+    expect(multi.fastestPart).toEqual({ day: 1, part: 2, seconds: 180 });
+    expect(multi.slowestPart).toEqual({ day: 1, part: 1, seconds: 300 });
+
     const solved = findPartRecord(validated, 2025, 1, 1);
-    expect(solved?.status).toBe('solved');
-    expect(computeSolveDurationSeconds(solved as Extract<NonNullable<typeof solved>, { status: 'solved' }>)).toBe(300);
+    expect(computeSolveDurationSeconds(solved as typeof base)).toBe(300);
     expect(formatDuration(45)).toBe('45s');
     expect(formatDuration(300)).toBe('5m 00s');
     expect(formatDuration(3725)).toBe('1h 02m');
@@ -120,45 +135,27 @@ describe('status schema and selectors', () => {
     expect(findPartRecord(validated, 2025, 9, 1)).toBeUndefined();
   });
 
-  it('rejects duplicate parts, invalid totalDays, and invalid state fields', () => {
-    const dup: StatusDocument = {
-      updatedAt: sampleDoc.updatedAt,
-      years: [{ year: 2025, totalDays: 12, parts: [sampleDoc.years[0]!.parts[0]!, sampleDoc.years[0]!.parts[0]!] }],
-    };
-    expect(() => validateStatusDocument(dup)).toThrow('Duplicate part entry');
-    expect(() =>
-      validateStatusDocument({ updatedAt: 'x', years: [{ year: 2025, totalDays: 0, parts: [] }] }),
-    ).toThrow('totalDays must be an integer between 1 and 25');
+  it('combines per-year statuses in descending year order with latest timestamp', () => {
+    const combined = combineYearStatuses([
+      { year: 2024, totalDays: 25, updatedAt: '2026-11-26T05:00:00Z', parts: [] },
+      sampleDoc.years[0]!,
+    ]);
+    expect(combined.years.map((y) => y.year)).toEqual([2025, 2024]);
+    expect(combined.updatedAt).toBe('2026-11-26T05:00:00Z');
+    expect(combineYearStatuses([{ year: 2023, totalDays: 25, parts: [] }]).updatedAt).toBe('1970-01-01T00:00:00Z');
+  });
 
-    const badSelected: StatusDocument = {
-      updatedAt: 'x',
-      years: [{
-        year: 2025,
-        totalDays: 12,
-        parts: [{ ...(sampleDoc.years[0]!.parts[1]! as Extract<StatusDocument['years'][0]['parts'][number], { status: 'in_progress' }>), selectedProposalId: 'missing' }],
-      }],
-    };
-    expect(() => validateStatusDocument(badSelected)).toThrow('Unknown selectedProposalId');
+  it('rejects duplicate parts, invalid totalDays, and invalid solved/in_progress fields', () => {
+    const base = sampleDoc.years[0]!.parts[0]! as Extract<StatusDocument['years'][0]['parts'][number], { status: 'solved' }>;
+    const inProg = sampleDoc.years[0]!.parts[1]! as Extract<StatusDocument['years'][0]['parts'][number], { status: 'in_progress' }>;
 
-    const badSolved: StatusDocument = {
-      updatedAt: 'x',
-      years: [{
-        year: 2025,
-        totalDays: 12,
-        parts: [{ ...(sampleDoc.years[0]!.parts[0]! as Extract<StatusDocument['years'][0]['parts'][number], { status: 'solved' }>), personalInputElapsedMs: -1 }],
-      }],
-    };
-    expect(() => validateStatusDocument(badSolved)).toThrow('personalInputElapsedMs must be non-negative');
-
-    const badTimestamps: StatusDocument = {
-      updatedAt: 'x',
-      years: [{
-        year: 2025,
-        totalDays: 12,
-        parts: [{ ...(sampleDoc.years[0]!.parts[0]! as Extract<StatusDocument['years'][0]['parts'][number], { status: 'solved' }>), startedAt: '2026-11-25T20:10:00Z' }],
-      }],
-    };
-    expect(() => validateStatusDocument(badTimestamps)).toThrow('verifiedAt must not precede startedAt');
+    expect(() => validateStatusDocument({ updatedAt: 'x', years: [{ year: 2025, totalDays: 12, parts: [base, base] }] })).toThrow('Duplicate part entry');
+    expect(() => validateStatusDocument({ updatedAt: 'x', years: [{ year: 2025, totalDays: 0, parts: [] }] })).toThrow('totalDays must be an integer between 1 and 25');
+    expect(() => validateStatusDocument({ updatedAt: 'x', years: [{ year: 2025, totalDays: 12, parts: [{ ...inProg, selectedProposalId: 'missing' }] }] })).toThrow('Unknown selectedProposalId');
+    expect(() => validateStatusDocument({ updatedAt: 'x', years: [{ year: 2025, totalDays: 12, parts: [{ ...base, personalInputElapsedMs: -1 }] }] })).toThrow('personalInputElapsedMs must be non-negative');
+    expect(() => validateStatusDocument({ updatedAt: 'x', years: [{ year: 2025, totalDays: 12, parts: [{ ...base, startedAt: '2026-11-25T20:10:00Z' }] }] })).toThrow('verifiedAt must not precede startedAt');
+    expect(() => validateStatusDocument({ updatedAt: 'x', years: [{ year: 2025, totalDays: 12, parts: [{ ...base, humanWaitSeconds: -1 }] }] })).toThrow('humanWaitSeconds');
+    expect(() => validateStatusDocument({ updatedAt: 'x', years: [{ year: 2025, totalDays: 12, parts: [{ ...base, humanWaitSeconds: 400 }] }] })).toThrow('humanWaitSeconds');
     expect(() => formatDuration(-1)).toThrow('Duration seconds must be a non-negative integer');
   });
 });

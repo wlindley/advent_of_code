@@ -1,0 +1,493 @@
+{
+  "year": 2025,
+  "totalDays": 12,
+  "parts": [
+    {
+      "year": 2025,
+      "day": 1,
+      "part": 1,
+      "title": "Secret Entrance",
+      "puzzleUrl": "https://adventofcode.com/2025/day/1",
+      "status": "solved",
+      "summary": "A circular safe dial numbered 0 through 99 starts at 50. Apply an ordered sequence of left (L) and right (R) click rotations modulo 100 and count how many rotations leave the dial resting on 0.",
+      "algorithmSummary": "Direct Euclidean modular simulation: parse instructions into immutable Rotation value objects in 2025/day01/shared, pre-reduce each rotation distance modulo 100 before signed addition, and fold through shared/core euclideanMod while counting resting positions at 0.",
+      "complexity": "O(N) time, O(N) parsed / O(1) solver working space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.28,
+      "attemptsCount": 1,
+      "learnings": [
+        "Promoted euclideanMod to shared/core/math.ts to avoid JavaScript negative remainder and -0 pitfalls.",
+        "Personal input includes multi-turn rotations up to 998 clicks; always pre-reduce distance modulo ring size instead of single-wrap conditionals.",
+        "Placing shared day input parsing and value objects in 2025/day01/shared preserves full rotation distances cleanly for Part 2."
+      ],
+      "startedAt": "2026-11-25T21:45:58Z",
+      "verifiedAt": "2026-11-25T21:54:54Z"
+    },
+    {
+      "year": 2025,
+      "day": 1,
+      "part": 2,
+      "title": "Secret Entrance",
+      "puzzleUrl": "https://adventofcode.com/2025/day/1#part2",
+      "status": "solved",
+      "summary": "Using the same 0–99 safe dial starting at 50 and rotation sequence from Part 1, count every individual click that lands the pointer on 0—both intermediate pass-throughs (including multi-turn loops) and exact end-of-rotation landings.",
+      "algorithmSummary": "First-hit modular arithmetic via Rotation.countZeroHitsFrom: compute clicks to the first zero crossing (100 - p for R; p === 0 ? 100 : p for L) and add 1 + floor((d - firstHit) / 100) in O(1) per rotation without negative-floor quirks or cumulative overflow.",
+      "complexity": "O(N) time, O(1) auxiliary space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.82,
+      "attemptsCount": 1,
+      "learnings": [
+        "Avoid naive floor-difference formulas on leftward crossings starting at 0; express first-hit distance explicitly in non-negative integers.",
+        "Pair closed-form O(1) step formulas with a brute-force single-step oracle in unit tests to catch subtle boundary/off-by-one bugs before submission.",
+        "Model trace frames as frozen value objects with derived getters so visualizers never duplicate domain math."
+      ],
+      "startedAt": "2026-11-25T21:55:40Z",
+      "verifiedAt": "2026-11-25T22:04:13Z"
+    },
+    {
+      "year": 2025,
+      "day": 2,
+      "part": 1,
+      "title": "Gift Shop",
+      "puzzleUrl": "https://adventofcode.com/2025/day/2",
+      "status": "solved",
+      "summary": "Given comma-separated inclusive positive integer ID ranges, identify every invalid ID whose canonical base-10 representation consists of a digit sequence repeated twice (e.g., 55, 6464, 123123) and return their sum.",
+      "algorithmSummary": "Closed-form digit-band arithmetic series in BigInt: for each overlapping even digit length 2k, clamp the repeated half-prefix h against [10^(k-1), 10^k - 1] via exact ceiling/floor division by M = 10^k + 1 and sum M * count * (h_min + h_max) / 2 in O(1) per band.",
+      "complexity": "O(R * D) time, O(R) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.36,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using BigInt for ceiling/floor bounds and arithmetic-series summation guarantees exactness across arbitrary digit widths without Number precision loss.",
+        "Implementing general RepeatedPatternBand(patternLength, repeats) in 2025/day02/shared keeps Part 2 ready for arbitrary repeat counts.",
+        "Scale BigInt positions to 0..1000 in BigInt before converting to Number when rendering SVG bars so huge custom inputs never produce NaN/Infinity."
+      ],
+      "startedAt": "2026-11-25T22:08:53Z",
+      "verifiedAt": "2026-11-25T22:19:09Z"
+    },
+    {
+      "year": 2025,
+      "day": 2,
+      "part": 2,
+      "title": "Gift Shop",
+      "puzzleUrl": "https://adventofcode.com/2025/day/2#part2",
+      "status": "solved",
+      "summary": "Using the same comma-separated inclusive positive integer ID ranges from Part 1, an ID is now invalid if its canonical base-10 representation consists of any non-empty digit sequence repeated at least twice (r >= 2). Sum all distinct invalid IDs across the ranges.",
+      "algorithmSummary": "Möbius inclusion-exclusion over RepeatedPatternBand(L/r, r): for each digit length L >= 2, expand non-empty subsets of distinct prime factors of L with weight -μ(r) in {+1, -1} and sum signed BigInt arithmetic series in O(1) per band.",
+      "complexity": "O(R * D * 2^ω(D)) time, O(1) working space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.13,
+      "attemptsCount": 1,
+      "learnings": [
+        "Inclusion-exclusion over squarefree repeat divisors deduplicates multi-periodic IDs like 222222 (r=2,3,6) in closed form without enumerating sets.",
+        "Designing 2025/day02/shared/idRange.ts with general (patternLength, repeats) let Part 2 reuse 100% of shared domain code with zero edits.",
+        "Key React lists by full composite tuple (digitLength-patternLength-repeats) when generalizing from Part 1 to multi-band Part 2."
+      ],
+      "startedAt": "2026-11-25T22:19:53Z",
+      "verifiedAt": "2026-11-25T22:29:15Z"
+    },
+    {
+      "year": 2025,
+      "day": 3,
+      "part": 1,
+      "title": "Lobby",
+      "puzzleUrl": "https://adventofcode.com/2025/day/3",
+      "status": "solved",
+      "summary": "Each input line is a battery bank of single-digit joltage ratings (1–9). Activate exactly two batteries at indices i < j without reordering to maximize the concatenated two-digit joltage, and sum the maxima across all banks.",
+      "algorithmSummary": "Monotonic non-increasing index stack with discard budget L - k in 2025/day03/shared/batteryBank.ts (strict > pop condition for earliest-index tie-breaking), accumulating BigInt totals in O(N * L) time independent of k.",
+      "complexity": "O(N * L) time, O(L) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.15,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using a strict > pop condition on the monotonic stack guarantees earliest-index determinism without wasting discard budget on equal digits.",
+        "Implementing k-agnostic BatteryBank.selectMaxJoltage(count) with BigInt in 2025/day03/shared/ prepares cleanly for larger k in Part 2."
+      ],
+      "startedAt": "2026-11-25T22:29:22Z",
+      "verifiedAt": "2026-11-25T22:37:25Z"
+    },
+    {
+      "year": 2025,
+      "day": 3,
+      "part": 2,
+      "title": "Lobby",
+      "puzzleUrl": "https://adventofcode.com/2025/day/3#part2",
+      "status": "solved",
+      "summary": "Activate exactly 12 batteries per bank while preserving their left-to-right order to form the maximum 12-digit joltage per bank, and return the BigInt sum across all banks.",
+      "algorithmSummary": "Reuses 2025/day03/shared/batteryBank.ts verbatim: O(n) strict-> monotonic decreasing stack with drop budget L - 12 selecting the lexicographically maximum 12-digit subsequence in BigInt, paired with a pure traceStackDrops breakdown and greedy-window-scan differential test oracle.",
+      "complexity": "O(N * L) time, O(L) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.45,
+      "attemptsCount": 1,
+      "learnings": [
+        "Building k-agnostic BatteryBank.selectMaxJoltage(count) with BigInt in Part 1 let Part 2 solve k = 12 with zero edits to shared/ or part1/.",
+        "Differential testing the O(n) monotonic stack against an independent O(k * n) feasible-window oracle verified both values and earliest-index tie-breaking."
+      ],
+      "startedAt": "2026-11-25T22:37:59Z",
+      "verifiedAt": "2026-11-25T22:45:35Z"
+    },
+    {
+      "year": 2025,
+      "day": 4,
+      "part": 1,
+      "title": "Printing Department",
+      "puzzleUrl": "https://adventofcode.com/2025/day/4",
+      "status": "solved",
+      "summary": "Given a rectangular 2D warehouse floor diagram of paper rolls (@) and empty floor (.), count how many paper rolls are accessible to a forklift—meaning strictly fewer than 4 of their 8 surrounding cells contain another paper roll.",
+      "algorithmSummary": "Zero-padded (R+2)x(C+2) Uint8Array occupancy buffer + branchless flat 8-neighbor degree map in 2025/day04/shared/warehouse.ts (backed by promoted shared/core/grid.ts Grid2D<T>), counting @ cells with degree < 4 in O(R * C) time.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.08,
+      "attemptsCount": 1,
+      "learnings": [
+        "Promoted immutable Grid2D<T> + DIRS_4/DIRS_8 to shared/core/grid.ts, preserving meaningful leading/trailing spaces by stripping only trailing line endings.",
+        "Using a 1-cell zero-padded Uint8Array eliminates inner bounds checks and row-wrap bugs while providing peel-ready degree buffers for Part 2.",
+        "HTML Canvas keeps 137x137 (~18.8k cells) heatmaps crisp and instant without thousands of SVG DOM nodes."
+      ],
+      "startedAt": "2026-11-25T22:45:46Z",
+      "verifiedAt": "2026-11-25T22:55:14Z"
+    },
+    {
+      "year": 2025,
+      "day": 4,
+      "part": 2,
+      "title": "Printing Department",
+      "puzzleUrl": "https://adventofcode.com/2025/day/4#part2",
+      "status": "solved",
+      "summary": "Repeatedly remove every @ paper roll with strictly fewer than 4 occupied 8-neighbors (updating neighbor degrees as rolls are removed) until no accessible rolls remain, and return the total number of rolls removed.",
+      "algorithmSummary": "Synchronous wave-by-wave 4-core peeling via double-buffered typed arrays over WarehouseFloor.computeDegreeMap(): claim neighbors immediately when degree crosses below 4 (preventing duplicate enqueues) and record 1-indexed Uint32Array removal waves in O(R * C) time.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.84,
+      "attemptsCount": 1,
+      "learnings": [
+        "Claiming occupied[nb] = 0 immediately when degree transitions 4 -> 3 prevents duplicate enqueues within a wave while preserving exact synchronous wave semantics.",
+        "Using Uint32Array for per-cell removal wave contours avoids 16-bit wraparound on pathological long chains and powers zero-copy Canvas animation without per-frame grid clones."
+      ],
+      "startedAt": "2026-11-25T22:55:55Z",
+      "verifiedAt": "2026-11-25T23:05:35Z"
+    },
+    {
+      "year": 2025,
+      "day": 5,
+      "part": 1,
+      "title": "Cafeteria",
+      "puzzleUrl": "https://adventofcode.com/2025/day/5",
+      "status": "solved",
+      "summary": "Given a two-section ingredient database containing inclusive fresh ID ranges and a list of available ingredient IDs, count how many available IDs fall within at least one fresh range.",
+      "algorithmSummary": "Promoted immutable BigInt ClosedInterval and IntervalUnion into shared/core/interval.ts: coalesce overlapping and integer-adjacent ranges in O(R log R) time, then binary-search each available ID in O(log M) without deduplicating queries.",
+      "complexity": "O(R log R + Q log M) time, O(R + Q) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.82,
+      "attemptsCount": 1,
+      "learnings": [
+        "Promoted ClosedInterval and IntervalUnion to shared/core/interval.ts using explicit < / > BigInt comparators and integer-adjacent coalescing (next.start <= curEnd + 1n).",
+        "Guard zero-span domains when projecting BigInt coordinates onto SVG tracks so singleton datasets never divide by zero."
+      ],
+      "startedAt": "2026-11-25T23:05:42Z",
+      "verifiedAt": "2026-11-25T23:14:03Z"
+    },
+    {
+      "year": 2025,
+      "day": 5,
+      "part": 2,
+      "title": "Cafeteria",
+      "puzzleUrl": "https://adventofcode.com/2025/day/5#part2",
+      "status": "solved",
+      "summary": "Disregard the available ingredient ID list and compute the total number of distinct integer IDs covered by the union of all inclusive fresh ingredient ID ranges.",
+      "algorithmSummary": "Reuses shared/core/interval.ts IntervalUnion.totalLength verbatim: sort inclusive BigInt ranges with explicit < / > comparisons, coalesce overlapping and integer-adjacent bands in O(R log R) time, and sum end - start + 1n across disjoint bands.",
+      "complexity": "O(R log R) time, O(R) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.58,
+      "attemptsCount": 1,
+      "learnings": [
+        "Promoting canonical IntervalUnion with totalLength in Part 1 let Part 2 solve in a single line with zero edits to shared/ or part1/.",
+        "Verifying IntervalUnion against an independent half-open endpoint sweep-line oracle (+1 at s, -1 at e+1n) guarantees zero off-by-one boundary bugs."
+      ],
+      "startedAt": "2026-11-25T23:14:42Z",
+      "verifiedAt": "2026-11-25T23:23:06Z"
+    },
+    {
+      "year": 2025,
+      "day": 6,
+      "part": 1,
+      "title": "Trash Compactor",
+      "puzzleUrl": "https://adventofcode.com/2025/day/6",
+      "status": "solved",
+      "summary": "Parse a horizontal ASCII math worksheet containing side-by-side vertical arithmetic problems separated by full blank columns. Evaluate each problem's stacked integers under its bottom operator (+ or *) in BigInt and sum all results.",
+      "algorithmSummary": "Space-preserving column-block partitioner in 2025/day06/shared/worksheet.ts: strip only outer blank lines, right-pad ragged lines to maxWidth, split on all-space columns into immutable ProblemBlock records, extract horizontal BigInt operands, and fold under + or *.",
+      "complexity": "O(R * W) time, O(R * W) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.09,
+      "attemptsCount": 1,
+      "learnings": [
+        "Never call .trim() on column-aligned ASCII worksheets; strip only outer blank lines and right-pad shorter lines so leading spaces remain aligned.",
+        "Keeping ProblemBlock tolerant of intra-row spaces preserves raw character grids cleanly for Part 2 vertical reading."
+      ],
+      "startedAt": "2026-11-25T23:23:14Z",
+      "verifiedAt": "2026-11-25T23:31:52Z"
+    },
+    {
+      "year": 2025,
+      "day": 6,
+      "part": 2,
+      "title": "Trash Compactor",
+      "puzzleUrl": "https://adventofcode.com/2025/day/6#part2",
+      "status": "solved",
+      "summary": "Re-evaluate the fixed-width ASCII math worksheet right-to-left one character column at a time, reading each column top-to-bottom (MSD to LSD) as a BigInt operand folded under the block's bottom operator (+ or *), and return the grand total.",
+      "algorithmSummary": "Reuses 2025/day06/shared/worksheet.ts verbatim: iterate blocks and columns right-to-left, accumulating top-to-bottom BigInt operands via a 3-state guard rejecting interior vertical gaps while preserving 0n columns and skipping operator-only space columns.",
+      "complexity": "O(R * W) time, O(W_max) working space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.47,
+      "attemptsCount": 1,
+      "learnings": [
+        "Preserving raw fixed-width digitRows in 2025/day06/shared/worksheet.ts let Part 2 decode vertical right-to-left columns with zero parser changes.",
+        "Track a 3-state digit machine (before / inDigits / after) rather than checking value !== 0n so legitimate zero-valued columns are preserved while empty columns are skipped."
+      ],
+      "startedAt": "2026-11-25T23:32:29Z",
+      "verifiedAt": "2026-11-25T23:41:23Z"
+    },
+    {
+      "year": 2025,
+      "day": 7,
+      "part": 1,
+      "title": "Laboratories",
+      "puzzleUrl": "https://adventofcode.com/2025/day/7",
+      "status": "solved",
+      "summary": "A downward beam enters a 2D tachyon manifold at S, passes straight through empty cells (.), and splits into adjacent left/right downward beams whenever it strikes a splitter (^). Converging beams merge into one; count the total number of split events.",
+      "algorithmSummary": "Row-by-row ping-pong Uint8Array(cols) frontier sweep over TachyonManifold (backed by shared/core Grid2D), emitting a zero-copy cellStates buffer and scalar row frames in O(R * C) time, verified against an independent BigInt bitmask oracle.",
+      "complexity": "O(R * C) time, O(C) working space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.46,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using ping-pong frontier buffers prevents in-place horizontal bleed when a splitter spawns into column c + 1 during a left-to-right scan.",
+        "Guarding !isSplitter before marking adjacent Beam cells preserves unreached splitter states on adjacent ^^ configurations."
+      ],
+      "startedAt": "2026-11-25T23:41:32Z",
+      "verifiedAt": "2026-11-25T23:50:26Z"
+    },
+    {
+      "year": 2025,
+      "day": 7,
+      "part": 2,
+      "title": "Laboratories",
+      "puzzleUrl": "https://adventofcode.com/2025/day/7#part2",
+      "status": "solved",
+      "summary": "A single quantum tachyon particle enters the manifold at S and branches into two distinct timelines at every splitter (^). Distinct histories passing through the same cell remain separate timelines; return the total number of distinct timelines upon exiting the manifold.",
+      "algorithmSummary": "Forward row-by-row arbitrary-precision BigInt DP over TachyonManifold (reused verbatim from 2025/day07/shared) with an exited accumulator for lateral exits and top-53-bit bigIntLog2 heatmap scaling, verified against a reverse bottom-up DP oracle.",
+      "complexity": "O(R * C) time, O(C) DP space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.21,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using -1 as EMPTY_DENSITY separates unvisited 0n cells from 1n cells where log2(1n) === 0, and top-53-bit bigIntLog2 avoids Infinity overflow at arbitrary bit widths.",
+        "Counting lateral exits as completed timelines preserves exact equivalence between forward DP, bottom-up DP, and totalTimelines = 1 + sum(entering(hitSplitters))."
+      ],
+      "startedAt": "2026-11-25T23:51:06Z",
+      "verifiedAt": "2026-11-25T23:59:56Z"
+    },
+    {
+      "year": 2025,
+      "day": 8,
+      "part": 1,
+      "title": "Playground",
+      "puzzleUrl": "https://adventofcode.com/2025/day/8",
+      "status": "solved",
+      "summary": "Given 3D integer coordinates of suspended junction boxes, process the first K closest distinct unordered pairs in ascending Euclidean distance order, linking each pair into a circuit (redundant pairs still count toward K). Return the product of the three largest circuit sizes.",
+      "algorithmSummary": "Stream all N(N-1)/2 pairs through a fixed-capacity K binary max-heap backed by Float64Array/Uint32Array (O(N^2 + K log K) expected, ~16 KB memory), sort the K shortest pairs deterministically by (distSq, u, v), and union via promoted shared/core/disjointSet.ts.",
+      "complexity": "O(N^2 + K log K) expected time, O(N + K) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.05,
+      "attemptsCount": 1,
+      "learnings": [
+        "Promoted Int32Array-backed DisjointSet (negative entries = -size, non-negative = parent) to shared/core/disjointSet.ts as a single-source-of-truth Union-Find.",
+        "Keep puzzle-specific parameters like K=10 (example) vs K=1000 (personal) explicit in domain functions and bind example presets strictly at the UI manifest boundary."
+      ],
+      "startedAt": "2026-11-26T00:00:03Z",
+      "verifiedAt": "2026-11-26T00:12:40Z"
+    },
+    {
+      "year": 2025,
+      "day": 8,
+      "part": 2,
+      "title": "Playground",
+      "puzzleUrl": "https://adventofcode.com/2025/day/8#part2",
+      "status": "solved",
+      "summary": "Keep connecting closest unconnected 3D junction-box pairs until all boxes merge into a single circuit. Identify the final connecting pair and return the product of their X coordinates.",
+      "algorithmSummary": "Dense O(N^2) Prim's MST in O(N) typed arrays (Uint8Array inTree, Float64Array bestDistSq, Int32Array parent) with canonical (distSq, min, max) tie-breaking, sorted by compareJunctionPairs to recover Kruskal chronological order and compute BigInt(x_u) * BigInt(x_v) for the final bridge.",
+      "complexity": "O(N^2) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 14.83,
+      "attemptsCount": 1,
+      "learnings": [
+        "Dense Prim's MST computes the exact maximum-weight Kruskal bottleneck edge in O(N^2) time and O(N) typed-array memory without materializing ~500k pairs.",
+        "Applying canonical (distSq, min(a,b), max(a,b)) tie-breaking in both relaxation and selection ensures exact equivalence to full Kruskal sort even on tied 3x3x3 grids."
+      ],
+      "startedAt": "2026-11-26T00:13:24Z",
+      "verifiedAt": "2026-11-26T00:25:04Z",
+      "humanWaitSeconds": 50
+    },
+    {
+      "year": 2025,
+      "day": 9,
+      "part": 1,
+      "title": "Movie Theater",
+      "puzzleUrl": "https://adventofcode.com/2025/day/9",
+      "status": "solved",
+      "summary": "Given 2D integer grid coordinates of red floor tiles, pick any two tiles as opposite corners of an axis-aligned rectangle and return the maximum inclusive tile area (|x1 - x2| + 1) * (|y1 - y2| + 1).",
+      "algorithmSummary": "Extract SW/NE (and vertically reflected NW/SE) Pareto staircases in O(N log N) and maximize the raw unclamped Monge score (X_j - x_i + 1)(Y_j - y_i + 1) in BigInt via Monotone Divide-and-Conquer, preserving raw vertex order in 2025/day09/shared for Part 2.",
+      "complexity": "O(N log N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.08,
+      "attemptsCount": 1,
+      "learnings": [
+        "Keep the Monge objective unclamped during Pareto-frontier D&C: because SW and NE come from the same point set, every invalid pair is strictly <= 0 while valid pairs are >= 1, preserving strict quadrangle monotonicity everywhere.",
+        "Preserve raw input vertex order in 2025/day09/shared/tileGeometry.ts (sorting only a copy inside skyline.ts) so Part 2 can directly build the closed orthogonal polygon."
+      ],
+      "startedAt": "2026-11-26T00:28:49Z",
+      "verifiedAt": "2026-11-26T00:41:03Z"
+    },
+    {
+      "year": 2025,
+      "day": 9,
+      "part": 2,
+      "title": "Movie Theater",
+      "puzzleUrl": "https://adventofcode.com/2025/day/9#part2",
+      "status": "solved",
+      "summary": "Consecutive red tiles trace a closed orthogonal loop of green edges enclosing green interior tiles. Find the maximum inclusive area of an axis-aligned rectangle with two opposite red corners whose every tile is red or green.",
+      "algorithmSummary": "Point+Gap BigInt coordinate compression (omitting 0-gap slabs), inclusive boundary rasterization + half-open vertical-edge XOR parity sweep, fused 1-based 2D Int32Array invalid-cell prefix sum, and area-pruned O(1)-checked red-vertex pair scan.",
+      "complexity": "O(N log N + Kx*Ky + N^2) time, O(Kx*Ky) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 11.21,
+      "attemptsCount": 1,
+      "learnings": [
+        "Point+Gap coordinate compression must omit gap slabs when u_{i+1} - u_i === 1n so 0-gap adjacent parallel walls stay adjacent without fabricating phantom exterior tiles.",
+        "Combine inclusive boundary marking with half-open vertical-edge XOR parity (cyLo <= cy < cyHi, ray at y + 0.5) instead of naive discrete flood-fill so both 0-gap pinches and bottleneck exterior cavities classify exactly."
+      ],
+      "startedAt": "2026-11-26T00:41:41Z",
+      "verifiedAt": "2026-11-26T00:56:23Z",
+      "humanWaitSeconds": 16
+    },
+    {
+      "year": 2025,
+      "day": 10,
+      "part": 1,
+      "title": "Factory",
+      "puzzleUrl": "https://adventofcode.com/2025/day/10",
+      "status": "solved",
+      "summary": "Each factory machine has indicator lights starting off, a target on/off pattern, wiring buttons that toggle subsets of lights, and joltage requirements. Find the minimum total button presses across all machines to match every target light pattern.",
+      "algorithmSummary": "Promoted arbitrary-width BigInt Gauss-Jordan GF(2) RREF into shared/core/gf2.ts, extracting each machine's particular solution and nullspace basis, then Gray-code enumerating all 2^k affine solutions for minimum Hamming weight (verified against a 50-machine state-space BFS oracle).",
+      "complexity": "O(L * B + 2^k) time, O(L + B) space per machine",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.07,
+      "attemptsCount": 1,
+      "learnings": [
+        "Promoted arbitrary-width BigInt Gf2LinearSystem and bitCount to shared/core/gf2.ts for reusable GF(2) RREF and Gray-code minimum-weight nullspace search.",
+        "Preserve unused input fields like joltageRequirements inside 2025/day10/shared/machine.ts with zero GF(2) coupling so Part 2 reuses the parser verbatim."
+      ],
+      "startedAt": "2026-11-26T00:56:57Z",
+      "verifiedAt": "2026-11-26T01:08:19Z"
+    },
+    {
+      "year": 2025,
+      "day": 10,
+      "part": 2,
+      "title": "Factory",
+      "puzzleUrl": "https://adventofcode.com/2025/day/10#part2",
+      "status": "solved",
+      "summary": "Each factory machine has integer joltage counters starting at 0 and buttons that each increment a subset of counters by +1. Find the minimum total non-negative integer button presses (min sum(x) s.t. A x = b, x >= 0) across all machines.",
+      "algorithmSummary": "Promoted immutable BigInt Rational + floorDiv/ceilDiv to shared/core/rational.ts; ran exact Gauss-Jordan Q-RREF with pivotOrder favoring tight free bounds, cleared row denominators via LCM, and solved free variables with interval-pruned directional DFS (cross-verified against a parity-halving-dc oracle).",
+      "complexity": "O(L^2 B + L * prod(span_k)) time, O(L B) space per machine",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 18.56,
+      "attemptsCount": 1,
+      "learnings": [
+        "Promoted exact BigInt Rational, gcdBigInt, lcmBigInt, floorDiv, and ceilDiv to shared/core/rational.ts so non-TU det=2 systems avoid floating-point rounding drift and truncated BigInt division.",
+        "Passing pivotOrder into RationalLinearSystem prefers tightly-bounded columns as free variables without moving column indices, keeping button mappings and visualizer columns aligned."
+      ],
+      "startedAt": "2026-11-26T01:08:56Z",
+      "verifiedAt": "2026-11-26T01:27:04Z"
+    },
+    {
+      "year": 2025,
+      "day": 11,
+      "part": 1,
+      "title": "Reactor",
+      "puzzleUrl": "https://adventofcode.com/2025/day/11",
+      "status": "solved",
+      "summary": "Given a directed device wiring network (device: out1 out2 ...), count all distinct directed paths starting at 'you' and ending at 'out'.",
+      "algorithmSummary": "Promoted immutable DirectedGraph<T> to shared/core/dag.ts: prune to R = Forward(you) ∩ Backward(out) via iterative BFS, verify acyclicity with iterative Kahn's topological sort, and sweep forward accumulating BigInt path counts.",
+      "complexity": "O(V + E) time and space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.05,
+      "attemptsCount": 1,
+      "learnings": [
+        "Promoted generic immutable DirectedGraph<T> (relevantSubgraph, iterative Kahn topologicalOrder, BigInt countPaths) to shared/core/dag.ts.",
+        "Pruning Backward(target) strictly inside Forward(source) scopes cycle detection to R without falsely rejecting off-path cycles, while still catching source===target cycles."
+      ],
+      "startedAt": "2026-11-26T01:27:36Z",
+      "verifiedAt": "2026-11-26T01:39:07Z"
+    },
+    {
+      "year": 2025,
+      "day": 11,
+      "part": 2,
+      "title": "Reactor",
+      "puzzleUrl": "https://adventofcode.com/2025/day/11#part2",
+      "status": "solved",
+      "summary": "Using the same directed device wiring network, count every distinct directed path starting at 'svr' and ending at 'out' that visits both 'dac' and 'fft' (in either order).",
+      "algorithmSummary": "Reused shared/core/dag.ts and 2025/day11/shared/reactor.ts verbatim: single-pass O(V + E) Kahn topological DP propagating frozen 4-state BigInt WaypointCounts ([neither, dacOnly, fftOnly, both]), cross-verified against topo-waypoint-legs and brute-force walk oracles.",
+      "complexity": "O(V + E) time and space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.22,
+      "attemptsCount": 1,
+      "learnings": [
+        "Single-pass 4-state bitmask topological DP handles arbitrary waypoint order, coincident endpoints, and parallel multiedges in O(V + E) while feeding per-node 4-state distributions directly to the visualizer.",
+        "Using branchless top-53-bit bigintLog2 and BigInt ratios scaled to 0..1000n before Number conversion keeps stacked layer charts safe past 2^1024."
+      ],
+      "startedAt": "2026-11-26T01:39:44Z",
+      "verifiedAt": "2026-11-26T01:51:02Z"
+    },
+    {
+      "year": 2025,
+      "day": 12,
+      "part": 1,
+      "title": "Christmas Tree Farm",
+      "puzzleUrl": "https://adventofcode.com/2025/day/12",
+      "status": "solved",
+      "summary": "Given a catalog of 2D polyomino present shapes (freely rotatable and reflectable) and rectangular tree regions with required shape counts, count how many regions can pack all required presents without overlapping solid cells.",
+      "algorithmSummary": "Two-sided O(S) fast-path bounds (area pigeonhole, single-shape fit, and constructive disjoint-box tiling) paired with an exact transposed column-scanline BigInt frontier DFS with column-boundary dead-state memoization, verified against a piece-first brute-force differential oracle.",
+      "complexity": "O(S) fast-path; O(W * 2^((span-1)*min(W,H)) * prod(c_i+1)) exact borderline",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.31,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pair exact O(S) two-sided bounds (area pigeonhole + constructive disjoint-box tiling) with an exact polyomino packer so both borderline interlocking examples and 1,000-region personal inputs solve in milliseconds.",
+        "On column-major anchored polyomino orientations, always bounds-check both 0 <= pr and pr < rows because cells in later columns (dc > 0) can have negative dr relative to the leftmost anchor."
+      ],
+      "startedAt": "2026-11-26T01:51:46Z",
+      "verifiedAt": "2026-11-26T02:08:04Z"
+    },
+    {
+      "year": 2025,
+      "day": 12,
+      "part": 2,
+      "title": "Christmas Tree Farm",
+      "puzzleUrl": "https://adventofcode.com/2025/day/12#part2",
+      "status": "solved",
+      "summary": "Advent of Code 2025 finale star: once all 23 preceding stars across Days 1–12 are collected, finish decorating the North Pole to claim the 24th and final star.",
+      "algorithmSummary": "Validated all 23 prerequisite stars and submitted the AoC finale completion trigger (level=2, answer=0), paired with a 24-star SVG tree illumination visualizer.",
+      "complexity": "O(1) verification, O(S) animation",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.05,
+      "attemptsCount": 1,
+      "learnings": [
+        "AoC final-day Part 2 stars submit level=2 with answer=0 once all preceding stars are earned and respond with a celebratory epilogue ('Congratulations! You've finished...')."
+      ],
+      "startedAt": "2026-11-26T02:08:41Z",
+      "verifiedAt": "2026-11-26T02:09:52Z"
+    }
+  ],
+  "updatedAt": "2026-11-26T02:09:52Z"
+}

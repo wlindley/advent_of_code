@@ -1,15 +1,38 @@
 import { formatPartKey, type PuzzlePart } from '../../shared/core';
-import type { PartRecord, StatusDocument, YearProgress, YearStatus } from './statusTypes';
+import type {
+  PartDurationSummary,
+  PartRecord,
+  StatusDocument,
+  YearProgress,
+  YearStatus,
+} from './statusTypes';
 
 export type {
   AttemptLog,
   InProgressPhase,
+  PartDurationSummary,
   PartRecord,
   Proposal,
   StatusDocument,
   YearProgress,
   YearStatus,
 } from './statusTypes';
+
+function validateSolvedPart(part: Extract<PartRecord, { status: 'solved' }>, key: string): void {
+  if (part.personalInputElapsedMs < 0) {
+    throw new Error(`personalInputElapsedMs must be non-negative for ${key}`);
+  }
+  const startMs = Date.parse(part.startedAt);
+  const endMs = Date.parse(part.verifiedAt);
+  if (Number.isNaN(startMs) || Number.isNaN(endMs) || endMs < startMs) {
+    throw new Error(`verifiedAt must not precede startedAt for ${key}`);
+  }
+  const wait = part.humanWaitSeconds ?? 0;
+  const rawSeconds = Math.round((endMs - startMs) / 1000);
+  if (!Number.isInteger(wait) || wait < 0 || wait > rawSeconds) {
+    throw new Error(`humanWaitSeconds must be an integer in [0, ${rawSeconds}] for ${key}`);
+  }
+}
 
 export function validateStatusDocument(doc: StatusDocument): StatusDocument {
   const seen = new Set<string>();
@@ -26,25 +49,30 @@ export function validateStatusDocument(doc: StatusDocument): StatusDocument {
         const exists = part.proposals.some((proposal) => proposal.id === part.selectedProposalId);
         if (!exists) throw new Error(`Unknown selectedProposalId: ${part.selectedProposalId}`);
       }
-      if (part.status === 'solved') {
-        if (part.personalInputElapsedMs < 0) {
-          throw new Error(`personalInputElapsedMs must be non-negative for ${key}`);
-        }
-        const startMs = Date.parse(part.startedAt);
-        const endMs = Date.parse(part.verifiedAt);
-        if (Number.isNaN(startMs) || Number.isNaN(endMs) || endMs < startMs) {
-          throw new Error(`verifiedAt must not precede startedAt for ${key}`);
-        }
-      }
+      if (part.status === 'solved') validateSolvedPart(part, key);
     }
   }
   return doc;
 }
 
+export function combineYearStatuses(years: readonly YearStatus[]): StatusDocument {
+  const sorted = [...years].sort((a, b) => b.year - a.year);
+  let latest = '';
+  for (const year of sorted) {
+    if (year.updatedAt && year.updatedAt > latest) latest = year.updatedAt;
+    for (const part of year.parts) {
+      const ts = part.status === 'solved' ? part.verifiedAt : part.status === 'pending' ? '' : part.updatedAt;
+      if (ts > latest) latest = ts;
+    }
+  }
+  return validateStatusDocument({ updatedAt: latest || '1970-01-01T00:00:00Z', years: sorted });
+}
+
 export function computeSolveDurationSeconds(
   part: Extract<PartRecord, { status: 'solved' }>,
 ): number {
-  return Math.round((Date.parse(part.verifiedAt) - Date.parse(part.startedAt)) / 1000);
+  const raw = Math.round((Date.parse(part.verifiedAt) - Date.parse(part.startedAt)) / 1000);
+  return Math.max(0, raw - (part.humanWaitSeconds ?? 0));
 }
 
 export function formatDuration(totalSeconds: number): string {
@@ -59,29 +87,38 @@ export function formatDuration(totalSeconds: number): string {
   return `${seconds}s`;
 }
 
+function medianNumber(values: readonly number[]): number {
+  if (values.length === 0) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 1 ? sorted[mid]! : (sorted[mid - 1]! + sorted[mid]!) / 2;
+}
+
 export function computeYearProgress(yearStatus: YearStatus): YearProgress {
   const totalParts = yearStatus.totalDays * 2;
   let solvedParts = 0;
   let inProgressParts = 0;
   let blockedParts = 0;
   let totalSolveSeconds = 0;
-  let earliestStartMs = Number.POSITIVE_INFINITY;
-  let latestEndMs = Number.NEGATIVE_INFINITY;
+  let firstTryCount = 0;
+  const durations: number[] = [];
+  const runMs: number[] = [];
+  let fastestPart: PartDurationSummary | null = null;
+  let slowestPart: PartDurationSummary | null = null;
 
   for (const part of yearStatus.parts) {
     if (part.status === 'solved') {
+      const sec = computeSolveDurationSeconds(part);
       solvedParts += 1;
-      totalSolveSeconds += computeSolveDurationSeconds(part);
-      const startMs = Date.parse(part.startedAt);
-      const endMs = Date.parse(part.verifiedAt);
-      if (startMs < earliestStartMs) earliestStartMs = startMs;
-      if (endMs > latestEndMs) latestEndMs = endMs;
+      totalSolveSeconds += sec;
+      if (part.attemptsCount === 1) firstTryCount += 1;
+      durations.push(sec);
+      runMs.push(part.personalInputElapsedMs);
+      if (!fastestPart || sec < fastestPart.seconds) fastestPart = { day: part.day, part: part.part, seconds: sec };
+      if (!slowestPart || sec > slowestPart.seconds) slowestPart = { day: part.day, part: part.part, seconds: sec };
     } else if (part.status === 'in_progress') inProgressParts += 1;
     else if (part.status === 'blocked') blockedParts += 1;
   }
-
-  const elapsedSolveSeconds =
-    solvedParts > 0 ? Math.round((latestEndMs - earliestStartMs) / 1000) : 0;
 
   return {
     totalParts,
@@ -91,7 +128,11 @@ export function computeYearProgress(yearStatus: YearStatus): YearProgress {
     pendingParts: Math.max(0, totalParts - solvedParts - inProgressParts - blockedParts),
     completionPercent: Math.round((solvedParts / totalParts) * 100),
     totalSolveSeconds,
-    elapsedSolveSeconds,
+    firstTryCount,
+    medianSolveSeconds: Math.round(medianNumber(durations)),
+    medianRunMs: Math.round(medianNumber(runMs) * 100) / 100,
+    fastestPart,
+    slowestPart,
   };
 }
 
