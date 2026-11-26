@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:42:31Z",
+  "updatedAt": "2026-11-26T21:53:43Z",
   "parts": [
     {
       "year": 2020,
@@ -203,6 +203,26 @@
       ],
       "startedAt": "2026-11-26T21:35:12Z",
       "verifiedAt": "2026-11-26T21:42:31Z"
+    },
+    {
+      "year": 2020,
+      "day": 6,
+      "part": 1,
+      "title": "Custom Customs",
+      "puzzleUrl": "https://adventofcode.com/2020/day/6",
+      "status": "solved",
+      "summary": "Sum across blank-line-separated passenger groups the number of distinct questions (a-z) to which at least one group member answered yes.",
+      "algorithmSummary": "26-bit integer bitmask encoding with branch-free Math.imul SWAR popcount26 and Template Method BitmaskConsensusPolicy (ANY_YES_POLICY for Part 1, pre-built ALL_YES_POLICY for zero-churn Part 2) in 2020/day06/shared/ (1.89 ms across ~485 groups -> 6,748): single-pass CRLF/whitespace parser, bounded 80-frame trace, 26-column a-z CustomsMatrixSvg showing unanimous vs partial-only consensus strips, differentially verified across 50 seeded PRNG batches against an independent Set<string> union/intersection oracle.",
+      "complexity": "O(C) parse & O(P) solve time, O(P) retained space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.89,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using Math.imul in a 32-bit SWAR popcount26 gives exact, branch-free O(1) bit counts over 26-bit masks with zero intermediate floating-point rounding.",
+        "Pre-building BOTH ANY_YES_POLICY and ALL_YES_POLICY under BitmaskConsensusPolicy with dual OR/AND strips in CustomsMatrixSvg prepares Part 2 with zero shared edits."
+      ],
+      "startedAt": "2026-11-26T21:42:31Z",
+      "verifiedAt": "2026-11-26T21:53:43Z"
     }
   ]
 }
