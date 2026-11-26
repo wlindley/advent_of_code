@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T20:29:09Z",
+  "updatedAt": "2026-11-26T20:46:19Z",
   "parts": [
     {
       "year": 2019,
@@ -63,6 +63,26 @@
       ],
       "startedAt": "2026-11-26T20:12:19Z",
       "verifiedAt": "2026-11-26T20:29:09Z"
+    },
+    {
+      "year": 2019,
+      "day": 2,
+      "part": 2,
+      "title": "1202 Program Alarm",
+      "puzzleUrl": "https://adventofcode.com/2019/day/2#part2",
+      "status": "solved",
+      "summary": "Find the noun and verb in [0..99] that make the gravity-assist Intcode program halt with mem[0] = 19690720, returning 100 * noun + verb.",
+      "algorithmSummary": "3-point affine basis probe ((0,0), (1,0), (0,1)) with concrete Intcode VM verification and cached exhaustive [0..99]^2 fallback in 2019/day02/part2/ (0.86 ms in 4 VM runs -> 5,064): zero edits to 2019/shared/intcode/ or day02/shared/, HiDPI canvas log-error heatmap (via shared/core bigintLog2) paired with winning-run TapeGridPanel replay, differentially verified against an independent flat-loop brute-force oracle across 30 seeded affine & non-affine programs.",
+      "complexity": "O(N + S) affine fast path (4 VM runs); O(R^2 * (N + S)) verified fallback",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.86,
+      "attemptsCount": 1,
+      "learnings": [
+        "A 3-point black-box affine probe verified by a concrete VM execution solves AoC Day 2 Part 2 in 4 VM runs (~0.86 ms) while staying 100% sound on non-affine or self-modifying programs via cached exhaustive fallback.",
+        "Mapping absError === 0n -> 0 and positive errors -> bigintLog2(absError) + 1 normalized only when maxLogError > 0 prevents 0/0 NaN and preserves clear visual separation between exact matches (0n) and unit errors (1n)."
+      ],
+      "startedAt": "2026-11-26T20:29:36Z",
+      "verifiedAt": "2026-11-26T20:46:19Z"
     }
   ]
 }
