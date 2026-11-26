@@ -65,14 +65,23 @@ export function computeYearProgress(yearStatus: YearStatus): YearProgress {
   let inProgressParts = 0;
   let blockedParts = 0;
   let totalSolveSeconds = 0;
+  let earliestStartMs = Number.POSITIVE_INFINITY;
+  let latestEndMs = Number.NEGATIVE_INFINITY;
 
   for (const part of yearStatus.parts) {
     if (part.status === 'solved') {
       solvedParts += 1;
       totalSolveSeconds += computeSolveDurationSeconds(part);
+      const startMs = Date.parse(part.startedAt);
+      const endMs = Date.parse(part.verifiedAt);
+      if (startMs < earliestStartMs) earliestStartMs = startMs;
+      if (endMs > latestEndMs) latestEndMs = endMs;
     } else if (part.status === 'in_progress') inProgressParts += 1;
     else if (part.status === 'blocked') blockedParts += 1;
   }
+
+  const elapsedSolveSeconds =
+    solvedParts > 0 ? Math.round((latestEndMs - earliestStartMs) / 1000) : 0;
 
   return {
     totalParts,
@@ -82,6 +91,7 @@ export function computeYearProgress(yearStatus: YearStatus): YearProgress {
     pendingParts: Math.max(0, totalParts - solvedParts - inProgressParts - blockedParts),
     completionPercent: Math.round((solvedParts / totalParts) * 100),
     totalSolveSeconds,
+    elapsedSolveSeconds,
   };
 }
 

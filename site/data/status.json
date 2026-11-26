@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T00:18:00Z",
+  "updatedAt": "2026-11-26T00:25:04Z",
   "years": [
     {
       "year": 2025,
@@ -309,6 +309,26 @@
           ],
           "startedAt": "2026-11-26T00:00:03Z",
           "verifiedAt": "2026-11-26T00:12:40Z"
+        },
+        {
+          "year": 2025,
+          "day": 8,
+          "part": 2,
+          "title": "Playground",
+          "puzzleUrl": "https://adventofcode.com/2025/day/8#part2",
+          "status": "solved",
+          "summary": "Keep connecting closest unconnected 3D junction-box pairs until all boxes merge into a single circuit. Identify the final connecting pair and return the product of their X coordinates.",
+          "algorithmSummary": "Dense O(N^2) Prim's MST in O(N) typed arrays (Uint8Array inTree, Float64Array bestDistSq, Int32Array parent) with canonical (distSq, min, max) tie-breaking, sorted by compareJunctionPairs to recover Kruskal chronological order and compute BigInt(x_u) * BigInt(x_v) for the final bridge.",
+          "complexity": "O(N^2) time, O(N) space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 14.83,
+          "attemptsCount": 1,
+          "learnings": [
+            "Dense Prim's MST computes the exact maximum-weight Kruskal bottleneck edge in O(N^2) time and O(N) typed-array memory without materializing ~500k pairs.",
+            "Applying canonical (distSq, min(a,b), max(a,b)) tie-breaking in both relaxation and selection ensures exact equivalence to full Kruskal sort even on tied 3x3x3 grids."
+          ],
+          "startedAt": "2026-11-26T00:13:24Z",
+          "verifiedAt": "2026-11-26T00:25:04Z"
         }
       ]
     }

@@ -78,4 +78,5 @@ export interface YearProgress {
   readonly pendingParts: number;
   readonly completionPercent: number;
   readonly totalSolveSeconds: number;
+  readonly elapsedSolveSeconds: number;
 }

@@ -87,7 +87,29 @@ describe('status schema and selectors', () => {
       pendingParts: 21,
       completionPercent: 4,
       totalSolveSeconds: 300,
+      elapsedSolveSeconds: 300,
     });
+    expect(computeYearProgress({ year: 2024, totalDays: 25, parts: [] })).toEqual({
+      totalParts: 50,
+      solvedParts: 0,
+      inProgressParts: 0,
+      blockedParts: 0,
+      pendingParts: 50,
+      completionPercent: 0,
+      totalSolveSeconds: 0,
+      elapsedSolveSeconds: 0,
+    });
+    const baseSolved = sampleDoc.years[0]!.parts[0]! as Extract<StatusDocument['years'][0]['parts'][number], { status: 'solved' }>;
+    const gappedYear = computeYearProgress({
+      year: 2025,
+      totalDays: 12,
+      parts: [
+        { ...baseSolved, day: 1, part: 2, startedAt: '2026-11-25T20:10:00Z', verifiedAt: '2026-11-25T20:14:00Z' },
+        { ...baseSolved, day: 1, part: 1, startedAt: '2026-11-25T20:00:00Z', verifiedAt: '2026-11-25T20:05:00Z' },
+      ],
+    });
+    expect(gappedYear.totalSolveSeconds).toBe(540);
+    expect(gappedYear.elapsedSolveSeconds).toBe(840);
     const solved = findPartRecord(validated, 2025, 1, 1);
     expect(solved?.status).toBe('solved');
     expect(computeSolveDurationSeconds(solved as Extract<NonNullable<typeof solved>, { status: 'solved' }>)).toBe(300);
