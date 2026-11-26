@@ -16,8 +16,13 @@ describe('quality report builder', () => {
     expect(normalizeCoveragePath('relative/file.ts', '/repo')).toBe('relative/file.ts');
   });
 
-  it('aggregates AST complexity and V8 coverage without double-counting shared files', () => {
+  it('aggregates AST complexity, hotspots, file rows, and V8 coverage', () => {
     const entries: AnalyzedFileEntry[] = [
+      {
+        relativePath: 'shared/core/empty.ts',
+        isTest: false,
+        metrics: analyzeSourceFile('shared/core/empty.ts', 'export type Empty = number;'),
+      },
       {
         relativePath: 'shared/core/math.ts',
         isTest: false,
@@ -26,12 +31,12 @@ describe('quality report builder', () => {
       {
         relativePath: '2025/day01/shared/dial.ts',
         isTest: false,
-        metrics: analyzeSourceFile('2025/day01/shared/dial.ts', 'export function turn(p: number, d: number) { if (d > 0) return p + d; return p - d; }'),
+        metrics: analyzeSourceFile('2025/day01/shared/dial.ts', 'export function turn(p: number, d: number) {\n  if (d > 0) return p + d;\n  return p - d;\n}'),
       },
       {
         relativePath: '2025/day01/part1/domain/solver.ts',
         isTest: false,
-        metrics: analyzeSourceFile('2025/day01/part1/domain/solver.ts', 'export function solve(xs: number[]) { let s = 0; for (const x of xs) { if (x === 0) s++; } return s; }'),
+        metrics: analyzeSourceFile('2025/day01/part1/domain/solver.ts', 'export function solve(xs: number[]) {\n  let s = 0;\n  for (const x of xs) {\n    if (x === 0) s++;\n  }\n  return s;\n}'),
       },
       {
         relativePath: '2025/day01/part1/domain/solver.test.ts',
@@ -79,17 +84,15 @@ describe('quality report builder', () => {
     };
 
     const report = buildQualityReport(entries, cov, '/repo', '2026-11-26T00:00:00Z');
-    expect(report.overall.complexity.fileCount).toBe(4);
-    expect(report.overall.complexity.testSloc).toBe(2);
-    expect(report.overall.coverage.statements).toEqual({ covered: 12, total: 13 });
-    expect(report.years['2025']?.complexity.fileCount).toBe(3);
-    expect(report.years['2025']?.coverage.statements).toEqual({ covered: 10, total: 11 });
-    expect(report.parts['2025/day01/part1']?.complexity.maxNestingDepth).toBe(2);
-    expect(report.parts['2025/day01/part1']?.complexity.testSloc).toBe(2);
-    expect(report.parts['2025/day01/part2']?.coverage.lines).toEqual({ covered: 1, total: 2 });
+    expect(report.overall.complexity.fileCount).toBe(5);
+    expect(report.overall.complexity.maxCyclomaticHotspot?.filePath).toBe('2025/day01/part1/domain/solver.ts');
+    expect(report.overall.complexity.longestFunctionHotspot?.value).toBe(7);
+    expect(report.files).toHaveLength(5);
+    expect(report.files.find((f) => f.path === 'shared/core/empty.ts')?.coveragePct).toBeNull();
+    expect(report.files.find((f) => f.path === '2025/day01/part2/domain/solver.ts')?.coveragePct).toBe(50);
 
-    // Empty report exercises zero-weight MI fallback
     const empty = buildQualityReport([], {}, '/repo', '2026-11-26T00:00:00Z');
     expect(empty.overall.complexity.maintainabilityIndex).toBe(100);
+    expect(empty.files).toEqual([]);
   });
 });

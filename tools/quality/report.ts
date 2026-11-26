@@ -1,9 +1,12 @@
-import type {
-  ComplexitySummary,
-  CoverageCounter,
-  CoverageSummary,
-  QualityReport,
-  ScopeQuality,
+import {
+  minCoveragePercent,
+  type CodeHotspot,
+  type ComplexitySummary,
+  type CoverageCounter,
+  type CoverageSummary,
+  type FileQualityRow,
+  type QualityReport,
+  type ScopeQuality,
 } from '../../site/data/quality';
 import type { FileAstMetrics } from './astMetrics';
 
@@ -30,8 +33,13 @@ interface ScopeAccumulator {
   totalCyclomatic: number;
   maxCyclomatic: number;
   maxNestingDepth: number;
+  maxFunctionSloc: number;
+  nestedFunctionCount: number;
   weightedMiSum: number;
   miWeightSloc: number;
+  maxCyclomaticHotspot: CodeHotspot | null;
+  maxNestingHotspot: CodeHotspot | null;
+  longestFunctionHotspot: CodeHotspot | null;
   statements: { covered: number; total: number };
   branches: { covered: number; total: number };
   functions: { covered: number; total: number };
@@ -47,8 +55,13 @@ function createAccumulator(): ScopeAccumulator {
     totalCyclomatic: 0,
     maxCyclomatic: 0,
     maxNestingDepth: 0,
+    maxFunctionSloc: 0,
+    nestedFunctionCount: 0,
     weightedMiSum: 0,
     miWeightSloc: 0,
+    maxCyclomaticHotspot: null,
+    maxNestingHotspot: null,
+    longestFunctionHotspot: null,
     statements: { covered: 0, total: 0 },
     branches: { covered: 0, total: 0 },
     functions: { covered: 0, total: 0 },
@@ -65,19 +78,31 @@ function getOrCreate(map: Map<string, ScopeAccumulator>, key: string): ScopeAccu
   return acc;
 }
 
+function pickHigherHotspot(current: CodeHotspot | null, candidate: CodeHotspot | null): CodeHotspot | null {
+  if (!candidate) return current;
+  if (!current || candidate.value > current.value) return candidate;
+  return current;
+}
+
 function addFileMetrics(acc: ScopeAccumulator, entry: AnalyzedFileEntry): void {
   if (entry.isTest) {
     acc.testSloc += entry.metrics.sloc;
     return;
   }
+  const m = entry.metrics;
   acc.fileCount += 1;
-  acc.sloc += entry.metrics.sloc;
-  acc.functionCount += entry.metrics.functionCount;
-  acc.totalCyclomatic += entry.metrics.totalCyclomatic;
-  if (entry.metrics.maxCyclomatic > acc.maxCyclomatic) acc.maxCyclomatic = entry.metrics.maxCyclomatic;
-  if (entry.metrics.maxNestingDepth > acc.maxNestingDepth) acc.maxNestingDepth = entry.metrics.maxNestingDepth;
-  const weight = Math.max(1, entry.metrics.sloc);
-  acc.weightedMiSum += entry.metrics.maintainabilityIndex * weight;
+  acc.sloc += m.sloc;
+  acc.functionCount += m.functionCount;
+  acc.totalCyclomatic += m.totalCyclomatic;
+  acc.nestedFunctionCount += m.nestedFunctionCount;
+  if (m.maxCyclomatic > acc.maxCyclomatic) acc.maxCyclomatic = m.maxCyclomatic;
+  if (m.maxNestingDepth > acc.maxNestingDepth) acc.maxNestingDepth = m.maxNestingDepth;
+  if (m.maxFunctionSloc > acc.maxFunctionSloc) acc.maxFunctionSloc = m.maxFunctionSloc;
+  acc.maxCyclomaticHotspot = pickHigherHotspot(acc.maxCyclomaticHotspot, m.maxCyclomaticHotspot);
+  acc.maxNestingHotspot = pickHigherHotspot(acc.maxNestingHotspot, m.maxNestingHotspot);
+  acc.longestFunctionHotspot = pickHigherHotspot(acc.longestFunctionHotspot, m.longestFunctionHotspot);
+  const weight = Math.max(1, m.sloc);
+  acc.weightedMiSum += m.maintainabilityIndex * weight;
   acc.miWeightSloc += weight;
 }
 
@@ -107,8 +132,13 @@ function finalizeScope(acc: ScopeAccumulator): ScopeQuality {
     totalCyclomatic: acc.totalCyclomatic,
     maxCyclomatic: acc.maxCyclomatic,
     maxNestingDepth: acc.maxNestingDepth,
+    maxFunctionSloc: acc.maxFunctionSloc,
+    nestedFunctionCount: acc.nestedFunctionCount,
     maintainabilityIndex:
       acc.miWeightSloc > 0 ? Math.round((acc.weightedMiSum / acc.miWeightSloc) * 10) / 10 : 100,
+    maxCyclomaticHotspot: acc.maxCyclomaticHotspot,
+    maxNestingHotspot: acc.maxNestingHotspot,
+    longestFunctionHotspot: acc.longestFunctionHotspot,
   };
   return { coverage, complexity };
 }
@@ -130,6 +160,28 @@ export function normalizeCoveragePath(rawKey: string, rootDir: string): string {
   return normKey.startsWith(normRoot) ? normKey.slice(normRoot.length) : normKey;
 }
 
+function buildFileRows(
+  files: readonly AnalyzedFileEntry[],
+  covByRelPath: ReadonlyMap<string, RawCoverageFileEntry>,
+): FileQualityRow[] {
+  return files
+    .filter((entry) => !entry.isTest)
+    .map((entry) => {
+      const cov = covByRelPath.get(entry.relativePath);
+      return {
+        path: entry.relativePath,
+        sloc: entry.metrics.sloc,
+        maintainabilityIndex: entry.metrics.maintainabilityIndex,
+        maxCyclomatic: entry.metrics.maxCyclomatic,
+        maxNestingDepth: entry.metrics.maxNestingDepth,
+        maxFunctionSloc: entry.metrics.maxFunctionSloc,
+        nestedFunctionCount: entry.metrics.nestedFunctionCount,
+        coveragePct: cov ? minCoveragePercent(cov) : null,
+      };
+    })
+    .sort((a, b) => a.path.localeCompare(b.path));
+}
+
 export function buildQualityReport(
   files: readonly AnalyzedFileEntry[],
   coverageSummary: RawCoverageSummary,
@@ -147,9 +199,11 @@ export function buildQualityReport(
     if (partKey) addFileMetrics(getOrCreate(partMap, partKey), entry);
   }
 
+  const covByRel = new Map<string, RawCoverageFileEntry>();
   for (const [rawKey, cov] of Object.entries(coverageSummary)) {
     if (rawKey === 'total') continue;
     const rel = normalizeCoveragePath(rawKey, rootDir);
+    covByRel.set(rel, cov);
     addCoverage(overall, cov);
     const { year, partKey } = classifyPathScopes(rel);
     if (year) addCoverage(getOrCreate(yearMap, year), cov);
@@ -165,5 +219,11 @@ export function buildQualityReport(
     parts[key] = finalizeScope(acc);
   }
 
-  return { generatedAt, overall: finalizeScope(overall), years, parts };
+  return {
+    generatedAt,
+    overall: finalizeScope(overall),
+    years,
+    parts,
+    files: buildFileRows(files, covByRel),
+  };
 }
