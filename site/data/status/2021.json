@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:49:58Z",
+  "updatedAt": "2026-11-26T21:57:23Z",
   "parts": [
     {
       "year": 2021,
@@ -223,6 +223,26 @@
       ],
       "startedAt": "2026-11-26T21:36:53Z",
       "verifiedAt": "2026-11-26T21:49:58Z"
+    },
+    {
+      "year": 2021,
+      "day": 6,
+      "part": 2,
+      "title": "Lanternfish",
+      "puzzleUrl": "https://adventofcode.com/2021/day/6#part2",
+      "status": "solved",
+      "summary": "Simulate the lanternfish school's 7-day adult and 9-day juvenile spawn cycles for 256 days and return the exact BigInt total population.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day06/shared/ binding PART2_DAYS (256) into LanternfishSolver and LanternfishVisualizer (0.23 ms across 300 fish -> 1,600,306,001,288): zero edits to shared/ or part1/, exact 257-frame default Log2/Linear growth playback, differentially verified against an independent 1D lineage DP oracle (f(d) = f(d-7) + f(d-9)) across all 9 basis timers 0..8, 30 seeded PRNG schools, and 5 overflow-regime > 2^53 / > 2^63 odd-bit BigInt schools.",
+      "complexity": "O(N + D) time, O(1) solve space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.23,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building parameterized LanternfishSolver(days) and DEFAULT_MAX_TRACE_STEPS = 257 in day06/shared/ let Part 2 ship in 3 lines of domain code with zero shared edits.",
+        "An independent 1D lineage recurrence f(d) = f(d-7) + f(d-9) with single-fish lookup f(days - t) cross-checks both 9-bucket rotation and matrix exponentiation cleanly even above 2^64."
+      ],
+      "startedAt": "2026-11-26T21:49:58Z",
+      "verifiedAt": "2026-11-26T21:57:23Z"
     }
   ]
 }
