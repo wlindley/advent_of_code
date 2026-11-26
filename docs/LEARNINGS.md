@@ -19,6 +19,7 @@ Reusable algorithmic patterns, parsing idioms, performance tricks, and AoC pitfa
 ## Parsing & Numeric Pitfalls
 - Always check whether puzzle answers can exceed `Number.MAX_SAFE_INTEGER` (`2^53 - 1`); use `BigInt` whenever totals/products can grow super-linearly.
 - **Exact `BigInt` ceiling/floor division** (2025 Day 2): For positive `L, M`, `(L + M - 1n) / M` is exact `ceil(L / M)` and `U / M` is exact `floor(U / M)`; when mapping `BigInt` ranges to SVG coordinates, scale `(val - lo) * 1000n / span` in `BigInt` before converting to `Number`.
+- **Safe `BigInt` log2 scaling for heatmaps** (2025 Day 7 Part 2): Never call `Math.log2(Number(big))` (overflows past `2^1024`); compute `Math.log2(parseInt(bits.slice(0, 53), 2)) + (bits.length - topLen)` and use `-1` (never `0`, which is `log2(1n)`) as the unvisited sentinel.
 - Trim trailing newlines cleanly without stripping meaningful leading/trailing spaces on grid or ASCII-art inputs.
 - **Space-preserving column segmentation** (2025 Day 6): On column-aligned ASCII worksheets, strip only outer blank lines, right-pad shorter lines to `maxWidth`, and store raw fixed-width slices per block so Part 2 can switch reading orientation (e.g., right-to-left vertical columns) with zero parser churn.
 

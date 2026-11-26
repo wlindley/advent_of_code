@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T23:56:00Z",
+  "updatedAt": "2026-11-26T00:00:10Z",
   "years": [
     {
       "year": 2025,
@@ -263,37 +263,18 @@
           "part": 2,
           "title": "Laboratories",
           "puzzleUrl": "https://adventofcode.com/2025/day/7#part2",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "A single quantum tachyon particle enters the manifold at S and branches into two distinct timelines at every splitter (^). Distinct histories passing through the same cell remain separate timelines; return the total number of distinct timelines upon exiting the manifold.",
-          "proposals": [
-            {
-              "id": "forward-row-dp",
-              "name": "Forward Row-by-Row BigInt DP",
-              "summary": "Sweep top-to-bottom with ping-pong bigint[] column buffers plus an exited accumulator, recording exact per-cell log2 density for Canvas heatmap playback.",
-              "complexity": "O(R * C) time, O(C) DP space",
-              "tradeoffs": "Exact arbitrary-precision counts (handles >2^70 timelines), zero edits to shared/ or part1/, and directly emits top-down wavefront frames."
-            },
-            {
-              "id": "bottom-up-dag-dp",
-              "name": "Bottom-Up Reverse Path-Count DP",
-              "summary": "Evaluate T(r, c) = T(r+1, c-1) + T(r+1, c+1) on splitters with base case 1n out of bounds.",
-              "complexity": "O(R * C) time, O(C) space",
-              "tradeoffs": "Ideal independent differential test oracle, but computes suffix rather than arrival density."
-            },
-            {
-              "id": "sparse-splitter-dag",
-              "name": "Vertical-Jump Compressed Splitter DAG DP",
-              "summary": "Precompute vertical jump links between hit splitters and propagate counts topologically.",
-              "complexity": "O(R * C) build + O(|S_hit|) DP",
-              "tradeoffs": "Extra indexing overhead with negligible benefit on a compact 142x141 manifold."
-            }
+          "algorithmSummary": "Forward row-by-row arbitrary-precision BigInt DP over TachyonManifold (reused verbatim from 2025/day07/shared) with an exited accumulator for lateral exits and top-53-bit bigIntLog2 heatmap scaling, verified against a reverse bottom-up DP oracle.",
+          "complexity": "O(R * C) time, O(C) DP space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 3.21,
+          "attemptsCount": 1,
+          "learnings": [
+            "Using -1 as EMPTY_DENSITY separates unvisited 0n cells from 1n cells where log2(1n) === 0, and top-53-bit bigIntLog2 avoids Infinity overflow at arbitrary bit widths.",
+            "Counting lateral exits as completed timelines preserves exact equivalence between forward DP, bottom-up DP, and totalTimelines = 1 + sum(entering(hitSplitters))."
           ],
-          "selectedProposalId": "forward-row-dp",
-          "selectionRationale": "O(R * C) arbitrary-precision BigInt DP reusing TachyonManifold verbatim while producing exact log2 timeline density frames for the quantum heatmap canvas.",
-          "inFlightWork": "Implementing 2025/day07/part2/domain (bigIntLog2, simulateQuantum + bottom-up DP differential tests) and Canvas log2 quantum heatmap visualizer via Flash.",
-          "attempts": [],
-          "updatedAt": "2026-11-25T23:56:00Z"
+          "verifiedAt": "2026-11-25T23:59:56Z"
         }
       ]
     }
