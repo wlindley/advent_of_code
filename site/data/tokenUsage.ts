@@ -33,11 +33,17 @@ export interface ModelTierUsage {
   readonly outputTokens: number;
 }
 
+export interface TokenUsageBucket extends ModelTierUsage {
+  readonly bucketStart: string;
+  readonly scope: string;
+}
+
 export interface TokenUsageReport {
   readonly generatedAt: string;
   readonly subagentsScanned: number;
   readonly budgetTargetTokens: number | null;
   readonly tiers: readonly ModelTierUsage[];
+  readonly timeline?: readonly TokenUsageBucket[];
 }
 
 export function totalFreshTokens(report: TokenUsageReport): number {
