@@ -64,10 +64,18 @@ describe('parsePuzzlePage', () => {
 });
 
 describe('parseSubmitOutcome', () => {
-  it('recognizes correct and already-completed answers', () => {
+  it('recognizes correct, finale completion, and already-completed answers', () => {
     expect(parseSubmitOutcome(`<article><p>That's the right answer! Gold star.</p></article>`)).toEqual({
       kind: 'correct',
     });
+    expect(
+      parseSubmitOutcome(
+        `<article><p>Congratulations! You've finished every puzzle in Advent of Code 2022!</p></article>`,
+      ),
+    ).toEqual({ kind: 'correct' });
+    expect(
+      parseSubmitOutcome(`<article><p>You've finished every puzzle in Advent of Code!</p></article>`),
+    ).toEqual({ kind: 'correct' });
     expect(parseSubmitOutcome(`<article><p>Did you already complete it?</p></article>`)).toEqual({
       kind: 'already_completed',
     });

@@ -29,6 +29,57 @@ describe('ClosedInterval', () => {
   it('rejects inverted endpoints with RangeError', () => {
     expect(() => new ClosedInterval(10n, 9n)).toThrow(RangeError);
   });
+
+  it('checks interval containment, overlaps, and intersections across symmetric cases', () => {
+    const outer = new ClosedInterval(2n, 10n);
+    const inner = new ClosedInterval(4n, 8n);
+    const rightOverlap = new ClosedInterval(7n, 15n);
+    const touching = new ClosedInterval(10n, 12n);
+    const disjointRight = new ClosedInterval(11n, 14n);
+    const disjointLeft = new ClosedInterval(-5n, 1n);
+
+    expect(outer.containsInterval(inner)).toBe(true);
+    expect(outer.containsInterval(outer)).toBe(true);
+    expect(inner.containsInterval(outer)).toBe(false);
+    expect(outer.containsInterval(rightOverlap)).toBe(false);
+
+    expect(outer.overlaps(inner)).toBe(true);
+    expect(outer.overlaps(rightOverlap)).toBe(true);
+    expect(outer.overlaps(touching)).toBe(true);
+    expect(outer.overlaps(disjointRight)).toBe(false);
+    expect(outer.overlaps(disjointLeft)).toBe(false);
+
+    expect(outer.intersection(inner)).toEqual(new ClosedInterval(4n, 8n));
+    expect(inner.intersection(outer)).toEqual(new ClosedInterval(4n, 8n));
+    expect(outer.intersection(rightOverlap)).toEqual(new ClosedInterval(7n, 10n));
+    expect(rightOverlap.intersection(outer)).toEqual(new ClosedInterval(7n, 10n));
+    expect(outer.intersection(touching)).toEqual(new ClosedInterval(10n, 10n));
+    expect(outer.intersection(disjointRight)).toBeNull();
+    expect(outer.intersection(disjointLeft)).toBeNull();
+  });
+
+  it('subtracts disjoint, covering, left-trimming, right-trimming, and interior intervals', () => {
+    const base = new ClosedInterval(10n, 20n);
+
+    const disjoint = base.subtract(new ClosedInterval(25n, 30n));
+    expect(Object.isFrozen(disjoint)).toBe(true);
+    expect(disjoint).toEqual([base]);
+
+    const covered = base.subtract(new ClosedInterval(10n, 20n));
+    expect(Object.isFrozen(covered)).toBe(true);
+    expect(covered).toEqual([]);
+    expect(base.subtract(new ClosedInterval(5n, 25n))).toEqual([]);
+
+    const leftTrimmed = base.subtract(new ClosedInterval(5n, 14n));
+    expect(leftTrimmed).toEqual([new ClosedInterval(15n, 20n)]);
+
+    const rightTrimmed = base.subtract(new ClosedInterval(16n, 25n));
+    expect(rightTrimmed).toEqual([new ClosedInterval(10n, 15n)]);
+
+    const split = base.subtract(new ClosedInterval(13n, 17n));
+    expect(Object.isFrozen(split)).toBe(true);
+    expect(split).toEqual([new ClosedInterval(10n, 12n), new ClosedInterval(18n, 20n)]);
+  });
 });
 
 describe('IntervalUnion', () => {

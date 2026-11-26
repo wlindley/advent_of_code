@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { bigintLog2, euclideanMod } from './index';
+import { bigintIsqrt, bigintLog2, euclideanMod } from './index';
 
 describe('euclideanMod', () => {
   it('computes non-negative remainders for positive and zero dividends', () => {
@@ -43,5 +43,29 @@ describe('bigintLog2', () => {
   it('rejects non-positive BigInts', () => {
     expect(() => bigintLog2(0n)).toThrow(RangeError);
     expect(() => bigintLog2(-4n)).toThrow(RangeError);
+  });
+});
+
+describe('bigintIsqrt', () => {
+  it('computes exact floor square roots for 0..16', () => {
+    const expected = [0n, 1n, 1n, 1n, 2n, 2n, 2n, 2n, 2n, 3n, 3n, 3n, 3n, 3n, 3n, 3n, 4n];
+    for (let i = 0; i < expected.length; i += 1) {
+      expect(bigintIsqrt(BigInt(i))).toBe(expected[i]);
+    }
+  });
+
+  it('handles k^2 - 1, k^2, and k^2 + 1 across large and >2^1024 scales', () => {
+    const bases = [10n ** 9n, 2n ** 64n, 10n ** 18n, 1n << 600n];
+    for (const k of bases) {
+      const sq = k * k;
+      expect(bigintIsqrt(sq - 1n)).toBe(k - 1n);
+      expect(bigintIsqrt(sq)).toBe(k);
+      expect(bigintIsqrt(sq + 1n)).toBe(k);
+    }
+  });
+
+  it('rejects negative BigInts with RangeError', () => {
+    expect(() => bigintIsqrt(-1n)).toThrow(RangeError);
+    expect(() => bigintIsqrt(-(10n ** 20n))).toThrow(RangeError);
   });
 });
