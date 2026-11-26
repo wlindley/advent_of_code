@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T10:24:09Z",
+  "updatedAt": "2026-11-26T10:40:46Z",
   "parts": [
     {
       "year": 2023,
@@ -682,6 +682,26 @@
       ],
       "startedAt": "2026-11-26T10:16:15Z",
       "verifiedAt": "2026-11-26T10:24:09Z"
+    },
+    {
+      "year": 2023,
+      "day": 18,
+      "part": 1,
+      "title": "Lavaduct Lagoon",
+      "puzzleUrl": "https://adventofcode.com/2023/day/18",
+      "status": "solved",
+      "summary": "Follow orthogonal trench dig steps (U/D/L/R with distances) around a closed 1m-wide loop, excavate the enclosed interior, and compute the total cubic meters of lava the lagoon can hold.",
+      "algorithmSummary": "Exact BigInt Shoelace formula + Pick's theorem (A = |sum(x_i * y_{i+1} - x_{i+1} * y_i)| / 2 + P / 2 + 1) behind a reusable DigPlanDecoder strategy in 2023/day18/shared/ (1.79 ms on 758 steps): computes exact interior+boundary lattice points in O(N) time and O(N) space with zero rasterization, paired with BigInt-scaled SVG projection (supporting Part 2's 10^7-scale coordinates) and reusable LagoonPolygonVisualizer; differentially verified against both an independent bounded flood-fill raster oracle and an exact BigInt horizontal scanline oracle across official examples (62), degenerate corridors, CW/CCW orientations, and randomized rectilinear loops.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.79,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pick's theorem combined with the exact BigInt Shoelace area computes total lattice-cell area (interior + boundary) in O(N) time without ever rasterizing a grid, making Part 2's ~10^7 hex distances effortless.",
+        "Parameterizing the shared solver by a DigPlanDecoder strategy and scaling vertices to SVG space in BigInt lets Part 2 plug in hex-encoded instructions with zero shared-module edits."
+      ],
+      "startedAt": "2026-11-26T10:24:50Z",
+      "verifiedAt": "2026-11-26T10:40:46Z"
     }
   ]
 }
