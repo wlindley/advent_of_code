@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:10:35Z",
+  "updatedAt": "2026-11-26T22:18:43Z",
   "parts": [
     {
       "year": 2019,
@@ -223,6 +223,26 @@
       ],
       "startedAt": "2026-11-26T21:56:50Z",
       "verifiedAt": "2026-11-26T22:10:35Z"
+    },
+    {
+      "year": 2019,
+      "day": 6,
+      "part": 2,
+      "title": "Universal Orbit Map",
+      "puzzleUrl": "https://adventofcode.com/2019/day/6#part2",
+      "status": "solved",
+      "summary": "Compute the minimum number of orbital transfers required to move from the object orbited by YOU to the object orbited by SAN.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day06/shared/ binding SANTA_TRANSFER_POLICY into OrbitMapSolver and OrbitMapVisualizer (2.16 ms across 1,800 objects -> 481): zero edits to shared/ or part1/, iterative depth-aligned two-pointer LCA climb over flat Int32Array parent/depth arrays, interactive tree + LCA gold diamond + depth histogram visualizer, differentially verified across 30 seeded PRNG rooted trees against an independent undirected BFS shortest-path oracle for both hop count and exact route labels.",
+      "complexity": "O(N) parse & O(H) LCA transfer query, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.16,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building OrbitMap.findTransferRoute and SANTA_TRANSFER_POLICY in day06/shared/ let Part 2 ship in 4 lines of domain code with zero edits to shared/ or part1/.",
+        "Assigning YOU and SAN to arbitrary distinct non-COM nodes (including internal nodes) during differential fuzzing automatically tests ancestor/descendant, shared-parent, and COM-LCA topologies against undirected BFS."
+      ],
+      "startedAt": "2026-11-26T22:10:35Z",
+      "verifiedAt": "2026-11-26T22:18:43Z"
     }
   ]
 }
