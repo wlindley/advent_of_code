@@ -1,6 +1,28 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T18:49:01Z",
-  "parts": []
+  "updatedAt": "2026-11-26T20:06:27Z",
+  "parts": [
+    {
+      "year": 2020,
+      "day": 1,
+      "part": 1,
+      "title": "Report Repair",
+      "puzzleUrl": "https://adventofcode.com/2020/day/1",
+      "status": "solved",
+      "summary": "Find the two entries in an expense report that sum to 2020 and multiply them together.",
+      "algorithmSummary": "Generalized sorted k-sum two-pointer search (k = 2 for Part 1, pre-built k = 3+ for zero-churn Part 2) in 2020/day01/shared/ (0.44 ms across 200 entries -> 355,875): immutable ExpenseReport with stable index preservation, exact BigInt product getter, bounded probe trace (kSumTrace.ts), interactive sorted-bar & sum-delta gauge visualizer, differentially verified against an independent brute-force oracle for k = 2 and k = 3.",
+      "complexity": "O(N log N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.44,
+      "attemptsCount": 1,
+      "learnings": [
+        "Generalizing sorted two-pointer search into recursive k-sum (kSum.ts) with an explicit ProbeObserver keeps Part 1 and Part 2 sharing one 100%-covered engine with zero Part 2 shared edits.",
+        "Checking !match rather than !product prevents false negatives when a valid tuple contains 0 (e.g., 0 + 2020 = 2020 has product 0n)."
+      ],
+      "startedAt": "2026-11-26T18:54:50Z",
+      "verifiedAt": "2026-11-26T20:06:27Z",
+      "humanWaitSeconds": 3470
+    }
+  ]
 }
