@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T21:28:49Z",
+  "updatedAt": "2026-11-26T21:36:53Z",
   "parts": [
     {
       "year": 2021,
@@ -183,6 +183,26 @@
       ],
       "startedAt": "2026-11-26T21:11:45Z",
       "verifiedAt": "2026-11-26T21:28:49Z"
+    },
+    {
+      "year": 2021,
+      "day": 5,
+      "part": 2,
+      "title": "Hydrothermal Venture",
+      "puzzleUrl": "https://adventofcode.com/2021/day/5#part2",
+      "status": "solved",
+      "summary": "Count how many integer lattice points are covered by at least two horizontal, vertical, or 45-degree diagonal hydrothermal vent line segments.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day05/shared/ binding OCTILINEAR_POLICY into createVentSolver and VentFieldVisualizer (4.17 ms across 500 segments -> 21,466): zero edits to shared/ or part1/, linear-stride Uint32Array rasterization handles all four 45-degree diagonal quadrants without row wrap, differentially verified across 40 seeded PRNG fields (including half-lattice near-misses, 4-quadrant stars, collinear opposite diagonals, oblique decoys, sparse fallback, and P2 >= P1 monotonicity) against an independent raw Map oracle.",
+      "complexity": "O(N + P) time, O(min(A, P)) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.17,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building OCTILINEAR_POLICY and convex-bounds linear-stride stepping (stride = sy * width + sx) in day05/shared/ let Part 2 ship in 4 lines of domain code with zero edits to shared/ or part1/.",
+        "Testing half-lattice non-crossing diagonals ((0,0)->(1,1) vs (1,0)->(0,1) -> 0) and sparse fallback mode assertion guards against continuous-intersection and dense-only bugs."
+      ],
+      "startedAt": "2026-11-26T21:28:49Z",
+      "verifiedAt": "2026-11-26T21:36:53Z"
     }
   ]
 }
