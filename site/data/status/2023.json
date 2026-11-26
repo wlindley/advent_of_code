@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T05:22:01Z",
+  "updatedAt": "2026-11-26T05:34:31Z",
   "parts": [
     {
       "year": 2023,
@@ -202,6 +202,26 @@
       ],
       "startedAt": "2026-11-26T05:12:08Z",
       "verifiedAt": "2026-11-26T05:22:01Z"
+    },
+    {
+      "year": 2023,
+      "day": 6,
+      "part": 1,
+      "title": "Wait For It",
+      "puzzleUrl": "https://adventofcode.com/2023/day/6",
+      "status": "solved",
+      "summary": "Given a table of toy-boat race durations T and record distances D where holding for h ms travels h * (T - h) mm, count how many integer hold times strictly beat the record in each race and return their product.",
+      "algorithmSummary": "Exact BigInt shifted-discriminant quadratic formula (Delta' = T^2 - 4(D + 1)) with monotone Newton-Raphson bigintIsqrt and shared/core ClosedInterval in 2023/day06/shared/ (O(N log log T) time, branch-free tie exclusion), plus reusable RaceParabolaVisualizer in 2023/day06/shared/viz/; exhaustively verified against a direct-hold-scan oracle (0 <= T <= 40) and a monotone binary-search oracle up to T = 10^18.",
+      "complexity": "O(N log log T) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.29,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using the shifted integer discriminant Delta' = T^2 - 4(D + 1) with exact BigInt floor square root makes Delta' >= 0 both necessary and sufficient for >= 1 winner and automatically excludes ties without floating-point rounding bugs.",
+        "Flagging 2023/day06/shared/math.ts (bigintIsqrt) for end-of-year promotion into shared/core/math.ts keeps shared/ read-only during parallel solves while preparing zero-churn Part 2 reuse."
+      ],
+      "startedAt": "2026-11-26T05:22:32Z",
+      "verifiedAt": "2026-11-26T05:34:31Z"
     }
   ]
 }
