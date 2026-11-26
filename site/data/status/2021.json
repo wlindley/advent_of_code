@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T20:15:53Z",
+  "updatedAt": "2026-11-26T20:23:09Z",
   "parts": [
     {
       "year": 2021,
@@ -63,6 +63,26 @@
       "startedAt": "2026-11-26T19:08:04Z",
       "verifiedAt": "2026-11-26T20:15:53Z",
       "humanWaitSeconds": 3356
+    },
+    {
+      "year": 2021,
+      "day": 2,
+      "part": 2,
+      "title": "Dive!",
+      "puzzleUrl": "https://adventofcode.com/2021/day/2#part2",
+      "status": "solved",
+      "summary": "Track submarine horizontal position, depth, and aim where down/up adjust aim and forward adds aim * X to depth, returning horizontal * depth.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day02/shared/ binding AIM_NAVIGATION_POLICY into navigateCourse, traceCourse, and DiveTrajectoryVisualizer (1.09 ms across 1,000 commands -> 2,089,174,012): exact BigInt cubic product, gold aim sightline overlay, differentially verified across 50 seeded courses (including > 2^65 odd-low-bit magnitudes) against both a divide-and-conquer associative affine-monoid oracle and a direct imperative BigInt oracle.",
+      "complexity": "O(N) time, O(N) parsed storage / O(1) extra solve space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.09,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building AIM_NAVIGATION_POLICY and the conditional gold aim ray in day02/shared/ enabled Part 2 with zero edits to shared/ or part1/.",
+        "An associative divide-and-conquer affine monoid (dh, dd, da) provides an algebraically independent differential oracle for non-commutative aim kinematics."
+      ],
+      "startedAt": "2026-11-26T20:16:25Z",
+      "verifiedAt": "2026-11-26T20:23:09Z"
     }
   ]
 }
