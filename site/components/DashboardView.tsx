@@ -1,8 +1,10 @@
 import { formatDayFolder, formatPartKey, type PuzzlePart } from '../../shared/core';
 import {
+  computeSolveDurationSeconds,
   computeYearProgress,
   findActiveParts,
   findPartRecord,
+  formatDuration,
   type StatusDocument,
 } from '../data/status';
 
@@ -52,7 +54,7 @@ export function DashboardView({ statusDoc, selectedYear, onSelectYear }: Dashboa
           <span>{progress.completionPercent}%</span>
         </div>
         <p className="muted">
-          In progress: {progress.inProgressParts} · Blocked: {progress.blockedParts} · Pending: {progress.pendingParts} · Updated {statusDoc.updatedAt}
+          In progress: {progress.inProgressParts} · Blocked: {progress.blockedParts} · Pending: {progress.pendingParts} · Total solve time: {formatDuration(progress.totalSolveSeconds)} · Updated {statusDoc.updatedAt}
         </p>
       </section>
 
@@ -86,7 +88,7 @@ export function DashboardView({ statusDoc, selectedYear, onSelectYear }: Dashboa
                 className={`part-pill status-${state}`}
                 href={`#/${yearData.year}/${formatDayFolder(day)}/part${partNum}`}
               >
-                P{partNum}: {state === 'solved' ? '★' : state === 'in_progress' ? 'WIP' : state === 'blocked' ? '!' : '—'}
+                P{partNum}: {record?.status === 'solved' ? `★ ${formatDuration(computeSolveDurationSeconds(record))}` : state === 'in_progress' ? 'WIP' : state === 'blocked' ? '!' : '—'}
               </a>
             );
           };

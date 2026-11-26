@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T00:13:00Z",
+  "updatedAt": "2026-11-26T00:18:00Z",
   "years": [
     {
       "year": 2025,
@@ -23,6 +23,7 @@
             "Personal input includes multi-turn rotations up to 998 clicks; always pre-reduce distance modulo ring size instead of single-wrap conditionals.",
             "Placing shared day input parsing and value objects in 2025/day01/shared preserves full rotation distances cleanly for Part 2."
           ],
+          "startedAt": "2026-11-25T21:45:58Z",
           "verifiedAt": "2026-11-25T21:54:54Z"
         },
         {
@@ -43,6 +44,7 @@
             "Pair closed-form O(1) step formulas with a brute-force single-step oracle in unit tests to catch subtle boundary/off-by-one bugs before submission.",
             "Model trace frames as frozen value objects with derived getters so visualizers never duplicate domain math."
           ],
+          "startedAt": "2026-11-25T21:55:40Z",
           "verifiedAt": "2026-11-25T22:04:13Z"
         },
         {
@@ -63,6 +65,7 @@
             "Implementing general RepeatedPatternBand(patternLength, repeats) in 2025/day02/shared keeps Part 2 ready for arbitrary repeat counts.",
             "Scale BigInt positions to 0..1000 in BigInt before converting to Number when rendering SVG bars so huge custom inputs never produce NaN/Infinity."
           ],
+          "startedAt": "2026-11-25T22:08:53Z",
           "verifiedAt": "2026-11-25T22:19:09Z"
         },
         {
@@ -83,6 +86,7 @@
             "Designing 2025/day02/shared/idRange.ts with general (patternLength, repeats) let Part 2 reuse 100% of shared domain code with zero edits.",
             "Key React lists by full composite tuple (digitLength-patternLength-repeats) when generalizing from Part 1 to multi-band Part 2."
           ],
+          "startedAt": "2026-11-25T22:19:53Z",
           "verifiedAt": "2026-11-25T22:29:15Z"
         },
         {
@@ -102,6 +106,7 @@
             "Using a strict > pop condition on the monotonic stack guarantees earliest-index determinism without wasting discard budget on equal digits.",
             "Implementing k-agnostic BatteryBank.selectMaxJoltage(count) with BigInt in 2025/day03/shared/ prepares cleanly for larger k in Part 2."
           ],
+          "startedAt": "2026-11-25T22:29:22Z",
           "verifiedAt": "2026-11-25T22:37:25Z"
         },
         {
@@ -121,6 +126,7 @@
             "Building k-agnostic BatteryBank.selectMaxJoltage(count) with BigInt in Part 1 let Part 2 solve k = 12 with zero edits to shared/ or part1/.",
             "Differential testing the O(n) monotonic stack against an independent O(k * n) feasible-window oracle verified both values and earliest-index tie-breaking."
           ],
+          "startedAt": "2026-11-25T22:37:59Z",
           "verifiedAt": "2026-11-25T22:45:35Z"
         },
         {
@@ -141,6 +147,7 @@
             "Using a 1-cell zero-padded Uint8Array eliminates inner bounds checks and row-wrap bugs while providing peel-ready degree buffers for Part 2.",
             "HTML Canvas keeps 137x137 (~18.8k cells) heatmaps crisp and instant without thousands of SVG DOM nodes."
           ],
+          "startedAt": "2026-11-25T22:45:46Z",
           "verifiedAt": "2026-11-25T22:55:14Z"
         },
         {
@@ -160,6 +167,7 @@
             "Claiming occupied[nb] = 0 immediately when degree transitions 4 -> 3 prevents duplicate enqueues within a wave while preserving exact synchronous wave semantics.",
             "Using Uint32Array for per-cell removal wave contours avoids 16-bit wraparound on pathological long chains and powers zero-copy Canvas animation without per-frame grid clones."
           ],
+          "startedAt": "2026-11-25T22:55:55Z",
           "verifiedAt": "2026-11-25T23:05:35Z"
         },
         {
@@ -179,6 +187,7 @@
             "Promoted ClosedInterval and IntervalUnion to shared/core/interval.ts using explicit < / > BigInt comparators and integer-adjacent coalescing (next.start <= curEnd + 1n).",
             "Guard zero-span domains when projecting BigInt coordinates onto SVG tracks so singleton datasets never divide by zero."
           ],
+          "startedAt": "2026-11-25T23:05:42Z",
           "verifiedAt": "2026-11-25T23:14:03Z"
         },
         {
@@ -198,6 +207,7 @@
             "Promoting canonical IntervalUnion with totalLength in Part 1 let Part 2 solve in a single line with zero edits to shared/ or part1/.",
             "Verifying IntervalUnion against an independent half-open endpoint sweep-line oracle (+1 at s, -1 at e+1n) guarantees zero off-by-one boundary bugs."
           ],
+          "startedAt": "2026-11-25T23:14:42Z",
           "verifiedAt": "2026-11-25T23:23:06Z"
         },
         {
@@ -217,6 +227,7 @@
             "Never call .trim() on column-aligned ASCII worksheets; strip only outer blank lines and right-pad shorter lines so leading spaces remain aligned.",
             "Keeping ProblemBlock tolerant of intra-row spaces preserves raw character grids cleanly for Part 2 vertical reading."
           ],
+          "startedAt": "2026-11-25T23:23:14Z",
           "verifiedAt": "2026-11-25T23:31:52Z"
         },
         {
@@ -236,6 +247,7 @@
             "Preserving raw fixed-width digitRows in 2025/day06/shared/worksheet.ts let Part 2 decode vertical right-to-left columns with zero parser changes.",
             "Track a 3-state digit machine (before / inDigits / after) rather than checking value !== 0n so legitimate zero-valued columns are preserved while empty columns are skipped."
           ],
+          "startedAt": "2026-11-25T23:32:29Z",
           "verifiedAt": "2026-11-25T23:41:23Z"
         },
         {
@@ -255,6 +267,7 @@
             "Using ping-pong frontier buffers prevents in-place horizontal bleed when a splitter spawns into column c + 1 during a left-to-right scan.",
             "Guarding !isSplitter before marking adjacent Beam cells preserves unreached splitter states on adjacent ^^ configurations."
           ],
+          "startedAt": "2026-11-25T23:41:32Z",
           "verifiedAt": "2026-11-25T23:50:26Z"
         },
         {
@@ -274,6 +287,7 @@
             "Using -1 as EMPTY_DENSITY separates unvisited 0n cells from 1n cells where log2(1n) === 0, and top-53-bit bigIntLog2 avoids Infinity overflow at arbitrary bit widths.",
             "Counting lateral exits as completed timelines preserves exact equivalence between forward DP, bottom-up DP, and totalTimelines = 1 + sum(entering(hitSplitters))."
           ],
+          "startedAt": "2026-11-25T23:51:06Z",
           "verifiedAt": "2026-11-25T23:59:56Z"
         },
         {
@@ -293,6 +307,7 @@
             "Promoted Int32Array-backed DisjointSet (negative entries = -size, non-negative = parent) to shared/core/disjointSet.ts as a single-source-of-truth Union-Find.",
             "Keep puzzle-specific parameters like K=10 (example) vs K=1000 (personal) explicit in domain functions and bind example presets strictly at the UI manifest boundary."
           ],
+          "startedAt": "2026-11-26T00:00:03Z",
           "verifiedAt": "2026-11-26T00:12:40Z"
         }
       ]

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { InputRunner, type PuzzlePartManifest } from '../../shared/viz';
-import type { PartRecord } from '../data/status';
+import { computeSolveDurationSeconds, formatDuration, type PartRecord } from '../data/status';
 
 export interface SolvedPartViewProps {
   readonly record: Extract<PartRecord, { status: 'solved' }>;
@@ -16,6 +16,7 @@ export function SolvedPartView({ record, manifest }: SolvedPartViewProps) {
       <section className="card">
         <div className="meta-row">
           <span className="badge status-solved">Verified ★</span>
+          <span className="badge">Solved in {formatDuration(computeSolveDurationSeconds(record))}</span>
           <span className="badge">{record.runtime}</span>
           <span className="badge">{record.personalInputElapsedMs.toFixed(2)} ms (personal input)</span>
           <a href={record.puzzleUrl} target="_blank" rel="noreferrer">
