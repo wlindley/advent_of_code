@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T19:07:48Z",
+  "updatedAt": "2026-11-26T20:11:41Z",
   "parts": [
     {
       "year": 2019,
@@ -22,6 +22,27 @@
       ],
       "startedAt": "2026-11-26T18:54:50Z",
       "verifiedAt": "2026-11-26T19:07:48Z"
+    },
+    {
+      "year": 2019,
+      "day": 1,
+      "part": 2,
+      "title": "The Tyranny of the Rocket Equation",
+      "puzzleUrl": "https://adventofcode.com/2019/day/1#part2",
+      "status": "solved",
+      "summary": "Compute total spacecraft fuel when each added fuel stage requires additional recursive fuel until floor(mass / 3) - 2 <= 0.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day01/shared/ binding RECURSIVE_FUEL_POLICY into createFuelSolver (0.36 ms across 100 modules -> 5,209,504): per-module iterative fuel stage cascade, bounded telemetry trace, shared RocketFuelVisualizer with stacked stage-breakdown bars, differentially verified against an independent BigInt recursive oracle across 0..200, powers-of-3 stage-jump boundaries, and Number.MAX_SAFE_INTEGER.",
+      "complexity": "O(N log M) time, O(N) parsed storage / O(log M) extra space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.36,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building RECURSIVE_FUEL_POLICY and multi-stage cascade bars in day01/shared/ reduced Part 2's domain solver to 4 lines with zero shared-module edits.",
+        "Computing recursive fuel per module before summing is essential because floor((a + b) / 3) - 2 != (floor(a / 3) - 2) + (floor(b / 3) - 2)."
+      ],
+      "startedAt": "2026-11-26T19:08:08Z",
+      "verifiedAt": "2026-11-26T20:11:41Z",
+      "humanWaitSeconds": 3437
     }
   ]
 }
