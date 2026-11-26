@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T20:46:19Z",
+  "updatedAt": "2026-11-26T21:01:22Z",
   "parts": [
     {
       "year": 2019,
@@ -83,6 +83,26 @@
       ],
       "startedAt": "2026-11-26T20:29:36Z",
       "verifiedAt": "2026-11-26T20:46:19Z"
+    },
+    {
+      "year": 2019,
+      "day": 3,
+      "part": 1,
+      "title": "Crossed Wires",
+      "puzzleUrl": "https://adventofcode.com/2019/day/3",
+      "status": "solved",
+      "summary": "Find the Manhattan distance from the central port (0, 0) to the closest non-origin intersection of two orthogonal wire paths.",
+      "algorithmSummary": "Exact BigInt pairwise segment-intersection geometry in 2019/day03/shared/ with SIGNAL_DELAY_METRIC pre-built for zero-churn Part 2 (6.98 ms across 301x301 segments -> 5,357): uses shared/core ClosedInterval.subtract around origin for collinear overlaps, branchless WireSegment.stepsTo, BigInt aspect-preserving HiDPI canvas visualizer, differentially verified across 30 seeded wire pairs against a unit-step grid-walk oracle for both Manhattan and signal-delay metrics.",
+      "complexity": "O(S1 * S2) time, O(S1 + S2 + K) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.98,
+      "attemptsCount": 1,
+      "learnings": [
+        "Splitting collinear overlaps on fixedCoord === 0n via shared/core ClosedInterval.subtract(ORIGIN_INTERVAL) handles all six origin-touch/split regimes in one branchless call.",
+        "Updating deduplicated crossing records unconditionally with minBigInt/Math.min avoids unreachable V8 branch traps under lexicographic segment-pair iteration."
+      ],
+      "startedAt": "2026-11-26T20:46:52Z",
+      "verifiedAt": "2026-11-26T21:01:22Z"
     }
   ]
 }
