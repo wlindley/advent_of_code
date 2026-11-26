@@ -1,10 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import {
   cacheHitPercent,
+  costPerStarUsd,
   flashTurnPercent,
   formatTokenCount,
+  formatUsd,
+  MODEL_TIER_PRICING,
+  tierCostUsd,
   tokensPerStar,
   totalCacheReadTokens,
+  totalEstimatedCostUsd,
   totalFreshTokens,
   totalOutputTokens,
   totalTurns,
@@ -35,6 +40,42 @@ describe('tokenUsage derived metrics', () => {
     expect(formatTokenCount(42)).toBe('42');
   });
 
+  it('estimates USD API cost per tier, total, and per star', () => {
+    expect(MODEL_TIER_PRICING['Gemini 4 Neon']).toEqual({
+      inputPerMillionUsd: 2.0,
+      cacheReadPerMillionUsd: 0.2,
+      outputPerMillionUsd: 12.0,
+    });
+    const neon = {
+      tier: 'Gemini 4 Neon' as const,
+      turns: 40,
+      inputTokens: 1_000_000,
+      cacheReadTokens: 10_000_000,
+      outputTokens: 500_000,
+    };
+    const flash = {
+      tier: 'Gemini Flash' as const,
+      turns: 60,
+      inputTokens: 2_000_000,
+      cacheReadTokens: 4_000_000,
+      outputTokens: 1_000_000,
+    };
+    expect(tierCostUsd(neon)).toBeCloseTo(10.0, 6);
+    expect(tierCostUsd(flash)).toBeCloseTo(5.55, 6);
+    const report: TokenUsageReport = {
+      generatedAt: '2026-11-26T00:00:00Z',
+      subagentsScanned: 10,
+      budgetTargetTokens: null,
+      tiers: [neon, flash],
+    };
+    expect(totalEstimatedCostUsd(report)).toBeCloseTo(15.55, 6);
+    expect(costPerStarUsd(report, 10)).toBeCloseTo(1.555, 6);
+    expect(costPerStarUsd(report, 0)).toBe(0);
+    expect(formatUsd(221.094)).toBe('$221.09');
+    expect(formatUsd(1.8)).toBe('$1.80');
+    expect(formatUsd(0)).toBe('$0.00');
+  });
+
   it('handles empty token reports safely', () => {
     const empty: TokenUsageReport = {
       generatedAt: '2026-11-26T00:00:00Z',
@@ -45,5 +86,7 @@ describe('tokenUsage derived metrics', () => {
     expect(cacheHitPercent(empty)).toBe(0);
     expect(flashTurnPercent(empty)).toBe(0);
     expect(tokensPerStar(empty, 5)).toBe(0);
+    expect(totalEstimatedCostUsd(empty)).toBe(0);
+    expect(costPerStarUsd(empty, 5)).toBe(0);
   });
 });

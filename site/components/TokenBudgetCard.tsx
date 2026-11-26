@@ -1,9 +1,13 @@
 import {
   cacheHitPercent,
+  costPerStarUsd,
   flashTurnPercent,
   formatTokenCount,
+  formatUsd,
+  tierCostUsd,
   tokensPerStar,
   totalCacheReadTokens,
+  totalEstimatedCostUsd,
   totalFreshTokens,
   totalOutputTokens,
   totalTurns,
@@ -15,6 +19,9 @@ export interface TokenBudgetCardProps {
   readonly solvedStars: number;
 }
 
+const RATE_TOOLTIP =
+  'Estimated at Gemini API standard list rates per 1M tokens: Pro/Neon $2.00 fresh / $0.20 cached / $12.00 output; Flash $0.75 fresh / $0.075 cached / $3.75 output';
+
 export function TokenBudgetCard({ report, solvedStars }: TokenBudgetCardProps) {
   const fresh = totalFreshTokens(report);
   const output = totalOutputTokens(report);
@@ -22,6 +29,7 @@ export function TokenBudgetCard({ report, solvedStars }: TokenBudgetCardProps) {
   const consumed = fresh + output;
   const turns = totalTurns(report);
   const flashPct = flashTurnPercent(report);
+  const estCostUsd = totalEstimatedCostUsd(report);
   const budgetPct =
     report.budgetTargetTokens && report.budgetTargetTokens > 0
       ? Math.min(100, Math.round((consumed / report.budgetTargetTokens) * 1000) / 10)
@@ -31,7 +39,7 @@ export function TokenBudgetCard({ report, solvedStars }: TokenBudgetCardProps) {
     <div className="token-card">
       <div className="quality-header">
         <div>
-          <strong>Token Budget &amp; Model Mix</strong>
+          <strong>Token Usage &amp; Est. Cost</strong>
           <span className="muted"> · {turns} turns across {report.subagentsScanned + 1} agents</span>
         </div>
         <span className="badge nowrap">
@@ -73,11 +81,16 @@ export function TokenBudgetCard({ report, solvedStars }: TokenBudgetCardProps) {
             ))}
           </div>
         </div>
-        <div className="metric-tile">
-          <span className="eyebrow">Account Quota</span>
-          <strong className="nowrap">Settings / <code>/usage</code></strong>
+        <div className="metric-tile" title={RATE_TOOLTIP}>
+          <span className="eyebrow">Est. API Cost</span>
+          <strong className="nowrap">{formatUsd(estCostUsd)}</strong>
           <div className="metric-sub">
-            <span>Rolling 5h/weekly quota lives in Antigravity Settings</span>
+            <span className="nowrap">{formatUsd(costPerStarUsd(report, solvedStars))} / star</span>
+            {report.tiers.map((tier) => (
+              <span key={tier.tier} className="nowrap">
+                {tier.tier.replace('Gemini ', '')}: {formatUsd(tierCostUsd(tier))}
+              </span>
+            ))}
           </div>
         </div>
       </div>

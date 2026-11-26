@@ -1,5 +1,30 @@
 export type ModelTierName = 'Gemini 4 Neon' | 'Gemini Flash' | 'Other';
 
+export interface ModelTierPricing {
+  readonly inputPerMillionUsd: number;
+  readonly cacheReadPerMillionUsd: number;
+  readonly outputPerMillionUsd: number;
+}
+
+/** Standard Gemini API list rates (USD per 1M tokens, <= 200K context, output incl. thinking). */
+export const MODEL_TIER_PRICING: Readonly<Record<ModelTierName, ModelTierPricing>> = Object.freeze({
+  'Gemini 4 Neon': Object.freeze({
+    inputPerMillionUsd: 2.0,
+    cacheReadPerMillionUsd: 0.2,
+    outputPerMillionUsd: 12.0,
+  }),
+  'Gemini Flash': Object.freeze({
+    inputPerMillionUsd: 0.75,
+    cacheReadPerMillionUsd: 0.075,
+    outputPerMillionUsd: 3.75,
+  }),
+  Other: Object.freeze({
+    inputPerMillionUsd: 2.0,
+    cacheReadPerMillionUsd: 0.2,
+    outputPerMillionUsd: 12.0,
+  }),
+});
+
 export interface ModelTierUsage {
   readonly tier: ModelTierName;
   readonly turns: number;
@@ -57,4 +82,29 @@ export function formatTokenCount(count: number): string {
   if (count >= 1_000_000) return `${(count / 1_000_000).toFixed(2)}M`;
   if (count >= 1_000) return `${Math.round(count / 1_000)}k`;
   return String(count);
+}
+
+const ONE_MILLION = 1_000_000;
+
+export function tierCostUsd(usage: ModelTierUsage): number {
+  const rates = MODEL_TIER_PRICING[usage.tier];
+  return (
+    (usage.inputTokens * rates.inputPerMillionUsd +
+      usage.cacheReadTokens * rates.cacheReadPerMillionUsd +
+      usage.outputTokens * rates.outputPerMillionUsd) /
+    ONE_MILLION
+  );
+}
+
+export function totalEstimatedCostUsd(report: TokenUsageReport): number {
+  return report.tiers.reduce((sum, t) => sum + tierCostUsd(t), 0);
+}
+
+export function costPerStarUsd(report: TokenUsageReport, solvedStars: number): number {
+  if (solvedStars <= 0) return 0;
+  return totalEstimatedCostUsd(report) / solvedStars;
+}
+
+export function formatUsd(amountUsd: number): string {
+  return `$${amountUsd.toFixed(2)}`;
 }
