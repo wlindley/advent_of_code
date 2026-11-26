@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T00:50:20Z",
+  "updatedAt": "2026-11-26T00:56:23Z",
   "years": [
     {
       "year": 2025,
@@ -356,38 +356,19 @@
           "part": 2,
           "title": "Movie Theater",
           "puzzleUrl": "https://adventofcode.com/2025/day/9#part2",
-          "status": "in_progress",
-          "phase": "design_selected",
+          "status": "solved",
           "summary": "Consecutive red tiles trace a closed orthogonal loop of green edges enclosing green interior tiles. Find the maximum inclusive area of an axis-aligned rectangle with two opposite red corners whose every tile is red or green.",
-          "proposals": [
-            {
-              "id": "compressed-prefix-sum",
-              "name": "Compressed Point+Gap Grid & 2D Prefix Sum",
-              "summary": "Build point+gap compressed axes (omitting 0-gap slabs), rasterize boundary + half-open vertical-edge XOR parity, fuse a 1-based 2D Int32Array invalid-cell prefix sum, and check area-pruned red pairs in O(1).",
-              "complexity": "O(N log N + Kx*Ky + N^2) time, O(Kx*Ky) space",
-              "tradeoffs": "Exact on 0-gap pinches, bottleneck cavities, and arbitrary BigInt coords; runs in < 5 ms (~1 MB) with zero edits to 2025/day09/shared/."
-            },
-            {
-              "id": "corridor-sweep",
-              "name": "Sparse IntervalUnion Corridor Sweep",
-              "summary": "Build horizontal IntervalUnion bands per compressed y-slab and sweep shrinking feasible horizontal corridors per red vertex.",
-              "complexity": "O(N log N + N * B * log I) time, O(B * I) space",
-              "tradeoffs": "Avoids 2D raster allocation and serves as an independent differential test oracle, but has trickier horizontal-cap transitions."
-            },
-            {
-              "id": "area-descending-prune",
-              "name": "Area-Descending Branch-and-Bound",
-              "summary": "Sort all N(N-1)/2 pairs by area descending and verify each candidate against horizontal IntervalUnion bands until the first valid hit.",
-              "complexity": "O(N^2 log N) time, O(N^2) space",
-              "tradeoffs": "Halts at first valid optimum, but pair sorting is slower (~20-40 ms) than O(1) prefix-sum lookup."
-            }
+          "algorithmSummary": "Point+Gap BigInt coordinate compression (omitting 0-gap slabs), inclusive boundary rasterization + half-open vertical-edge XOR parity sweep, fused 1-based 2D Int32Array invalid-cell prefix sum, and area-pruned O(1)-checked red-vertex pair scan.",
+          "complexity": "O(N log N + Kx*Ky + N^2) time, O(Kx*Ky) space",
+          "runtime": "main-thread",
+          "personalInputElapsedMs": 11.21,
+          "attemptsCount": 1,
+          "learnings": [
+            "Point+Gap coordinate compression must omit gap slabs when u_{i+1} - u_i === 1n so 0-gap adjacent parallel walls stay adjacent without fabricating phantom exterior tiles.",
+            "Combine inclusive boundary marking with half-open vertical-edge XOR parity (cyLo <= cy < cyHi, ray at y + 0.5) instead of naive discrete flood-fill so both 0-gap pinches and bottleneck exterior cavities classify exactly."
           ],
-          "selectedProposalId": "compressed-prefix-sum",
-          "selectionRationale": "O(1) branch-free invalid-cell prefix-sum queries, < 5 ms runtime, exact discrete parity semantics on 0-gap pinches and bottleneck cavities, and zero edits to 2025/day09/shared/ or part1/.",
-          "inFlightWork": "Implementing CompressedAxis, PolygonTileGrid, area-pruned solver, dual differential oracle tests, and interactive SVG polygon/candidate visualizer.",
-          "attempts": [],
           "startedAt": "2026-11-26T00:41:41Z",
-          "updatedAt": "2026-11-26T00:50:20Z"
+          "verifiedAt": "2026-11-26T00:56:23Z"
         }
       ]
     }
