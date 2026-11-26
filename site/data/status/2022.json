@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T10:38:43Z",
+  "updatedAt": "2026-11-26T10:49:08Z",
   "parts": [
     {
       "year": 2022,
@@ -702,6 +702,26 @@
       ],
       "startedAt": "2026-11-26T10:23:10Z",
       "verifiedAt": "2026-11-26T10:38:43Z"
+    },
+    {
+      "year": 2022,
+      "day": 18,
+      "part": 2,
+      "title": "Boiling Boulders",
+      "puzzleUrl": "https://adventofcode.com/2022/day/18#part2",
+      "status": "solved",
+      "summary": "Compute only the exterior surface area of the 3D lava droplet reachable by outside water and steam expanding orthogonally, excluding faces bordering sealed interior air pockets.",
+      "algorithmSummary": "Zero-churn ExteriorFlood BFS specialization reusing 2022/day18/shared VoxelDroplet, ExteriorFlood, traceExteriorSurface, and dual-canvas DropletVisualizer with zero shared edits (3.76 ms across 2,759 cubes): seeds iterative 6-connected Int32Array BFS from padded corner (0, 0, 0) to partition CELL_EXTERIOR from CELL_TRAPPED_AIR and counts lava faces adjoining exterior air; differentially verified against an independent Set<string> 6-connected BFS oracle across official example (58), 6-cube diagonal-pinch octahedron (30), hollow 3x3x3/4x4x4 shells, nested/breached 5x5x5 shells, and 5 seeded random 3D blobs.",
+      "complexity": "O(N + V_box) time, O(V_box) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.76,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building ExteriorFlood and exterior-mode slice coloring in 2022/day18/shared/ delivered Part 2 with 19 lines of domain solver code and zero shared-module edits.",
+        "Testing a 6-cube diagonal-pinch octahedron (36 total -> 30 exterior) and a nested 5x5x5 shell with a floating inner cube explicitly validates 6-connectivity and inner-island face exclusion."
+      ],
+      "startedAt": "2026-11-26T10:40:28Z",
+      "verifiedAt": "2026-11-26T10:49:08Z"
     }
   ]
 }
