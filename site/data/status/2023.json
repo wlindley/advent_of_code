@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T07:09:02Z",
+  "updatedAt": "2026-11-26T07:23:19Z",
   "parts": [
     {
       "year": 2023,
@@ -382,6 +382,26 @@
       ],
       "startedAt": "2026-11-26T06:54:58Z",
       "verifiedAt": "2026-11-26T07:09:02Z"
+    },
+    {
+      "year": 2023,
+      "day": 10,
+      "part": 2,
+      "title": "Pipe Maze",
+      "puzzleUrl": "https://adventofcode.com/2023/day/10#part2",
+      "status": "solved",
+      "summary": "Count all non-loop tiles (both ground '.' and disconnected junk pipes) strictly enclosed inside the main pipe loop, treating parallel adjacent pipes as zero-width squeeze corridors connected to the exterior.",
+      "algorithmSummary": "Zero-churn row-by-row North-port (DIR_N) scanline crossing parity reusing 2023/day10/shared PipeMaze, MainLoop, and PipeMazeCanvas (enclosedMask, revealedUpToRow, activeScanRow) in O(R * C) time (9.01 ms on 140x140): stores only a private Uint8Array mask and crossingsByRow in immutable EnclosedAnalysis with dynamic count/row totals; differentially verified against both an O(L) Shoelace + Pick's Theorem oracle and a 2x-expanded squeeze flood-fill BFS verifying cell-by-cell mask equality across all 4 official examples, all 6 S shapes, and 25 seeded non-convex cluttered mazes.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 9.01,
+      "attemptsCount": 1,
+      "learnings": [
+        "Sweeping row-by-row and toggling inside on main-loop tiles whose effective mask has DIR_N (|, L, J, including resolved S) simultaneously solves squeezing corridors, counts enclosed junk pipes, and produces the exact enclosedMask for zero-churn PipeMazeCanvas playback.",
+        "Cross-checking scanline parity against both Shoelace + Pick's Theorem (scalar) and 2x-expanded BFS flood fill (cell-by-cell mask) independently validates every inferred S shape and tight corridor squeeze."
+      ],
+      "startedAt": "2026-11-26T07:09:45Z",
+      "verifiedAt": "2026-11-26T07:23:19Z"
     }
   ]
 }

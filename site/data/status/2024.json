@@ -1,7 +1,7 @@
 {
   "year": 2024,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T07:16:03Z",
+  "updatedAt": "2026-11-26T07:25:23Z",
   "parts": [
     {
       "year": 2024,
@@ -383,6 +383,26 @@
       ],
       "startedAt": "2026-11-26T07:04:16Z",
       "verifiedAt": "2026-11-26T07:16:03Z"
+    },
+    {
+      "year": 2024,
+      "day": 10,
+      "part": 2,
+      "title": "Hoof It",
+      "puzzleUrl": "https://adventofcode.com/2024/day/10#part2",
+      "status": "solved",
+      "summary": "Rate each height-0 trailhead on the topographic elevation grid by the total number of distinct strictly +1 orthogonal hiking trails from that trailhead to any height-9 peak, and return the sum of all trailhead ratings.",
+      "algorithmSummary": "Zero-churn RATING_METRIC strategy plugging into 2024/day10/shared generation-stamped height-ordered BFS and TopographicVisualizer (mode='rating') with zero shared edits in O(V) time (4.23 ms on 57x57): reuses exact per-cell path multiplicity accumulation (ways[nb] += ways[u], bounded by 4 * 3^8 = 26,244 << 2^31) and renders numeric peak path-count badges; differentially verified against both a global bottom-up 9 -> 0 elevation DP oracle up to 57x57 and an explicit unmemoized 10-cell path-enumeration DFS oracle.",
+      "complexity": "O(V) time, O(V) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.23,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because every reachable cell at elevation h >= 1 has out-degree <= 3 to elevation h + 1, any single trailhead's rating is strictly <= 4 * 3^8 = 26,244—making Int32Array path accumulation provably overflow-free.",
+        "Parameterizing PeakContributionMetric and TopographicVisualizer(mode='rating') in 2024/day10/shared/ delivered Part 2 in 43 lines of production domain code and a 16-line visualizer wrapper with zero shared-module edits."
+      ],
+      "startedAt": "2026-11-26T07:16:42Z",
+      "verifiedAt": "2026-11-26T07:25:23Z"
     }
   ]
 }
