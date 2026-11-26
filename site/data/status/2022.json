@@ -1,7 +1,7 @@
 {
   "year": 2022,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T11:14:17Z",
+  "updatedAt": "2026-11-26T11:29:58Z",
   "parts": [
     {
       "year": 2022,
@@ -762,6 +762,26 @@
       ],
       "startedAt": "2026-11-26T11:06:39Z",
       "verifiedAt": "2026-11-26T11:14:17Z"
+    },
+    {
+      "year": 2022,
+      "day": 20,
+      "part": 1,
+      "title": "Grove Positioning System",
+      "puzzleUrl": "https://adventofcode.com/2022/day/20",
+      "status": "solved",
+      "summary": "Mix a circular list of 5,000 signed integers once in original file order (moving each entry by its own value around the remaining N - 1 elements) and sum the values at offsets +1000, +2000, and +3000 after 0.",
+      "algorithmSummary": "Sqrt-decomposed SqrtCircularList (blocks + Int32Array blockOf with automatic 2B block splitting and empty-block compaction) + exact BigInt Euclidean modulo (N - 1) in 2022/day20/shared/ (5.80 ms on 5,000 items): tracks entries by original identity id (handling duplicates cleanly), computes zeroId and GroveCoordinates.sum dynamically, preserves 0/+1k/+2k/+3k/active landmarks in 64-slot SVG ring sampling, and parameterizes MixConfig (rounds, decryptionKey) for zero-churn 10-round Part 2 reuse; differentially verified against an independent naive Array.splice circular oracle across official Part 1 (3) and Part 2 (1623178306) examples, duplicate-heavy lists, +/- (N - 1) wrap boundaries, N = 1..3, and 20 seeded random arrays.",
+      "complexity": "O(R * N * sqrt(N)) amortized time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 5.8,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using a sqrt-decomposed block list (SqrtCircularList) keeps 5,000-element circular mixing sub-quadratic while natively returning (fromIndex, toIndex, steps) jump arcs for SVG ring visualization and staying 100% branch-testable via injectable blockSize.",
+        "Adding mandatory landmarks (0, +1k/+2k/+3k, and active toIndex) before uniform ring sampling keeps every grove coordinate and move chord visible on a 64-node SVG even for N = 5,000."
+      ],
+      "startedAt": "2026-11-26T11:15:11Z",
+      "verifiedAt": "2026-11-26T11:29:58Z"
     }
   ]
 }
