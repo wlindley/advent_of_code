@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T23:06:29Z",
+  "updatedAt": "2026-11-26T23:17:32Z",
   "parts": [
     {
       "year": 2019,
@@ -303,6 +303,26 @@
       ],
       "startedAt": "2026-11-26T22:48:08Z",
       "verifiedAt": "2026-11-26T23:06:29Z"
+    },
+    {
+      "year": 2019,
+      "day": 8,
+      "part": 2,
+      "title": "Space Image Format",
+      "puzzleUrl": "https://adventofcode.com/2019/day/8#part2",
+      "status": "solved",
+      "summary": "Composite 100 stacked 25x6 Space Image layers front-to-back (0 black, 1 white, 2 transparent) and decode the resulting 5-letter BIOS message.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day08/shared/ binding DECODED_MESSAGE_POLICY into SpaceImageSolver and SpaceImageVisualizer (1.48 ms across 100 25x6 layers -> LRFKU): zero edits to shared/ or part1/, front-to-back early-stop compositor + 30-bit 5x6 canonical AoC bitmap font OCR, progressive 6-layer SPACE browser example unlocking one letter per frame, differentially verified across all 20 canonical templates and 30 seeded PRNG multi-layer images against an independent raw-string vertical raycast + row-equality oracle.",
+      "complexity": "O(N) worst-case time (early-exits once all 150 pixels resolve), O(N) parsed storage / O(W * H) composite buffer",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.48,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building DECODED_MESSAGE_POLICY and 20 canonical 30-bit 5x6 AoC glyphs in day08/shared/ reduced Part 2's domain solver to 4 lines and decoded all 5 personal BIOS letters on the first try.",
+        "Slicing CANONICAL_GLYPHS directly by index rather than .find() by letter ensures duplicate-letter variants (both I and both S templates) are genuinely exercised end-to-end."
+      ],
+      "startedAt": "2026-11-26T23:06:29Z",
+      "verifiedAt": "2026-11-26T23:17:32Z"
     }
   ]
 }

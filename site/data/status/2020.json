@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:50:18Z",
+  "updatedAt": "2026-11-26T23:09:18Z",
   "parts": [
     {
       "year": 2020,
@@ -323,6 +323,26 @@
       ],
       "startedAt": "2026-11-26T22:42:39Z",
       "verifiedAt": "2026-11-26T22:50:18Z"
+    },
+    {
+      "year": 2020,
+      "day": 9,
+      "part": 1,
+      "title": "Encoding Error",
+      "puzzleUrl": "https://adventofcode.com/2020/day/9",
+      "status": "solved",
+      "summary": "Find the first post-preamble number in an XMAS transmission that is not the sum of two distinct-valued numbers among the immediately preceding 25 numbers.",
+      "algorithmSummary": "Exact-BigInt sliding lastIndex map enforcing AoC's strict distinct-value (a != b) rule and pre-built O(N) half-open two-pointer ENCRYPTION_WEAKNESS_POLICY in 2020/day09/shared/ (1.07 ms across 1,000 numbers up to ~9.2e13 -> 18,272,118): zero-derived-state index-based models, discriminated union PreambleScanFrame | WeaknessScanFrame, bigintLog2-scaled SVG bar chart & pair-arc visualizer, differentially verified across 50 seeded PRNG streams each against independent O(W^2) pair and O(N^2) prefix-sum oracles.",
+      "complexity": "O(N * W) time, O(W) aux space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.07,
+      "attemptsCount": 1,
+      "learnings": [
+        "Tracking only lastIndex: Map<bigint, number> with conditional deletion (lastIndex.get(outVal) === windowStart) handles duplicate values cleanly without a redundant counts map, while left-to-right scanning guarantees p < q with zero swap branches.",
+        "Representing the Part 2 two-pointer window as half-open [windowStart, windowEnd) handles single-element > target drains to empty (windowStart === windowEnd, sum = 0n) without violating range invariants."
+      ],
+      "startedAt": "2026-11-26T22:50:18Z",
+      "verifiedAt": "2026-11-26T23:09:18Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T23:00:30Z",
+  "updatedAt": "2026-11-26T23:08:50Z",
   "parts": [
     {
       "year": 2021,
@@ -343,6 +343,26 @@
       ],
       "startedAt": "2026-11-26T22:45:13Z",
       "verifiedAt": "2026-11-26T23:00:30Z"
+    },
+    {
+      "year": 2021,
+      "day": 9,
+      "part": 2,
+      "title": "Smoke Basin",
+      "puzzleUrl": "https://adventofcode.com/2021/day/9#part2",
+      "status": "solved",
+      "summary": "Find all 4-connected heightmap basins bounded by height-9 ridges and return the product of the sizes of the three largest basins.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day09/shared/ binding LARGEST_BASINS_PRODUCT_POLICY into SmokeBasinSolver and SmokeBasinVisualizer (12.86 ms across 100x100 grid -> 959,136): zero edits to shared/ or part1/, component-at-a-time flat-Int32Array BFS with O(R*C) wave-depth counting sort and gold top-3 wavefront overlay on BathymetryCanvas, differentially verified across 35 seeded PRNG grids against two independent oracles (non-ridge-filtered shared/core DisjointSet percolation and Set<string> iterative DFS).",
+      "complexity": "O(R * C + B log B) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 12.86,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building LARGEST_BASINS_PRODUCT_POLICY and BathymetryCanvas flood overlays in day09/shared/ reduced Part 2's domain solver to 3 lines with zero shared-module edits.",
+        "When using DisjointSet as a differential oracle on grids with walls, sizes must be collected strictly from roots of non-ridge cells because DisjointSet initializes every ridge cell as its own size-1 component."
+      ],
+      "startedAt": "2026-11-26T23:00:30Z",
+      "verifiedAt": "2026-11-26T23:08:50Z"
     }
   ]
 }
