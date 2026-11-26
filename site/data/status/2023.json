@@ -1,7 +1,7 @@
 {
   "year": 2023,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T17:39:15Z",
+  "updatedAt": "2026-11-26T17:56:27Z",
   "parts": [
     {
       "year": 2023,
@@ -923,6 +923,26 @@
       ],
       "startedAt": "2026-11-26T17:32:10Z",
       "verifiedAt": "2026-11-26T17:39:15Z"
+    },
+    {
+      "year": 2023,
+      "day": 24,
+      "part": 1,
+      "title": "Never Tell Me The Odds",
+      "puzzleUrl": "https://adventofcode.com/2023/day/24",
+      "status": "solved",
+      "summary": "Ignore the Z axis of 300 3D linear hailstone rays and count how many unordered pairs have future XY path intersections inside the closed [200e12, 400e12]^2 test area.",
+      "algorithmSummary": "Exact BigInt pairwise 2D Cramer intersection (normalized d > 0n, zero float64 rounding) + exact Rational Liang-Barsky viewport ray clipping in 2023/day24/shared/ (12.15 ms across 44,850 pairs on 300 hailstones): pre-builds zero-churn Part 2 RationalLinearSystem (incremental Gauss-Jordan RREF over shared/core Rational), axis-agnostic solveRockTrajectory, buildRockTrace, and HiDPI Hail2DCanvas/HailVisualizer, verified at 100% V8 coverage across 7 test suites.",
+      "complexity": "O(N^2) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 12.15,
+      "attemptsCount": 1,
+      "learnings": [
+        "Normalizing the 2D cross-product determinant to d > 0n keeps future-time (tANum >= 0n && tBNum >= 0n) and box-containment checks in exact BigInt with zero float64 precision loss across 10^14 coordinates and 10^21 numerators.",
+        "Performing exact Rational Liang-Barsky slab clipping in world coordinates before normalizing only the two clipped endpoints avoids BigInt velocity underflow ((v * 1e6) / 2e14 === 0n) while pre-building RationalLinearSystem and solveRockTrajectory for zero-churn Part 2."
+      ],
+      "startedAt": "2026-11-26T17:39:58Z",
+      "verifiedAt": "2026-11-26T17:56:27Z"
     }
   ]
 }
