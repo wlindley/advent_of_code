@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T22:12:29Z",
+  "updatedAt": "2026-11-26T22:20:21Z",
   "parts": [
     {
       "year": 2021,
@@ -263,6 +263,26 @@
       ],
       "startedAt": "2026-11-26T21:57:23Z",
       "verifiedAt": "2026-11-26T22:12:29Z"
+    },
+    {
+      "year": 2021,
+      "day": 7,
+      "part": 2,
+      "title": "The Treachery of Whales",
+      "puzzleUrl": "https://adventofcode.com/2021/day/7#part2",
+      "status": "solved",
+      "summary": "Find the integer horizontal alignment position minimizing total triangular fuel (d * (d + 1) / 2 per crab) across the crab submarine swarm.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day07/shared/ binding TRIANGULAR_FUEL_MODEL into CrabAlignmentSolver and CrabAlignmentVisualizer (2.88 ms across 1,000 crabs -> 91,257,582): zero edits to shared/ or part1/, discrete convex binary search in exact BigInt with dual-panel swarm histogram and parabolic fuel-landscape SVG playback, differentially verified across 40 seeded PRNG fleets (seed 20210702) against both brute-force [min..max] and analytic {floorDiv(sum, n), floorDiv(sum, n) + 1} oracles plus > 2^100 BigInt closed-form and P2 >= P1 checks.",
+      "complexity": "O(N log R) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.88,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building TRIANGULAR_FUEL_MODEL and exact BigInt discrete convex binary search in day07/shared/ let Part 2 ship in 3 lines of domain code with zero shared edits.",
+        "For strictly convex triangular fuel, all minimizers lie inside {floorDiv(sum, n), floorDiv(sum, n) + 1n} (verified algebraically for negative sums too), providing an O(N) closed-form differential oracle."
+      ],
+      "startedAt": "2026-11-26T22:12:29Z",
+      "verifiedAt": "2026-11-26T22:20:21Z"
     }
   ]
 }
