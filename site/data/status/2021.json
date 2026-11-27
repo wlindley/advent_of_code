@@ -905,6 +905,26 @@
       "startedAt": "2026-11-27T06:26:05Z",
       "verifiedAt": "2026-11-27T07:35:53Z",
       "humanWaitSeconds": 3012
+    },
+    {
+      "year": 2021,
+      "day": 23,
+      "part": 2,
+      "title": "Amphipod",
+      "puzzleUrl": "https://adventofcode.com/2021/day/23#part2",
+      "status": "solved",
+      "summary": "Unfold the burrow by inserting two middle amphipod rows (#D#C#B#A# and #D#B#A#C#) into depth-4 rooms (16 amphipods) and find the minimum total organization energy.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day23/shared/ implementing UnfoldedBurrowPolicy (id: 'unfolded', roomDepth: 4, inserting DD/CB/BA/AC into rooms A..D) in 2021/day23/part2/domain/policy.ts (187.62 ms -> 46,754 energy): zero edits to shared/ or part1/, consistent triangular A* heuristic + forced home-move dominance solves the 16-amphipod depth-4 burrow cleanly with zero SVG clipping in AmphipodBurrowSvg (viewBox 536x292), verified across the official Part 2 example (44,169), unfolded already-sorted inputs, full step-by-step replay & admissibility/consistency trace oracle, bounded traces, and room-count validation guards.",
+      "complexity": "O(E log V) over pruned reachable depth-4 A* states",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 187.62,
+      "attemptsCount": 1,
+      "learnings": [
+        "Parameterizing BurrowState, move generation, the triangular A* heuristic, and AmphipodBurrowSvg over roomDepth let Part 2 drop in via a 38-line UnfoldedBurrowPolicy with zero edits to day23/shared/ or part1/.",
+        "Validating every consecutive frame in the optimal Part 2 trace against an independent state-transition replay and admissibility/consistency checker verifies both heuristic soundness and path legality end-to-end."
+      ],
+      "startedAt": "2026-11-27T07:35:53Z",
+      "verifiedAt": "2026-11-27T07:47:39Z"
     }
   ]
 }

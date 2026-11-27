@@ -805,6 +805,26 @@
       "startedAt": "2026-11-27T06:28:09Z",
       "verifiedAt": "2026-11-27T07:33:24Z",
       "humanWaitSeconds": 3012
+    },
+    {
+      "year": 2019,
+      "day": 21,
+      "part": 1,
+      "title": "Springdroid Adventure",
+      "puzzleUrl": "https://adventofcode.com/2019/day/21",
+      "status": "solved",
+      "summary": "Program a 4-sensor (A..D) Springscript routine in WALK mode for an Intcode-driven jumping droid to cross damaged ship hull segments and report the non-ASCII hull damage integer.",
+      "algorithmSummary": "5-instruction De Morgan Boolean Springscript policy (!(A && B && C) && D via OR A J / AND B J / AND C J / NOT J J / AND D J, leaving T untouched) with pre-built 8-instruction RUN_POLICY for zero-churn Part 2, local SpringscriptProgram evaluator + hullSimulator, and O(1) cursor-draining SpringdroidAsciiIo over read-only 2019/shared/intcode/ in 2019/day21/shared/ (18.44 ms -> 19,361,414 hull damage): hand-verified 202-cell pure-Intcode EXAMPLE_SPRINGDROID_PROGRAM ROM (19,354 WALK / 114,084 RUN / ASCII failure), interactive HullDiagramSvg + SpringdroidVisualizer showing live (T, J) register traces and parabolic jump arcs, verified across the exhaustive 16-input WALK truth table, RUN trap hulls, and VM/IO error paths.",
+      "complexity": "O(1) script synthesis, O(I) Intcode VM execution (~10^5 steps)",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 18.44,
+      "attemptsCount": 1,
+      "learnings": [
+        "Applying De Morgan's Law reduces the Part 1 WALK jump predicate (!A || !B || !C) && D to 5 instructions while leaving temporary register T untouched, letting Part 2 append OR E T / OR H T / AND T J in 8 total instructions.",
+        "Pairing a verified 202-cell pure-Intcode example ROM with a pure-TS hull simulator enables end-to-end Intcode execution and rich visual sensor-arc playback without exposing personal input."
+      ],
+      "startedAt": "2026-11-27T07:33:24Z",
+      "verifiedAt": "2026-11-27T07:50:11Z"
     }
   ]
 }
