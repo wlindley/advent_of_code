@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T03:54:34Z",
+  "updatedAt": "2026-11-27T04:14:19Z",
   "parts": [
     {
       "year": 2019,
@@ -604,6 +604,26 @@
       ],
       "startedAt": "2026-11-27T03:42:54Z",
       "verifiedAt": "2026-11-27T03:54:34Z"
+    },
+    {
+      "year": 2019,
+      "day": 16,
+      "part": 1,
+      "title": "Flawed Frequency Transmission",
+      "puzzleUrl": "https://adventofcode.com/2019/day/16",
+      "status": "solved",
+      "summary": "Apply 100 phases of the Flawed Frequency Transmission [0, 1, 0, -1] repeating pattern filter to a digit signal and return the first eight digits.",
+      "algorithmSummary": "Harmonic prefix-sum FFT (Int32Array prefix sums + double-buffered Uint8Array) with polymorphic FftPolicy (FULL_SIGNAL_POLICY for Part 1, pre-built reverse suffix-sum tail OFFSET_MESSAGE_POLICY for zero-churn Part 2) in 2019/day16/shared/ (1.72 ms across 650 digits -> 52611030): exact second-half validation offset >= floor(L/2) proven for both even and odd lengths, string output preserving leading zeros, pure-TS batched SVG spectrum + pattern matrix layout (vizLayout.ts), SignalSpectrumSvg + PatternMatrixSvg + FftVisualizer playback, differentially verified against BOTH an independent O(N^2) direct dot-product oracle (Part 1) and an independent Lucas's Theorem CRT mod 10 binomial convolution oracle (Part 2).",
+      "complexity": "O(P * N ln N) Part 1 / O(P * (L - offset)) Part 2 time, O(N) / O(L - offset) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.72,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using Int32Array prefix sums to accumulate harmonic +1 and -1 blocks of stride 4(i + 1) drops Part 1 FFT from O(N^2) to O(N ln N) per phase (1.72 ms for 100 phases of 650 digits) with zero overflow risk.",
+        "The second-half upper-triangular suffix-sum simplification holds iff offset >= Math.floor(totalLength / 2) for both even and odd lengths, and cross-checking against an independent Lucas's Theorem CRT mod 10 oracle verifies Part 2 without duplicating suffix loops."
+      ],
+      "startedAt": "2026-11-27T03:54:34Z",
+      "verifiedAt": "2026-11-27T04:14:19Z"
     }
   ]
 }

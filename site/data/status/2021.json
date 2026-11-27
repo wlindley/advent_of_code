@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T03:51:36Z",
+  "updatedAt": "2026-11-27T04:01:39Z",
   "parts": [
     {
       "year": 2021,
@@ -664,6 +664,26 @@
       ],
       "startedAt": "2026-11-27T03:31:03Z",
       "verifiedAt": "2026-11-27T03:51:36Z"
+    },
+    {
+      "year": 2021,
+      "day": 17,
+      "part": 2,
+      "title": "Trick Shot",
+      "puzzleUrl": "https://adventofcode.com/2021/day/17#part2",
+      "status": "solved",
+      "summary": "Count every distinct integer initial launch velocity (vx, vy) from (0, 0) whose ballistic trajectory lands inside the target trench on at least one discrete step.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day17/shared/ binding VALID_VELOCITY_COUNT_POLICY into TrickShotSolver and TrickShotVisualizer (0.54 ms -> 1,447 distinct velocities): zero edits to shared/ or part1/, O(1) per-vy interval overlap counts via Int32Array prefix sums (xLoPrefix[yHi] - xHiPrefix[yLo - 1]) avoiding multi-step hit double-counting, synchronized BallisticArcSvg + VelocityPhaseSpaceSvg phase-space sweep visualizer, differentially verified across the official example (112), 6 stalling/overshoot/gap/overlap boundary boxes, and 28 seeded PRNG target boxes against an independent 2D brute-force ballistic simulator.",
+      "complexity": "O((X + |Y|) * |Y|) time, O(|Y|) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.54,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building VALID_VELOCITY_COUNT_POLICY, Int32Array interval prefix sums, and VelocityPhaseSpaceSvg in day17/shared/ reduced Part 2's domain solver to 4 lines and counted 1,447 velocities in 0.54 ms with zero shared edits.",
+        "Summing xLoPrefix[yHi] - xHiPrefix[yLo - 1] over disjoint vy intervals counts each hitting (vx, vy) pair exactly once by construction even when trajectories spend multiple consecutive steps inside the trench."
+      ],
+      "startedAt": "2026-11-27T03:51:36Z",
+      "verifiedAt": "2026-11-27T04:01:39Z"
     }
   ]
 }

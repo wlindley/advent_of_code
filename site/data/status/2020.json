@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T03:53:57Z",
+  "updatedAt": "2026-11-27T04:05:01Z",
   "parts": [
     {
       "year": 2020,
@@ -664,6 +664,26 @@
       ],
       "startedAt": "2026-11-27T03:36:30Z",
       "verifiedAt": "2026-11-27T03:53:57Z"
+    },
+    {
+      "year": 2020,
+      "day": 17,
+      "part": 2,
+      "title": "Conway Cubes",
+      "puzzleUrl": "https://adventofcode.com/2020/day/17#part2",
+      "status": "solved",
+      "summary": "Simulate 6 simultaneous cycles of 4D Conway's Game of Life (80 Moore neighbors) from an initial 2D slice at (z = 0, w = 0) and return the total number of active hypercubes.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day17/shared/ binding POCKET_4D_POLICY into ConwayCubesSolver and ConwayCubesVisualizer (5.47 ms across 8x8 seed -> 1,624 active hypercubes): zero edits to shared/ or part1/, 4-pass separable 1D box-sum convolution over flat padded Uint8Array buffers with interactive w-hyperplane selector and HiDPI SliceCardCanvas diff cards, differentially verified cycle-by-cycle against an independent sparse 4D Set<string> 80-neighbor oracle on the official example (5 -> 29 -> 60 -> ... -> 848), w <-> -w and z <-> w slice symmetries across every cycle, edge seeds, and 16 seeded PRNG rectangular seeds.",
+      "complexity": "O(C * (W + 2C)(H + 2C)(1 + 2C)^2) time and space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 5.47,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building POCKET_4D_POLICY, 4-pass separable box-sum convolution, and the interactive HyperplaneSelector in day17/shared/ reduced Part 2's domain solver to 3 lines and solved 6 cycles of 4D Conway life in 5.47 ms with zero shared edits.",
+        "Explicitly verifying both w <-> -w mirror symmetry and z <-> w exchange symmetry across every trace frame provides an orthogonal structural invariant alongside sparse 80-neighbor differential testing."
+      ],
+      "startedAt": "2026-11-27T03:53:57Z",
+      "verifiedAt": "2026-11-27T04:05:01Z"
     }
   ]
 }
