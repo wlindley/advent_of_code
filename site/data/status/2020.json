@@ -443,6 +443,46 @@
       ],
       "startedAt": "2026-11-27T00:02:18Z",
       "verifiedAt": "2026-11-27T00:13:09Z"
+    },
+    {
+      "year": 2020,
+      "day": 12,
+      "part": 1,
+      "title": "Rain Risk",
+      "puzzleUrl": "https://adventofcode.com/2020/day/12",
+      "status": "solved",
+      "summary": "Navigate a ferry from (0, 0) facing East through N/S/E/W/L/R/F steering instructions and return the Manhattan distance from the origin.",
+      "algorithmSummary": "Unified exact-BigInt (position, vector) state machine with exact 4-way quarter-turn rotation tuple and polymorphic NavigationRule (HEADING_NAVIGATION_RULE for Part 1, pre-built WAYPOINT_NAVIGATION_RULE for zero-churn Part 2) in 2020/day12/shared/ (1.34 ms across 783 instructions -> 439): zero-derived-state models, BigInt fixed-point aspect-preserving SVG projection safe past 2^1024, light-mode NauticalChartSvg course plot + compass/waypoint inset visualizer, differentially verified across official examples (25/286) and 50 seeded PRNG voyages for both Part 1 and Part 2 against an independent Gaussian-integer simulator.",
+      "complexity": "O(N) time, O(1) solve / O(min(N, maxSteps)) trace space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.34,
+      "attemptsCount": 1,
+      "learnings": [
+        "Unifying Part 1 heading and Part 2 waypoint under a single (position, vector) ShipState lets L, R, and F share 100% identical logic while isolating N/S/E/W behind a 1-method NavigationRule strategy.",
+        "Scaling BigInt coordinates in fixed-point before converting to Number and normalizing -0 branchlessly via (-ny / mag) + 0 keeps SVG projections finite and exact even for > 2^1024 coordinates."
+      ],
+      "startedAt": "2026-11-27T00:13:09Z",
+      "verifiedAt": "2026-11-27T00:28:10Z"
+    },
+    {
+      "year": 2020,
+      "day": 12,
+      "part": 2,
+      "title": "Rain Risk",
+      "puzzleUrl": "https://adventofcode.com/2020/day/12#part2",
+      "status": "solved",
+      "summary": "Steer the ferry by shifting and rotating a relative waypoint starting at (10E, 1N), advancing forward in multiples of the waypoint vector, and returning the final Manhattan distance.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day12/shared/ binding WAYPOINT_NAVIGATION_RULE into RainRiskSolver and NavigationVisualizer (1.06 ms across 783 instructions -> 12,385): zero edits to shared/ or part1/, exact BigInt quarter-turn waypoint rotations around the ship with Waypoint Compass inset in NauticalChartSvg, differentially verified across the official example (286), zero-waypoint, odd-low-bit > 2^63 BigInt stress cases, multi-turn L/R invariance, and 40 seeded PRNG voyages against an independent Gaussian-integer simulator.",
+      "complexity": "O(N) time, O(1) solve / O(min(N, maxSteps)) trace space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.06,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building WAYPOINT_NAVIGATION_RULE and Waypoint Compass inset in day12/shared/ reduced Part 2's domain solver to 4 lines with zero shared-module edits.",
+        "Testing odd-low-bit > 2^63 BigInt moves after a 90-degree CW rotation verifies exact sign, scaling, and Manhattan accumulation with zero IEEE-754 rounding loss."
+      ],
+      "startedAt": "2026-11-27T00:28:10Z",
+      "verifiedAt": "2026-11-27T00:36:14Z"
     }
   ]
 }

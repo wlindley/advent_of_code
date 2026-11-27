@@ -403,6 +403,26 @@
       ],
       "startedAt": "2026-11-27T00:06:02Z",
       "verifiedAt": "2026-11-27T00:18:26Z"
+    },
+    {
+      "year": 2019,
+      "day": 11,
+      "part": 1,
+      "title": "Space Police",
+      "puzzleUrl": "https://adventofcode.com/2019/day/11",
+      "status": "solved",
+      "summary": "Drive an Intcode-controlled hull-painting robot starting on a black panel at (0, 0) facing up, feeding panel colors and reading (paint, turn) pairs until halt, and return distinct panels painted.",
+      "algorithmSummary": "Read-only reuse of complete 2019/shared/intcode/ via O(1) cursor-draining RobotIoChannel and run-first pause/resume loop paired with polymorphic PaintingPolicy (PAINTED_COUNT_POLICY for Part 1, pre-built 5x6 bitmap OCR REGISTRATION_ID_POLICY with minX-1 fallback for leading centered 'I' for zero-churn Part 2) in 2019/day11/shared/ (69.46 ms -> 1,909 distinct panels): single-source-of-truth paintedPanels map separate from initialStartColor, 4-layer batched SVG path HullPainterVisualizer over slate-navy hull plate, differentially verified across the official 7-step walkthrough and reactive feedback programs against an independent flat-loop reference VM.",
+      "complexity": "O(I + S) time, O(M + P) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 69.46,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using an O(1) cursor-draining RobotIoChannel implementing IoChannel avoids O(S^2) output-array cloning over 10,000+ paint cycles while keeping 2019/shared/intcode/ 100% read-only.",
+        "Keeping initialStartColor separate from paintedPanels ensures paintedCount is exact even on immediate halt while preserving unpainted (0, 0) in whitePanels for Part 2 OCR."
+      ],
+      "startedAt": "2026-11-27T00:18:26Z",
+      "verifiedAt": "2026-11-27T00:34:59Z"
     }
   ]
 }
