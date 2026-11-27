@@ -784,6 +784,46 @@
       ],
       "startedAt": "2026-11-27T05:05:17Z",
       "verifiedAt": "2026-11-27T05:23:02Z"
+    },
+    {
+      "year": 2021,
+      "day": 20,
+      "part": 2,
+      "title": "Trench Map",
+      "puzzleUrl": "https://adventofcode.com/2021/day/20#part2",
+      "status": "solved",
+      "summary": "Apply 50 simultaneous 3x3 cellular-automaton image-enhancement passes over the infinite 2D trench map (tracking alternating infinite-void flips) and count all lit pixels.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day20/shared/ binding PART2_POLICY (50 passes) into TrenchMapSolver and TrenchMapVisualizer (6.13 ms across 50 passes expanding 100x100 to 200x200 -> 18,989 lit pixels): zero edits to shared/ or part1/, double-buffered Uint8Array rolling 3-bit window convolution with unconditional 2-cell halo stamping captures all 51 exact playback frames (DEFAULT_MAX_TRACE_STEPS = 51) displaying every alternating dark/lit Infinite Void flash, differentially verified across the official 50-pass example (3,351), blinking (1,0) 50-pass 3x3 grid against an independent naive 2D PixelBit[][] oracle, rectangular 2x5 dimensions, sticky (1,1) RangeError guard, and bounded trace sampling.",
+      "complexity": "O(S * (H0 + 2S) * (W0 + 2S)) time, O((H0 + 2S) * (W0 + 2S)) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.13,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building PART2_POLICY (steps = 50), DEFAULT_MAX_TRACE_STEPS = 51, and double-buffered rolling 3-bit convolution in day20/shared/ reduced Part 2's domain solver to 4 lines and ran 50 passes over 40,000 cells in 6.13 ms with zero shared edits.",
+        "Using a naive 2D PixelBit[][] differential oracle instead of string-keyed Sets keeps 50-pass blinking-void verification under 10 ms while remaining completely independent of flat Uint8Array halo indexing."
+      ],
+      "startedAt": "2026-11-27T05:23:02Z",
+      "verifiedAt": "2026-11-27T05:32:49Z"
+    },
+    {
+      "year": 2021,
+      "day": 21,
+      "part": 1,
+      "title": "Dirac Dice",
+      "puzzleUrl": "https://adventofcode.com/2021/day/21",
+      "status": "solved",
+      "summary": "Simulate a two-player 10-space circular-track game with a deterministic 100-sided die (3 rolls per turn) until a player reaches score 1,000, returning losingScore * totalDieRolls.",
+      "algorithmSummary": "Direct turn-by-turn deterministic simulator with exact wrapped 100-sided die triplets paired with pre-built sparse-active forward wavefront exact BigInt DP (O(|active|) double-buffered reset + post-round per-space universe weights for zero-churn Part 2) in 2021/day21/shared/ (0.75 ms -> 929,625): zero stored derived state on DeterministicTurnFrame & QuantumTraceFrame, circular 10-space DiracTrackSvg reusing shared/core bigintLog2 for dual deterministic/quantum overlays, differentially verified across all 100 (1..10)^2 starting pairs against an independent O(1) period-10 algebraic cycle oracle for Part 1 and against an independent player-symmetry memoized BigInt DP oracle + round-by-round 27x conservation invariant for Part 2.",
+      "complexity": "O(T) Part 1 / O(P * S_active * 7) Part 2 time, O(1) Part 1 / O(100 * T^2) Part 2 space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.75,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using plain bigint[] double buffers with O(|active|) zeroing on pop eliminates both BigInt64Array 2^64 overflow and TypedArray freeze hazards while emitting exact turn-by-turn multiverse wavefront and ring-density frames in one pass.",
+        "Reusing shared/core bigintLog2(weight + 1n) for quantum track glow scaling maps 0n -> 0 and 1n -> 1 monotonically without throwing or branching."
+      ],
+      "startedAt": "2026-11-27T05:32:49Z",
+      "verifiedAt": "2026-11-27T05:47:45Z"
     }
   ]
 }
