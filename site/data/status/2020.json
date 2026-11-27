@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T04:22:55Z",
+  "updatedAt": "2026-11-27T04:32:26Z",
   "parts": [
     {
       "year": 2020,
@@ -704,6 +704,26 @@
       ],
       "startedAt": "2026-11-27T04:05:01Z",
       "verifiedAt": "2026-11-27T04:22:55Z"
+    },
+    {
+      "year": 2020,
+      "day": 18,
+      "part": 2,
+      "title": "Operation Order",
+      "puzzleUrl": "https://adventofcode.com/2020/day/18#part2",
+      "status": "solved",
+      "summary": "Evaluate arithmetic homework expressions where addition has higher precedence than multiplication (+ > *), left-associative with parenthesized grouping, and return the sum of all line values.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day18/shared/ binding ADD_BEFORE_MUL_POLICY into OperationOrderSolver and OperationOrderVisualizer (4.11 ms across 376 expressions -> 68,852,578,641,904): zero edits to shared/ or part1/, Pratt precedence-climbing parser with prec + 1 recursion evaluates addition clusters before multiplication in exact BigInt, leaf-midpoint AstTreeSvg renders deeper addition subtrees resolving under multiplication ancestors, differentially verified across all 6 official Part 2 examples (combined sum 694,173), > 2^68 BigInt precision tests, and 60 seeded PRNG expressions against an independent Shunting-Yard two-stack oracle.",
+      "complexity": "O(T) time, O(T) space for T total tokens",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.11,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building ADD_BEFORE_MUL_POLICY (+ -> 2, * -> 1) and policy-keyed playback in day18/shared/ reduced Part 2's domain solver to 4 lines and evaluated 376 BigInt expressions in 4.11 ms with zero shared edits.",
+        "Giving the differential Shunting-Yard oracle its own independent local precedence table rather than reading solver.policy.precedence catches policy-wiring bugs as well as parser bugs."
+      ],
+      "startedAt": "2026-11-27T04:22:55Z",
+      "verifiedAt": "2026-11-27T04:32:26Z"
     }
   ]
 }

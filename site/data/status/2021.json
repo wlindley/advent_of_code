@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T04:24:08Z",
+  "updatedAt": "2026-11-27T04:32:59Z",
   "parts": [
     {
       "year": 2021,
@@ -704,6 +704,26 @@
       ],
       "startedAt": "2026-11-27T04:01:39Z",
       "verifiedAt": "2026-11-27T04:24:08Z"
+    },
+    {
+      "year": 2021,
+      "day": 18,
+      "part": 2,
+      "title": "Snailfish",
+      "puzzleUrl": "https://adventofcode.com/2021/day/18#part2",
+      "status": "solved",
+      "summary": "Find the largest magnitude obtainable from the reduced sum of any two different snailfish numbers from the homework list (testing both ordered directions).",
+      "algorithmSummary": "Zero-churn reuse of 2021/day18/shared/ binding MAX_PAIR_MAGNITUDE_POLICY into SnailfishSolver and SnailfishVisualizer (30.89 ms across 9,900 ordered pairs -> 4,559): zero edits to shared/ or part1/, allocation-light addSnailfishMagnitude evaluates all i !== j ordered pairs without mutating operands and materializes only the winning sum for DepthBarChart playback, differentially verified across the official 10-line homework (3,993 via pair #9 + #1), asymmetric non-commutativity, self-pair exclusion, all-zero/duplicate boundaries, and 8 seeded PRNG homework lists against an independent recursive binary-tree oracle.",
+      "complexity": "O(N^2 * S * L) time, O(L) working space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 30.89,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building MAX_PAIR_MAGNITUDE_POLICY, zero-allocation addSnailfishMagnitude, and polymorphic planTrace in day18/shared/ reduced Part 2's domain solver to 4 lines and scanned 9,900 ordered pairs in 30.89 ms with zero shared edits.",
+        "Initializing bestMag = -1 and distinguishing pairs strictly by index (i !== j) rather than value equality handles all-zero and duplicate-line homeworks cleanly."
+      ],
+      "startedAt": "2026-11-27T04:24:08Z",
+      "verifiedAt": "2026-11-27T04:32:59Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T04:25:48Z",
+  "updatedAt": "2026-11-27T04:47:03Z",
   "parts": [
     {
       "year": 2019,
@@ -644,6 +644,26 @@
       ],
       "startedAt": "2026-11-27T04:14:19Z",
       "verifiedAt": "2026-11-27T04:25:48Z"
+    },
+    {
+      "year": 2019,
+      "day": 17,
+      "part": 1,
+      "title": "Set and Forget",
+      "puzzleUrl": "https://adventofcode.com/2019/day/17",
+      "status": "solved",
+      "summary": "Execute the Intcode ASCII camera program to decode the 2D exterior scaffolding map, find all four-way scaffold intersections, and sum their x * y alignment parameters.",
+      "algorithmSummary": "Read-only 2019/shared/intcode/ execution via O(1) cursor-draining AsciiIoChannel into flat Uint8Array ScaffoldMap with polymorphic ScaffoldPolicy (ALIGNMENT_PARAMETERS_POLICY for Part 1, pre-built straight-first traceScaffoldPath + exact bounded-DFS A/B/C routine compressor DUST_COLLECTION_POLICY for zero-churn Part 2) in 2019/day17/shared/ (49.18 ms across 47x65 scaffold -> 9,544): double-newline camera parsing, 3-routine (pos, calls) failure memoization + maxLen pruning in compressPath, batched SVG scaffold blueprint + sweep visualization (ScaffoldVisualizer), verified on the compiled 113-int official 13x7 example ROM (76), synthetic patch-safe Part 2 ROMs, and adversarial uncompressible paths.",
+      "complexity": "O(S_vm + W * H) Part 1 / O(S_vm + W * H + B^3 * L) Part 2 time, O(W * H) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 49.18,
+      "attemptsCount": 1,
+      "learnings": [
+        "Real AoC Day 17 Part 2 Intcode programs strictly reject empty lines for unused Function B/C prompts, so padding unused routines with ['R'] and pruning 3-routine DFS via (pos, calls) memoization keeps generic compression both spec-compliant and < 2 ms.",
+        "Handling double trailing newlines (\\n\\n) in ScaffoldMap.fromAscii while rejecting interior blank lines accurately parses live camera output without loosening malformed-grid checks."
+      ],
+      "startedAt": "2026-11-27T04:25:48Z",
+      "verifiedAt": "2026-11-27T04:47:03Z"
     }
   ]
 }
