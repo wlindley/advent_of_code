@@ -824,6 +824,26 @@
       ],
       "startedAt": "2026-11-27T05:35:43Z",
       "verifiedAt": "2026-11-27T05:54:11Z"
+    },
+    {
+      "year": 2020,
+      "day": 21,
+      "part": 2,
+      "title": "Allergen Assessment",
+      "puzzleUrl": "https://adventofcode.com/2020/day/21#part2",
+      "status": "solved",
+      "summary": "Deduce the unique 1-to-1 bijection from allergens to dangerous ingredients and join the dangerous ingredients sorted alphabetically by allergen name with commas.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day21/shared/ binding DANGEROUS_LIST_POLICY into AllergenAssessmentSolver and AllergenVisualizer (1.99 ms across 39 foods / 8 allergens / 200 ingredients -> cfzdnz,htxsjf,ttbrlvd,bbbl,lmds,cbmjz,cmbcm,dvnbh): zero edits to shared/ or part1/, one-sided parallel allergen singleton peeling via BigInt bitmasks & shared/core bigintLog2, renders interactive Allergen x Suspect PeelingMatrixSvg playback with live canonical list assembly, verified across the official 4-food example (mxmxvkd,sqjhc,fvjkl), parallel multi-lock rounds, 69-ingredient BigInt masks, zero-allergen boundaries, trace caps, and all six peeling/syntax error paths.",
+      "complexity": "O(F * I + F * A + A^2) time, O(F * I + A) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.99,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building DANGEROUS_LIST_POLICY, one-sided singleton peeling, and PeelingMatrixSvg in day21/shared/ reduced Part 2's domain solver to 4 lines and deduced the 8-allergen list in 1.99 ms with zero shared edits.",
+        "Because any finite bipartite graph with a unique A-saturating matching has an acyclic alternating residual graph with a sink in A, one-sided allergen singleton peeling is both sound and complete for unique-bijection resolution."
+      ],
+      "startedAt": "2026-11-27T05:54:11Z",
+      "verifiedAt": "2026-11-27T06:03:14Z"
     }
   ]
 }

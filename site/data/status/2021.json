@@ -844,6 +844,26 @@
       ],
       "startedAt": "2026-11-27T05:47:45Z",
       "verifiedAt": "2026-11-27T05:58:16Z"
+    },
+    {
+      "year": 2021,
+      "day": 22,
+      "part": 1,
+      "title": "Reactor Reboot",
+      "puzzleUrl": "https://adventofcode.com/2021/day/22",
+      "status": "solved",
+      "summary": "Execute ordered 3D cuboid on/off reboot steps clipped to the [-50..50]^3 initialization region and count the resulting lit cubes.",
+      "algorithmSummary": "Exact 6-way axis-aligned disjoint cuboid CSG splitting reusing shared/core ClosedInterval (zero-allocation overlaps() guard in Cuboid.intersection + 9-line slab subtraction) paired with polymorphic ReactorPolicy (INITIALIZATION_POLICY for [-50..50]^3 Part 1, pre-built unclipped FULL_REACTOR_POLICY for zero-churn Part 2) in 2021/day22/shared/ (2.03 ms -> 655,005 lit cubes): zero stored derived state on ReactorTraceFrame, continuous half-open BigInt 3D isometric projection (ReactorIsoSvg) with 400-prism cap and ReactorVisualizer playback, differentially verified across official 4-step (39) and 22-step (590,784) examples, 20 seeded small-grid 3D voxel Set oracles, and 20 > 2^63 BigInt coalesced inclusion-exclusion oracles.",
+      "complexity": "O(N * M) time, O(M) space for M disjoint active cuboids",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.03,
+      "attemptsCount": 1,
+      "learnings": [
+        "Reusing shared/core ClosedInterval.subtract reduces 3D disjoint cuboid subtraction to 9 lines with zero manual +/-1 arithmetic and arbitrary-precision BigInt volumes past 2^64.",
+        "Guarding Cuboid.intersection with a zero-allocation overlaps() check eliminates wasted ClosedInterval allocations on partial-axis misses while collapsing three null branches into one for 100% V8 coverage."
+      ],
+      "startedAt": "2026-11-27T05:58:16Z",
+      "verifiedAt": "2026-11-27T06:16:12Z"
     }
   ]
 }

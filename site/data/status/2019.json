@@ -744,6 +744,26 @@
       ],
       "startedAt": "2026-11-27T05:28:31Z",
       "verifiedAt": "2026-11-27T05:54:51Z"
+    },
+    {
+      "year": 2019,
+      "day": 19,
+      "part": 2,
+      "title": "Tractor Beam",
+      "puzzleUrl": "https://adventofcode.com/2019/day/19#part2",
+      "status": "solved",
+      "summary": "Find the 100x100 axis-aligned square closest to the emitter (0, 0) that fits entirely inside the Intcode tractor beam and return x * 10000 + y.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day19/shared/ and read-only 2019/shared/intcode/ binding CLOSEST_SQUARE_POLICY into TractorBeamSolver and TractorBeamVisualizer (27.58 ms -> 10,450,905 for top-left (1045, 905)): zero edits to shared/, part1/, or shared/intcode/, 2-phase gap(y) <= -3 doubling-jump + exact local monotonic walk avoids discrete lattice-rounding flicker while cutting Intcode VM probes ~10x, animates emitter/anchor/left-edge/candidate 100x100 square SVG playback, differentially verified across EXAMPLE_BEAM_PROGRAM (2,810,228) and four compiled rational cone Intcode ROMs (vertical, shallow, narrow, coprime-tie) against an independent 4-corner arithmetic oracle.",
+      "complexity": "O((log y* + W) * I) time, O(log y*) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 27.58,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building CLOSEST_SQUARE_POLICY, 2-phase gap(y) <= -3 doubling jump, and SquareSvgBody in day19/shared/ reduced Part 2's domain solver to 4 lines and located (1045, 905) in 27.58 ms with zero shared edits.",
+        "Testing compiled pure Intcode cone ROMs across vertical, shallow, narrow, and coprime-tie geometries validates exact 100x100 placement end-to-end through the VM in under 30 ms."
+      ],
+      "startedAt": "2026-11-27T05:54:51Z",
+      "verifiedAt": "2026-11-27T06:06:32Z"
     }
   ]
 }
