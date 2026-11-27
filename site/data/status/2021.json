@@ -403,6 +403,46 @@
       ],
       "startedAt": "2026-11-26T23:25:32Z",
       "verifiedAt": "2026-11-26T23:32:29Z"
+    },
+    {
+      "year": 2021,
+      "day": 11,
+      "part": 1,
+      "title": "Dumbo Octopus",
+      "puzzleUrl": "https://adventofcode.com/2021/day/11",
+      "status": "solved",
+      "summary": "Simulate 100 steps of a 10x10 dumbo octopus bioluminescent energy grid where crossing energy 9 triggers once-per-step 8-neighbor flash cascades, and return total flashes.",
+      "algorithmSummary": "Flat Uint8Array energy buffer with preallocated Int32Array BFS flash queue (threshold-10 exact crossing eliminates any separate flashed array) and polymorphic OctopusPolicy (TOTAL_FLASHES_100_POLICY for Part 1, pre-built FIRST_SYNC_STEP_POLICY for zero-churn Part 2) in 2021/day11/shared/ (2.18 ms across 100 steps -> 1,729): zero-derived-state OctopusStepFrame, light-mode OctopusGridSvg heatmap + FlashSparklineSvg sync-threshold bar chart visualizer, differentially verified across 40 seeded PRNG grids against an independent fixed-point relaxation oracle.",
+      "complexity": "O(S * R * C) time, O(R * C) typed-array space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.18,
+      "attemptsCount": 1,
+      "learnings": [
+        "Triggering a flash only on the exact crossing energy === 10 guarantees at most one flash per octopus per step without a separate visited/flashed array.",
+        "Using the 1x2 '05' grid (which enters an exact period-9 cycle and never synchronizes) deterministically tests FIRST_SYNC_STEP_POLICY's maxSyncSteps RangeError bound."
+      ],
+      "startedAt": "2026-11-26T23:32:29Z",
+      "verifiedAt": "2026-11-26T23:47:50Z"
+    },
+    {
+      "year": 2021,
+      "day": 11,
+      "part": 2,
+      "title": "Dumbo Octopus",
+      "puzzleUrl": "https://adventofcode.com/2021/day/11#part2",
+      "status": "solved",
+      "summary": "Find the first 1-based simulation step during which all 100 dumbo octopuses flash simultaneously.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day11/shared/ binding FIRST_SYNC_STEP_POLICY into OctopusSolver and OctopusVisualizer (2.59 ms -> step 237): zero edits to shared/ or part1/, flat Uint8Array + Int32Array BFS flash cascade halting immediately on stepFlashes === rows * cols, green Synchronized! badge and Full Sync ceiling highlight in FlashSparklineSvg, differentially verified across 40 seeded PRNG 2x2..5x5 grids (using bounded 500-step solver on proven cycles to keep tests fast) against an independent fixed-point relaxation + cycle-set oracle.",
+      "complexity": "O(S * R * C) time, O(R * C) typed-array space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.59,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building FIRST_SYNC_STEP_POLICY and green Synchronized! overlays in day11/shared/ reduced Part 2's domain solver to 4 lines with zero shared-module edits.",
+        "Pairing a state-set cycle-detecting oracle with a 500-step bounded solver on proven non-syncing PRNG grids avoids spinning 100,000 steps per cycle and keeps the full differential test suite under 75 ms."
+      ],
+      "startedAt": "2026-11-26T23:47:50Z",
+      "verifiedAt": "2026-11-26T23:58:01Z"
     }
   ]
 }

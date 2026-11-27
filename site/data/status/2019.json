@@ -343,6 +343,26 @@
       ],
       "startedAt": "2026-11-26T23:17:32Z",
       "verifiedAt": "2026-11-26T23:38:51Z"
+    },
+    {
+      "year": 2019,
+      "day": 9,
+      "part": 2,
+      "title": "Sensor Boost",
+      "puzzleUrl": "https://adventofcode.com/2019/day/9#part2",
+      "status": "solved",
+      "summary": "Run the completed Intcode BOOST program in sensor boost mode (input 2) to calculate and output the single distress signal coordinate.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day09/shared/ and complete 2019/shared/intcode/ binding BOOST_SENSOR_MODE (input 2n) into BoostSolver and BoostVisualizer (174.02 ms -> 46,643): zero edits to shared/, part1/, or shared/intcode/, interactive RB/sparse-memory BoostVisualizer, differentially verified across 20 seeded PRNG complete Intcode programs (plus >2^63 odd-low-bit BigInt, negative coordinates, and >2^53 sparse addresses) against an independent flat-loop Map<bigint, bigint> reference VM.",
+      "complexity": "O(S) time, O(N + W_sparse) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 174.02,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building BOOST_SENSOR_MODE alongside BOOST_TEST_MODE in day09/shared/ reduced Part 2's domain solver to 4 lines with zero edits to shared/, part1/, or 2019/shared/intcode/.",
+        "Testing sparse memory addresses > 2^53 (9007199254740993n) and odd-low-bit > 2^63 values in sensor mode proves exact BigInt preservation across the complete Intcode VM."
+      ],
+      "startedAt": "2026-11-26T23:38:51Z",
+      "verifiedAt": "2026-11-26T23:49:02Z"
     }
   ]
 }
