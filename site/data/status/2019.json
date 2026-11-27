@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T03:21:27Z",
+  "updatedAt": "2026-11-27T03:54:34Z",
   "parts": [
     {
       "year": 2019,
@@ -564,6 +564,46 @@
       ],
       "startedAt": "2026-11-27T03:11:39Z",
       "verifiedAt": "2026-11-27T03:21:27Z"
+    },
+    {
+      "year": 2019,
+      "day": 15,
+      "part": 1,
+      "title": "Oxygen System",
+      "puzzleUrl": "https://adventofcode.com/2019/day/15",
+      "status": "solved",
+      "summary": "Navigate a remote Intcode repair droid through an unmapped ship compartment via movement commands (1=N, 2=S, 3=W, 4=E) and return the fewest commands from the origin to the oxygen system.",
+      "algorithmSummary": "Single-VM iterative DFS backtracking explorer + O(V) cursor-queue BFS over read-only 2019/shared/intcode/ with O(1) DroidIoChannel and polymorphic OxygenPolicy (SHORTEST_PATH_POLICY for Part 1, pre-built OXYGEN_FILL_MINUTES_POLICY for zero-churn Part 2) in 2019/day15/shared/ (47.95 ms -> 354 steps): zero VM cloning, full cyclic-maze exploration, non-leaf oxygen backtracking safety (accepting status 1 or 2 on return), pure-TS <= 8-primitive SVG layout (vizLayout.ts), light-mode ShipCompartmentVisualizer blueprint playback, differentially verified on the compiled 87-int official 5x4 maze ROM (P1 = 2, P2 = 3), cyclic shortcut mazes, and 8 protocol-error boundaries.",
+      "complexity": "O(V * C_step + V) time, O(V) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 47.95,
+      "attemptsCount": 1,
+      "learnings": [
+        "Exploring the full connected compartment with a single IntcodeMachine via physical reverse-command DFS backtracking avoids VM cloning and guarantees true shortest paths on cyclic mazes while pre-mapping the entire compartment for Part 2.",
+        "Backtracking onto a non-leaf oxygen cell can legitimately return status 1 or 2, so backtrack validation must reject only status 0 while forward duplicate-oxygen checks remain branch-clean."
+      ],
+      "startedAt": "2026-11-27T03:21:27Z",
+      "verifiedAt": "2026-11-27T03:42:54Z"
+    },
+    {
+      "year": 2019,
+      "day": 15,
+      "part": 2,
+      "title": "Oxygen System",
+      "puzzleUrl": "https://adventofcode.com/2019/day/15#part2",
+      "status": "solved",
+      "summary": "Once the oxygen system is repaired, determine how many minutes it takes for oxygen to diffuse orthogonally across every reachable open tile in the ship compartment.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day15/shared/ and read-only 2019/shared/intcode/ binding OXYGEN_FILL_MINUTES_POLICY into OxygenSystemSolver and ShipCompartmentVisualizer (48.71 ms -> 370 minutes): zero edits to shared/, part1/, or shared/intcode/, single-VM DFS backtracking explores the full connected component then O(V) head-index queue BFS computes exact eccentricity from the oxygen cell, oxygen wavefront SVG playback, differentially verified on the compiled 97-int official 6x5 Part 2 example ROM (4 minutes), cyclic ring/asymmetric/pocket fixtures, and 24 seeded PRNG bordered mazes against an independent ASCII Set<string> diffusion oracle.",
+      "complexity": "O(V * I + V) time, O(V) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 48.71,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building OXYGEN_FILL_MINUTES_POLICY, full-compartment DFS exploration, and oxygen-wavefront SVG playback in day15/shared/ reduced Part 2's domain solver to 4 lines with zero shared-module edits.",
+        "Compiling the exact official 6x5 Part 2 example (8 open cells, 4 minutes) into a 97-int Intcode ROM keeps Part 2's live manifest example faithful to the Part 2 prompt rather than reusing Part 1's 5x4 corridor."
+      ],
+      "startedAt": "2026-11-27T03:42:54Z",
+      "verifiedAt": "2026-11-27T03:54:34Z"
     }
   ]
 }

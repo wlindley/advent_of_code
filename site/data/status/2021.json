@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T03:31:03Z",
+  "updatedAt": "2026-11-27T03:51:36Z",
   "parts": [
     {
       "year": 2021,
@@ -644,6 +644,26 @@
       ],
       "startedAt": "2026-11-27T03:20:19Z",
       "verifiedAt": "2026-11-27T03:31:03Z"
+    },
+    {
+      "year": 2021,
+      "day": 17,
+      "part": 1,
+      "title": "Trick Shot",
+      "puzzleUrl": "https://adventofcode.com/2021/day/17",
+      "status": "solved",
+      "summary": "Find the highest vertical y apex reached by any integer-velocity ballistic trajectory launched from (0, 0) that lands inside the target trench on at least one discrete step.",
+      "algorithmSummary": "Time-indexed exact axis decoupling with Int32Array interval prefix sums (xLoPrefix[yHi] - xHiPrefix[yLo - 1]) and polymorphic TrickShotPolicy (MAX_APEX_POLICY for Part 1, pre-built VALID_VELOCITY_COUNT_POLICY for zero-churn Part 2) in 2021/day17/shared/ (0.54 ms -> 3,655): handles narrow non-stalling targets and stalling-vs-overshoot boundaries exactly without naive triangular-apex assumptions, lookahead loop guards for zero unreachable V8 branches, dual light-mode BallisticArcSvg + VelocityPhaseSpaceSvg playback visualizer, differentially verified against a brute-force 2D ballistic simulator across official examples (45 / 112), narrow non-stalling targets (1 / 12 and 0 / 1), and 15+ seeded PRNG target boxes.",
+      "complexity": "O(X log X + |Y| log |Y|) time, O(X + |Y|) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.54,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using lookahead bounds in computeXStepInterval (x + curVx <= xMax) prevents misclassifying a velocity that overshoots xMax on the exact step curVx reaches 0 as stalling inside the target.",
+        "Counting matching vx intervals per vy via Int32Array prefix sums (xLoPrefix[yHi] - xHiPrefix[yLo - 1]) solves both exact Part 1 apex (including narrow non-stalling trenches) and duplicate-free Part 2 counts in O(1) per vy."
+      ],
+      "startedAt": "2026-11-27T03:31:03Z",
+      "verifiedAt": "2026-11-27T03:51:36Z"
     }
   ]
 }

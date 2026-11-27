@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T03:36:30Z",
+  "updatedAt": "2026-11-27T03:53:57Z",
   "parts": [
     {
       "year": 2020,
@@ -644,6 +644,26 @@
       ],
       "startedAt": "2026-11-27T03:26:32Z",
       "verifiedAt": "2026-11-27T03:36:30Z"
+    },
+    {
+      "year": 2020,
+      "day": 17,
+      "part": 1,
+      "title": "Conway Cubes",
+      "puzzleUrl": "https://adventofcode.com/2020/day/17",
+      "status": "solved",
+      "summary": "Simulate 6 simultaneous cycles of 3D Conway's Game of Life (26 neighbors) from an initial 2D slice at z = 0 and return the total number of active cubes.",
+      "algorithmSummary": "Separable 1D 3-tap box-sum convolution over 4 padded flat Uint8Array buffers with strictly growing active envelope B_t and polymorphic PocketPolicy (POCKET_3D_POLICY for Part 1, pre-built POCKET_4D_POLICY for zero-churn Part 2) in 2020/day17/shared/ (1.75 ms across 8x8 seed -> 213 active cubes): zero buffer clears between cycles, exact 3D/4D parity selection (tmpA vs tmpB), free born/surviving/dying slice diffs via cur <-> next swap, HiDPI Canvas 2D SliceCardCanvas multi-slice strip + conditional 4D w-selector in ConwayCubesVisualizer, differentially verified against an independent sparse Set<string> Conway oracle across official examples (3D = 112, 4D = 848) and 16 seeded rectangular grids.",
+      "complexity": "O(d * sum_t V_t) time (9 reads/cell in 3D, 12 in 4D), O(V_padded) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.75,
+      "attemptsCount": 1,
+      "learnings": [
+        "Overwriting all cells inside the strictly growing envelope B_t during each separable 1D box-sum pass guarantees exact global k-D box sums with zero buffer clears and zero stale border values across both 3D and 4D.",
+        "Swapping cur <-> next after transition retains exact S_{t-1} in next, enabling branchless born/surviving/dying diff-code extraction with zero extra buffer allocations."
+      ],
+      "startedAt": "2026-11-27T03:36:30Z",
+      "verifiedAt": "2026-11-27T03:53:57Z"
     }
   ]
 }
