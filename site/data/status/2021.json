@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T03:20:19Z",
+  "updatedAt": "2026-11-27T03:31:03Z",
   "parts": [
     {
       "year": 2021,
@@ -624,6 +624,26 @@
       ],
       "startedAt": "2026-11-27T03:02:01Z",
       "verifiedAt": "2026-11-27T03:20:19Z"
+    },
+    {
+      "year": 2021,
+      "day": 16,
+      "part": 2,
+      "title": "Packet Decoder",
+      "puzzleUrl": "https://adventofcode.com/2021/day/16#part2",
+      "status": "solved",
+      "summary": "Decode the hexadecimal BITS packet AST and recursively evaluate all operator packets (sum, product, min, max, >, <, ==) in exact BigInt arithmetic.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day16/shared/ binding EVALUATE_EXPRESSION_POLICY into PacketSolver and PacketVisualizer (1.19 ms across 5,416 bits -> 101,501,020,883): zero edits to shared/ or part1/, total frozen OPERATOR_SPECS dispatch in exact BigInt with strict arity enforcement, post-order bottom-up reduction telemetry in PacketAstTree + 64-bit capped BitSpanStrip, differentially verified across all 8 official Part 2 examples, > 2^64 odd-bit literals/products/comparisons, 0n literals, and 20 seeded PRNG random-AST round-trips against an independent binary-string expression-tree oracle.",
+      "complexity": "O(B) time, O(H + P) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.19,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building EVALUATE_EXPRESSION_POLICY, total OPERATOR_SPECS, and post-order reduction playback in day16/shared/ reduced Part 2's domain solver to 4 lines and evaluated the 5,416-bit expression tree in 1.19 ms with zero shared edits.",
+        "Encoding 0n literals with a do-while nibble loop in synthetic round-trip fuzz generators guarantees 0n emits a single 5-bit terminal group (00000) rather than an empty payload."
+      ],
+      "startedAt": "2026-11-27T03:20:19Z",
+      "verifiedAt": "2026-11-27T03:31:03Z"
     }
   ]
 }

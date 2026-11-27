@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T03:09:08Z",
+  "updatedAt": "2026-11-27T03:36:30Z",
   "parts": [
     {
       "year": 2020,
@@ -604,6 +604,46 @@
       ],
       "startedAt": "2026-11-27T03:00:18Z",
       "verifiedAt": "2026-11-27T03:09:08Z"
+    },
+    {
+      "year": 2020,
+      "day": 16,
+      "part": 1,
+      "title": "Ticket Translation",
+      "puzzleUrl": "https://adventofcode.com/2020/day/16",
+      "status": "solved",
+      "summary": "Validate all nearby train ticket fields against the merged union of all field rule ranges and return the sum of every completely invalid value (ticket scanning error rate).",
+      "algorithmSummary": "BigInt-native ClosedInterval & IntervalUnion binary search (reusing read-only shared/core/interval.ts) paired with polymorphic TicketPolicy (ERROR_RATE_POLICY for Part 1, pre-built BigInt-bitmask degree-1 bipartite peeling DEPARTURE_PRODUCT_POLICY using shared/core bigintLog2 & bitCount for zero-churn Part 2) in 2020/day16/shared/ (1.98 ms across 237 nearby tickets -> 29,851): TicketScanResult.isValid tracks invalidIndices.length === 0 (immune to invalid-0 trap on personal input), SpectrumScannerSvg & PeelingMatrixSvg visualizer, differentially verified across official examples, invalid-0 traps, 56-field BigInt peeling, and 20 seeded random ticket sets against an independent linear-scan oracle.",
+      "complexity": "O(R log R + T * F log M) Part 1 / O(T * F^2 + F^2) Part 2 time, O(F + M) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.98,
+      "attemptsCount": 1,
+      "learnings": [
+        "Personal input includes an invalid 0 on a nearby ticket while all rule lower bounds are >= 27; defining TicketScanResult.isValid as invalidIndices.length === 0 rather than invalidSum === 0n guarantees Part 2 discards it accurately.",
+        "Every finite bipartite compatibility graph with a unique perfect matching admits iterative degree-1 field peeling, and bigintLog2(1n << BigInt(k)) returns exact integer k for arbitrary field counts without 53-bit IEEE-754 limits."
+      ],
+      "startedAt": "2026-11-27T03:09:08Z",
+      "verifiedAt": "2026-11-27T03:26:32Z"
+    },
+    {
+      "year": 2020,
+      "day": 16,
+      "part": 2,
+      "title": "Ticket Translation",
+      "puzzleUrl": "https://adventofcode.com/2020/day/16#part2",
+      "status": "solved",
+      "summary": "Discard invalid nearby tickets, deduce the unique mapping from rule names to ticket field positions, and return the product of the six 'departure' field values on your own ticket.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day16/shared/ binding DEPARTURE_PRODUCT_POLICY into TicketSolver and TicketTranslationVisualizer (8.66 ms across 20 fields and 237 nearby tickets -> 3,029,180,675,981): zero edits to shared/ or part1/, filters tickets via TicketScanResult.isValid (invalidIndices.length === 0), iteratively peels degree-1 BigInt compatibility masks via shared/core bigintLog2 and bitCount, renders PeelingMatrixSvg elimination trace, differentially verified across the official example, 6-prime > 2^99 BigInt exactness, invalid-0 trap tickets, and 25 seeded PRNG instances against an independent brute-force matrix-peeling oracle.",
+      "complexity": "O(T * F^2 + F^2) time, O(F^2) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 8.66,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building DEPARTURE_PRODUCT_POLICY, BigInt compatibility bitmasks, and PeelingMatrixSvg in day16/shared/ reduced Part 2's domain solver to 4 lines with zero shared-module edits.",
+        "Testing six 6-digit primes producing a 100-bit BigInt product (~1.002e30 with odd LSB) proves exact arbitrary-precision departure multiplication without IEEE-754 loss."
+      ],
+      "startedAt": "2026-11-27T03:26:32Z",
+      "verifiedAt": "2026-11-27T03:36:30Z"
     }
   ]
 }
