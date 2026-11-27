@@ -383,6 +383,26 @@
       ],
       "startedAt": "2026-11-26T23:49:02Z",
       "verifiedAt": "2026-11-27T00:06:02Z"
+    },
+    {
+      "year": 2019,
+      "day": 10,
+      "part": 2,
+      "title": "Monitoring Station",
+      "puzzleUrl": "https://adventofcode.com/2019/day/10#part2",
+      "status": "solved",
+      "summary": "Rotate a giant vaporization laser clockwise from straight up at the optimal monitoring station, vaporizing one closest asteroid per ray per sweep, and return x * 100 + y for the 200th hit.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day10/shared/ binding VAPORIZATION_200TH_POLICY into MonitoringStationSolver and MonitoringStationVisualizer (7.62 ms across 36x36 / 337 asteroids -> 1,321): zero edits to shared/ or part1/, exact integer gcdInt + half-plane cross-product clockwise ray sorting and round-robin sweep, live red laser beam & gold #200 target highlight in AsteroidFieldSvg, differentially verified across EX5 (802), SMALL_LASER 3-sweep checkpoints, 20 dense multi-sweep grids, and 5 full-scale 205..234-asteroid grids against an independent quantized-atan2 polar oracle.",
+      "complexity": "O(A^2 log(W + H)) time, O(W * H + A) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 7.62,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building VAPORIZATION_200TH_POLICY and VaporizationTraceFrame rendering in day10/shared/ reduced Part 2's domain solver to 4 lines with zero shared-module edits.",
+        "Quantizing Math.atan2(dx, -dy) to 1e12 in the independent polar oracle prevents IEEE-754 1-ULP bucket splitting on collinear non-power-of-two multiples while keeping zero dependence on integer gcd geometry."
+      ],
+      "startedAt": "2026-11-27T00:06:02Z",
+      "verifiedAt": "2026-11-27T00:18:26Z"
     }
   ]
 }

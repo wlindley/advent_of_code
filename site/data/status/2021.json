@@ -443,6 +443,46 @@
       ],
       "startedAt": "2026-11-26T23:47:50Z",
       "verifiedAt": "2026-11-26T23:58:01Z"
+    },
+    {
+      "year": 2021,
+      "day": 12,
+      "part": 1,
+      "title": "Passage Pathing",
+      "puzzleUrl": "https://adventofcode.com/2021/day/12",
+      "status": "solved",
+      "summary": "Count all distinct paths from start to end through an undirected cave network where uppercase big caves may be visited any number of times and lowercase small caves at most once.",
+      "algorithmSummary": "Big-cave contraction into a weighted small-cave multigraph (explicitly preserving degree-1 big-cave self-loops w(s,s) while excluding transitions into start or out of end) paired with exact BigInt-bitmask memoized DP and polymorphic CaveVisitPolicy (NO_REVISIT_POLICY for Part 1, pre-built SINGLE_SMALL_REVISIT_POLICY for zero-churn Part 2) in 2021/day12/shared/ (0.77 ms across 25 edges / 13 caves -> 3,369): bounded raw-graph DFS trace with derived findRevisitedSmallCave, BFS-layered quadratic-Bezier CaveGraphSvg visualizer, differentially verified across all 3 official examples and 35 seeded PRNG graphs for both Part 1 and Part 2 against an independent string-backtracking DFS oracle.",
+      "complexity": "O(V + E + |S| * 2^|S| * (B+1) * d_H) time, O(|S| * 2^|S| * (B+1)) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.77,
+      "attemptsCount": 1,
+      "learnings": [
+        "Contracting big caves into weighted transitions over non-big caves—including ordered self-pairs (u === v) for degree-1 big caves like LN-dc—cuts state space dramatically while staying 100% isomorphic for Part 2 single-small-cave revisits.",
+        "Guarding visitedSmall.delete(next) with if (!alreadyVisited) during raw-graph DFS trace backtracking prevents Part 2 revisits from erasing the earlier visit while still inside that cave."
+      ],
+      "startedAt": "2026-11-26T23:58:01Z",
+      "verifiedAt": "2026-11-27T00:16:52Z"
+    },
+    {
+      "year": 2021,
+      "day": 12,
+      "part": 2,
+      "title": "Passage Pathing",
+      "puzzleUrl": "https://adventofcode.com/2021/day/12#part2",
+      "status": "solved",
+      "summary": "Count all distinct paths from start to end where at most one regular small cave may be visited twice, all other small caves at most once, start/end exactly once, and big caves arbitrarily often.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day12/shared/ binding SINGLE_SMALL_REVISIT_POLICY into CavePathSolver and CaveVisualizer (0.96 ms across 25 edges / 13 caves -> 85,883): zero edits to shared/ or part1/, contracted small-cave multigraph (preserving degree-1 big-cave self-loops) + BigInt bitmask DP memoizing (u, budget, visitedMask), gold Revisited halo and badge in CaveGraphSvg, differentially verified across all 3 official examples (36, 103, 3509), self-loop topologies, and 30 seeded PRNG graphs against an independent raw-string backtracking DFS oracle.",
+      "complexity": "O(V^2 + K^2 * 2^K) time, O(K * 2^K) memo space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.96,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building SINGLE_SMALL_REVISIT_POLICY, contracted self-loop weights w(s,s), and gold Revisited overlays in day12/shared/ reduced Part 2's domain solver to 4 lines and counted 85,883 paths in under 1 ms.",
+        "Bounding seeded differential graphs to 3-4 small caves and 1-2 big caves prevents worst-case raw-DFS path explosions while still thoroughly verifying multi-big-cave loops and triangles in 13 ms."
+      ],
+      "startedAt": "2026-11-27T00:16:52Z",
+      "verifiedAt": "2026-11-27T00:24:44Z"
     }
   ]
 }
