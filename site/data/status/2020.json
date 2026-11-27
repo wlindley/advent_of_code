@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T04:05:01Z",
+  "updatedAt": "2026-11-27T04:22:55Z",
   "parts": [
     {
       "year": 2020,
@@ -684,6 +684,26 @@
       ],
       "startedAt": "2026-11-27T03:53:57Z",
       "verifiedAt": "2026-11-27T04:05:01Z"
+    },
+    {
+      "year": 2020,
+      "day": 18,
+      "part": 1,
+      "title": "Operation Order",
+      "puzzleUrl": "https://adventofcode.com/2020/day/18",
+      "status": "solved",
+      "summary": "Evaluate arithmetic homework expressions containing +, *, and parentheses under equal left-to-right operator precedence and return the sum of all line values.",
+      "algorithmSummary": "Policy-parameterized iterative Pratt precedence-climbing parser producing frozen polymorphic BigInt Expression AST nodes (LiteralExpr, GroupExpr, BinaryExpr) with polymorphic PrecedencePolicy (EQUAL_PRECEDENCE_POLICY for Part 1, pre-built ADD_BEFORE_MUL_POLICY for zero-churn Part 2) in 2020/day18/shared/ (3.83 ms across 376 expressions -> 4,491,283,311,856): zero switch chains, strict 16-case syntax validation, 2-pass range-skipping bounded traceHomework, leaf-midpoint scrollable AstTreeSvg + OperationOrderVisualizer playback, differentially verified across all 6 official Part 1 (26,457) and Part 2 (694,173) examples, > 2^64 BigInt overflow cases, and 60 seeded PRNG expressions against an independent Shunting-Yard two-stack evaluator.",
+      "complexity": "O(T) time, O(T) space for T total tokens",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.83,
+      "attemptsCount": 1,
+      "learnings": [
+        "Parameterizing a Pratt precedence-climbing parser by a frozen PrecedencePolicy table lets Part 1 (+ = *) and Part 2 (+ > *) share 100% identical lexing, AST, evaluation, and SVG tree rendering with zero switch statements.",
+        "Computing leaf-midpoint x-coordinates in a scrollable light-mode SVG container guarantees zero node overlap even on 150-character nested expressions while keeping BigInt node badges readable via compact labels and exact tooltips."
+      ],
+      "startedAt": "2026-11-27T04:05:01Z",
+      "verifiedAt": "2026-11-27T04:22:55Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T04:01:39Z",
+  "updatedAt": "2026-11-27T04:24:08Z",
   "parts": [
     {
       "year": 2021,
@@ -684,6 +684,26 @@
       ],
       "startedAt": "2026-11-27T03:51:36Z",
       "verifiedAt": "2026-11-27T04:01:39Z"
+    },
+    {
+      "year": 2021,
+      "day": 18,
+      "part": 1,
+      "title": "Snailfish",
+      "puzzleUrl": "https://adventofcode.com/2021/day/18",
+      "status": "solved",
+      "summary": "Left-fold snailfish pair additions with explode-before-split reduction across all homework lines and return the final sum's recursive 3*left + 2*right magnitude.",
+      "algorithmSummary": "In-order flat (value, depth) leaf-token reducer with O(1) explode neighbor updates (depths[i] >= 5 && depths[i] === depths[i + 1]) and polymorphic SnailfishPolicy (HOMEWORK_SUM_POLICY for Part 1, pre-built MAX_PAIR_MAGNITUDE_POLICY for zero-churn Part 2) in 2021/day18/shared/ (4.88 ms across 100 lines -> 4,433): stack-collapse tree validator/serializer/magnitude, polymorphic planTrace eliminating mode branching in trace.ts, light-mode DepthBarChart SVG with depth-5 explosion rails & SnailfishVisualizer playback, differentially verified against a self-contained recursive binary-tree oracle across all official list sums (445, 791, 1137, 3488), 10-line homework (Part 1 = 4,140, Part 2 = 3,993), depth-6 asymmetric trees, and cascading split-explode chains.",
+      "complexity": "O(N * L * S) Part 1 / O(N^2 * L * S) Part 2 time, O(L) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 4.88,
+      "attemptsCount": 1,
+      "learnings": [
+        "Checking depths[i] >= 5 && depths[i] === depths[i + 1] handles both standard AoC depth-5 sums and synthetic depth-6+ asymmetric trees cleanly, while requiring an explicit depth-6 test fixture for 100% V8 branch coverage.",
+        "Delegating trace operand selection to SnailfishPolicy.planTrace(homework) lets Part 1 and Part 2 share one unified trace loop with zero mode switches and without running Part 2's O(N^2) pair scan during Part 1."
+      ],
+      "startedAt": "2026-11-27T04:01:39Z",
+      "verifiedAt": "2026-11-27T04:24:08Z"
     }
   ]
 }

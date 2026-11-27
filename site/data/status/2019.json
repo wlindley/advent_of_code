@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T04:14:19Z",
+  "updatedAt": "2026-11-27T04:25:48Z",
   "parts": [
     {
       "year": 2019,
@@ -624,6 +624,26 @@
       ],
       "startedAt": "2026-11-27T03:54:34Z",
       "verifiedAt": "2026-11-27T04:14:19Z"
+    },
+    {
+      "year": 2019,
+      "day": 16,
+      "part": 2,
+      "title": "Flawed Frequency Transmission",
+      "puzzleUrl": "https://adventofcode.com/2019/day/16#part2",
+      "status": "solved",
+      "summary": "Repeat the input signal 10,000 times, apply 100 FFT phases, and extract the 8-digit message at the 7-digit offset encoded in the first seven input digits.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day16/shared/ binding OFFSET_MESSAGE_POLICY into FftSolver and FftVisualizer (158.61 ms across 521,983-digit tail of 6.5M repeated signal -> 52541026): zero edits to shared/ or part1/, enforces exact second-half condition offset >= floor(L/2) and runs 100 in-place right-to-left mod-10 suffix sums on Uint8Array, upper-triangular suffix matrix & 64-digit message spectrum visualization, differentially verified against an independent Lucas's Theorem + CRT mod 10 binomial convolution oracle across all 3 official Part 2 examples (84462026, 78725270, 53553731), exact leading-zero upper boundary (014999200000001 -> 00050001), exact midpoint boundary, and 5 seeded PRNG repeated signals.",
+      "complexity": "O(P * (L - offset)) time, O(L - offset) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 158.61,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building OFFSET_MESSAGE_POLICY, in-place tail suffix sums, and the upper-triangular PatternMatrixSvg mode in day16/shared/ reduced Part 2's domain solver to 4 lines with zero shared-module edits.",
+        "Computing Lucas's theorem binomial weights C(j + 99, 99) mod 10 once per tail distance j and skipping zeros (~95% of positions) makes the independent algebraic oracle run in < 25 ms across all official and seeded Part 2 fixtures."
+      ],
+      "startedAt": "2026-11-27T04:14:19Z",
+      "verifiedAt": "2026-11-27T04:25:48Z"
     }
   ]
 }
