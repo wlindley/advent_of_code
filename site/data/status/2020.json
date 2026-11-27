@@ -483,6 +483,26 @@
       ],
       "startedAt": "2026-11-27T00:28:10Z",
       "verifiedAt": "2026-11-27T00:36:14Z"
+    },
+    {
+      "year": 2020,
+      "day": 13,
+      "part": 1,
+      "title": "Shuttle Search",
+      "puzzleUrl": "https://adventofcode.com/2020/day/13",
+      "status": "solved",
+      "summary": "Find the active shuttle bus departing earliest at or after the target timestamp and return its bus ID multiplied by the wait time in minutes.",
+      "algorithmSummary": "Exact-BigInt closed-form modular wait scan with polymorphic ShuttlePolicy (EARLIEST_BUS_POLICY for Part 1, pre-built CONSECUTIVE_ALIGNMENT_POLICY reusing read-only shared/core/crt.ts solveCongruences and bigintLog2 for zero-churn Part 2) in 2020/day13/shared/ (0.24 ms across 9 active buses -> 119): zero-derived-state EarliestBusFrame & CrtLockFrame, BigInt-scaled wait & log-modulus projections safe past 2^1024, light-mode SVG Departure Wait Timetable visualizer, differentially verified across all 6 official Part 2 examples and 30 seeded schedules against independent forward-scan and progressive-sieving oracles.",
+      "complexity": "O(K) Part 1 / O(K log M) Part 2 time, O(K) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.24,
+      "attemptsCount": 1,
+      "learnings": [
+        "Reusing shared/core/crt.ts solveCongruences incrementally via acc = solveCongruences([acc, bus.congruence]) drives both Part 2 solving and step-by-step CRT modulus-locking traces with zero duplicated math.",
+        "Guarding finalModulus === 1n (returning 1 instead of bigintLog2(1n)/bigintLog2(1n) = 0/0) and maxWait === 0n keeps SVG wait/modulus projections NaN-free across degenerate schedules."
+      ],
+      "startedAt": "2026-11-27T00:36:14Z",
+      "verifiedAt": "2026-11-27T00:50:42Z"
     }
   ]
 }

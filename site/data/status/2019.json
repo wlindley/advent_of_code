@@ -423,6 +423,26 @@
       ],
       "startedAt": "2026-11-27T00:18:26Z",
       "verifiedAt": "2026-11-27T00:34:59Z"
+    },
+    {
+      "year": 2019,
+      "day": 11,
+      "part": 2,
+      "title": "Space Police",
+      "puzzleUrl": "https://adventofcode.com/2019/day/11#part2",
+      "status": "solved",
+      "summary": "Start the Intcode hull-painting robot on a single white panel at (0, 0) and OCR-decode the 8-letter uppercase registration identifier painted across the hull.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day11/shared/ and read-only 2019/shared/intcode/ binding REGISTRATION_ID_POLICY into PaintingRobotSolver and HullPainterVisualizer (9.78 ms -> JUFEKHPH): zero edits to shared/, part1/, or shared/intcode/, 30-bit canonical 5x6 AoC bitmap OCR with minX-1 fallback for leading centered 'I' and Decoded Hull Registration banner, differentially verified across a reactive 146-int relative-mode 'HI' painter, an 8-letter ISSABCEY stress test, and multi-word synthetic painters against an independent flat-loop Intcode + reference OCR oracle.",
+      "complexity": "O(I + S + W) time, O(M + P) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 9.78,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building REGISTRATION_ID_POLICY and 20 canonical 30-bit 5x6 AoC glyphs in day11/shared/ reduced Part 2's domain solver to 4 lines and decoded JUFEKHPH cleanly on the first run.",
+        "Because a Day 11 robot must turn 90 degrees on every step, an odd-width 3-band serpentine meander visits every pixel of any 6-row registration exactly once without U-turn collisions."
+      ],
+      "startedAt": "2026-11-27T00:34:59Z",
+      "verifiedAt": "2026-11-27T00:49:00Z"
     }
   ]
 }

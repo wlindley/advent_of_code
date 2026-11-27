@@ -483,6 +483,26 @@
       ],
       "startedAt": "2026-11-27T00:16:52Z",
       "verifiedAt": "2026-11-27T00:24:44Z"
+    },
+    {
+      "year": 2021,
+      "day": 13,
+      "part": 1,
+      "title": "Transparent Origami",
+      "puzzleUrl": "https://adventofcode.com/2021/day/13",
+      "status": "solved",
+      "summary": "Fold a transparent coordinate sheet along its first horizontal or vertical crease and count the distinct visible dots after overlapping reflections merge.",
+      "algorithmSummary": "Canonical sorted-deduplicated DotSheet with O(log N) binary-search hasDot, overflow-safe injective reflection fold.value - (coord - fold.value), axis-polymorphic AXIS_ADAPTERS, and OrigamiPolicy (FIRST_FOLD_COUNT_POLICY for Part 1, pre-built 5x6 bitmap OCR ALL_FOLDS_CODE_POLICY with minX-1 fallback for zero-churn Part 2) in 2021/day13/shared/ (1.73 ms across 974 dots -> 818): discriminated OrigamiTraceFrame with zero stored derived state, adaptive scatter/pixel-tile HiDPI OrigamiSheetCanvas visualizer, differentially verified across 10 seeded sheets and a personal-scale 900-dot 12-fold 8-letter code against independent 2D boolean[][] and Set<string> oracles.",
+      "complexity": "O(N log N + N * F) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.73,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because reflection c -> k - (c - k) is strictly injective on c > k, two reflected dots can never collide with each other—an overlap occurs iff the reflected coordinate already exists in the stationary sheet.",
+        "Using fold.value - (coord - fold.value) instead of 2 * fold.value - coord keeps reflection overflow-free across the entire JS safe-integer range."
+      ],
+      "startedAt": "2026-11-27T00:24:44Z",
+      "verifiedAt": "2026-11-27T00:42:40Z"
     }
   ]
 }
