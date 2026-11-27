@@ -363,6 +363,26 @@
       ],
       "startedAt": "2026-11-26T23:38:51Z",
       "verifiedAt": "2026-11-26T23:49:02Z"
+    },
+    {
+      "year": 2019,
+      "day": 10,
+      "part": 1,
+      "title": "Monitoring Station",
+      "puzzleUrl": "https://adventofcode.com/2019/day/10",
+      "status": "solved",
+      "summary": "Find the asteroid location on a 2D map with direct unobstructed line of sight to the maximum number of other asteroids and return that count.",
+      "algorithmSummary": "Symmetric row-major half-ray generation stamping (Uint32Array((2W-1)*H)) using exact integer gcdInt slope reduction with zero floating-point drift and polymorphic MonitoringStationPolicy (BEST_MONITOR_POLICY for Part 1, pre-built exact half-plane cross-product VAPORIZATION_200TH_POLICY for zero-churn Part 2) in 2019/day10/shared/ (6.82 ms across 36x36 / 337 asteroids -> 276): zero-derived-state discriminated MonitorScanTraceFrame | VaporizationTraceFrame, light-mode AsteroidFieldSvg radar & laser sweep visualizer, differentially verified across all 5 official examples and 30 seeded PRNG maps against independent O(A^3) segment-collinearity and Math.atan2 polar sweep oracles.",
+      "complexity": "O(A^2 log max(W, H)) time, O(W * H) scratch space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.82,
+      "attemptsCount": 1,
+      "learnings": [
+        "Enforcing strictly ascending row-major (y, x) order in AsteroidMap lets the half-ray loop visit each unordered pair once (dy >= 0) while guaranteeing every collinear intermediate asteroid appears strictly between i and j.",
+        "Separating Part 2's full-quadrant ray key (allowing ry < 0) from Part 1's half-ray key and sharing buildRayBuckets powers both findVisibleTargets and round-robin computeVaporizationSchedule with zero floating-point angle drift."
+      ],
+      "startedAt": "2026-11-26T23:49:02Z",
+      "verifiedAt": "2026-11-27T00:06:02Z"
     }
   ]
 }

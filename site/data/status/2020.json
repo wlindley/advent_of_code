@@ -403,6 +403,46 @@
       ],
       "startedAt": "2026-11-26T23:37:02Z",
       "verifiedAt": "2026-11-26T23:45:35Z"
+    },
+    {
+      "year": 2020,
+      "day": 11,
+      "part": 1,
+      "title": "Seating System",
+      "puzzleUrl": "https://adventofcode.com/2020/day/11",
+      "status": "solved",
+      "summary": "Simulate a rectangular ferry seating grid where empty seats fill with 0 occupied 8-neighbors and occupied seats vacate with >= 4 occupied 8-neighbors until equilibrium, returning final occupied seats.",
+      "algorithmSummary": "Precomputed CSR SeatGraph (Int32Array offsets/neighbors over non-floor seats) with double-buffered Uint8Array synchronous stepping, module-scoped TextDecoder('ascii') cycle detection, and polymorphic SeatingRule (ADJACENT_SEATING_RULE for Part 1, pre-built LINE_OF_SIGHT_SEATING_RULE for zero-churn Part 2) in 2020/day11/shared/ (16.56 ms across 97x97 grid -> 2,427): 2-pass bounded trace with unified diffSeatStates, HiDPI Canvas 2D SeatingCanvas with interactive hover/click neighbor-ray inspector, differentially verified across 30 seeded PRNG grids for both Part 1 and Part 2 against an independent 2D grid-scan oracle.",
+      "complexity": "O(R * C + T * E) time, O(R * C + S + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 16.56,
+      "attemptsCount": 1,
+      "learnings": [
+        "Precomputing a static CSR neighbor graph over only non-floor seats eliminates all floor scans and sentinel branches in the cellular automaton hot loop.",
+        "Checking changes === 0 before cycle-set lookup prevents false cycle detection on equilibrium, while the 4x4 hollow-corner octagon deterministically triggers period-2 oscillation under Part 1's threshold."
+      ],
+      "startedAt": "2026-11-26T23:45:35Z",
+      "verifiedAt": "2026-11-27T00:02:18Z"
+    },
+    {
+      "year": 2020,
+      "day": 11,
+      "part": 2,
+      "title": "Seating System",
+      "puzzleUrl": "https://adventofcode.com/2020/day/11#part2",
+      "status": "solved",
+      "summary": "Simulate the ferry seating grid using first-visible-seat line-of-sight along all 8 compass rays and a >= 5 occupied crowdedness threshold until equilibrium, returning final occupied seats.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day11/shared/ binding LINE_OF_SIGHT_SEATING_RULE (crowdThreshold = 5) into SeatingSystemSolver and SeatingVisualizer (41.07 ms across 97x98 grid -> 2,199): zero edits to shared/ or part1/, static CSR line-of-sight SeatGraph with HiDPI Canvas 2D golden ray inspector across floor corridors, differentially verified across AoC visibility/threshold edge fixtures (VIS_EIGHT, VIS_BLOCKED, VIS_ZERO, OCTAGON_4X4, SOLID_3X3) and 30 seeded PRNG grids against an independent 2D ray-scan oracle.",
+      "complexity": "O(S * max(R, C)) ray preprocessing + O(T * (S + E)) simulation, O(S + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 41.07,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building LINE_OF_SIGHT_SEATING_RULE and golden ray overlays in day11/shared/ reduced Part 2's domain solver to 4 lines with zero shared-module edits.",
+        "No finite 2D layout can oscillate under Part 2's crowdThreshold = 5 because the topmost-leftmost seat in any hypothetical oscillating set can see at most 4 other oscillating seats (E, SW, S, SE)."
+      ],
+      "startedAt": "2026-11-27T00:02:18Z",
+      "verifiedAt": "2026-11-27T00:13:09Z"
     }
   ]
 }
