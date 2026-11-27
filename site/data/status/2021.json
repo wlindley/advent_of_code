@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T23:32:29Z",
+  "updatedAt": "2026-11-27T00:55:48Z",
   "parts": [
     {
       "year": 2021,
@@ -503,6 +503,26 @@
       ],
       "startedAt": "2026-11-27T00:24:44Z",
       "verifiedAt": "2026-11-27T00:42:40Z"
+    },
+    {
+      "year": 2021,
+      "day": 13,
+      "part": 2,
+      "title": "Transparent Origami",
+      "puzzleUrl": "https://adventofcode.com/2021/day/13#part2",
+      "status": "solved",
+      "summary": "Execute all horizontal and vertical origami folds on the transparent coordinate sheet and decode the resulting eight-capital-letter 5x6 bitmap activation code.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day13/shared/ binding ALL_FOLDS_CODE_POLICY into OrigamiSolver and OrigamiVisualizer (3.50 ms across 974 dots and 12 folds -> LRGPRECB): zero edits to shared/ or part1/, canonical sorted-deduplicated DotSheet folding with 30-bit 5x6 AoC bitmap OCR (including minX-1 fallback for centered leading 'I' and 5-wide 'Y' slot sizing), adaptive scatter-to-pixel-tile HiDPI OrigamiSheetCanvas with gold Decoded badge, differentially verified across 15 seeded PRNG random-word 6-fold sheets plus all 26 glyph round-trips against an independent Set<string> fold + ASCII raster oracle.",
+      "complexity": "O(N log N + N * F) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 3.50,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building ALL_FOLDS_CODE_POLICY, 30-bit 5x6 bitmap OCR, and pixel-tile canvas rendering in day13/shared/ reduced Part 2's domain solver to 4 lines and decoded LRGPRECB cleanly on the first attempt.",
+        "Duplicated 5x6 bitmapFont.ts across 2019/day08, 2019/day11, and 2021/day13 is a high-value consolidation candidate for shared/core/bitmapFont.ts at the end-of-year refactoring barrier."
+      ],
+      "startedAt": "2026-11-27T00:42:40Z",
+      "verifiedAt": "2026-11-27T00:55:48Z"
     }
   ]
 }

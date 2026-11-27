@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T23:37:02Z",
+  "updatedAt": "2026-11-27T01:02:00Z",
   "parts": [
     {
       "year": 2020,
@@ -503,6 +503,26 @@
       ],
       "startedAt": "2026-11-27T00:36:14Z",
       "verifiedAt": "2026-11-27T00:50:42Z"
+    },
+    {
+      "year": 2020,
+      "day": 13,
+      "part": 2,
+      "title": "Shuttle Search",
+      "puzzleUrl": "https://adventofcode.com/2020/day/13#part2",
+      "status": "solved",
+      "summary": "Find the earliest timestamp t such that every active shuttle bus departs at t plus its 0-based index offset in the schedule.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day13/shared/ binding CONSECUTIVE_ALIGNMENT_POLICY (incremental BigInt CRT via read-only shared/core/crt.ts solveCongruences) into ShuttleSolver with a new light-mode SVG CRT Modulus-Locking Visualizer (0.41 ms across 9 active buses -> 1,106,724,616,194,525): zero edits to shared/ or part1/, log2-scaled horizontal locking bars keyed by 1-based frame step with compact BigInt suffixes, differentially verified across all 6 official AoC Part 2 examples, non-coprime compatible/incompatible schedules, > 2^64 BigInt primes, and 25 seeded distinct-prime schedules against an independent progressive-LCM-sieving oracle.",
+      "complexity": "O(K log M) time, O(K) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.41,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building CONSECUTIVE_ALIGNMENT_POLICY and computePart2Rows(frames) in day13/shared/ reduced Part 2's domain solver to 4 lines and solved the 50-bit CRT alignment in 0.41 ms with zero shared edits.",
+        "Drawing distinct primes from a small pool for the progressive-LCM-sieving differential oracle guarantees pairwise coprimality and bounded per-step sieving, running all 25 randomized checks in 7 ms."
+      ],
+      "startedAt": "2026-11-27T00:50:42Z",
+      "verifiedAt": "2026-11-27T01:02:00Z"
     }
   ]
 }

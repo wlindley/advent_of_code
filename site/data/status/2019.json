@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-26T23:38:51Z",
+  "updatedAt": "2026-11-27T01:04:14Z",
   "parts": [
     {
       "year": 2019,
@@ -443,6 +443,26 @@
       ],
       "startedAt": "2026-11-27T00:34:59Z",
       "verifiedAt": "2026-11-27T00:49:00Z"
+    },
+    {
+      "year": 2019,
+      "day": 12,
+      "part": 1,
+      "title": "The N-Body Problem",
+      "puzzleUrl": "https://adventofcode.com/2019/day/12",
+      "status": "solved",
+      "summary": "Simulate 1,000 steps of pairwise unit gravitational acceleration and velocity integration across four Jupiter moons in 3D space and return total system energy (sum of potential * kinetic).",
+      "algorithmSummary": "Decoupled 1D Int32Array axis steppers exploiting X/Y/Z gravitational separability with polymorphic NBodyPolicy (TOTAL_ENERGY_1000_POLICY for Part 1, pre-built FIRST_REPEAT_PERIOD_POLICY using read-only shared/core lcmBigInt for zero-churn Part 2) in 2019/day12/shared/ (0.76 ms across 1,000 steps -> 10,189): zero-derived-state Vec3/MoonState/MoonSystem/CycleAnalysis, canonical sampled OrbitStepTraceFrame | AxisCycleTraceFrame, Isometric 3D & Dual XY/XZ SVG OrbitVisualizer with energy bars and axis lock-in gauges, differentially verified across 30 seeded 3D systems and 10 small-period repeat systems against independent 3D and 1D oracles.",
+      "complexity": "O(S * M^2) Part 1 / O((Px + Py + Pz) * M^2) Part 2 time, O(M) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.76,
+      "attemptsCount": 1,
+      "learnings": [
+        "Exploiting X/Y/Z axis separability with flat Int32Array steppers and generalized initial-velocity period detection solves both 1,000-step 3D energy and trillion-step orbital repeat periods cleanly with zero churn for Part 2.",
+        "Bounding MoonSystem.parse to MAX_ABS_COORDINATE = 10_000_000 and MAX_MOONS = 64 keeps worst-case O(N * M) excursion strictly inside signed 32-bit Int32 range with 3x+ headroom."
+      ],
+      "startedAt": "2026-11-27T00:49:00Z",
+      "verifiedAt": "2026-11-27T01:04:14Z"
     }
   ]
 }
