@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T01:02:00Z",
+  "updatedAt": "2026-11-27T02:31:02Z",
   "parts": [
     {
       "year": 2020,
@@ -523,6 +523,27 @@
       ],
       "startedAt": "2026-11-27T00:50:42Z",
       "verifiedAt": "2026-11-27T01:02:00Z"
+    },
+    {
+      "year": 2020,
+      "day": 14,
+      "part": 1,
+      "title": "Docking Data",
+      "puzzleUrl": "https://adventofcode.com/2020/day/14",
+      "status": "solved",
+      "summary": "Execute a 36-bit docking initialization program where each active bitmask overwrites 0 and 1 bits on written values while X passes bits through, and return the untruncated sum of all memory values.",
+      "algorithmSummary": "Exact 36-bit BigInt Bitmask (setMask & floatingMask without redundant keepMask) and sparse MemoryBank with O(1) running sum plus polymorphic DecoderChipPolicy (DECODER_V1_POLICY for Part 1, pre-built zero-alloc ascending submask generator DECODER_V2_POLICY with MAX_FLOATING_BITS=18 for zero-churn Part 2) in 2020/day14/shared/ (1.73 ms across 570 instructions -> 9,628,746,976,360): O(1) bounded MRU TraceMemoryBank, 36-bit MSB-to-LSB BitmaskGateSvg + MemoryLedgerPanels visualizer, differentially verified across official examples and 40 seeded PRNG programs for both v1 and v2 against independent 36-char binary-string oracles.",
+      "complexity": "O(N) Part 1 / O(sum 2^k_i) Part 2 time, O(U) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.73,
+      "attemptsCount": 1,
+      "learnings": [
+        "In BigInt two's complement, (0n - 1n) & floatingMask wraps back to floatingMask; checking if (sub === 0n) return before decrementing keeps zero-alloc ascending submask enumeration termination-safe.",
+        "Maintaining an O(1) bounded MRU Map inside TraceMemoryBank avoids cloning tens of thousands of memory cells per trace frame in Part 2 while preserving exact newest-first register inspection."
+      ],
+      "startedAt": "2026-11-27T01:02:00Z",
+      "verifiedAt": "2026-11-27T02:31:02Z",
+      "humanWaitSeconds": 4310
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T01:04:14Z",
+  "updatedAt": "2026-11-27T01:12:55Z",
   "parts": [
     {
       "year": 2019,
@@ -463,6 +463,26 @@
       ],
       "startedAt": "2026-11-27T00:49:00Z",
       "verifiedAt": "2026-11-27T01:04:14Z"
+    },
+    {
+      "year": 2019,
+      "day": 12,
+      "part": 2,
+      "title": "The N-Body Problem",
+      "puzzleUrl": "https://adventofcode.com/2019/day/12#part2",
+      "status": "solved",
+      "summary": "Find the exact number of simulation steps until all four Jupiter moons simultaneously return to a previously visited 3D position and velocity state.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day12/shared/ binding FIRST_REPEAT_PERIOD_POLICY into NBodySolver and OrbitVisualizer (13.33 ms -> 469,671,086,427,712): zero edits to shared/ or part1/, independent 1D Int32Array period detection per axis (X, Y, Z) returning to t = 0 via time-reversibility and recombined with read-only shared/core lcmBigInt, AxisCycleTelemetry per-axis lock-in bars and Isometric/Dual orbital preview, differentially verified against an independent unfactored full-3D state-set repeat oracle on Example 1 (2,772) and multi-moon fixtures plus Example 2 (4,686,774,924).",
+      "complexity": "O((Tx + Ty + Tz) * M^2) time, O(M) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 13.33,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building FIRST_REPEAT_PERIOD_POLICY, AxisCycleTraceFrame, and AxisCycleTelemetry in day12/shared/ reduced Part 2's domain solver to 4 lines and computed the 49-bit orbital repeat period in 13.33 ms with zero shared edits.",
+        "Testing an unfactored full-3D state-set oracle that flags the first revisit of any prior state independently proves both time-reversibility (matchedStep === 0) and exact per-axis LCM factoring."
+      ],
+      "startedAt": "2026-11-27T01:04:14Z",
+      "verifiedAt": "2026-11-27T01:12:55Z"
     }
   ]
 }

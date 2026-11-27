@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T00:55:48Z",
+  "updatedAt": "2026-11-27T02:33:15Z",
   "parts": [
     {
       "year": 2021,
@@ -523,6 +523,47 @@
       ],
       "startedAt": "2026-11-27T00:42:40Z",
       "verifiedAt": "2026-11-27T00:55:48Z"
+    },
+    {
+      "year": 2021,
+      "day": 14,
+      "part": 1,
+      "title": "Extended Polymerization",
+      "puzzleUrl": "https://adventofcode.com/2021/day/14",
+      "status": "solved",
+      "summary": "Apply 10 simultaneous pair-insertion polymerization steps to the initial polymer template and return the difference between the most and least common element counts.",
+      "algorithmSummary": "Exact BigInt active-pair frequency Map DP anchored at invariant lastElement (count(e) = 1[e===last] + sum_{XY: X=e} pairCount(XY)) with parameterized PolymerizationSolver(steps) (PART1_STEPS = 10, pre-built PART2_STEPS = 40 for zero-churn Part 2) in 2021/day14/shared/ (1.43 ms across 10 steps / 100 rules -> 2,010): zero-derived-state InsertionRule/PolymerFormula/PolymerState/PolymerTraceFrame, Linear/Log2 (bigintLog2(v+1)) ElementFrequencyChart + ActiveReactionsChart + SpreadCurveChart visualizer, differentially verified across steps 0..10, 30 seeded PRNG formulas, and > 2^64 (step 80) against an independent explicit string-expansion oracle.",
+      "complexity": "O(T + R + S * P) time, O(R + P) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.43,
+      "attemptsCount": 1,
+      "learnings": [
+        "Counting each active pair's left element plus the invariant lastElement derives exact element frequencies without parity halving, handling partial rule tables and length-1 templates cleanly.",
+        "Scaling Log2 charts via bigintLog2(value + 1n) / bigintLog2(maxValue + 1n) prevents division-by-zero NaN on single-element templates (maxCount = 1n) and zero-spread traces while preserving 100% V8 branch coverage."
+      ],
+      "startedAt": "2026-11-27T00:55:48Z",
+      "verifiedAt": "2026-11-27T01:11:01Z"
+    },
+    {
+      "year": 2021,
+      "day": 14,
+      "part": 2,
+      "title": "Extended Polymerization",
+      "puzzleUrl": "https://adventofcode.com/2021/day/14#part2",
+      "status": "solved",
+      "summary": "Apply 40 simultaneous pair-insertion polymerization steps to the initial polymer template and return the exact BigInt difference between the most and least common element counts.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day14/shared/ binding PART2_STEPS (40) into PolymerizationSolver and PolymerizationVisualizer (2.32 ms across 40 steps / 20.89 trillion elements -> 2,437,698,971,143): zero edits to shared/ or part1/, exact BigInt active-pair frequency Map DP with full 41-frame Log2/Linear playback, differentially verified against two independent 40-step oracles (binary matrix exponentiation M^40*v0 and top-down memoized insertion-tree DP) including a > 2^53 precision-guard fixture (9,008,298,766,368,767).",
+      "complexity": "O(T + R + S * P) time, O(R + P) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.32,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building PART2_STEPS = 40, DEFAULT_MAX_TRACE_STEPS = 41, and Log2 scaling in day14/shared/ reduced Part 2's domain solver to 4 lines and computed the 20.89-trillion-element spread in 2.32 ms with zero shared edits.",
+        "Cross-checking 40-step BigInt DP against both binary matrix exponentiation (M^40 * v0) and top-down memoized insertion-tree DP (with an 8,194-char fixture exceeding Number.MAX_SAFE_INTEGER) proves precision past 2^53 independently of the terminal-anchor trick."
+      ],
+      "startedAt": "2026-11-27T01:11:01Z",
+      "verifiedAt": "2026-11-27T02:33:15Z",
+      "humanWaitSeconds": 4310
     }
   ]
 }
