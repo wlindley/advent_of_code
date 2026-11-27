@@ -844,6 +844,26 @@
       ],
       "startedAt": "2026-11-27T05:54:11Z",
       "verifiedAt": "2026-11-27T06:03:14Z"
+    },
+    {
+      "year": 2020,
+      "day": 22,
+      "part": 1,
+      "title": "Crab Combat",
+      "puzzleUrl": "https://adventofcode.com/2020/day/22",
+      "status": "solved",
+      "summary": "Simulate two-player Crab Combat card draws until one deck empties and return the winning deck's reverse-positional weighted score.",
+      "algorithmSummary": "Encapsulated O(1) circular Int32Array DeckRingBuffer + polymorphic CombatPolicy (STANDARD_COMBAT_POLICY for Part 1, pre-built Recursive Combat with compact UTF-16 state keys and Pigeonhole sub-game max1 > max2 shortcut RECURSIVE_COMBAT_POLICY for zero-churn Part 2) in 2020/day22/shared/ (0.77 ms -> 32,162): 1-pass top-level trace with zero stored derived state on CombatTraceFrame, light-mode CombatArenaSvg + CombatArenaVisualizer playback with head/tail deck windowing, differentially verified across official Part 1 (306), Part 2 (291), infinite-loop (105), and 20 seeded Recursive Combat decks against an independent unpruned plain-array oracle.",
+      "complexity": "O(R) Part 1 / O(R_pruned * N) Part 2 time, O(N) Part 1 space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.77,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because all T = |D1| + |D2| cards in any Recursive Combat sub-game are distinct positive integers, Pigeonhole Principle guarantees max(D1 U D2) >= T > T - 2 unconditionally—making subD1.maxCard() > subD2.maxCard() alone 100% exact without an unreachable V8 branch.",
+        "Running top-level trace capture in a single pass with zero stored derived state on CombatTraceFrame (computing p1Score/p2Score/winningScore via getters) cuts browser trace latency in half on Recursive Combat."
+      ],
+      "startedAt": "2026-11-27T06:03:14Z",
+      "verifiedAt": "2026-11-27T06:21:17Z"
     }
   ]
 }

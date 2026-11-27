@@ -764,6 +764,26 @@
       ],
       "startedAt": "2026-11-27T05:54:51Z",
       "verifiedAt": "2026-11-27T06:06:32Z"
+    },
+    {
+      "year": 2019,
+      "day": 20,
+      "part": 1,
+      "title": "Donut Maze",
+      "puzzleUrl": "https://adventofcode.com/2019/day/20",
+      "status": "solved",
+      "summary": "Find the shortest path from outer entrance AA to exit ZZ through a hollow-rectangle ASCII portal maze where matching two-letter portals warp in 1 step.",
+      "algorithmSummary": "Whitespace-preserving parser + margin-invariant bounding-box outer/inner portal classifier + contracted portal-graph BFS and MinHeap Dijkstra (goal check on pop) paired with polymorphic DonutPolicy (FLAT_DONUT_POLICY for Part 1, pre-built depth-capped RECURSIVE_DONUT_POLICY for zero-churn Part 2) in 2019/day20/shared/ (14.33 ms across 135x129 maze / 56 portals -> 690 steps): zero stored derived state on DonutTraceFrame, HiDPI light-mode DonutCanvas + DonutVisualizer with dashed gold warp arcs and Part 2 Recursion Depth Gauge, differentially verified across official Examples 1 (23 flat / 26 recursive) & 2 (58 flat / unreachable recursive), diamond stale-heap mazes, 0-step co-located AA/ZZ, and an independent raw (r, c, depth) grid BFS oracle.",
+      "complexity": "O(P * R * C + E * D log(P * D)) time, O(R * C + P * D) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 14.33,
+      "attemptsCount": 1,
+      "learnings": [
+        "Never calling raw.trim() and instead stripping only blank outer lines preserves leading spaces on row 0 so top outer portal labels remain aligned with their passage columns.",
+        "Checking goalKey on MinHeap pop rather than push ensures Example 1's 23-step portal path beats the 26-step direct walk, while contracting corridors into a 56-node portal graph makes both Part 1 and recursive Part 2 run in milliseconds."
+      ],
+      "startedAt": "2026-11-27T06:06:32Z",
+      "verifiedAt": "2026-11-27T06:28:09Z"
     }
   ]
 }

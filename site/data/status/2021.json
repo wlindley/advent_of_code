@@ -864,6 +864,26 @@
       ],
       "startedAt": "2026-11-27T05:58:16Z",
       "verifiedAt": "2026-11-27T06:16:12Z"
+    },
+    {
+      "year": 2021,
+      "day": 22,
+      "part": 2,
+      "title": "Reactor Reboot",
+      "puzzleUrl": "https://adventofcode.com/2021/day/22#part2",
+      "status": "solved",
+      "summary": "Execute all 420 ordered 3D cuboid on/off reboot steps across the full unbounded 3D coordinate space and return the exact BigInt count of lit cubes.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day22/shared/ binding FULL_REACTOR_POLICY into createReactorSolver and ReactorVisualizer (50.92 ms across all 420 unbounded 3D cuboids -> 1,125,649,856,443,608 lit cubes): zero edits to shared/ or part1/, pairwise-disjoint 6-way axis-aligned slab subtraction over shared/core ClosedInterval with zero-allocation overlaps() guards, exact BigInt coordinate normalization in 3D isometric ReactorIsoSvg capped at the top 400 prisms by volume, verified across the official 60-step Part 2 example (2,758,514,936,282,235 with 474,140 inside INITIALIZATION_REGION), > 2^64 BigInt volumes, bounded trace sampling, and strict input/option validation.",
+      "complexity": "O(N * M) time, O(M) space for M disjoint active cuboids",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 50.92,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building FULL_REACTOR_POLICY, exact BigInt SceneBounds normalization, and the 400-prism SVG cap in day22/shared/ reduced Part 2's domain solver to 4 lines and executed all 420 unbounded cuboids in 50.92 ms with zero shared edits.",
+        "Cross-checking the final activeCuboids intersected with INITIALIZATION_REGION against the official prose figure (474,140) provides an independent spatial integrity check on top of the exact 60-step total (2,758,514,936,282,235)."
+      ],
+      "startedAt": "2026-11-27T06:16:12Z",
+      "verifiedAt": "2026-11-27T06:26:05Z"
     }
   ]
 }
