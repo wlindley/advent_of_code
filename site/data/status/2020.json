@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T03:00:18Z",
+  "updatedAt": "2026-11-27T03:09:08Z",
   "parts": [
     {
       "year": 2020,
@@ -584,6 +584,26 @@
       ],
       "startedAt": "2026-11-27T02:41:28Z",
       "verifiedAt": "2026-11-27T03:00:18Z"
+    },
+    {
+      "year": 2020,
+      "day": 15,
+      "part": 2,
+      "title": "Rambunctious Recitation",
+      "puzzleUrl": "https://adventofcode.com/2020/day/15#part2",
+      "status": "solved",
+      "summary": "Continue the Van Eck turn-age memory recitation game to the 30,000,000th turn and return the number spoken.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day15/shared/ binding PART2_TARGET_TURN (30,000,000) into MemoryGameSolver and MemoryGameVisualizer (579.27 ms -> 63,644): zero edits to shared/ or part1/, flat Uint32Array(30_000_000) + overflow Map with Commit-on-Speak exchange, responsive browser trace automatically capped at MAX_TRACE_TURN = 20,000 (200 sampled frames in < 5 ms), verified on the 30M official example (0,3,6 -> 175,594) and cross-checked across all 7 official seeds + edge seeds at horizons 50..5000 against an independent Store-Previous-Turn Map oracle.",
+      "complexity": "O(N) time, O(N) space for N = 30,000,000",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 579.27,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building PART2_TARGET_TURN = 30_000_000, flat Uint32Array LastSeenTable, and MAX_TRACE_TURN = 20_000 horizon capping in day15/shared/ reduced Part 2's domain solver to 4 lines and kept browser playback instant with zero shared edits.",
+        "Adding Vitest { timeout: 15_000 } explicitly on the two 30M-turn tests avoids flaky 5000ms timeouts under V8 coverage on contended CI runners without slowing down normal local execution."
+      ],
+      "startedAt": "2026-11-27T03:00:18Z",
+      "verifiedAt": "2026-11-27T03:09:08Z"
     }
   ]
 }

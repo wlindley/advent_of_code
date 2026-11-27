@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T03:02:01Z",
+  "updatedAt": "2026-11-27T03:20:19Z",
   "parts": [
     {
       "year": 2021,
@@ -604,6 +604,26 @@
       ],
       "startedAt": "2026-11-27T02:50:29Z",
       "verifiedAt": "2026-11-27T03:02:01Z"
+    },
+    {
+      "year": 2021,
+      "day": 16,
+      "part": 1,
+      "title": "Packet Decoder",
+      "puzzleUrl": "https://adventofcode.com/2021/day/16",
+      "status": "solved",
+      "summary": "Decode a hexadecimal BITS transmission into its nested literal and operator packet hierarchy and return the sum of all packet version numbers.",
+      "algorithmSummary": "Nibble-backed HexBitstream (private Uint8Array nibbles + BitCursor) and recursive-descent immutable AST (LiteralPacket with exact BigInt, OperatorPacket with lengthTypeId 0/1 and BitSpan) paired with polymorphic PacketPolicy and total OPERATOR_SPECS lookup table (VERSION_SUM_POLICY for Part 1, pre-built EVALUATE_EXPRESSION_POLICY for zero-churn Part 2) in 2021/day16/shared/ (1.06 ms across 1,354 hex chars / 5,416 bits -> 977): O(1) pre-order/post-order DFS trace queries with zero per-frame Sets, hard-capped 64-bit BitSpanStrip + 120-row windowed PacketAstTree visualizer, differentially verified across all 7 Part 1 & 8 Part 2 official examples plus 30 seeded random AST round-trips against an independent binary-string oracle.",
+      "complexity": "O(B) time, O(H + P) space for B = 4H bits and P packets",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.06,
+      "attemptsCount": 1,
+      "learnings": [
+        "Encoding DFS pre-order and post-order ranks directly on IndexedPacketNode makes per-frame decoded/reduced membership O(1) arithmetic (nodeId < decodedCount and postOrderRank < reducedCount) with zero per-frame Set allocations.",
+        "Hard-capping BitSpanStrip at 64 rendered bit cells and windowing PacketAstTree at 120 visible rows keeps DOM node count O(1) even on multi-kilobit transmissions and huge BigInt literals."
+      ],
+      "startedAt": "2026-11-27T03:02:01Z",
+      "verifiedAt": "2026-11-27T03:20:19Z"
     }
   ]
 }

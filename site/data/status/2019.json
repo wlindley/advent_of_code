@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T02:55:26Z",
+  "updatedAt": "2026-11-27T03:21:27Z",
   "parts": [
     {
       "year": 2019,
@@ -524,6 +524,46 @@
       ],
       "startedAt": "2026-11-27T02:39:47Z",
       "verifiedAt": "2026-11-27T02:55:26Z"
+    },
+    {
+      "year": 2019,
+      "day": 14,
+      "part": 1,
+      "title": "Space Stoichiometry",
+      "puzzleUrl": "https://adventofcode.com/2019/day/14",
+      "status": "solved",
+      "summary": "Compute the exact minimum BigInt quantity of raw ORE needed to synthesize 1 unit of FUEL through a DAG of whole-batch chemical reactions with surplus pooling.",
+      "algorithmSummary": "Single-pass reverse-topological BigInt demand propagation reusing read-only shared/core DirectedGraph (topologicalOrder + relevantSubgraph) and ceilDiv, with polymorphic StoichiometryPolicy (ORE_FOR_ONE_FUEL_POLICY for Part 1, pre-built exponential-bracketing binary search MAX_FUEL_FOR_TRILLION_ORE_POLICY for zero-churn Part 2) in 2019/day14/shared/ (1.89 ms across 60 reactions -> 899,155 ORE): zero-derived-state ChemicalDemand/FuelSearchStep/DagLayout, left-to-right layered DemandWaterfallSvg & log-scale FuelSearchGaugeSvg visualizer, differentially verified across all 5 official Part 1 examples, all 3 official Part 2 examples, and 20 seeded random DAGs against independent surplus-inventory FIFO and linear-scan oracles.",
+      "complexity": "O(V + E) Part 1 / O((V + E) log B) Part 2 time, O(V + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.89,
+      "attemptsCount": 1,
+      "learnings": [
+        "Validating closed reactant references and full-graph acyclicity via DirectedGraph.topologicalOrder() BEFORE pruning unused reactions with relevantSubgraph('FUEL', 'ORE') prevents undefined chemicals or ORE-disconnected cycles from being silently dropped.",
+        "Requiring fuelAmount > 0n in evaluateStoichiometry while starting findMaxFuelForOre at low = 0n eliminates unreachable zero-demand branches while handling budgets < ore(1n) cleanly."
+      ],
+      "startedAt": "2026-11-27T02:55:26Z",
+      "verifiedAt": "2026-11-27T03:11:39Z"
+    },
+    {
+      "year": 2019,
+      "day": 14,
+      "part": 2,
+      "title": "Space Stoichiometry",
+      "puzzleUrl": "https://adventofcode.com/2019/day/14#part2",
+      "status": "solved",
+      "summary": "Compute the exact maximum integer quantity of FUEL that can be synthesized from a cargo hold of 1,000,000,000,000 ORE using pooled reaction surplus.",
+      "algorithmSummary": "Zero-churn reuse of 2019/day14/shared/ binding MAX_FUEL_FOR_TRILLION_ORE_POLICY into StoichiometrySolver and StoichiometryVisualizer (2.94 ms -> 2,390,226 FUEL): zero edits to shared/ or part1/, exponential bracketing + exact BigInt binary search over monotonic reverse-topological oreRequiredForFuel, log2-scale [low, high] bracket & ORE budget gauge in FuelSearchGaugeSvg, differentially verified via tightness invariant oracleOre(ans) <= 10^12 < oracleOre(ans + 1) across all 3 official examples, extreme 10^24 BigInt scale, and 25 seeded PRNG DAGs against an independent coalesced FIFO surplus-inventory simulator.",
+      "complexity": "O((V + E) log F) time, O(V + E) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.94,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building MAX_FUEL_FOR_TRILLION_ORE_POLICY and FuelSearchGaugeSvg in day14/shared/ reduced Part 2's domain solver to 4 lines and computed max FUEL from 1 trillion ORE in 2.94 ms with zero shared edits.",
+        "Checking the two-sided tightness invariant oracleOre(ans) <= budget < oracleOre(ans + 1n) with an independent coalesced FIFO surplus-inventory simulator proves global optimality without duplicating binary search."
+      ],
+      "startedAt": "2026-11-27T03:11:39Z",
+      "verifiedAt": "2026-11-27T03:21:27Z"
     }
   ]
 }
