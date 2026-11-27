@@ -884,6 +884,27 @@
       ],
       "startedAt": "2026-11-27T06:16:12Z",
       "verifiedAt": "2026-11-27T06:26:05Z"
+    },
+    {
+      "year": 2021,
+      "day": 23,
+      "part": 1,
+      "title": "Amphipod",
+      "puzzleUrl": "https://adventofcode.com/2021/day/23",
+      "status": "solved",
+      "summary": "Find the minimum total energy to organize eight amphipods (A..D) from four depth-2 side rooms into their matching destination rooms without blocking doorways.",
+      "algorithmSummary": "A* shortest-path search over compact ASCII burrow state keys with an exact admissible + consistent triangular lower-bound heuristic (including own-room sidestep cost 2) and single-step forced home-move dominance paired with polymorphic BurrowPolicy (STANDARD_BURROW_POLICY for depth-2 Part 1, extensible to depth-4 unfolded Part 2) in 2021/day23/shared/ (10.97 ms -> 11,608 energy): zero stored derived state on BurrowMove and BurrowTraceFrame, dynamic depth-aware AmphipodBurrowSvg + BurrowVisualizer playback showing doorway no-stop cells, settled rings, and last-move paths, verified across the official example (12,521), consistency property checks across generated successors, already-solved burrows, deadlocked unsolvable burrows, and strict diagram/state validation.",
+      "complexity": "O(E log V) over reachable A* states (sub-15ms with forced home-move dominance)",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 10.97,
+      "attemptsCount": 1,
+      "learnings": [
+        "Adding exact triangular room-entry energy k*(k+1)/2 plus own-room sidestep cost 2 yields a 100% admissible and consistent A* heuristic for all room depths D >= 1 (since doorway exclusions guarantee |hallCol - roomCol| >= 1).",
+        "Emitting one single-step forced home-move per A* expansion whenever any amphipod can legally enter a clean target room shrinks explored states by ~5-10x while preserving full move-by-move replay fidelity."
+      ],
+      "startedAt": "2026-11-27T06:26:05Z",
+      "verifiedAt": "2026-11-27T07:35:53Z",
+      "humanWaitSeconds": 3012
     }
   ]
 }

@@ -864,6 +864,27 @@
       ],
       "startedAt": "2026-11-27T06:03:14Z",
       "verifiedAt": "2026-11-27T06:21:17Z"
+    },
+    {
+      "year": 2020,
+      "day": 22,
+      "part": 2,
+      "title": "Crab Combat",
+      "puzzleUrl": "https://adventofcode.com/2020/day/22#part2",
+      "status": "solved",
+      "summary": "Play Recursive Combat with deck-state loop prevention (instant Player 1 win) and card-triggered recursive sub-games, returning the winning deck's weighted score.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day22/shared/ binding RECURSIVE_COMBAT_POLICY into CombatSolver and CombatArenaVisualizer (17.81 ms -> 32,534): zero edits to shared/ or part1/, O(1) Int32Array DeckRingBuffer, compact UTF-16 seen-state keys preventing infinite loops before round increment, Pigeonhole sub-game shortcut (subD1.maxCard() > subD2.maxCard()), single-pass top-level trace with zero stored derived state, light-mode CombatArenaSvg playback, differentially verified across official Part 2 (291), infinite-loop (105), non-recursive/recursive/loop-abort sub-game fixtures, and 25 seeded PRNG games against an independent unpruned array oracle.",
+      "complexity": "O(R_pruned * N) time, O(S * N) space for visited top-level/sub-game states",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 17.81,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building RECURSIVE_COMBAT_POLICY, compact UTF-16 deck-state hashing, and the Pigeonhole sub-game shortcut in day22/shared/ reduced Part 2's domain solver to 4 lines and solved Recursive Combat in 17.81 ms with zero shared edits.",
+        "Checking seen-state loop-abort before incrementing the round counter keeps both the official infinite-loop example (round 6, score 105) and sub-game recursion counts exact."
+      ],
+      "startedAt": "2026-11-27T06:21:17Z",
+      "verifiedAt": "2026-11-27T07:27:05Z",
+      "humanWaitSeconds": 3012
     }
   ]
 }

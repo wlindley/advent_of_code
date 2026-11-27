@@ -784,6 +784,27 @@
       ],
       "startedAt": "2026-11-27T06:06:32Z",
       "verifiedAt": "2026-11-27T06:28:09Z"
+    },
+    {
+      "year": 2019,
+      "day": 20,
+      "part": 2,
+      "title": "Donut Maze",
+      "puzzleUrl": "https://adventofcode.com/2019/day/20#part2",
+      "status": "solved",
+      "summary": "Find the shortest path from AA to ZZ at outermost depth 0 through recursive donut maze levels where inner portals descend (+1) and outer portals ascend (-1).",
+      "algorithmSummary": "Zero-churn reuse of 2019/day20/shared/ binding RECURSIVE_DONUT_POLICY into DonutSolver and DonutVisualizer (14.25 ms across 135x129 maze / 25 portal pairs -> 7,976 steps): zero edits to shared/ or part1/, depth-layered MinHeap Dijkstra over (depth, portalId) checking (0, ZZ) on pop with AA/ZZ sealed at depth > 0 and outer portals sealed at depth 0, renders HiDPI DonutCanvas + Part 2 RecursionDepthGauge playback, verified across the verbatim 37-line official recursive example (396 steps, 32 warps, peak depth 10), Part 1 Example 1 in recursive mode (26 direct depth-0 steps), unreachable depth-cap traps, and malformed input guards.",
+      "complexity": "O(P * R * C + E * D log(P * D)) time, O(R * C + P * D) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 14.25,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building RECURSIVE_DONUT_POLICY, depth-layered portal Dijkstra, and RecursionDepthGauge in day20/shared/ reduced Part 2's domain solver to 3 lines and solved recursive Donut Maze in 14.25 ms with zero shared edits.",
+        "In recursive spaces Part 1's Example 1 changes from 23 to 26 steps because ZZ behaves as a wall at depth > 0, forcing the optimal route to walk directly across depth 0."
+      ],
+      "startedAt": "2026-11-27T06:28:09Z",
+      "verifiedAt": "2026-11-27T07:33:24Z",
+      "humanWaitSeconds": 3012
     }
   ]
 }
