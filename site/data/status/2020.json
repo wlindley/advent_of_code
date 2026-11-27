@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T02:31:02Z",
+  "updatedAt": "2026-11-27T02:41:28Z",
   "parts": [
     {
       "year": 2020,
@@ -544,6 +544,26 @@
       "startedAt": "2026-11-27T01:02:00Z",
       "verifiedAt": "2026-11-27T02:31:02Z",
       "humanWaitSeconds": 4310
+    },
+    {
+      "year": 2020,
+      "day": 14,
+      "part": 2,
+      "title": "Docking Data",
+      "puzzleUrl": "https://adventofcode.com/2020/day/14#part2",
+      "status": "solved",
+      "summary": "Execute the docking program under Decoder Chip v2 where mask 1 forces address bits to 1, 0 leaves address bits unchanged, and X floats across both 0 and 1, returning the untruncated memory sum.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day14/shared/ binding DECODER_V2_POLICY into DockingSolver and DockingVisualizer (19.34 ms across 570 instructions -> 4,574,598,714,592): zero edits to shared/ or part1/, zero-alloc ascending BigInt submask enumeration guarded by MAX_FLOATING_BITS=18 with gold floating-bit BitmaskGateSvg and capped MemoryLedgerPanels, differentially verified across the official example (208), MSB bit-35 masks, zero-clearing writes, a 131,073-write > 2^53 BigInt precision fixture, and 25 seeded PRNG programs against an independent 36-char binary-string expansion oracle.",
+      "complexity": "O(sum 2^f_i) time, O(U) sparse space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 19.34,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building DECODER_V2_POLICY, Bitmask.expandedAddresses, and gold floating-gate projection in day14/shared/ reduced Part 2's domain solver to 4 lines and solved 570 instructions (up to 512 addresses/write) in 19.34 ms with zero shared edits.",
+        "Using two disjoint writes totaling 2^17 + 1 = 131,073 cells of WORD_MASK hits the exact mathematical minimum for exceeding Number.MAX_SAFE_INTEGER with 36-bit cells while running in ~20 ms."
+      ],
+      "startedAt": "2026-11-27T02:31:02Z",
+      "verifiedAt": "2026-11-27T02:41:28Z"
     }
   ]
 }

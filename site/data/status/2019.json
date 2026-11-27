@@ -1,7 +1,7 @@
 {
   "year": 2019,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T01:12:55Z",
+  "updatedAt": "2026-11-27T02:39:47Z",
   "parts": [
     {
       "year": 2019,
@@ -483,6 +483,27 @@
       ],
       "startedAt": "2026-11-27T01:04:14Z",
       "verifiedAt": "2026-11-27T01:12:55Z"
+    },
+    {
+      "year": 2019,
+      "day": 13,
+      "part": 1,
+      "title": "Care Package",
+      "puzzleUrl": "https://adventofcode.com/2019/day/13",
+      "status": "solved",
+      "summary": "Execute an Intcode arcade cabinet program producing (x, y, tileId) output triples until halt and return the count of destructible block tiles (tileId = 2) on the screen.",
+      "algorithmSummary": "Read-only reuse of complete 2019/shared/intcode/ via O(1) cursor-draining ArcadeIoChannel and run-first pause/resume loop paired with polymorphic ArcadePolicy (BLOCK_COUNT_POLICY for Part 1, pre-built FREE_PLAY_SCORE_POLICY patching memory[0]=2 with reactive joystick tracking sign(ballX - paddleX) for zero-churn Part 2) in 2019/day13/shared/ (13.42 ms across 989 tiles -> 363 blocks): O(<= 120)-clone memory-bounded dual-mode trace replay, 9-primitive batched 5-band Atari Breakout rainbow CRT SVG visualizer with single-pass VM execution, differentially verified against an independent flat-loop Intcode reference oracle.",
+      "complexity": "O(V + E) time, O(W * H) solve space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 13.42,
+      "attemptsCount": 1,
+      "learnings": [
+        "Recording compact ArcadeEvent deltas and cloning the screen Map only on the <= 120 sampled trace indices avoids allocating thousands of Map snapshots during Part 2 Breakout playback.",
+        "Adding formatFrameAnswer(frame) onto ArcadePolicy lets the visualizer derive the final answer directly from the guaranteed terminal trace frame without running the Intcode VM twice."
+      ],
+      "startedAt": "2026-11-27T01:12:55Z",
+      "verifiedAt": "2026-11-27T02:39:47Z",
+      "humanWaitSeconds": 4310
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T02:33:15Z",
+  "updatedAt": "2026-11-27T02:50:29Z",
   "parts": [
     {
       "year": 2021,
@@ -564,6 +564,26 @@
       "startedAt": "2026-11-27T01:11:01Z",
       "verifiedAt": "2026-11-27T02:33:15Z",
       "humanWaitSeconds": 4310
+    },
+    {
+      "year": 2021,
+      "day": 15,
+      "part": 1,
+      "title": "Chiton",
+      "puzzleUrl": "https://adventofcode.com/2021/day/15",
+      "status": "solved",
+      "summary": "Find the lowest-total-risk 4-directional path from the top-left to bottom-right corner of a cavern risk grid (excluding start risk, including destination risk).",
+      "algorithmSummary": "Dial's 10-bucket circular-queue O(R*C) Dijkstra exploiting integer weights in 1..9 and the vertex-weight zero-stale-entries theorem (dist[next] === UNVISITED) with CavernPolicy tiling (PART1_POLICY tileFactor=1, pre-built PART2_POLICY tileFactor=5 for zero-churn Part 2) in 2021/day15/shared/ (2.44 ms across 100x100 cavern -> 755): O(V + maxDistance) prefix-sum wavefront & golden path-reveal trace, HiDPI ImageData CavernCanvas resolving CSS tokens via getComputedStyle, differentially verified across official 1x1 (40) & 5x5 (315) examples, UP/LEFT detour mazes, and 25 seeded PRNG grids against an independent shared/core MinHeap Dijkstra oracle.",
+      "complexity": "O(R * C) time, O(R * C) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 2.44,
+      "attemptsCount": 1,
+      "learnings": [
+        "Because every edge (u, v) in Chiton has weight risk(v) depending solely on target v and Dial's pops vertices in non-decreasing distance order, each cell is discovered at most once—eliminating any unreachable stale-entry continue branch under 100% V8 coverage.",
+        "Precomputing settledCount and frontierCount via an O(V + maxDistance) distance-histogram prefix sum avoids O(frames * V) per-frame scans on 500x500 Part 2 caverns."
+      ],
+      "startedAt": "2026-11-27T02:33:15Z",
+      "verifiedAt": "2026-11-27T02:50:29Z"
     }
   ]
 }
