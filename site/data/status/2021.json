@@ -1,7 +1,7 @@
 {
   "year": 2021,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T02:50:29Z",
+  "updatedAt": "2026-11-27T03:02:01Z",
   "parts": [
     {
       "year": 2021,
@@ -584,6 +584,26 @@
       ],
       "startedAt": "2026-11-27T02:33:15Z",
       "verifiedAt": "2026-11-27T02:50:29Z"
+    },
+    {
+      "year": 2021,
+      "day": 15,
+      "part": 2,
+      "title": "Chiton",
+      "puzzleUrl": "https://adventofcode.com/2021/day/15#part2",
+      "status": "solved",
+      "summary": "Expand the cavern risk grid into a 5x5 tiled map with risk increments wrapping 9 -> 1 across tiles and find the lowest-total-risk 4-directional path from top-left to bottom-right.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day15/shared/ binding PART2_POLICY (5x5 tiling) into CavernRiskSolver and CavernVisualizer (12.61 ms across 500x500 / 250,000-cell tiled cavern -> 3,016): zero edits to shared/ or part1/, zero-stale 10-bucket Dial's O(V) Dijkstra with HiDPI ImageData CavernCanvas wavefront + golden optimal path reveal, differentially verified across the official 50x50 example (315), 1x1 wrap boundaries ('8' -> 37, '9' -> 36), symmetric UP/LEFT double-9 detour mazes, and 15 seeded PRNG grids against an independent virtual-tiled MinHeap Dijkstra oracle.",
+      "complexity": "O(V + D) time, O(V) space for V = 25 * R * C",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 12.61,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building PART2_POLICY (tileFactor=5), zero-stale 10-bucket Dial's Dijkstra, and O(V + maxDistance) prefix-sum traces in day15/shared/ reduced Part 2's domain solver to 4 lines and solved 250,000 cells in 12.61 ms with zero shared edits.",
+        "Because 5x5 tiling wraps 9 -> 1 in adjacent tiles, verifying non-monotonic UP/LEFT optimal moves on expanded maps requires double-9 barrier bands so the detour remains globally optimal across tile boundaries."
+      ],
+      "startedAt": "2026-11-27T02:50:29Z",
+      "verifiedAt": "2026-11-27T03:02:01Z"
     }
   ]
 }

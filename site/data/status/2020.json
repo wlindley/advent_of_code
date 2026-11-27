@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T02:41:28Z",
+  "updatedAt": "2026-11-27T03:00:18Z",
   "parts": [
     {
       "year": 2020,
@@ -564,6 +564,26 @@
       ],
       "startedAt": "2026-11-27T02:31:02Z",
       "verifiedAt": "2026-11-27T02:41:28Z"
+    },
+    {
+      "year": 2020,
+      "day": 15,
+      "part": 1,
+      "title": "Rambunctious Recitation",
+      "puzzleUrl": "https://adventofcode.com/2020/day/15",
+      "status": "solved",
+      "summary": "Play the Van Eck turn-age memory recitation game from a comma-separated starting sequence and return the 2,020th number spoken.",
+      "algorithmSummary": "Hybrid LastSeenTable (flat Uint32Array(targetTurn) storing 1-based last-spoken turns plus overflow Map for starting values >= targetTurn) using a uniform Commit-on-Speak exchange invariant with parameterized MemoryGameSolver(targetTurn) (PART1_TARGET_TURN = 2,020, pre-built PART2_TARGET_TURN = 30,000,000 with traceHorizon capped at 20,000 for zero-churn Part 2) in 2020/day15/shared/ (0.30 ms -> 492): dense-prefix + sampled trace turns, TurnArcTimelineSvg with in-window & off-window Bezier back-reference arcs + GrowthStatsPanel sparkline, differentially verified across all 7 official examples and 25 seeded sequences against an independent lastIndexOf reverse-scan oracle.",
+      "complexity": "O(N) time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 0.30,
+      "attemptsCount": 1,
+      "learnings": [
+        "Every generated value after the starting sequence is strictly less than targetTurn, so a hybrid Uint32Array(targetTurn) + overflow Map delivers O(1) GC-free lookups while staying OOM-safe for arbitrary large starting seeds.",
+        "Applying the Commit-on-Speak invariant (exchange on every turn including seed turns) tracks duplicate starting numbers accurately in both solve() and trace() without special-case duplicate-seed branches."
+      ],
+      "startedAt": "2026-11-27T02:41:28Z",
+      "verifiedAt": "2026-11-27T03:00:18Z"
     }
   ]
 }
