@@ -1,7 +1,7 @@
 {
   "year": 2020,
   "totalDays": 25,
-  "updatedAt": "2026-11-27T04:32:26Z",
+  "updatedAt": "2026-11-27T04:55:08Z",
   "parts": [
     {
       "year": 2020,
@@ -724,6 +724,26 @@
       ],
       "startedAt": "2026-11-27T04:22:55Z",
       "verifiedAt": "2026-11-27T04:32:26Z"
+    },
+    {
+      "year": 2020,
+      "day": 19,
+      "part": 1,
+      "title": "Monster Messages",
+      "puzzleUrl": "https://adventofcode.com/2020/day/19",
+      "status": "solved",
+      "summary": "Parse a context-free grammar of character and sequence rules and count how many received messages completely match start rule 0.",
+      "algorithmSummary": "General CFG-to-CNF compiler (right-binarization + cycle-safe BFS unit-rule closure + Left/LHS Int32Array CSR tables) driving a bit-31-safe Uint32Array bitset CYK recognizer with polymorphic GrammarPolicy (RAW_GRAMMAR_POLICY for Part 1, pre-built LOOP_PATCHED_GRAMMAR_POLICY for zero-churn Part 2) in 2020/day19/shared/ (27.68 ms across 132 rules and 479 messages up to length 96 -> 265 matches): full-scan witness derivation span extractor (spans.ts), DPR-aware Canvas 2D CykTriangle + SpanRibbon + MonsterMessagesVisualizer playback, differentially verified across official Part 1 (2) and Part 2 (3 raw / 12 patched) examples, an independent 42^m 31^k block-matcher oracle, and 30 seeded random acyclic grammars against an independent regex oracle.",
+      "complexity": "O(L^3 * |G|) worst-case time, O(L^2 * ceil(V/32) + |G|) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 27.68,
+      "attemptsCount": 1,
+      "learnings": [
+        "Right-binarizing k >= 3 productions before computing BFS reflexive-transitive unit-rule closure makes CYK handle arbitrary non-empty CFGs—including unit cycles, left/right/center recursion, and Part 2's looped rules 8 & 11—without hardcoding 42^m 31^n shortcuts.",
+        "Iterating active bitset symbols via lsb = bits & -bits and 31 - Math.clz32(lsb) with !== 0 checks stays 100% safe on JS bit 31 across multi-word Uint32Array CYK charts."
+      ],
+      "startedAt": "2026-11-27T04:32:26Z",
+      "verifiedAt": "2026-11-27T04:55:08Z"
     }
   ]
 }
