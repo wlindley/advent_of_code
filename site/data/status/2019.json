@@ -684,6 +684,26 @@
       ],
       "startedAt": "2026-11-27T04:47:03Z",
       "verifiedAt": "2026-11-27T04:59:20Z"
+    },
+    {
+      "year": 2019,
+      "day": 18,
+      "part": 1,
+      "title": "Many-Worlds Interpretation",
+      "puzzleUrl": "https://adventofcode.com/2019/day/18",
+      "status": "solved",
+      "summary": "Find the shortest number of orthogonal tunnel steps from the vault entrance to collect all 26 lowercase keys while unlocking matching uppercase doors along the way.",
+      "algorithmSummary": "Pareto-minimal per-node BFS key-graph builder (pruning dominated doorsMask sets while recording intermediateKeysMask prior to target pickup) + lossless 46-bit safe-integer multi-robot MinHeap Dijkstra (heldMask * 2^20 + packedRobots) with polymorphic VaultPolicy (SINGLE_EXPLORER_POLICY for Part 1, pre-built QUAD_ROBOT_POLICY + splitVaultForQuadRobots for zero-churn Part 2) in 2019/day18/shared/ (43.37 ms across 81x81 26-key vault -> 4,900 steps): key-avoiding diamond-safe segment path reconstruction, shared robotTrails + trailLengths bounded playback trace, DPR-aware HiDPI VaultCanvas + key-ring HUD visualizer, differentially verified across all 5 official Part 1 examples (8, 86, 132, 136, 81), cyclic Pareto detour traps, 4-robot Part 2 example (8), and an independent raw-grid (cells, keysMask) BFS oracle.",
+      "complexity": "O(N * W * H * P + S * R * d * log S) time, O(N * K * P + S) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 43.37,
+      "attemptsCount": 1,
+      "learnings": [
+        "Recording intermediateKeysMask BEFORE OR-ing the arrived key bit—and pruning Pareto BFS strictly by doorsMask dominance—preserves global optimality on cyclic mazes for both 1 and 4 robots while shrinking the 81x81 26-key vault solve to 43.37 ms.",
+        "Unpacking 46-bit composite Dijkstra keys via Math.floor(key / 1_048_576) and key % 1_048_576 avoids JavaScript's 32-bit bitwise truncation while eliminating string key allocations in the hot loop."
+      ],
+      "startedAt": "2026-11-27T04:59:20Z",
+      "verifiedAt": "2026-11-27T05:18:41Z"
     }
   ]
 }

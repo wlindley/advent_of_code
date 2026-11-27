@@ -744,6 +744,26 @@
       ],
       "startedAt": "2026-11-27T04:32:26Z",
       "verifiedAt": "2026-11-27T04:55:08Z"
+    },
+    {
+      "year": 2020,
+      "day": 19,
+      "part": 2,
+      "title": "Monster Messages",
+      "puzzleUrl": "https://adventofcode.com/2020/day/19#part2",
+      "status": "solved",
+      "summary": "Replace rules 8 and 11 with recursive loop productions (8: 42 | 42 8 and 11: 42 31 | 42 11 31) and count how many received messages completely match start rule 0.",
+      "algorithmSummary": "Zero-churn reuse of 2020/day19/shared/ binding LOOP_PATCHED_GRAMMAR_POLICY into MonsterMessagesSolver and MonsterMessagesVisualizer (82.40 ms across 132 rules and 479 messages -> 394 matches): zero edits to shared/ or part1/, general CFG-to-CNF compiler handles recursive rules 8 and 11 directly without fixed-width 42/31 assumptions, bit-31-safe Uint32Array bitset CYK chart with witness derivation span ribbon (rule42/rule31 roles) and DPR-aware CykTriangle playback, differentially verified across the official 31-rule / 15-message Part 2 example (12), 42^m 31^k boundary cases, variable-length/overlapping 42 & 31 rules, and 20 seeded grammars against an independent top-down memoized CFG oracle.",
+      "complexity": "O(L^3 * |G|) worst-case time, O(L^2 * ceil(V/32) + |G|) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 82.40,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building LOOP_PATCHED_GRAMMAR_POLICY and general recursive CFG-to-CNF compilation in day19/shared/ reduced Part 2's domain solver to 4 lines and matched 394 messages in 82.40 ms with zero shared edits.",
+        "Because CNF unit-rule closure folds 8 -> 42 directly into rule 8, verifying span roles (rule42 and rule31 presence) rather than fixed span counts stays faithful to general recursive derivations."
+      ],
+      "startedAt": "2026-11-27T04:55:08Z",
+      "verifiedAt": "2026-11-27T05:06:54Z"
     }
   ]
 }

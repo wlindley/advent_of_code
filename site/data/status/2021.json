@@ -744,6 +744,26 @@
       ],
       "startedAt": "2026-11-27T04:32:59Z",
       "verifiedAt": "2026-11-27T04:52:43Z"
+    },
+    {
+      "year": 2021,
+      "day": 19,
+      "part": 2,
+      "title": "Beacon Scanner",
+      "puzzleUrl": "https://adventofcode.com/2021/day/19#part2",
+      "status": "solved",
+      "summary": "Find the largest Manhattan distance between any two oriented 3D ocean-trench beacon scanners after aligning all 40 scanner reports into scanner 0's frame.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day19/shared/ binding MAX_SCANNER_MANHATTAN_POLICY into BeaconScannerSolver and BeaconScannerVisualizer (34.52 ms across 40 scanners -> 12,149): zero edits to shared/ or part1/, O(N^2) pairwise Manhattan scan over aligned scanner origins with exact 3D coordinate verification, fixed-bounds 3D orthographic TrenchProjectionSvg playback, differentially verified across the official 5-scanner example (3,621), negative/asymmetric octant pairs, single-scanner edge case (0), and ground-truth 24-rotation synthetic multi-scanner clusters.",
+      "complexity": "O(N * M^2 log M + N^2 * M^2) time, O(N * M^2) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 34.52,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building MAX_SCANNER_MANHATTAN_POLICY and shared TrenchProjectionSvg playback in day19/shared/ reduced Part 2's domain solver to 4 lines and computed 12,149 across 40 scanners in 34.52 ms with zero shared edits.",
+        "Synthesizing multi-scanner ground-truth test inputs by applying the transpose rotation worldToLocal = R^T * (p - origin) lets differential tests verify exact scanner origin recovery across all 24 proper cube rotations."
+      ],
+      "startedAt": "2026-11-27T04:52:43Z",
+      "verifiedAt": "2026-11-27T05:05:17Z"
     }
   ]
 }
