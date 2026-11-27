@@ -724,6 +724,26 @@
       ],
       "startedAt": "2026-11-27T05:18:41Z",
       "verifiedAt": "2026-11-27T05:28:31Z"
+    },
+    {
+      "year": 2019,
+      "day": 19,
+      "part": 1,
+      "title": "Tractor Beam",
+      "puzzleUrl": "https://adventofcode.com/2019/day/19",
+      "status": "solved",
+      "summary": "Probe a 50x50 coordinate grid using fresh Intcode tractor-beam drone runs and count how many points are pulled by the beam.",
+      "algorithmSummary": "Read-only 2019/shared/intcode/ IntcodeBeamOracle (fresh VM per probe with Map<string, boolean> caching) + cone-bounded monotonic row-span scan storing only readonly (RowSpan | null)[] in BeamGrid, paired with polymorphic TractorBeamPolicy (AREA_SCAN_POLICY for Part 1, pre-built 2-phase gap(y) <= -3 doubling-jump + exact local monotonic walk CLOSEST_SQUARE_POLICY for zero-churn Part 2) in 2019/day19/shared/ (61.87 ms across ~250 probes -> 209 affected points): authentic 59-cell pure Intcode beam ROM matching 100% of the official 10x10 diagram (27) with 50x50 = 674 and 100x100 = 2,810,228, pure-TS SVG projection + TractorBeamVisualizer playback, differentially verified on oscillating discrete-rounding cones, narrow empty-row cones, and seeded PRNG brute-force oracles.",
+      "complexity": "O(N * I) Part 1 / O((log y* + W) * I) Part 2 time, O(N) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 61.87,
+      "attemptsCount": 1,
+      "learnings": [
+        "Storing only readonly (RowSpan | null)[] as BeamGrid's single source of truth avoids redundant Uint8Array storage and Object.freeze hazards while rendering <= 50 crisp SVG span bars.",
+        "Guarding Phase 1 doubling jumps in findClosestSquare with the proven gap(y) <= -3 condition (!probe(left + S - 3, y - S + 1)) drops Part 2 from ~2,500 probes to ~250 probes (< 80 ms) while staying 100% immune to discrete lattice-rounding flicker."
+      ],
+      "startedAt": "2026-11-27T05:28:31Z",
+      "verifiedAt": "2026-11-27T05:54:51Z"
     }
   ]
 }

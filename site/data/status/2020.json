@@ -804,6 +804,26 @@
       ],
       "startedAt": "2026-11-27T05:24:34Z",
       "verifiedAt": "2026-11-27T05:35:43Z"
+    },
+    {
+      "year": 2020,
+      "day": 21,
+      "part": 1,
+      "title": "Allergen Assessment",
+      "puzzleUrl": "https://adventofcode.com/2020/day/21",
+      "status": "solved",
+      "summary": "Intersect per-allergen ingredient sets across all food labels to identify ingredients that cannot contain any listed allergen and count their total appearances.",
+      "algorithmSummary": "ASCII-sorted BigInt ingredient bitmask intersection reusing shared/core bitCount and bigintLog2 paired with polymorphic AllergenPolicy (SAFE_APPEARANCES_POLICY for Part 1 supporting multi-matching satisfiable food lists, pre-built one-sided allergen singleton peeling DANGEROUS_LIST_POLICY for zero-churn Part 2) in 2020/day21/shared/ (1.67 ms across 39 foods / 8 allergens / 200 ingredients -> 2,315 safe appearances): zero stored derived state on Food, AllergenDocument, & AllergenAnalysis, pure-TS SVG view-model projections feeding IntersectionMatrixSvg + PeelingMatrixSvg + AllergenVisualizer playback, differentially verified against an independent brute-force injective backtracking oracle across 60 seeded planted/unplanted instances (0, 1, and >= 2 valid matchings).",
+      "complexity": "O(T + F * L * ceil(I/64) + A^2 * ceil(I/64)) time, O(T + A * ceil(I/64)) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.67,
+      "attemptsCount": 1,
+      "learnings": [
+        "By Hall's theorem, Part 1 must NOT invoke singleton peeling because valid Part 1 inputs can admit multiple valid matchings while still having exact safe set I \\ U.",
+        "Reusing shared/core bitCount(bigint) and bigintLog2(1n << k) stays exact past bit 200 (zero floating-point drift on powers of 2) while avoiding duplicate bit-manipulation helpers."
+      ],
+      "startedAt": "2026-11-27T05:35:43Z",
+      "verifiedAt": "2026-11-27T05:54:11Z"
     }
   ]
 }

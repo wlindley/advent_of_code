@@ -824,6 +824,26 @@
       ],
       "startedAt": "2026-11-27T05:32:49Z",
       "verifiedAt": "2026-11-27T05:47:45Z"
+    },
+    {
+      "year": 2021,
+      "day": 21,
+      "part": 2,
+      "title": "Dirac Dice",
+      "puzzleUrl": "https://adventofcode.com/2021/day/21#part2",
+      "status": "solved",
+      "summary": "Play Dirac Dice with a 3-sided quantum die splitting every active universe 27 ways per turn until score 21, returning the exact BigInt win count of the player winning in more universes.",
+      "algorithmSummary": "Zero-churn reuse of 2021/day21/shared/ binding solveQuantumGame and traceQuantumGame (DEFAULT_QUANTUM_TARGET = 21) plus DiracTrackSvg's quantum overlay (17.83 ms -> 175,731,756,652,760 universes): zero edits to shared/ or part1/, sparse-active double-buffered BigInt wavefront DP over 10x10x21x21 states with O(|active|) reset, log-scaled P1/P2 win-race bars via shared/core bigintLog2(wins + 1n) and BigInt permille win-share telemetry, differentially verified across the official (4, 8) example (444,356,092,776,315 / 341,960,390,180,808), P2-dominant (6, 1), round-by-round 27x conservation invariant, and an independent player-symmetry memoized BigInt DP oracle across 8 seeded starting pairs.",
+      "complexity": "O(R * |active| * 7) time, O(100 * T^2) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 17.83,
+      "attemptsCount": 1,
+      "learnings": [
+        "Pre-building solveQuantumGame, traceQuantumGame, and DiracTrackSvg's quantum overlay in day21/shared/ let Part 2 drop in with zero shared edits and solve 175.7 trillion universes in 17.83 ms.",
+        "Formatting win-share percentages via BigInt basis points ((wins * 1000n) / totalWins) avoids Number(big) precision loss past 2^53 while keeping log2 win bars strictly overflow-free via bigintLog2(wins + 1n)."
+      ],
+      "startedAt": "2026-11-27T05:47:45Z",
+      "verifiedAt": "2026-11-27T05:58:16Z"
     }
   ]
 }
