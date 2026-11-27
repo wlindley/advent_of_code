@@ -1,0 +1,32 @@
+import type { PuzzleSolver } from '../../../shared/core';
+import type { PuzzlePartManifest } from '../../../shared/viz';
+import { solver } from './domain';
+import { OperationOrderPart1Visualizer } from './viz/OperationOrderPart1Visualizer';
+
+const EXAMPLE_INPUT = [
+  '1 + 2 * 3 + 4 * 5 + 6',
+  '1 + (2 * 3) + (4 * (5 + 6))',
+  '2 * 3 + (4 * 5)',
+  '5 + (8 * 3 + 9 + 3 * 4 * 3)',
+  '5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))',
+  '((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2',
+].join('\n');
+
+export const manifest: PuzzlePartManifest = {
+  meta: {
+    year: 2020,
+    day: 18,
+    part: 1,
+    title: 'Operation Order',
+    puzzleUrl: 'https://adventofcode.com/2020/day/18',
+    summary:
+      'Evaluate multi-line integer expressions with equal left-to-right precedence for + and * and parenthesized grouping, then sum all results.',
+    algorithmSummary:
+      'Tokenize each line and construct a polymorphic expression AST with a Pratt parser parameterized by EQUAL_PRECEDENCE_POLICY, then sum post-order BigInt evaluations.',
+    complexity: 'O(N) time and space across N total tokens',
+  },
+  exampleInput: EXAMPLE_INPUT,
+  exampleAnswer: '26457',
+  solver: solver as PuzzleSolver<unknown, unknown>,
+  Visualizer: OperationOrderPart1Visualizer,
+};
