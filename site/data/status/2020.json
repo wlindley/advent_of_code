@@ -764,6 +764,26 @@
       ],
       "startedAt": "2026-11-27T04:55:08Z",
       "verifiedAt": "2026-11-27T05:06:54Z"
+    },
+    {
+      "year": 2020,
+      "day": 20,
+      "part": 1,
+      "title": "Jurassic Jigsaw",
+      "puzzleUrl": "https://adventofcode.com/2020/day/20",
+      "status": "solved",
+      "summary": "Reassemble 144 shuffled square satellite tiles across all 8 dihedral D4 orientations so every adjacent 1-cell border matches, and return the BigInt product of the four corner tile IDs.",
+      "algorithmSummary": "Branch-free 8-entry D4 affine pullback table + Map-indexed exact backtracking assembler (distinct-tile canonical border counts, outer-score anchor ordering, interior-edge pruning, BigInt corner product) paired with polymorphic JigsawPolicy (CORNER_PRODUCT_POLICY for Part 1, pre-built border-stripping + overlap-safe Uint8Array 15-cell Sea Monster scan WATER_ROUGHNESS_POLICY for zero-churn Part 2) in 2020/day20/shared/ (6.46 ms across 144 tiles / 12x12 mosaic -> 32,287,787,075,651): zero-duplication JigsawTraceFrame with HiDPI DPR Canvas 2D mosaic & sea-monster visualizer, differentially verified across the official 9-tile example (20,899,048,083,289 / 273 roughness), BigInt > 2^53 IDs, palindromic/self-duplicate/backtracking fixtures, and seeded random 3x3 & 4x4 ground-truth slicers.",
+      "complexity": "O(T * S + N^2) typical time, O(T + M^2) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 6.46,
+      "attemptsCount": 1,
+      "learnings": [
+        "Using Map<number, number> for distinct-tile canonical border counts (deduplicated per tile) handles tile widths up to 30 without allocating a 1 << 30 table and prevents self-duplicate borders from inflating shared-edge counts.",
+        "Because D4 horizontal and vertical flips map every placed tile's right/bottom border onto left/top orientations, byLeft.get(reqLeft)! and byTop.get(reqTop)! are guaranteed non-empty—eliminating dead ?? [] V8 coverage branches."
+      ],
+      "startedAt": "2026-11-27T05:06:54Z",
+      "verifiedAt": "2026-11-27T05:24:34Z"
     }
   ]
 }

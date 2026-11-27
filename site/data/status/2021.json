@@ -764,6 +764,26 @@
       ],
       "startedAt": "2026-11-27T04:52:43Z",
       "verifiedAt": "2026-11-27T05:05:17Z"
+    },
+    {
+      "year": 2021,
+      "day": 20,
+      "part": 1,
+      "title": "Trench Map",
+      "puzzleUrl": "https://adventofcode.com/2021/day/20",
+      "status": "solved",
+      "summary": "Apply 2 simultaneous 3x3 cellular-automaton image-enhancement passes over an infinite 2D plane (tracking infinite-void parity flips) and count all lit pixels.",
+      "algorithmSummary": "Pre-allocated double-buffered Uint8Array convolution with unconditional 2-cell halo stamping and rolling 3-bit horizontal row windows (w0/w1/w2 pre-loaded on newLeft-1..newLeft) paired with polymorphic EnhancementPolicy (PART1_POLICY = 2 steps, pre-built PART2_POLICY = 50 steps for zero-churn Part 2) in 2021/day20/shared/ (1.77 ms across 100x100 blinking-void personal input -> 5,400 lit pixels): explicit infinite-background parity tracking across all four (algo[0], algo[511]) regimes, RangeError guard on infinite-lit totalLitPixels, HiDPI ImageData TrenchMapVisualizer displaying the flashing Infinite Void halo, differentially verified against an independent sparse Set<string> + outsideBit oracle across 30 seeded grids and composition invariants.",
+      "complexity": "O(S * (H0 + 2S) * (W0 + 2S)) time, O((H0 + 2S) * (W0 + 2S)) space",
+      "runtime": "main-thread",
+      "personalInputElapsedMs": 1.77,
+      "attemptsCount": 1,
+      "learnings": [
+        "Stamping a 2-cell background halo unconditionally before every enhancement step eliminates inner-loop bounds checks while preserving exact composition when an input image already starts with background === 1.",
+        "Pre-loading the 3-bit rolling row windows from columns (newLeft - 1, newLeft) before shifting in c + 1 avoids off-by-one shifts while cutting per-pixel reads from 9 to 3."
+      ],
+      "startedAt": "2026-11-27T05:05:17Z",
+      "verifiedAt": "2026-11-27T05:23:02Z"
     }
   ]
 }
