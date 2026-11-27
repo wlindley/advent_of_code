@@ -22,6 +22,7 @@ import type { TokenUsageReport } from '../data/tokenUsage';
 import type { DashboardTab, MetricsScope } from '../data/viewState';
 import { MetricsChartsView } from './MetricsChartsView';
 import { MetricsGuide } from './MetricsGuide';
+import { OverallProgressCard } from './OverallProgressCard';
 import { QualityPanel } from './QualityPanel';
 import { TokenBudgetCard } from './TokenBudgetCard';
 
@@ -226,6 +227,15 @@ export function DashboardView({
 
   return (
     <>
+      <OverallProgressCard
+        statusDoc={statusDoc}
+        selectedYear={yearData.year}
+        onSelectYear={(year) => {
+          onSelectYear(year);
+          onSelectTab('overview');
+        }}
+      />
+
       <div
         className="tablist dashboard-tabs"
         role="tablist"

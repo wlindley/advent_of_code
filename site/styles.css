@@ -59,6 +59,18 @@ code, pre, textarea { font-family: ui-monospace, SFMono-Regular, Menlo, monospac
 
 .progress-row { display: flex; align-items: center; gap: 1rem; margin: 0.75rem 0; }
 .progress-row progress { flex: 1; height: 12px; }
+.year-rollup-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 0.45rem; }
+.year-rollup-chip { display: flex; flex-direction: column; gap: 0.2rem; padding: 0.4rem 0.5rem; border-radius: 7px; border: 1px solid var(--border); background: var(--bg); color: var(--text); text-align: left; font-size: 0.78rem; transition: border-color 0.15s ease; }
+.year-rollup-chip:hover { border-color: var(--accent); }
+.year-rollup-chip.active { border-color: var(--accent); background: var(--surface); }
+.year-rollup-top { display: flex; justify-content: space-between; align-items: center; gap: 0.25rem; }
+.year-rollup-count { font-size: 0.73rem; color: var(--muted); }
+.year-rollup-bar { display: block; width: 100%; height: 4px; border-radius: 999px; background: var(--border); overflow: hidden; }
+.year-rollup-fill { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
+.year-rollup-chip.state-completed .year-rollup-top span { color: var(--ok); }
+.year-rollup-chip.state-completed .year-rollup-fill { background: var(--ok); }
+.year-rollup-chip.state-in_progress .year-rollup-top span { color: var(--gold); }
+.year-rollup-chip.state-pending .year-rollup-top span { color: var(--muted); }
 .tablist { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 0.25rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; scrollbar-width: thin; }
 .dashboard-tabs { margin-bottom: 1.1rem; }
 .year-tabs { margin-bottom: 0.9rem; }
